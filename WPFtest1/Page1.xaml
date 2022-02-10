@@ -1,0 +1,81 @@
+﻿<Page x:Class="WPFtest1.Page1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WPFtest1"
+      mc:Ignorable="d"
+      Title="Page1" Width="500" Height="168.266">
+
+    <Grid Margin="0,0,0,100" >
+        <TabControl HorizontalAlignment="Left" Width="500" Margin="0,0,0,-123" Height="191" VerticalAlignment="Top">
+
+            <TabItem >
+                <TabItem.Header>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Потоки</TextBlock>
+                    </StackPanel>
+
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >информация</Button>
+                        <Button Margin="0,0,336.8,0">материал</Button>
+                        <Button Margin="0,0,336.8,0">заказы</Button>
+                    </StackPanel>
+                </TabItem.Content>
+
+            </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Другое</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >исток</Button>
+                        <Button Margin="0,0,336.8,0">сток</Button>
+                        <Button Margin="0,0,336.8,0">константа</Button>
+                        <Button Margin="0,0,336.8,0">вспомогательная переменная</Button>
+                        <Button Margin="0,0,336.8,0">переменная на другойдиаграмме</Button>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Уровни</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >запаздывание</Button>
+                        <Button Margin="0,0,336.8,0">уровень</Button>
+
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Функции</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >функция принятия решения</Button>
+
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
