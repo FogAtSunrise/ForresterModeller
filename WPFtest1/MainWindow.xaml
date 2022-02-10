@@ -54,11 +54,14 @@
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
                     <TextBox>Рабобл</TextBox>
+                    <Button Content="Test1" Click ="Test1" Margin="0,26,261.2,143.2"/>
+                    <Button Content="Test2" Click ="Test2" Margin="0,61,261.2,108.2"/>
                 </Grid>
                 <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
-                    <Frame Source="Page1.xaml" />
+                    <!--Source="Page1.xaml" -->
+                        <Frame x:Name="LeftBelowFrame"  NavigationUIVisibility="Hidden" />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>

@@ -46,5 +46,27 @@ namespace WPFtest1
         {
 
         }
+
+        private void Test1(object sender, RoutedEventArgs e)
+        {
+           // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
+            Open_Page(LeftBelowFrame, new LeftBelow.GraphElements());
+        }
+private void Test2(object sender, RoutedEventArgs e)
+        {
+            Open_Page(LeftBelowFrame, new LeftBelow.ToolsPage());
+
+        }
+        /// <summary>
+        /// ОТКРЫТЬ УКАЗАННУЮ СТРАНИЦУ, В УКАЗАННОМ ФРЕЙМЕ
+        /// </summary>
+        /// <param name="frame"></param>
+        /// <param name="page"></param>
+        private void Open_Page(Frame frame, Page page)
+        {
+            frame.NavigationService.Navigate(page);
+        }
+
+        
     }
 }
