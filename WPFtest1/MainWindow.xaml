@@ -1,0 +1,163 @@
+﻿<Window x:Class="WPFtest1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFtest1"
+        mc:Ignorable="d"
+        Title="Моделлер" Height="450" Width="800">
+    <Grid>
+        
+
+        <Menu Height="19" VerticalAlignment="Top" Margin="0,0,-0.4,0">
+            <MenuItem Header="Проект">
+                <MenuItem Header="Создать" Click="MenuItem_Click" />
+                <MenuItem Header="Открыть" Click="MenuItem_Click_1" />
+                <MenuItem Header="Сохранить" />
+                <MenuItem Header="Сохранить как" />
+            </MenuItem>
+            <MenuItem Header="Инструменты" Click="MenuItem_Click_2">
+                <MenuItem Header="Создать диаграмму" />
+                <MenuItem Header="Создать представление" />
+                <MenuItem Header="Построить график" />
+            </MenuItem>
+            <MenuItem Header="Справка">
+               
+            </MenuItem>
+        </Menu>
+
+        <TabControl  Margin="0,215,219.6,0" SelectionChanged="TabControl_SelectionChanged">
+            
+            <TabItem >
+                <TabItem.Header>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Потоки</TextBlock>
+                    </StackPanel>
+                    
+                </TabItem.Header>
+                
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >информация</Button>
+                        <Button Margin="0,0,336.8,0">материал</Button>
+                        <Button Margin="0,0,336.8,0">заказы</Button>
+                    </StackPanel>
+                </TabItem.Content>
+                
+            </TabItem>
+            
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Другое</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >исток</Button>
+                        <Button Margin="0,0,336.8,0">сток</Button>
+                        <Button Margin="0,0,336.8,0">константа</Button>
+                        <Button Margin="0,0,336.8,0">вспомогательная переменная</Button>
+                        <Button Margin="0,0,336.8,0">переменная на другойдиаграмме</Button>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Уровни</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >запаздывание</Button>
+                        <Button Margin="0,0,336.8,0">уровень</Button>
+                       
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3">Функции</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <StackPanel>
+                        <Button Margin="0,0,336.8,0" >функция принятия решения</Button>
+
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        
+        <TabControl  Margin="520,19,-0.4,242" SelectionChanged="TabControl_SelectionChanged">
+
+            <TabItem >
+                <TabItem.Header>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3" Width="120"><Run Text="Файловый менеджер"/></TextBlock>
+                    </StackPanel>
+
+                </TabItem.Header>
+
+                <StackPanel>
+                    <Button Margin="0,0,183.6,0" Content="информация" />
+                    <Button Margin="0,0,183.6,0" Content="материал"/>
+                    <Button Margin="0,0,183.6,0" Content="заказы"/>
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3"><Run Text="Другое"/></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <StackPanel>
+                    <Button Margin="0,0,336.8,0" Content="исток" />
+                    <Button Margin="0,0,336.8,0" Content="сток"/>
+                    <Button Margin="0,0,336.8,0" Content="константа"/>
+                    <Button Margin="0,0,336.8,0" Content="вспомогательная переменная"/>
+                    <Button Margin="0,0,336.8,0" Content="переменная на другойдиаграмме"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3"><Run Text="Уровни"/></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <StackPanel>
+                    <Button Margin="0,0,336.8,0" Content="запаздывание" />
+                    <Button Margin="0,0,336.8,0" Content="уровень"/>
+
+                </StackPanel>
+            </TabItem>
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal"/>
+                </TabItem.Header>
+
+                <StackPanel>
+                    <Button Margin="0,0,336.8,0" Content="функция принятия решения" />
+
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+
+    </Grid>
+
+
+</Window>
