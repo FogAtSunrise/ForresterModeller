@@ -24,5 +24,7 @@ namespace WPFtest1.LeftBelow
         {
             InitializeComponent();
         }
+
+       
     }
 }

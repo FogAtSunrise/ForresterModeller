@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       Title="GraphElements" Height="195.899" Width="530.386">
 
-    <Grid Margin="0,0,9.6,40.8">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0*"/>
@@ -16,8 +16,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <TabControl HorizontalAlignment="Left" Width="526" Height="190" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,-12.4,-34.8" Grid.RowSpan="3">
+        <TabControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
 
             <TabItem >
                 <TabItem.Header>

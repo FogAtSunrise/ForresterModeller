@@ -60,8 +60,8 @@
                 <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
-                    <!--Source="Page1.xaml" -->
-                        <Frame x:Name="LeftBelowFrame"  NavigationUIVisibility="Hidden" />
+                    <!--фрейм -->
+                    <Frame x:Name="LeftBelowFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
