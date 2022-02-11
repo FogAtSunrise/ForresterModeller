@@ -6,11 +6,6 @@
         xmlns:local="clr-namespace:WPFtest1"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
-    <!--<DockPanel>
-       
-        
-       
-    </DockPanel>-->
 
     <DockPanel>
         <Menu Height="19" DockPanel.Dock="Top" >
@@ -61,7 +56,7 @@
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
                     <!--фрейм -->
-                    <Frame x:Name="LeftBelowFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
+                    <Frame x:Name="ToolsFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>

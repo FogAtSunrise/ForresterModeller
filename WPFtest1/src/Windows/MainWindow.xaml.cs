@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WPFtest1.src.Tools;
 
 namespace WPFtest1
 {
@@ -50,11 +39,11 @@ namespace WPFtest1
         private void Test1(object sender, RoutedEventArgs e)
         {
            // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
-            Open_Page(LeftBelowFrame, new LeftBelow.GraphElements());
+            Open_Page(ToolsFrame, new GraphElements());
         }
 private void Test2(object sender, RoutedEventArgs e)
         {
-            Open_Page(LeftBelowFrame, new LeftBelow.ToolsPage());
+            Open_Page(ToolsFrame, new ToolsPage());
 
         }
         /// <summary>
