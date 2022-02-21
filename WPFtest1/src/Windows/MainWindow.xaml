@@ -56,7 +56,7 @@
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
                     <!--фрейм -->
-                    <Frame x:Name="ToolsFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
+                    <Frame x:Name="ToolsFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
