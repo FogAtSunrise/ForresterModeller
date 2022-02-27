@@ -31,8 +31,17 @@
 
                 </TabItem.Header>
 
+
                 <StackPanel>
-                    <Button Margin="0,0,336.8,0" Content="информация" />
+
+                    <Button Margin="0,0,336.8,0" Height="50" >
+                        <Canvas Height="100" Width="100" >
+
+                            <Image Source="/WPFtest1;component/Resources/flow1.png" Canvas.Left="-9" Height="55" Width="68" />
+                            <Label Canvas.Left="99" Canvas.Top="17" >jhfjhyfj</Label>
+
+                        </Canvas>
+                    </Button>
                     <Button Margin="0,0,336.8,0" Content="материал"/>
                     <Button Margin="0,0,336.8,0" Content="заказы"/>
                 </StackPanel>
