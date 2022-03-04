@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="src\Entities\DiagramConstant.cs" />
+    <Compile Include="src\Entities\DiagramElement.cs" />
+    <Compile Include="src\Entities\IDiagramEntity.cs" />
     <Compile Include="src\Pages\Tools\GraphElements.xaml.cs">
       <DependentUpon>GraphElements.xaml</DependentUpon>
     </Compile>
