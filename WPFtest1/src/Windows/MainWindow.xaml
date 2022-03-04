@@ -28,84 +28,99 @@
             </MenuItem>
         </Menu>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="300"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition MinWidth="200"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition MinHeight="100"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition MinHeight="100"></RowDefinition>
-            </Grid.RowDefinitions>
+                <RowDefinition Height="auto" MinHeight="369.6"></RowDefinition>
+                <RowDefinition Height="31.2"></RowDefinition>
 
-            <!--Левая половина (рабочая)-->
-            <Grid Grid.Row="0" Grid.RowSpan="3">
+            </Grid.RowDefinitions>
+            <Grid Margin="0,0,-0.4,0.6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="300"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition MinWidth="200"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="100"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition MinHeight="100"></RowDefinition>
                 </Grid.RowDefinitions>
-                <!--Рабочая область-->
-                <Grid Grid.Row="0" x:Name="WorkArea">
-                    <TextBox>Рабобл</TextBox>
-                    <Button Content="Test1" Click ="Test1" Margin="0,26,261.2,143.2"/>
-                    <Button Content="Test2" Click ="Test2" Margin="0,61,261.2,108.2"/>
+
+                <!--Левая половина (рабочая)-->
+                <Grid Grid.Row="0" Grid.RowSpan="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="100"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition MinHeight="100"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!--Рабочая область-->
+                    <Grid Grid.Row="0" x:Name="WorkArea">
+                        <TextBox>Рабобл</TextBox>
+                        <Button Content="Test1" Click ="Test1" Margin="0,26,261.2,143.2"/>
+                        <Button Content="Test2" Click ="Test2" Margin="0,61,261.2,108.2"/>
+                    </Grid>
+                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
+                    <!--Инструменты-->
+                    <Grid Grid.Row="2" x:Name="Tools">
+                        <!--фрейм -->
+                        <Frame x:Name="ToolsFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
+                    </Grid>
                 </Grid>
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
-                <!--Инструменты-->
-                <Grid Grid.Row="2" x:Name="Tools">
-                    <!--фрейм -->
-                    <Frame x:Name="ToolsFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
+                <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
+                <GridSplitter  Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
+                <!--Правая половина (справочная)-->
+                <!--Область отображения информации-->
+                <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
+                    <TextBox Margin="0,0,-0.8,-0.2" Grid.RowSpan="2">Отображение полезной информации</TextBox>
+                    <TabControl SelectionChanged="TabControl_SelectionChanged">
+                        <TabItem >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="3" Width="120"><Run Text="Файловый менеджер"/></TextBlock>
+                                </StackPanel>
+
+                            </TabItem.Header>
+
+                            <StackPanel>
+                                <TextBox>Здесь иерархия файлов проекта</TextBox>
+                            </StackPanel>
+                        </TabItem>
+
+                        <TabItem >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="3"><Run Text="Уравнения"/></TextBlock>
+                                </StackPanel>
+                            </TabItem.Header>
+
+                            <StackPanel>
+                                <TextBlock>Здесь уравнения</TextBlock>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem >
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="3"><Run Text="Что-то"/></TextBlock>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <StackPanel>
+                                <TextBox>Третий пункт меню</TextBox>
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+                <!--Область редактирования элементов-->
+                <Grid Grid.Row="2" Grid.Column="2"  x:Name="PropertyArea">
+                    <TextBox>Отображение и редактироавние инфор</TextBox>
                 </Grid>
             </Grid>
-            <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
-            <GridSplitter  Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
-            <!--Правая половина (справочная)-->
-            <!--Область отображения информации-->
-            <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
-                <TextBox Margin="0,0,-0.8,-0.2" Grid.RowSpan="2">Отображение полезной информации</TextBox>
-                <TabControl SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem >
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="3" Width="120"><Run Text="Файловый менеджер"/></TextBlock>
-                            </StackPanel>
-
-                        </TabItem.Header>
-
-                        <StackPanel>
-                            <TextBox>Здесь иерархия файлов проекта</TextBox>
-                        </StackPanel>
-                    </TabItem>
-
-                    <TabItem >
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="3"><Run Text="Уравнения"/></TextBlock>
-                            </StackPanel>
-                        </TabItem.Header>
-
-                        <StackPanel>
-                            <TextBlock>Здесь уравнения</TextBlock>
-                        </StackPanel>
-                    </TabItem>
-                    <TabItem >
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="3"><Run Text="Что-то"/></TextBlock>
-                            </StackPanel>
-                        </TabItem.Header>
-                        <StackPanel>
-                            <TextBox>Третий пункт меню</TextBox>
-                        </StackPanel>
-                    </TabItem>
-                </TabControl>
+            <Grid Grid.Row="1" x:Name="Buttons" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
+                <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
+                <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
             </Grid>
-            <!--Область редактирования элементов-->
-            <Grid Grid.Row="2" Grid.Column="2"  x:Name="PropertyArea">
-                <TextBox>Отображение и редактироавние инфор</TextBox>
-            </Grid>
+
         </Grid>
+
+
+
     </DockPanel>
 </Window>
