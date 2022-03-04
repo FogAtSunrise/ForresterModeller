@@ -8,7 +8,53 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ToolsPage">
 
-    <Grid Background="Blue">
-        <Label Content="ТУТ ТИПА ПАНЕЛЬКА СО СХЕМЫ plotterWindow"/>
+    <Grid >
+
+        <TabControl  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3"><Run Text="Инструменты"/></TextBlock>
+                    </StackPanel>
+
+                </TabItem.Header>
+                
+               
+                    
+                                <TreeView Name="myTreeViewEvent" >
+                    <TreeViewItem Name="NameProject" Header="NameProject" IsSelected="False" >
+                        <TreeViewItem Name="NamePlotter" Header="NamePlotter" IsSelected="True">
+                            <TreeViewItem Name="PlotterLevel" Header="Уровни" IsSelected="True">
+                        <TreeViewItem Header="Jesper Aaberg"/>
+                        <TreeViewItem Header="Employee Number">
+                            <TreeViewItem Header="12345"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Work Days">
+                            <TreeViewItem Header="Monday"/>
+                            <TreeViewItem Header="Tuesday"/>
+                            <TreeViewItem Header="Thursday"/>
+                        </TreeViewItem>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Константы">
+                        <TreeViewItem Header="Dominik Paiha"/>
+                        <TreeViewItem Header="Employee Number">
+                            <TreeViewItem Header="98765"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Work Days">
+                            <TreeViewItem Header="Tuesday"/>
+                            <TreeViewItem Header="Wednesday"/>
+                            <TreeViewItem Header="Friday"/>
+                        </TreeViewItem>
+
+                            </TreeViewItem>
+                            <TreeViewItem Header="Уравнения">
+                            </TreeViewItem>
+                        </TreeViewItem>
+
+                     
+                    </TreeViewItem>
+                </TreeView>
+            </TabItem>
+            </TabControl>
     </Grid>
 </Page>

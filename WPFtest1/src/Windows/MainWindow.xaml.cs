@@ -44,6 +44,7 @@ namespace ForresterModeller
 private void Test2(object sender, RoutedEventArgs e)
         {
             Open_Page(ToolsFrame, new ToolsPage());
+           
 
         }
         /// <summary>

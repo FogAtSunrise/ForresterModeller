@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using ForresterModeller.Entities;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 
 namespace ForresterModeller.src.Tools
@@ -12,5 +14,17 @@ namespace ForresterModeller.src.Tools
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// вывод элементов графика 
+        /// </summary>
+        /// <param name="elements"></param>
+        // public void ChangeListInPlotterTools(List<IDiagramEntity> elements)
+        public void ChangeListInPlotterTools()
+        {
+            TreeView tree = new TreeView();
+        }
+       
+      
     }
 }
