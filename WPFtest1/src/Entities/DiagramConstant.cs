@@ -1,6 +1,6 @@
 ﻿using System.Windows.Navigation;
 
-namespace WPFtest1.Entities
+namespace ForresterModeller.Entities
 {
     public class DiagramConstant: DiagramElement
     {

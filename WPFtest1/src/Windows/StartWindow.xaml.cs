@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 
 
-namespace WPFtest1
+namespace ForresterModeller
 {
     /// <summary>
     /// Логика взаимодействия для Window1.xaml

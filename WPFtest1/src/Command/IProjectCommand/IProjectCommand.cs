@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFtest1.src.Command.IProjectCommand
+namespace ForresterModeller.src.Command.IProjectCommand
 {
     interface IProjectCommand : ICommand
     {

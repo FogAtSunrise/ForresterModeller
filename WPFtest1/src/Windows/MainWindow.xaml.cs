@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using WPFtest1.src.Tools;
+using ForresterModeller.src.Tools;
 
-namespace WPFtest1
+namespace ForresterModeller
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFtest1.src.Command.IDiagramCommand
+namespace ForresterModeller.src.Command.IDiagramCommand
 {
     interface IDiagramCommand : ICommand
     {

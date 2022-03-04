@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFtest1.src.Command.IDiagramEdgeCommand
+namespace ForresterModeller.src.Command.IDiagramEdgeCommand
 {
     interface IDiagramEdgeCommand : ICommand
     {

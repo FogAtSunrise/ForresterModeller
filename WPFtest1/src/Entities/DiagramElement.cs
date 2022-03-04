@@ -1,4 +1,4 @@
-﻿namespace WPFtest1.Entities
+﻿namespace ForresterModeller.Entities
 {
     public abstract class DiagramElement : IDiagramEntity
     {

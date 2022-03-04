@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 
 
-namespace WPFtest1.src.Tools
+namespace ForresterModeller.src.Tools
 {
     /// <summary>
     /// Логика взаимодействия для GraphElements.xaml
