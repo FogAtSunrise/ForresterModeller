@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
 
-    <DockPanel>
-        <Menu Height="19" DockPanel.Dock="Top" >
+    <Grid>
+        <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Проект">
                 <MenuItem Header="Создать" Click="MenuItem_Click" />
                 <MenuItem Header="Открыть" Click="MenuItem_Click_1" />
@@ -27,20 +27,15 @@
 
             </MenuItem>
         </Menu>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" MinHeight="369.6"></RowDefinition>
-                <RowDefinition Height="31.2"></RowDefinition>
 
-            </Grid.RowDefinitions>
-            <Grid Margin="0,0,-0.4,0.6">
+        <Grid Margin="0,19,0,31"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="300"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition MinWidth="200"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="100"></RowDefinition>
+                    <RowDefinition MinHeight="100" ></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition MinHeight="100"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -66,7 +61,7 @@
                     </Grid>
                 </Grid>
                 <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
-                <GridSplitter  Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
+                <GridSplitter  Grid.Row="1" Grid.Column="2"    HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Правая половина (справочная)-->
                 <!--Область отображения информации-->
                 <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
@@ -113,14 +108,13 @@
                     <TextBox>Отображение и редактироавние инфор</TextBox>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" x:Name="Buttons" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
+            <Grid Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
                 <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
                 <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
             </Grid>
 
+
         </Grid>
 
 
-
-    </DockPanel>
 </Window>
