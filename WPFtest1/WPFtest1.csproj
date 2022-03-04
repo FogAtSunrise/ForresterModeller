@@ -120,7 +120,38 @@
     <None Include="flow1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\flow1.png" />
+    <Resource Include="src\Pages\Tools\but1.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but11.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
