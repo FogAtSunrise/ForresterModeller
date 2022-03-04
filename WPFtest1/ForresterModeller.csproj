@@ -64,20 +64,20 @@
     <Compile Include="src\Command\IDiagramEdgeCommand\IDiagramEdgeCommand.cs" />
     <Compile Include="src\Command\IProjectCommand\IProjectCommand.cs" />
     <Compile Include="src\Command\PlotterCommand\PlotterCommand.cs" />
-    <Compile Include="src\Pages\Tools\GraphElements.xaml.cs">
-      <DependentUpon>GraphElements.xaml</DependentUpon>
+    <Compile Include="src\Pages\Tools\DiagramTools.xaml.cs">
+      <DependentUpon>DiagramTools.xaml</DependentUpon>
     </Compile>
-    <Compile Include="src\Pages\Tools\ToolsPage.xaml.cs">
-      <DependentUpon>ToolsPage.xaml</DependentUpon>
+    <Compile Include="src\Pages\Tools\PlotterTools.xaml.cs">
+      <DependentUpon>PlotterTools.xaml</DependentUpon>
     </Compile>
     <Compile Include="src\Windows\StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="src\Pages\Tools\GraphElements.xaml">
+    <Page Include="src\Pages\Tools\DiagramTools.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="src\Pages\Tools\ToolsPage.xaml">
+    <Page Include="src\Pages\Tools\PlotterTools.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
