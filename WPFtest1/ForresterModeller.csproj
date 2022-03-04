@@ -59,6 +59,11 @@
     <Compile Include="src\Entities\DiagramConstant.cs" />
     <Compile Include="src\Entities\DiagramElement.cs" />
     <Compile Include="src\Entities\IDiagramEntity.cs" />
+    <Compile Include="src\Command\ICommand.cs" />
+    <Compile Include="src\Command\IDiagramCommand\IDiagramCommand.cs" />
+    <Compile Include="src\Command\IDiagramEdgeCommand\IDiagramEdgeCommand.cs" />
+    <Compile Include="src\Command\IProjectCommand\IProjectCommand.cs" />
+    <Compile Include="src\Command\PlotterCommand\PlotterCommand.cs" />
     <Compile Include="src\Pages\Tools\GraphElements.xaml.cs">
       <DependentUpon>GraphElements.xaml</DependentUpon>
     </Compile>
