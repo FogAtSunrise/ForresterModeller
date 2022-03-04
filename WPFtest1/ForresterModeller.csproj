@@ -58,6 +58,8 @@
     </ApplicationDefinition>
     <Compile Include="src\Entities\DiagramConstant.cs" />
     <Compile Include="src\Entities\DiagramElement.cs" />
+    <Compile Include="src\Entities\DiagramFunction.cs" />
+    <Compile Include="src\Entities\DiagramLevel.cs" />
     <Compile Include="src\Entities\IDiagramEntity.cs" />
     <Compile Include="src\Command\ICommand.cs" />
     <Compile Include="src\Command\IDiagramCommand\IDiagramCommand.cs" />

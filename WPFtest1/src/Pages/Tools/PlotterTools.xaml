@@ -19,41 +19,16 @@
 
                 </TabItem.Header>
                 
-               
                     
-                                <TreeView Name="myTreeViewEvent" >
-                    <TreeViewItem Name="NameProject" Header="NameProject" IsSelected="False" >
-                        <TreeViewItem Name="NamePlotter" Header="NamePlotter" IsSelected="True">
-                            <TreeViewItem Name="PlotterLevel" Header="Уровни" IsSelected="True">
-                        <TreeViewItem Header="Jesper Aaberg"/>
-                        <TreeViewItem Header="Employee Number">
-                            <TreeViewItem Header="12345"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Work Days">
-                            <TreeViewItem Header="Monday"/>
-                            <TreeViewItem Header="Tuesday"/>
-                            <TreeViewItem Header="Thursday"/>
-                        </TreeViewItem>
-                    </TreeViewItem>
-                    <TreeViewItem Header="Константы">
-                        <TreeViewItem Header="Dominik Paiha"/>
-                        <TreeViewItem Header="Employee Number">
-                            <TreeViewItem Header="98765"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Work Days">
-                            <TreeViewItem Header="Tuesday"/>
-                            <TreeViewItem Header="Wednesday"/>
-                            <TreeViewItem Header="Friday"/>
-                        </TreeViewItem>
+                        <TreeView   Name="TreeViewEvent" >
+                    <TreeView.Resources>
+                        
 
-                            </TreeViewItem>
-                            <TreeViewItem Header="Уравнения">
-                            </TreeViewItem>
-                        </TreeViewItem>
-
-                     
-                    </TreeViewItem>
+                    </TreeView.Resources>
                 </TreeView>
+                 
+                   
+
             </TabItem>
             </TabControl>
     </Grid>

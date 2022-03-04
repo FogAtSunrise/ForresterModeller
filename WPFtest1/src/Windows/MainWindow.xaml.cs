@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using ForresterModeller.Entities;
 using ForresterModeller.src.Tools;
 
 namespace ForresterModeller
@@ -41,10 +44,23 @@ namespace ForresterModeller
            // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
             Open_Page(ToolsFrame, new GraphElements());
         }
+        //фрейм plottertools
 private void Test2(object sender, RoutedEventArgs e)
         {
-            Open_Page(ToolsFrame, new ToolsPage());
+
+            ToolsPage t = new ToolsPage();
+
+            List<IDiagramEntity> test = new List<IDiagramEntity>();
+            for (int i = 0; i < 6; i++)
+                test.Add(new DiagramConstant() { Name = "константа"+i });
+
+            for (int i = 0; i < 6; i++)
+            t.ChangeListInPlotterTools(test, "name"+i);
+         
+            Open_Page(ToolsFrame, t);
            
+
+
 
         }
         /// <summary>
