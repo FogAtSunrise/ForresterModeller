@@ -58,9 +58,9 @@ private void Test2(object sender, RoutedEventArgs e)
             t.ChangeListInPlotterTools(test, "name"+i);
          
             Open_Page(ToolsFrame, t);
-           
 
 
+            ChangeListInFileManager(new List<string> {"file1","file2","file3" }, "project1");
 
         }
         /// <summary>
@@ -73,6 +73,42 @@ private void Test2(object sender, RoutedEventArgs e)
             frame.NavigationService.Navigate(page);
         }
 
-        
+
+
+        /// <summary>
+        /// вывод файлов проекта
+        /// </summary>
+        /// elements - список имен файлов
+        /// name - имяпроекта
+       
+        public void ChangeListInFileManager(List<string> elements, string name)
+        {
+            TreeViewItem treeHead = new TreeViewItem() { Header = name };
+            foreach (var elem in elements)
+            {
+                TreeViewItem treeItem = new TreeViewItem();
+                treeItem.Header = elem;
+                treeItem.MouseLeftButtonUp += OpenFile_MouseLeftButtonUp;
+                treeHead.Items.Add(treeItem);
+
+            }
+            TreeFiles.Items.Add(treeHead);
+
+        }
+
+
+        /// <summary>
+        /// Ловит, какой узел был нажат в дереве, тобишь определяет,
+        /// какой файл проекта пользователь хочет открыть через файловый менеджер 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void OpenFile_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = sender as TreeViewItem;
+            MessageBox.Show("Должен открыться "+item.Header);
+         
+        }
+
     }
 }
