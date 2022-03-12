@@ -19,17 +19,17 @@
 
                 </TabItem.Header>
 
-
-                <TreeView Name="TreeView_NodeList">
-                    <TreeView.Resources>
-                        <HierarchicalDataTemplate  DataType="{x:Type tools:Node}" ItemsSource="{Binding Nodes,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                            <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
-                                <CheckBox Content="{Binding NodeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding NodeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" ></CheckBox>
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-                    </TreeView.Resources>
-                </TreeView>
-
+               
+                    <TreeView Name="TreeView_NodeList">
+                        <TreeView.Resources>
+                            <HierarchicalDataTemplate  DataType="{x:Type tools:Node}" ItemsSource="{Binding Nodes,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                                    <CheckBox Content="{Binding NodeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding NodeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" ></CheckBox>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.Resources>
+                    </TreeView>
+              
 
             </TabItem>
             </TabControl>
