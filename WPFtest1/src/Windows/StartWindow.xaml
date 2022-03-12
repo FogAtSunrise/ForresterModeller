@@ -5,10 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ForresterModeller"
         mc:Ignorable="d"
-        Title="" Height="500" Width="600">
+        Title="" Height="500" Width="600" ResizeMode="NoResize">
     <Grid>
 
-        <Button x:Name="CreateNewProject"  Margin="100,100,100,340" Click="CreateNewProject_Click" Content="Создать новый проект"/>
-        <Button x:Name  ="OpenOldProject"  Margin="100,155,99.6,284.4" Click="OpenOldProject_Click" Content="Открыть существующий проект"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"  ></RowDefinition>
+            <RowDefinition Height="Auto" ></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" >
+            <Button x:Name="CreateNewProject"  Click="CreateNewProject_Click" Content="Создать новый проект" Margin="148,41,148.6,109"/>
+            <Button x:Name  ="OpenOldProject"   Click="OpenOldProject_Click" Content="Открыть существующий проект" Margin="148,112,148.6,38"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="Auto" MinHeight="100"></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0" Height="30">
+                <TextBlock Text="   Недавние проекты" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25"/>
+            </Grid>
+
+
+            <Grid Grid.Row="1">
+                <DockPanel Height="15">
+
+
+                    <Grid HorizontalAlignment="Stretch" >
+                        <TextBlock Text="       Имя"  VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                    </Grid>
+                    <Grid  HorizontalAlignment="Stretch" >
+
+                    </Grid>
+                    <Grid HorizontalAlignment="Stretch" >
+                        <TextBlock Text="Дата создания  Дата изменения  "  VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                    </Grid>
+
+                </DockPanel>
+            </Grid>
+            <Grid Grid.Row="2" VerticalAlignment="Top">
+                <DockPanel x:Name="LastFilesPanel">
+                    <Button x:Name ="Project1" DockPanel.Dock="Top" Height="50" >
+                        <Canvas Height="Auto" Width="Auto" >
+                            <Label x:Name="NameProject" Canvas.Top="-13" Canvas.Left="-280"  Width="Auto " Content="Project1"/>
+                            <Label x:Name="FirstDate" Canvas.Top="-13" Canvas.Left="110"  Width="Auto " Content="12.12.20"/>
+                            <Label x:Name="SecondDate" Canvas.Top="-13" Canvas.Left="200"  Width="Auto " Content="26.12.20"/>
+                        </Canvas>
+
+                    </Button>
+                    <Button x:Name ="Project13" DockPanel.Dock="Top" Height="50" >
+                        <Canvas Height="Auto" Width="Auto" >
+                            <Label x:Name="NameProject1" Canvas.Top="-13" Canvas.Left="-280"  Width="Auto " Content="Project12"/>
+                            <Label x:Name="FirstDate1" Canvas.Top="-13" Canvas.Left="110"  Width="Auto " Content="12.03.21"/>
+                            <Label x:Name="SecondDate1" Canvas.Top="-13" Canvas.Left="200"  Width="Auto " Content="21.12.21"/>
+                        </Canvas>
+
+                    </Button>
+                </DockPanel >
+            </Grid>
+        </Grid>
     </Grid>
+
 </Window>
