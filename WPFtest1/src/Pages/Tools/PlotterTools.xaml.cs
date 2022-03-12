@@ -1,9 +1,10 @@
 ﻿using ForresterModeller.Entities;
+using ForresterModeller.src.Pages.Tools;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using WPFtest1.src.Entities;
 
-namespace ForresterModeller.src.Tools
+namespace ForresterModeller.src.Pages.Tools
 {
     /// <summary>
     /// Логика взаимодействия для ToolsPage.xaml
@@ -43,12 +44,12 @@ namespace ForresterModeller.src.Tools
                
  
             
-            TreeViewEvent.Items.Add(treeHead);
+         //   TreeViewEvent.Items.Add(treeHead);
 
          
         }
 
-     
 
+        public List<Node> nodeList { get; set; }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="src\Pages\Tools\DiagramTools.xaml.cs">
       <DependentUpon>DiagramTools.xaml</DependentUpon>
     </Compile>
+    <Compile Include="src\Pages\Tools\Node.cs" />
     <Compile Include="src\Pages\Tools\PlotterTools.xaml.cs">
       <DependentUpon>PlotterTools.xaml</DependentUpon>
     </Compile>

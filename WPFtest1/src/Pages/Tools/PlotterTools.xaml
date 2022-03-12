@@ -1,4 +1,4 @@
-﻿<Page x:Class="ForresterModeller.src.Tools.ToolsPage"
+﻿<Page x:Class="ForresterModeller.src.Pages.Tools.ToolsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,16 +18,18 @@
                     </StackPanel>
 
                 </TabItem.Header>
-                
-                    
-                        <TreeView   Name="TreeViewEvent" >
+
+
+                <TreeView Name="TreeView_NodeList">
                     <TreeView.Resources>
-
-
+                        <HierarchicalDataTemplate  DataType="{x:Type local:Node}" ItemsSource="{Binding Nodes,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                                <CheckBox Content="{Binding NodeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding NodeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" ></CheckBox>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
                     </TreeView.Resources>
                 </TreeView>
-                 
-                   
+
 
             </TabItem>
             </TabControl>

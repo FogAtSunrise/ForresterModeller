@@ -48,8 +48,8 @@ namespace ForresterModeller.src.Pages.Tools
         /// <summary>
         ///  been deleted
         /// </summary>
-        private bool isSelected = false;
-        public bool IsSelected
+        private bool? isSelected = false;
+        public bool? IsSelected
         {
             set
             {
