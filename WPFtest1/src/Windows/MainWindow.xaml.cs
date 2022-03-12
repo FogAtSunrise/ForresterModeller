@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using ForresterModeller.Entities;
+using ForresterModeller.Pages.Properties;
 using ForresterModeller.src.Tools;
 
 namespace ForresterModeller
@@ -12,12 +13,17 @@ namespace ForresterModeller
     /// </summary>
     public partial class MainWindow : Window
     {
-      //  public Frame mainFrame { get; set; }
+        //  public Frame mainFrame { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            OpenProperty();
         }
 
+        private void OpenProperty()
+        {
+            Open_Page(PropertyFrame, new ConstantProperty());
+        }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -25,7 +31,7 @@ namespace ForresterModeller
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-         //   mainFrame.NavigationService.Navigate(new Page1()); // Перемещение на страницу
+            //   mainFrame.NavigationService.Navigate(new Page1()); // Перемещение на страницу
 
         }
 
@@ -41,26 +47,24 @@ namespace ForresterModeller
 
         private void Test1(object sender, RoutedEventArgs e)
         {
-           // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
+            // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
             Open_Page(ToolsFrame, new GraphElements());
         }
         //фрейм plottertools
-private void Test2(object sender, RoutedEventArgs e)
+        private void Test2(object sender, RoutedEventArgs e)
         {
 
             ToolsPage t = new ToolsPage();
 
             List<IDiagramEntity> test = new List<IDiagramEntity>();
             for (int i = 0; i < 6; i++)
-                test.Add(new DiagramConstant() { Name = "константа"+i });
+                test.Add(new DiagramConstant() { Name = "константа" + i });
 
             for (int i = 0; i < 6; i++)
-            t.ChangeListInPlotterTools(test, "name"+i);
-         
+                t.ChangeListInPlotterTools(test, "name" + i);
+
             Open_Page(ToolsFrame, t);
-
-
-            ChangeListInFileManager(new List<string> {"file1","file2","file3" }, "project1");
+            ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
 
         }
         /// <summary>
@@ -80,7 +84,7 @@ private void Test2(object sender, RoutedEventArgs e)
         /// </summary>
         /// elements - список имен файлов
         /// name - имяпроекта
-       
+
         public void ChangeListInFileManager(List<string> elements, string name)
         {
             TreeViewItem treeHead = new TreeViewItem() { Header = name };
@@ -106,8 +110,8 @@ private void Test2(object sender, RoutedEventArgs e)
         void OpenFile_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = sender as TreeViewItem;
-            MessageBox.Show("Должен открыться "+item.Header);
-         
+            MessageBox.Show("Должен открыться " + item.Header);
+
         }
 
     }

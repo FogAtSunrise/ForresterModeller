@@ -32,7 +32,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="300"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
-                    <ColumnDefinition MinWidth="200"></ColumnDefinition>
+                <ColumnDefinition Width="350" MinWidth="350"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="100" ></RowDefinition>
@@ -107,7 +107,7 @@
                 </Grid>
                 <!--Область редактирования элементов-->
                 <Grid Grid.Row="2" Grid.Column="2"  x:Name="PropertyArea">
-                    <TextBox>Отображение и редактироавние инфор</TextBox>
+                    <Frame x:Name="PropertyFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">

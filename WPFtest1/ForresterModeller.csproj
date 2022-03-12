@@ -6,14 +6,29 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{24D8D162-ECA8-4391-927C-2368850344A3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WPFtest1</RootNamespace>
-    <AssemblyName>WPFtest1</AssemblyName>
+    <RootNamespace>ForresterModeller</RootNamespace>
+    <AssemblyName>ForresterModeller</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -66,6 +81,12 @@
     <Compile Include="src\Command\IDiagramEdgeCommand\IDiagramEdgeCommand.cs" />
     <Compile Include="src\Command\IProjectCommand\IProjectCommand.cs" />
     <Compile Include="src\Command\PlotterCommand\PlotterCommand.cs" />
+    <Compile Include="src\Pages\Properties\ConstantProperty.xaml.cs">
+      <DependentUpon>ConstantProperty.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="src\Pages\Test.xaml.cs">
+      <DependentUpon>Test.xaml</DependentUpon>
+    </Compile>
     <Compile Include="src\Pages\Tools\DiagramTools.xaml.cs">
       <DependentUpon>DiagramTools.xaml</DependentUpon>
     </Compile>
@@ -75,6 +96,14 @@
     <Compile Include="src\Windows\StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="src\Pages\Properties\ConstantProperty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="src\Pages\Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\Pages\Tools\DiagramTools.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,7 +161,18 @@
   <ItemGroup>
     <Resource Include="src\Pages\Tools\but1.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="src\Pages\Tools\but2.png" />
   </ItemGroup>
