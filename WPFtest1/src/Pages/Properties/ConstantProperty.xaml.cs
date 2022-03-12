@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ForresterModeller.Pages.Properties
+namespace ForresterModeller.src.Pages.Properties
 {
     /// <summary>
     /// Логика взаимодействия для ConstantProperty.xaml
