@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using ForresterModeller.Entities;
+using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.Tools;
 
 namespace ForresterModeller
@@ -48,7 +49,7 @@ namespace ForresterModeller
 private void Test2(object sender, RoutedEventArgs e)
         {
 
-            ToolsPage t = new ToolsPage();
+            PlotterTools t = new PlotterTools();
 
             List<IDiagramEntity> test = new List<IDiagramEntity>();
             for (int i = 0; i < 6; i++)
