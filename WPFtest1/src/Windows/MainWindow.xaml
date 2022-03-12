@@ -70,7 +70,7 @@
                         <TabItem >
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="3" Width="120"><Run Text="Файловый менеджер"/></TextBlock>
+                                    <TextBlock Margin="3" Width="120"><Run Text="Структура проекта"/></TextBlock>
                                 </StackPanel>
 
                             </TabItem.Header>
@@ -93,16 +93,7 @@
                                 <TextBlock>Здесь уравнения</TextBlock>
                             </StackPanel>
                         </TabItem>
-                        <TabItem >
-                            <TabItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="3"><Run Text="Что-то"/></TextBlock>
-                                </StackPanel>
-                            </TabItem.Header>
-                            <StackPanel>
-                                <TextBox>Третий пункт меню</TextBox>
-                            </StackPanel>
-                        </TabItem>
+                        
                     </TabControl>
                 </Grid>
                 <!--Область редактирования элементов-->

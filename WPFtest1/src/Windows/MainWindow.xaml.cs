@@ -83,7 +83,9 @@ private void Test2(object sender, RoutedEventArgs e)
        
         public void ChangeListInFileManager(List<string> elements, string name)
         {
-            TreeViewItem treeHead = new TreeViewItem() { Header = name };
+            TreeFiles.Items.Clear();
+
+               TreeViewItem treeHead = new TreeViewItem() { Header = name };
             foreach (var elem in elements)
             {
                 TreeViewItem treeItem = new TreeViewItem();
