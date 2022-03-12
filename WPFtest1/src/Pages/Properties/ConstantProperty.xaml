@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="170" d:DesignWidth="350"
       Title="ConstantProperty">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,0.4,-16.4" >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,0.4,-6.4" >
         <StackPanel Width="330">
             <Grid Background="GhostWhite">
                 <Grid.RowDefinitions>
