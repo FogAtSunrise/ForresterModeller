@@ -8,7 +8,7 @@
       Title="ConstantProperty">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="0,0,0.4,-16.4" >
         <StackPanel Width="330">
-            <Grid Background="AliceBlue">
+            <Grid Background="GhostWhite">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="5*"></RowDefinition>
@@ -35,19 +35,19 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid Row="0">
-                                    <Label>a</Label>
+                                    <Label Content="Тип элемента"/>
                                 </Grid>
                                 <Grid Row="1">
-                                    <Label>a</Label>
+                                    <Label Content="Имя"/>
                                 </Grid>
                                 <Grid Row="2">
-                                    <Label>a</Label>
+                                    <Label Content="Единица измерения"/>
                                 </Grid>
                                 <Grid Row="3">
-                                    <Label>a</Label>
+                                    <Label Content="Значение"/>
                                 </Grid>
                                 <Grid Row="4">
-                                    <Label>a</Label>
+                                    <Label Content="Описание"/>
                                 </Grid>
                             </Grid>
 
@@ -60,19 +60,25 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid Row="0">
-                                    <Label>b</Label>
+                                    <Label Content="Константа" Foreground="DimGray"/>
                                 </Grid>
                                 <Grid Row="1">
-                                    <Label>b</Label>
+                                    <TextBox Margin="2" BorderBrush="Transparent">DUR</TextBox>
                                 </Grid>
                                 <Grid Row="2">
-                                    <Label>b</Label>
+                                    <Label Content="Неделя"  ></Label>
                                 </Grid>
                                 <Grid Row="3">
-                                    <Label>b</Label>
+                                    <TextBox Margin="2" BorderBrush="Transparent">12</TextBox>
                                 </Grid>
-                                <Grid Row="4">
-                                    <Label>b</Label>
+                                <Grid Row="4" Height="auto">
+                                    <RichTextBox Margin="2" BorderBrush="Transparent" Height="Auto">
+                                        <FlowDocument>
+                                            <Paragraph>
+                                                <Run Text="минимальное время выполнения заказа розничным звеном"/>
+                                            </Paragraph>
+                                        </FlowDocument>
+                                    </RichTextBox>
                                 </Grid>
                             </Grid>
                         </Grid>
