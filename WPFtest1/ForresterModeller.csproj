@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{24D8D162-ECA8-4391-927C-2368850344A3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WPFtest1</RootNamespace>
-    <AssemblyName>WPFtest1</AssemblyName>
+    <RootNamespace>ForresterModeller</RootNamespace>
+    <AssemblyName>ForresterModeller</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
