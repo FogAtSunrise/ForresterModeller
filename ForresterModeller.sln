@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForresterModeller", "ForresterModeller\ForresterModeller.csproj", "{47CED866-C773-4578-A3A8-D3FA529FA5EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForresterModeller", "ForresterModeller\ForresterModeller.csproj", "{47CED866-C773-4578-A3A8-D3FA529FA5EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NodeNetwork", "NodeNetwork\NodeNetwork.csproj", "{01D6FF2C-B6C4-460F-856F-0BEDC24F2AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{47CED866-C773-4578-A3A8-D3FA529FA5EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47CED866-C773-4578-A3A8-D3FA529FA5EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47CED866-C773-4578-A3A8-D3FA529FA5EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01D6FF2C-B6C4-460F-856F-0BEDC24F2AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01D6FF2C-B6C4-460F-856F-0BEDC24F2AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01D6FF2C-B6C4-460F-856F-0BEDC24F2AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01D6FF2C-B6C4-460F-856F-0BEDC24F2AAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
