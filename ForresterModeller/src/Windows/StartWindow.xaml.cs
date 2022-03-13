@@ -33,7 +33,5 @@ namespace ForresterModeller
             dialog.ShowDialog();
             
         }
-
-        
     }
 }
