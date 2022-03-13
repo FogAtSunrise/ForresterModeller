@@ -1,120 +1,124 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{24D8D162-ECA8-4391-927C-2368850344A3}</ProjectGuid>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WPFtest1</RootNamespace>
-    <AssemblyName>WPFtest1</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System.Windows" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="src\Pages\Tools\GraphElements.xaml.cs">
-      <DependentUpon>GraphElements.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="src\Pages\Tools\ToolsPage.xaml.cs">
-      <DependentUpon>ToolsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="src\Windows\StartWindow.xaml.cs">
-      <DependentUpon>StartWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="src\Pages\Tools\GraphElements.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="src\Pages\Tools\ToolsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="src\Windows\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="src\Windows\StartWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <ProjectReference Include="NodeNetwork\NodeNetwork.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    <PackageReference Include="DynamicData" Version="7.6.5" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Pharmacist.Common" Version="2.0.8" />
+    <PackageReference Include="Splat.Drawing" Version="11.0.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.310801">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Compile Remove="NodeNetwork\NNViewRegistrar.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\GeneratedInternalTypeHelper.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\Views\Controls\ArrowToggleButton.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\Views\Controls\ArrowToggleButton.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\Views\Controls\ViewModelViewHostNoAnimations.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\Views\Controls\ViewModelViewHostNoAnimations.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\Views\NetworkView.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\net472\Views\NetworkView.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\Views\Controls\ArrowToggleButton.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\Views\Controls\ArrowToggleButton.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\Views\Controls\ViewModelViewHostNoAnimations.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\Views\Controls\ViewModelViewHostNoAnimations.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\Views\NetworkView.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Debug\netcoreapp3.1\Views\NetworkView.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\GeneratedInternalTypeHelper.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\Views\Controls\ArrowToggleButton.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\Views\Controls\ArrowToggleButton.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\Views\Controls\ViewModelViewHostNoAnimations.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\Views\Controls\ViewModelViewHostNoAnimations.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\Views\NetworkView.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\net472\Views\NetworkView.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\GeneratedInternalTypeHelper.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\Views\Controls\ArrowToggleButton.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\Views\Controls\ArrowToggleButton.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\Views\Controls\ViewModelViewHostNoAnimations.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\Views\Controls\ViewModelViewHostNoAnimations.g.i.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\Views\NetworkView.g.cs" />
+    <Compile Remove="NodeNetwork\obj\Release\netcoreapp3.1\Views\NetworkView.g.i.cs" />
+    <Compile Remove="NodeNetwork\Properties\AssemblyInfo.cs" />
+    <Compile Remove="NodeNetwork\Utilities\LongestCommonSubsequence.cs" />
+    <Compile Remove="NodeNetwork\Utilities\ReactiveExtensions.cs" />
+    <Compile Remove="NodeNetwork\Utilities\WPF\BoolToZIndexConverter.cs" />
+    <Compile Remove="NodeNetwork\Utilities\WPF\NullVisibilityConverter.cs" />
+    <Compile Remove="NodeNetwork\Utilities\WPF\WPFUtils.cs" />
+    <Compile Remove="NodeNetwork\ValidationResult.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\ConnectionViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\CutLineViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\Endpoint.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\EndpointGroup.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\EndpointGroupViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\EndpointGroupViewModelFactory.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\ErrorMessageViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\NetworkViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\NodeEndpointEditorViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\NodeInputViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\NodeOutputViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\NodeViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\PendingConnectionViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\PortViewModel.cs" />
+    <Compile Remove="NodeNetwork\ViewModels\SelectionRectangleViewModel.cs" />
+    <Compile Remove="NodeNetwork\Views\ConnectionView.cs" />
+    <Compile Remove="NodeNetwork\Views\Controls\ArrowToggleButton.xaml.cs" />
+    <Compile Remove="NodeNetwork\Views\Controls\DragCanvas.cs" />
+    <Compile Remove="NodeNetwork\Views\Controls\FillPanel.cs" />
+    <Compile Remove="NodeNetwork\Views\Controls\ViewModelViewHostNoAnimations.xaml.cs" />
+    <Compile Remove="NodeNetwork\Views\EndpointGroupView.cs" />
+    <Compile Remove="NodeNetwork\Views\ErrorMessageView.cs" />
+    <Compile Remove="NodeNetwork\Views\NetworkView.xaml.cs" />
+    <Compile Remove="NodeNetwork\Views\NodeEndpointEditorView.cs" />
+    <Compile Remove="NodeNetwork\Views\NodeInputView.cs" />
+    <Compile Remove="NodeNetwork\Views\NodeOutputView.cs" />
+    <Compile Remove="NodeNetwork\Views\NodeView.cs" />
+    <Compile Remove="NodeNetwork\Views\PendingConnectionView.cs" />
+    <Compile Remove="NodeNetwork\Views\PortView.cs" />
+    <Page Remove="NodeNetwork\Themes\ConnectionView.xaml" />
+    <Page Remove="NodeNetwork\Themes\Endpoint.xaml" />
+    <Page Remove="NodeNetwork\Themes\EndpointGroupView.xaml" />
+    <Page Remove="NodeNetwork\Themes\ErrorMessageView.xaml" />
+    <Page Remove="NodeNetwork\Themes\Generic.xaml" />
+    <Page Remove="NodeNetwork\Themes\NodeEndpointEditorView.xaml" />
+    <Page Remove="NodeNetwork\Themes\NodeInputView.xaml" />
+    <Page Remove="NodeNetwork\Themes\NodeOutputView.xaml" />
+    <Page Remove="NodeNetwork\Themes\NodeView.xaml" />
+    <Page Remove="NodeNetwork\Themes\PendingConnectionView.xaml" />
+    <Page Remove="NodeNetwork\Themes\PortView.xaml" />
+    <Page Remove="NodeNetwork\Views\Controls\ArrowToggleButton.xaml" />
+    <Page Remove="NodeNetwork\Views\Controls\ViewModelViewHostNoAnimations.xaml" />
+    <Page Remove="NodeNetwork\Views\NetworkView.xaml" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
 </Project>
