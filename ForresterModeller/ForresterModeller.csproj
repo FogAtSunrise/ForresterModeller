@@ -7,7 +7,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="src\Pages\Tools\but1.png" />
+    <None Remove="src\Pages\Tools\but10.png" />
+    <None Remove="src\Pages\Tools\but11.png" />
+    <None Remove="src\Pages\Tools\but2.png" />
+    <None Remove="src\Pages\Tools\but3.png" />
+    <None Remove="src\Pages\Tools\but4.png" />
+    <None Remove="src\Pages\Tools\but5.png" />
+    <None Remove="src\Pages\Tools\but6.png" />
+    <None Remove="src\Pages\Tools\but7.png" />
+    <None Remove="src\Pages\Tools\but8.png" />
+    <None Remove="src\Pages\Tools\but9.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NodeNetwork\NodeNetwork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="src\Pages\Tools\but1.png" />
+    <Resource Include="src\Pages\Tools\but10.png" />
+    <Resource Include="src\Pages\Tools\but11.png" />
+    <Resource Include="src\Pages\Tools\but2.png" />
+    <Resource Include="src\Pages\Tools\but3.png" />
+    <Resource Include="src\Pages\Tools\but4.png" />
+    <Resource Include="src\Pages\Tools\but5.png" />
+    <Resource Include="src\Pages\Tools\but6.png" />
+    <Resource Include="src\Pages\Tools\but7.png" />
+    <Resource Include="src\Pages\Tools\but8.png" />
+    <Resource Include="src\Pages\Tools\but9.png" />
   </ItemGroup>
 
   <ItemGroup>
