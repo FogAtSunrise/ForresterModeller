@@ -48,6 +48,7 @@ namespace ForresterModeller
 
         private void Test1(object sender, RoutedEventArgs e)
         {
+            openNewPage("file_name");
             // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
             Open_Page(ToolsFrame, new GraphElements());
         }
@@ -117,5 +118,52 @@ namespace ForresterModeller
 
         }
 
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            OpenPages.Items.RemoveAt(OpenPages.SelectedIndex);
+            
+        }
+
+        /*
+         * TabItem  Header="Tab1" Width="150" Height="20">
+         *   <TabItem.HeaderTemplate >
+                                <DataTemplate>
+                                    <Canvas  Height="20" Width="140" >
+                                        <TextBlock Text="TabItem 1" Canvas.Left="0" Canvas.Bottom="2"  Width="120" />
+                                        <Button Background="White" Content="x" Click="ButtonBase_OnClick"  Canvas.Right="0" Height="18" Width="20"  Canvas.Left="120" />
+                                    </Canvas>
+                                </DataTemplate>
+                            </TabItem.HeaderTemplate>
+         */
+        private void openNewPage(string name)
+        {
+           int  W = 130;
+           int  H = 20;
+            TabItem page = new TabItem();
+            page.Header = name;
+            page.Width = W;
+            page.Height = H;
+            page.Header = new Canvas ();
+
+            Canvas canvas = new Canvas() { Height = 20, Width = 120};
+
+            TextBlock text = new TextBlock() { Text = name,  Width = 100 };
+            Canvas.SetLeft(text, 0);
+            Canvas.SetBottom(text, 2);
+            canvas.Children.Add(text);
+
+            Button but = new Button() { Content = "x", Height = 18, Width = 20  };
+            but.Click += ButtonBase_OnClick;
+            Canvas.SetRight(but, 0);
+            canvas.Children.Add(but);
+
+            page.Header = canvas;
+           // page.Content = DateTime.Now;
+            OpenPages.Items.Add(page);
+
+         
+
+
+        }
     }
 }
