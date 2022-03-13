@@ -18,7 +18,7 @@ namespace NodeNetwork.ViewModels
     /// </summary>
     public enum PortPosition
     {
-        Left, Right, Up, Down, Centr
+        Left, Right, Up, Down, Centr, Circle
     }
 
     /// <summary>

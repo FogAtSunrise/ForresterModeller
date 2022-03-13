@@ -14,16 +14,26 @@
                     <Setter Property="Template" Value="{StaticResource LeftAlignedEndpoint}"/>
                 </DataTrigger.Setters>
             </DataTrigger>
+            
             <DataTrigger Binding="{Binding Path=PortPosition}" Value="{x:Static viewModels:PortPosition.Right}">
                 <DataTrigger.Setters>
                     <Setter Property="Template" Value="{StaticResource RightAlignedEndpoint}"/>
                 </DataTrigger.Setters>
             </DataTrigger>
+            
             <DataTrigger Binding="{Binding Path=PortPosition}" Value="{x:Static viewModels:PortPosition.Centr}">
                 <DataTrigger.Setters>
                     <Setter Property="Template" Value="{StaticResource CentrAlignedEndpoint}"/>
                 </DataTrigger.Setters>
             </DataTrigger>
+
+            <DataTrigger Binding="{Binding Path=PortPosition}" Value="{x:Static viewModels:PortPosition.Circle}">
+                <DataTrigger.Setters>
+                    <Setter Property="Template" Value="{StaticResource CircleAlignedEndpoint}"/>
+                </DataTrigger.Setters>
+            </DataTrigger>
+
+
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

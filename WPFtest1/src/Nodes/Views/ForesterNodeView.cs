@@ -17,7 +17,7 @@ namespace WPFtest1.src.Nodes.Views
 
     public class ForesterNodeView : NodeView
     {
-        public static readonly DependencyProperty ViewModelForesterProperty = DependencyProperty.Register(nameof(ViewModel),
+        public static readonly DependencyProperty ViewModelForesterProperty = DependencyProperty.Register(nameof(ForesterViewModel),
             typeof(ForesterNodeModel), typeof(NodeView), new PropertyMetadata(null));
 
         public ForesterNodeModel ForesterViewModel
@@ -34,14 +34,13 @@ namespace WPFtest1.src.Nodes.Views
         {
             base.OnApplyTemplate();
             FullName = GetTemplateChild(nameof(FullName)) as TextBlock;
+            Code = GetTemplateChild(nameof(Code)) as TextBlock;
 
         }
 
         public ForesterNodeView(string type) : base()
         {
-            
-
-
+           
             this.WhenActivated(d =>
             {
                 this.OneWayBind(ForesterViewModel, vm => vm.FullName, v => v.FullName.Text).DisposeWith(d);

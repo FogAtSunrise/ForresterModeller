@@ -25,8 +25,7 @@ namespace WPFtest1.src.Nodes.Models
             this.Value = value;
 
             var a = new NodeOutputViewModel();
-            //TODO: исправить на центр
-            a.PortPosition = PortPosition.Left;
+            a.PortPosition = PortPosition.Centr;
             this.Outputs.Add(a);
         }
         public ConstantNodeViewModel():this("DT", "DT", DefaultValue) { }
