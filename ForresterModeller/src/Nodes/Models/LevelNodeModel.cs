@@ -18,12 +18,18 @@ namespace WPFtest1.src.Nodes.Models
             this.OutputtRate = output;
 
             var a = new NodeOutputViewModel();
-            a.PortPosition = PortPosition.Left;
+            a.PortPosition = PortPosition.Right;
             this.Outputs.Add(a);
 
             a = new NodeOutputViewModel();
-            a.PortPosition = PortPosition.Left;
+            a.PortPosition = PortPosition.Right;
             Outputs.Add(a);
+
+            var b = new NodeInputViewModel();
+            b.PortPosition = PortPosition.Left;
+            Inputs.Add(b);
+
+
         }
         public LevelNodeModel() : this("LVL", "Уровень", "1", "1") { }
         static LevelNodeModel()

@@ -23,8 +23,6 @@ namespace WPFtest1
             var node2 = new LevelNodeModel();
             network.Nodes.Add(node2);
 
-            var node3 = new FunkNodeModel();
-            network.Nodes.Add(node3);
 
             networkView.ViewModel = network;
         }

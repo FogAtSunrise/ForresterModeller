@@ -195,6 +195,8 @@ namespace NodeNetwork.Views
                     return new Vector(0, 1);
                 case PortPosition.Down:
                     return new Vector(0, -1);
+                case PortPosition.Circle:
+                    return new Vector(0, 0);
                 default:
                     throw new NotImplementedException();
             }

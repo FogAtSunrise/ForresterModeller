@@ -3,7 +3,7 @@
                     xmlns:views="clr-namespace:NodeNetwork.Views"
                     xmlns:controls="clr-namespace:NodeNetwork.Views.Controls">
     <Style TargetType="{x:Type views:PendingConnectionView}">
-        <Setter Property="RegularBrush" Value="#C8FFFFFF"/>
+        <Setter Property="RegularBrush" Value="#FF180707"/>
         <Setter Property="ErrorBrush" Value="#C8FF0000"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">

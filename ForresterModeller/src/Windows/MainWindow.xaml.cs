@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using DynamicData;
 using ForresterModeller.Entities;
 using ForresterModeller.src.Pages.Properties;
 using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.Tools;
+using NodeNetwork.ViewModels;
+using WPFtest1.src.Nodes.Models;
 
 namespace ForresterModeller
 {
@@ -18,6 +21,19 @@ namespace ForresterModeller
         public MainWindow()
         {
             InitializeComponent();
+
+            var network = new NetworkViewModel();
+
+
+            var node1 = new ConstantNodeViewModel();
+            network.Nodes.Add(node1);
+
+            var node2 = new LevelNodeModel();
+            network.Nodes.Add(node2);
+
+
+            networkView.ViewModel = network;
+
             OpenProperty();
         }
 
@@ -137,10 +153,21 @@ namespace ForresterModeller
                                 </DataTemplate>
                             </TabItem.HeaderTemplate>
          */
+
+        /*
+         *     <Grid>
+        <nodenetwork:NetworkView x:Name="networkView" Background="AliceBlue"/>
+    </Grid>
+         * */
         private void openNewPage(string name)
         {
            int  W = 130;
            int  H = 20;
+
+
+
+
+           // networkView.ViewModel = network;
             TabItem page = new TabItem();
             page.Header = name;
             page.Width = W;
@@ -160,6 +187,7 @@ namespace ForresterModeller
             canvas.Children.Add(but);
 
             page.Header = canvas;
+           // page = ;
            page.Content = "Содержимое файла "+name;
             OpenPages.Items.Add(page);
 

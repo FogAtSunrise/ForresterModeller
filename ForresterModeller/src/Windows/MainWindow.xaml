@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ForresterModeller"
+        xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
 
@@ -52,8 +52,22 @@
 
 
                     <TabControl  x:Name="OpenPages" >
-                       
 
+
+                        <TabItem  Header="Tab1" Width="150" Height="20">
+         
+                        <TabItem.HeaderTemplate >
+                            <DataTemplate>
+                                <Canvas  Height="20" Width="140" >
+                                    <TextBlock Text="TabItem 1" Canvas.Left="0" Canvas.Bottom="2"  Width="120" />
+                                    <Button Background="White" Content="x" Click="ButtonBase_OnClick"  Canvas.Right="0" Height="18" Width="20"  Canvas.Left="120" />
+                                </Canvas>
+                            </DataTemplate>
+                        </TabItem.HeaderTemplate>
+                            <Grid>
+                                <nodenetwork:NetworkView x:Name="networkView" Background="AliceBlue"/>
+                            </Grid>
+                        </TabItem>
                     </TabControl>
 
                 </Grid>

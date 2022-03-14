@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="" Height="500" Width="600">
     <Grid>
-        <nodenetwork:NetworkView x:Name="networkView"/>
+        <nodenetwork:NetworkView x:Name="networkView" Background="AliceBlue"/>
     </Grid>
 </Window>

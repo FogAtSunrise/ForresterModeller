@@ -7,7 +7,7 @@
 
     <Style x:Key="constant" TargetType="{x:Type views:NodeView}">
         <Setter Property="Background" Value="Green"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TitleFontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="TitleFontSize" Value="18"/>
         <Setter Property="BorderBrush" Value="Orange"/>

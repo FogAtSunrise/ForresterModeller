@@ -3,7 +3,7 @@
                     xmlns:views="clr-namespace:NodeNetwork.Views"
                     xmlns:controls="clr-namespace:NodeNetwork.Views.Controls">
     <Style TargetType="{x:Type views:ConnectionView}">
-        <Setter Property="RegularBrush" Value="White"/>
+        <Setter Property="RegularBrush" Value="Black"/>
         <Setter Property="ErrorBrush" Value="DarkRed"/>
         <Setter Property="HighlightBrush" Value="Yellow"/>
         <Setter Property="MarkedForDeleteBrush" Value="Red"/>
