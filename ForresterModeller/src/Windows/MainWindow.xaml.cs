@@ -48,7 +48,7 @@ namespace ForresterModeller
 
         private void Test1(object sender, RoutedEventArgs e)
         {
-            openNewPage("file_name");
+           // openNewPage("file_name");
             // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
             Open_Page(ToolsFrame, new GraphElements());
         }
@@ -96,7 +96,8 @@ namespace ForresterModeller
             {
                 TreeViewItem treeItem = new TreeViewItem();
                 treeItem.Header = elem;
-                treeItem.MouseLeftButtonUp += OpenFile_MouseLeftButtonUp;
+               // treeItem.MouseLeftButtonUp += OpenFile_MouseLeftButtonUp;
+                treeItem.MouseDoubleClick+= OpenFile_MouseLeftButtonUp;
                 treeHead.Items.Add(treeItem);
 
             }
@@ -114,7 +115,8 @@ namespace ForresterModeller
         void OpenFile_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = sender as TreeViewItem;
-            MessageBox.Show("Должен открыться " + item.Header);
+          //  MessageBox.Show("Должен открыться " + item.Header);
+            openNewPage((string)item.Header);
 
         }
 
@@ -158,7 +160,7 @@ namespace ForresterModeller
             canvas.Children.Add(but);
 
             page.Header = canvas;
-           // page.Content = DateTime.Now;
+           page.Content = "Содержимое файла "+name;
             OpenPages.Items.Add(page);
 
          
