@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DynamicData;
 using ForresterModeller.Entities;
+using ForresterModeller.src.Pages;
 using ForresterModeller.src.Pages.Properties;
 using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.Tools;
@@ -194,6 +195,11 @@ namespace ForresterModeller
          
 
 
+        }
+
+        private void TestPlot(object sender, RoutedEventArgs e)
+        {
+            Open_Page(ToolsFrame, new PlotPage());
         }
     }
 }

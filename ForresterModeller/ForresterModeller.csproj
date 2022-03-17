@@ -18,6 +18,7 @@
     <None Remove="src\Pages\Tools\but7.png" />
     <None Remove="src\Pages\Tools\but8.png" />
     <None Remove="src\Pages\Tools\but9.png" />
+    <PackageReference Include="ScottPlot.WPF" Version="4.1.35" />
   </ItemGroup>
 
   <ItemGroup>
