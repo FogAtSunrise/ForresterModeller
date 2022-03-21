@@ -110,9 +110,14 @@
                             </StackPanel>
                         </TabItem.Header>
 
-                        <StackPanel>
-                            <TextBlock>Здесь уравнения</TextBlock>
+                        <StackPanel Name ="formul" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+                                <controls:FormulaControl Formula="(x^2 +2*x+2) = 0," />
+                                <controls:FormulaControl Formula="  x+(y+z) = 1,   " />
+                                <controls:FormulaControl Formula="x+y+z = \frac{5}{2}, " />
+                                <controls:FormulaControl Formula=" x+y+z = 5 " />
+                     
                         </StackPanel>
+
                     </TabItem>
 
                 </TabControl>

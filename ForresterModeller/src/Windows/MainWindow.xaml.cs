@@ -42,6 +42,8 @@ namespace ForresterModeller
             networkView.ViewModel = network;
 
 
+            ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
+
             OpenProperty();
         }
 
@@ -90,7 +92,7 @@ namespace ForresterModeller
                 t.ChangeListInPlotterTools(test, "name" + i);
 
             Open_Page(ToolsFrame, t);
-            ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
+            
 
         }
         /// <summary>
