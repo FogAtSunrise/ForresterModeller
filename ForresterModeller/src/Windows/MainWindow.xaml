@@ -115,13 +115,15 @@
                             </StackPanel>
                         </TabItem.Header>
 
-                        <StackPanel Name ="formul" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
-                                <controls:FormulaControl Formula="(x^2 +2*x+2) = 0," />
-                                <controls:FormulaControl Formula="  x+(y+z) = 1,   " />
-                                <controls:FormulaControl Formula="x+y+z = \frac{5}{2}, " />
-                                <controls:FormulaControl Formula=" x+y+z = 5 " />
-                     
+                        <StackPanel Name ="formuls" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+                            <DockPanel>
+                            <TextBox Name ="input_formul"  DockPanel.Dock="Left" Width="299"  ></TextBox>
+                            <Button DockPanel.Dock="Right" Content="+" Width="44" Click="Button_Click_Add_Formule"/>
+                        </DockPanel>
                         </StackPanel>
+
+                       
+
 
                     </TabItem>
 

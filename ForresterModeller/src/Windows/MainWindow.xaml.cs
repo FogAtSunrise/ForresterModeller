@@ -16,9 +16,7 @@ using ForresterModeller.src.Nodes.Models;
 using Brushes = System.Windows.Media.Brushes;
 using ScottPlot.Plottable;
 using ScottPlot;
-
-
-
+using WpfMath.Controls;
 
 namespace ForresterModeller
 {
@@ -40,11 +38,15 @@ namespace ForresterModeller
             var node2 = new LevelNodeModel();
             network.Nodes.Add(node2);
             networkView.ViewModel = network;
-
+         
 
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
 
             OpenProperty();
+
+            //тест вывода формулы
+           PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
+           PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
         }
 
         private void OpenProperty()
@@ -241,5 +243,18 @@ namespace ForresterModeller
 
             openNewPage("file1", "diagram");
         }
+
+        private void PrintFormule(string form)
+        {
+            FormulaControl forml = new FormulaControl();
+            forml.Formula = form;
+            formuls.Children.Add(forml);
+        }
+        private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
+        { PrintFormule(input_formul.Text.ToString());
+          input_formul.Text = "";
+         }
+
+        
     }
 }
