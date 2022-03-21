@@ -1,9 +1,9 @@
 ﻿using DynamicData;
 using NodeNetwork.ViewModels;
 using System.Windows;
-using WPFtest1.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Models;
 
-namespace WPFtest1
+namespace ForresterModeller
 {
     /// <summary>
     /// Логика взаимодействия для Window1.xaml

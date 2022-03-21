@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFtest1.src.Nodes.Models
+namespace ForresterModeller.src.Nodes.Models
 {
     /// <summary>
     /// Базовая модель узла в схеме форестера

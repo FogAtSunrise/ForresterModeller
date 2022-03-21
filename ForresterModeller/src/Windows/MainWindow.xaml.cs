@@ -12,7 +12,7 @@ using ForresterModeller.src.Tools;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using System.Windows.Media;
-using WPFtest1.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Models;
 using Brushes = System.Windows.Media.Brushes;
 using ScottPlot.Plottable;
 using ScottPlot;
