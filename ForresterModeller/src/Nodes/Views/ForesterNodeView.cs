@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using WPFtest1.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Models;
 
-namespace WPFtest1.src.Nodes.Views
+namespace ForresterModeller.src.Nodes.Views
 {
     [TemplatePart(Name = nameof(Code), Type = typeof(TextBlock))]
     [TemplatePart(Name = nameof(FullName), Type = typeof(TextBlock))]

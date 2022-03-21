@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using WPFtest1.src.Entities;
+using ForresterModeller.src.Entities;
 
 namespace ForresterModeller.src.Pages.Tools
 {

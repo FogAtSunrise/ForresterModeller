@@ -1,9 +1,9 @@
 ﻿using DynamicData;
 using NodeNetwork.ViewModels;
 using ReactiveUI;
-using WPFtest1.src.Nodes.Views;
+using ForresterModeller.src.Nodes.Views;
 
-namespace WPFtest1.src.Nodes.Models
+namespace ForresterModeller.src.Nodes.Models
 {
     public class FunkNodeModel : ForesterNodeModel
     {

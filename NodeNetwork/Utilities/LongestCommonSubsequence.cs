@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WPFtest1.src.Nodes.Templates
+namespace ForresterModeller.src.Nodes.Templates
 {
     //Class for calculating the longest common subsequence of two lists
     //For example: the LCS of 'computer' and 'houseboat' is 'out'
