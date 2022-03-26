@@ -1,7 +1,10 @@
-﻿using DynamicData;
+﻿using System;
+using System.Collections.ObjectModel;
+using DynamicData;
 using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
+using ForresterModeller.src.Pages.Properties;
 
 namespace ForresterModeller.src.Nodes.Models
 {
