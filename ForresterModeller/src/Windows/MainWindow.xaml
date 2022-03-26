@@ -78,7 +78,7 @@
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
                     <!--фрейм -->
-                    <Frame x:Name="ToolsFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
+                    <Frame x:Name="ToolsFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
@@ -97,9 +97,7 @@
                         </TabItem.Header>
 
                         <StackPanel>
-
                             <TreeView   Name="TreeFiles"/>
-
                         </StackPanel>
                     </TabItem>
 
@@ -118,8 +116,8 @@
                 </TabControl>
             </Grid>
             <!--Область редактирования элементов-->
-            <Grid Grid.Row="1"  x:Name="PropertyArea" Margin="3,3,-3.4,10.4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                <Frame x:Name="PropertyFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
+            <Grid Grid.Row="2"  x:Name="PropertyArea" Grid.Column="2">
+                <Frame x:Name="PropertyFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
             </Grid>
         </Grid>
         <Grid Background="White"  Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
