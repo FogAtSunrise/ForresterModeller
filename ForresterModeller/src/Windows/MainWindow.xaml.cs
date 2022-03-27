@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using DynamicData;
-using ForresterModeller.Entities;
+
 using ForresterModeller.src.Pages;
 using ForresterModeller.src.Pages.Properties;
 using ForresterModeller.src.Pages.Tools;
@@ -92,9 +92,9 @@ namespace ForresterModeller
 
             PlotterTools t = new PlotterTools();
 
-            List<IDiagramEntity> test = new List<IDiagramEntity>();
+            List<ForesterNodeModel> test = new List<ForesterNodeModel>();
             for (int i = 0; i < 6; i++)
-                test.Add(new DiagramConstant() { Name = "константа" + i });
+                test.Add(new LevelNodeModel());
 
             for (int i = 0; i < 6; i++)
                 t.ChangeListInPlotterTools(test, "name" + i);

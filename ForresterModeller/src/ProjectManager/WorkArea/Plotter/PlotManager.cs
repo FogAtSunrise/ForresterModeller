@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using Brushes = System.Windows.Media.Brushes;
-using ForresterModeller.Entities;
+
 
 namespace ForresterModeller.src.ProjectManager.WorkArea.Plotter
 {
