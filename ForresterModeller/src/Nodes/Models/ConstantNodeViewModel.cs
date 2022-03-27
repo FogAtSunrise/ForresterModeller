@@ -5,16 +5,13 @@ using System;
 using System.Collections.ObjectModel;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class ConstantNodeViewModel : ForesterNodeModel
     {
-        public override string TypeName
-        {
-            get => Resource.constType;
-            set { }
-        }
+        public override string TypeName => Resource.constType;
 
         /// <summary>
         /// Значение всех констант по умолчанию
@@ -48,6 +45,11 @@ namespace ForresterModeller.src.Nodes.Models
             //todo validation
             properties.Add(new Property( Resource.value,  Value.ToString(), (String str) => { Value = float.Parse(str); }));
             return properties;
+        }
+
+        public override T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            return viseter.VisitConstant(this);
         }
     }
 

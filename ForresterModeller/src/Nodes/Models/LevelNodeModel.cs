@@ -5,18 +5,19 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class LevelNodeModel : ForesterNodeModel
     {
-        public override string TypeName
-        {
-            get => Resource.levelType;
-            set {}
-        }
+        public override string TypeName => Resource.levelType;
+
         public string InputRate { get; set; }
         public string OutputRate { get; set; }
+
+        public string StartValue { get; set; }
+
         public LevelNodeModel(string name, string fulname, string input, string output) : base()
         {
             this.Name = name;
@@ -42,7 +43,13 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));
         }
-    }
 
+
+
+        public override T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            return viseter.VisitLevel(this);
+        }
+    }
 
 }

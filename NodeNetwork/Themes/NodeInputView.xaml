@@ -23,12 +23,13 @@
                 </DataTrigger.Setters>
             </DataTrigger>
 
-            <DataTrigger Binding="{Binding Path=PortPosition}" Value="{x:Static viewModels:PortPosition.Circle}">
+
+
+            <DataTrigger Binding="{Binding Path=PortPosition}" Value="{x:Static viewModels:PortPosition.Centr}">
                 <DataTrigger.Setters>
-                    <Setter Property="Template" Value="{StaticResource CircleAlignedEndpoint}"/>
+                    <Setter Property="Template" Value="{StaticResource CentrAlignedEndpoint}"/>
                 </DataTrigger.Setters>
             </DataTrigger>
-
 
 
         </Style.Triggers>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using ForresterModeller.src.Nodes.Viters;
 using ForresterModeller.src.Pages.Properties;
 
 namespace ForresterModeller.src.Nodes.Models
@@ -9,7 +10,9 @@ namespace ForresterModeller.src.Nodes.Models
         /// <summary>
         /// Литерал, обозначающий тип узла
         /// </summary>
-        public string TypeName { get; set; }
+        public string TypeName { get;}
+
+        public T AcceptViseter<T>(INodeViseters<T> viseter);
 
         /// <summary>
         /// Уникальный идентификатор модели

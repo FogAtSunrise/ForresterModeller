@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -16,9 +17,14 @@ namespace ForresterModeller.src.Nodes.Models
     {
         
         public string Description { get; set; }
-        public virtual string TypeName { get; set; } 
+        public virtual string TypeName { get; } 
         public string FullName { get; set; } 
         public string Id { get; set; }
+
+        public virtual T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual ObservableCollection<Property> GetProperties()
         {
@@ -30,6 +36,7 @@ namespace ForresterModeller.src.Nodes.Models
             return properties;
         }
     }
+
 
 
 }
