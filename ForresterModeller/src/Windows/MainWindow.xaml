@@ -10,12 +10,12 @@
     <Grid>
         <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Проект">
-                <MenuItem Header="Создать" Click="MenuItem_Click" />
-                <MenuItem Header="Открыть" Click="MenuItem_Click_1" />
+                <MenuItem Header="Создать" />
+                <MenuItem Header="Открыть" />
                 <MenuItem Header="Сохранить" />
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
-            <MenuItem Header="Инструменты" Click="MenuItem_Click_2">
+            <MenuItem Header="Инструменты">
                 <MenuItem Header="Создать диаграмму" />
                 <MenuItem Header="Создать представление" />
                 <MenuItem Header="Построить график" />
@@ -49,32 +49,27 @@
                 </Grid.RowDefinitions>
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
-
-
-                    <TabControl  x:Name="OpenPages" >
-
-
-                        <TabItem  Header="Tab1" Width="150" Height="20">
-         
-                        <TabItem.HeaderTemplate >
+                <Grid>
+                    <TabControl x:Name="PagesTabControl" DockPanel.Dock="Right" Background="White">
+                        <TabControl.ItemTemplate>
                             <DataTemplate>
-                                <Canvas  Height="20" Width="140" >
-                                    <TextBlock Text="TabItem 1" Canvas.Left="0" Canvas.Bottom="2"  Width="120" />
-                                    <Button Background="White" Content="x" Click="ButtonBase_OnClick"  Canvas.Right="0" Height="18" Width="20"  Canvas.Left="120" />
-                                </Canvas>
+                                <StackPanel Margin="0" Orientation="Horizontal">
+                                    <TextBlock MinWidth="80"  Padding="0,0" Margin="0" Text="{Binding Header}"/>
+                                    <Button Name="CloseButton" HorizontalAlignment="Right" Height="15"  BorderThickness="0"
+                                            Background="Transparent" Click="ButtonDelete_OnClick" >X</Button>
+                                </StackPanel>
                             </DataTemplate>
-                        </TabItem.HeaderTemplate>
-                            
-                                <nodenetwork:NetworkView x:Name="networkView" Background="AliceBlue"/>
-                            
-                        </TabItem>
-
-                        
-
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                                <DataTemplate >
+                                    <ContentControl  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
                     </TabControl>
-
                 </Grid>
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
+
+            </Grid>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
                     <!--фрейм -->
@@ -92,7 +87,7 @@
                     <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
                 
                 </Grid>
-                <TabControl SelectionChanged="TabControl_SelectionChanged" Margin="0,40,0,0">
+                <TabControl Margin="0,40,0,0">
                     <TabItem >
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">

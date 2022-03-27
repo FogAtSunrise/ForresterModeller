@@ -23,7 +23,6 @@ namespace ForresterModeller
             OpenStartList();
 
             ApplicationManager nnn = new ApplicationManager();
-            nnn.CreateStructJson();
                 
         }
         /// <summary>
