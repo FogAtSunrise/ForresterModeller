@@ -10,12 +10,12 @@
     <Grid>
         <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Проект">
-                <MenuItem Header="Создать" Click="MenuItem_Click" />
-                <MenuItem Header="Открыть" Click="MenuItem_Click_1" />
+                <MenuItem Header="Создать" />
+                <MenuItem Header="Открыть" />
                 <MenuItem Header="Сохранить" />
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
-            <MenuItem Header="Инструменты" Click="MenuItem_Click_2">
+            <MenuItem Header="Инструменты">
                 <MenuItem Header="Создать диаграмму" />
                 <MenuItem Header="Создать представление" />
                 <MenuItem Header="Построить график" />
