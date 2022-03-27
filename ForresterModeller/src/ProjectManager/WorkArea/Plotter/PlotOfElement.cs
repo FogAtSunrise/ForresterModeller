@@ -1,4 +1,4 @@
-﻿using ForresterModeller.Entities;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +10,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea.Plotter
 {
     class PlotOfElement
     {
-        DiagramElement src;
+       // DiagramElement src;
         Color LineColor;
         //? LineType
         bool IsVisible;
