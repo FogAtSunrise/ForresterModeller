@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ForresterModeller.src.Pages.Properties;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -29,6 +30,9 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new Property(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
+
+        public virtual JsonObject ToJSON() { return new JsonObject(); }
+        public virtual bool FromJSON(JsonObject obj) { return new bool(); }
     }
 
 

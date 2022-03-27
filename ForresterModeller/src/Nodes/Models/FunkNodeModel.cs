@@ -7,6 +7,7 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -46,7 +47,35 @@ namespace ForresterModeller.src.Nodes.Models
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
         }
+
+        public override JsonObject ToJSON()
+        {
+            JsonObject obj = new JsonObject()
+            {
+                ["Id"] = Id ,
+                ["Type"] = this.GetType().ToString(),
+                ["Name"] = Name == null ? "" :"Name",
+                ["FullName"] = FullName == null ? "" : FullName,
+                ["Funk"] = Funk == null ? "" : Funk,
+              //  ["OutputRate"] = OutputRate,
+                ["Description"] = Description == null ? "" : Description
+            };
+
+            return obj;
+        }
+
+        public override bool FromJSON(JsonObject obj)
+        {
+            Id = obj!["Id"]!.GetValue<string>();
+            Name = obj!["Name"]!.GetValue<string>();
+            FullName = obj!["FullName"]!.GetValue<string>();
+            Funk = obj!["Funk"]!.GetValue<string>();
+           // OutputRate = obj!["OutputRate"]!.GetValue<string>();
+            Description = obj!["Description"]!.GetValue<string>();
+            return true;
+        }
     }
-
-
 }
+
+
+

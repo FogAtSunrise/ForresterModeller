@@ -67,8 +67,8 @@ namespace ForresterModeller.src.ProjectManager
             file.WriteLine(obj);
             file.Close();
 
-            var options = new JsonSerializerOptions { WriteIndented = true };
-          //  MessageBox.Show(obj.ToJsonString(options));
+          //  var options = new JsonSerializerOptions { WriteIndented = true };
+          // MessageBox.Show(obj.ToJsonString(options));
 
         }
     }

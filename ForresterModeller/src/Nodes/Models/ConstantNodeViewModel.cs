@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -48,6 +49,34 @@ namespace ForresterModeller.src.Nodes.Models
             //todo validation
             properties.Add(new Property( Resource.value,  Value.ToString(), (String str) => { Value = float.Parse(str); }));
             return properties;
+        }
+
+        public override JsonObject ToJSON()
+        {
+            JsonObject obj = new JsonObject()
+            {
+                ["Id"] = Id,
+                ["Type"] = this.GetType().ToString(),
+                ["Name"] = Name == null ? "" : "Name",
+                ["FullName"] = FullName == null ? "" : FullName,
+                ["Value"] = Value,
+                //  ["OutputRate"] = OutputRate,
+                ["Description"] = Description == null ? "" : Description
+
+            };
+
+            return obj;
+        }
+
+        public override bool FromJSON(JsonObject obj)
+        {
+            Id = obj!["Id"]!.GetValue<string>();
+            Name = obj!["Name"]!.GetValue<string>();
+            FullName = obj!["FullName"]!.GetValue<string>();
+            Value = obj!["Value"]!.GetValue<float>();
+            // OutputRate = obj!["OutputRate"]!.GetValue<string>();
+            Description = obj!["Description"]!.GetValue<string>();
+            return true;
         }
     }
 
