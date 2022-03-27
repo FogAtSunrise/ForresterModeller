@@ -16,6 +16,10 @@ namespace ForresterModeller
         {
             InitializeComponent();
             OpenStartList();
+
+            ApplicationManager nnn = new ApplicationManager();
+            nnn.CreateStructJson();
+                
         }
         /// <summary>
         /// СОЗДАТЬ НОВЫЙ ПРОЕКТ
