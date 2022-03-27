@@ -54,7 +54,7 @@ namespace ForresterModeller
             var model = new ConstantNodeViewModel("SUR", "Surface", 12);
             model.Description =
                 "Очень сюрреалистичная константа! Очень подробное описание. Чтобы проверить, что верстка устоит перед испытанием судьбы.";    
-            var model2 = new FunkNodeModel("FUR", "function", "a = 2b + c");
+            var model2 = new FunkNodeModel("FUR", "Функция запаздывания", "a = 2b + c");
             model2.Description =
                 "Вот это функционал!";
             Open_Page(PropertyFrame, new PropertyTemplate(model2));

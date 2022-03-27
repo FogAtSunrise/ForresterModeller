@@ -88,6 +88,15 @@ namespace ForresterModeller {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя.
+        /// </summary>
+        internal static string fullName {
+            get {
+                return ResourceManager.GetString("fullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Функция.
         /// </summary>
         internal static string funcType {
@@ -106,7 +115,7 @@ namespace ForresterModeller {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Имя.
+        ///   Ищет локализованную строку, похожую на Обозначение.
         /// </summary>
         internal static string name {
             get {

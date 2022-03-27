@@ -126,6 +126,9 @@
   <data name="equationType" xml:space="preserve">
     <value>Уравнение</value>
   </data>
+  <data name="fullName" xml:space="preserve">
+    <value>Имя</value>
+  </data>
   <data name="funcType" xml:space="preserve">
     <value>Функция</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Уровень</value>
   </data>
   <data name="name" xml:space="preserve">
-    <value>Имя</value>
+    <value>Обозначение</value>
   </data>
   <data name="type" xml:space="preserve">
     <value>Тип</value>
