@@ -58,14 +58,14 @@ namespace ForesterNodeCore
             return args;
         }
 
-        private static float[] ParseDataFromString(string data)
+        private static double[] ParseDataFromString(string data)
         {
-            var parseValue = Array.ConvertAll<string, float>(data.Split(" "),float.Parse);
+            var parseValue = Array.ConvertAll<string, double>(data.Split(" "),double.Parse);
 
             return parseValue;
         }
 
-		public static Dictionary<string,float[]> GetCurve(string model, IList<NodeIdentificator> order, float t, float delta = 0.1f)
+		public static Dictionary<string,double[]> GetCurve(string model, IList<NodeIdentificator> order, float t, float delta = 0.1f)
         {
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
 
@@ -78,7 +78,7 @@ namespace ForesterNodeCore
             var dataStrings = result.Split("\r\n");
 
 
-            var answer = new Dictionary<string, float[]>();
+            var answer = new Dictionary<string, double[]>();
 
             for (int i = 0; i < order.Count; i++)
             {
