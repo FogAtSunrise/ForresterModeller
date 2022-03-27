@@ -1,6 +1,8 @@
 ﻿using System;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using System.Windows.Media;
 using DynamicData;
 using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.ViewModels;
@@ -13,27 +15,48 @@ namespace ForresterModeller.src.ProjectManager
 {
     class ApplicationManager
     {
-        Project activeProject;
-
+        //Project activeProject;
+        private List<IForesterModel> allnodes = new();
         WorkAreaManager active;
-        List<WorkAreaManager> opened;
+        List<WorkAreaManager> opened = new();
         private IForesterModel activeModel;
+        private List<ForesterNodeModel> diagramsNode = new();
 
-        private List<NetworkViewModel> diagramsList;
+            //todo сделать нормально из файла с данными о диаграмме
+        /// <summary>
+        /// Создает предствление конкретной диаграммы по списку ее узлов 
+        /// </summary>
+        /// <param name="nods"></param>
+        /// <returns></returns>
+        public NetworkViewModel GetNetworkViewModel(List<ForesterNodeModel> nods)
+        {
+            var network = new NetworkViewModel();
+            foreach (var node in nods)
+            {
+                network.Nodes.Add(node);
+            }
+            return network;
+        }
 
         public ApplicationManager()
         {
-           
+            var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12 );
+            n1.Description = "Стабильная константа";
+            var n2 = new ConstantNodeViewModel();
+            var n3 = new LevelNodeModel();
+            n3.Description = "Невероятный уровень";
+            //var n4 = new FunkNodeModel();
+            allnodes.Add(n1);
+            allnodes.Add(n2);
+            allnodes.Add(n3);
+            diagramsNode.Add(n1);
+            diagramsNode.Add(n2);
+            diagramsNode.Add(n3);
         }
+
         public void FillDiagram(NetworkView diag)
         {
-
-            var network = new NetworkViewModel();
-            var node1 = new ConstantNodeViewModel();
-            network.Nodes.Add(node1);
-            var node2 = new LevelNodeModel();
-            network.Nodes.Add(node2);
-            diag.ViewModel = network;
+            diag.ViewModel = GetNetworkViewModel(diagramsNode);
         }
 
         public void FillPlot(WpfPlot WpfPlot1)
@@ -50,11 +73,32 @@ namespace ForresterModeller.src.ProjectManager
             WpfPlot1.Plot.Legend();
             WpfPlot1.Refresh();
         }
-
-        public void FillTabItem(string fileName)
+        
+        /// <summary>
+        /// Сформировать содержимое таба
+        /// </summary>
+        /// <returns></returns>
+        public ContentControl CreateContentControl(string type)
         {
+            ContentControl cc = null;
 
+            if (type == "diagram")
+            {
+                NetworkView graf = new NetworkView() { Background = Brushes.AliceBlue };
+                FillDiagram(graf);
+                cc = graf;
+            }
+            else if (type == "plotter")
+            {
+
+                WpfPlot plot = new WpfPlot() { Name = "WpfPlot1" };
+                FillPlot(plot);
+                cc = plot;
+            }
+
+            return cc;
         }
+
         public void ObjectSelected(IForesterModel model)
         {
 
