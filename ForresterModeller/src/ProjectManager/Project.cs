@@ -23,7 +23,5 @@ namespace ForresterModeller.src.ProjectManager
             ChangeDate= DateTime.Now;
         }
         public Project() { }
-
-
-}
+        }
 }

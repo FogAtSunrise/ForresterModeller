@@ -10,6 +10,12 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class ConstantNodeViewModel : ForesterNodeModel
     {
+        public override string TypeName
+        {
+            get => Resource.constType;
+            set { }
+        }
+
         /// <summary>
         /// Значение всех констант по умолчанию
         /// </summary>
@@ -23,12 +29,9 @@ namespace ForresterModeller.src.Nodes.Models
         
         public ConstantNodeViewModel(string name, string fulname, float value) : base()
         {
-            TypeName = Resource.constType;
             this.Name = name;
-            this.FullName = fulname;
-            this.Code = name;
+            this.Id = name;
             this.Value = value;
-
             var a = new NodeOutputViewModel();
             a.PortPosition = PortPosition.Centr;
             this.Outputs.Add(a);

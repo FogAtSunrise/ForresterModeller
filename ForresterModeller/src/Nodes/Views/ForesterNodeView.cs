@@ -44,7 +44,8 @@ namespace ForresterModeller.src.Nodes.Views
             this.WhenActivated(d =>
             {
                 this.OneWayBind(ForesterViewModel, vm => vm.FullName, v => v.FullName.Text).DisposeWith(d);
-                this.OneWayBind(ForesterViewModel, vm => vm.Code, v => v.Code.Text).DisposeWith(d);
+                    //todo исправить, вместо id раньше был code
+                this.OneWayBind(ForesterViewModel, vm => vm.Id, v => v.Code.Text).DisposeWith(d);
             }
             );
 

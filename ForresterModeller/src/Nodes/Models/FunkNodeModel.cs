@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using DynamicData;
+using ForresterModeller;
+using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
@@ -10,15 +12,17 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class FunkNodeModel : ForesterNodeModel
     {
+        public override string TypeName { 
+            get => Resource.funcType;
+            set {}
+        }
         public string Funk { get; set; }
         public FunkNodeModel(string name, string fulname, string funk) : base()
         {
-            TypeName = Resource.funcType;
             this.Name = name;
-            this.FullName = fulname;
-            this.Code = name;
+            this.Id = name;
             this.Funk = funk;
-
+            this.FullName = fulname;
             var a = new NodeOutputViewModel();
             a.PortPosition = PortPosition.Left;
             this.Outputs.Add(a);

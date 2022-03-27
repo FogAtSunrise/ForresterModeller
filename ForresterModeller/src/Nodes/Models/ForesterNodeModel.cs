@@ -12,28 +12,19 @@ namespace ForresterModeller.src.Nodes.Models
     /// <summary>
     /// Базовая модель узла в схеме форестера
     /// </summary>
-    public class ForesterNodeModel : NodeViewModel
+    public class ForesterNodeModel : NodeViewModel, IForesterModel
     {
-        /// <summary>
-        /// Полное, осмысленное имя показателя
-        /// </summary>
-        public string FullName { get; set; }
-        public string Description { get; set; } = "";
-        /// <summary>
-        /// Литерал, обозначающий тип узла
-        /// </summary>
-        public string TypeName { get; protected set; } = "";
-
-        /// <summary>
-        /// Код формулы для вычисления показателя
-        /// Код констант дублирует имя
-        /// </summary>
-        public string Code { get; set; }
+        
+        public string Description { get; set; }
+        public virtual string TypeName { get; set; } 
+        public string FullName { get; set; } 
+        public string Id { get; set; }
 
         public virtual ObservableCollection<Property> GetProperties()
         {
             var properties = new ObservableCollection<Property>();
             properties.Add(new Property(Resource.name, Name, (String str) => { Name = str; }));
+            properties.Add(new Property(Resource.fullName, FullName, (String str) => { FullName = str; }));
             properties.Add(new Property(Resource.type, TypeName));
             properties.Add(new Property(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
