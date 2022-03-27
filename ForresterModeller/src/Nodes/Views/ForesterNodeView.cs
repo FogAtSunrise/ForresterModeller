@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using WPFtest1.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Models;
 
-namespace WPFtest1.src.Nodes.Views
+namespace ForresterModeller.src.Nodes.Views
 {
     [TemplatePart(Name = nameof(Code), Type = typeof(TextBlock))]
     [TemplatePart(Name = nameof(FullName), Type = typeof(TextBlock))]
@@ -44,7 +44,8 @@ namespace WPFtest1.src.Nodes.Views
             this.WhenActivated(d =>
             {
                 this.OneWayBind(ForesterViewModel, vm => vm.FullName, v => v.FullName.Text).DisposeWith(d);
-                this.OneWayBind(ForesterViewModel, vm => vm.Code, v => v.Code.Text).DisposeWith(d);
+                    //todo исправить, вместо id раньше был code
+                this.OneWayBind(ForesterViewModel, vm => vm.Id, v => v.Code.Text).DisposeWith(d);
             }
             );
 

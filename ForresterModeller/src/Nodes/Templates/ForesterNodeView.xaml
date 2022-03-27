@@ -3,7 +3,7 @@
                     xmlns:views="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
                     xmlns:controls="clr-namespace:NodeNetwork.Views.Controls;assembly=NodeNetwork"
                     xmlns:viewModels="clr-namespace:NodeNetwork.ViewModels;assembly=NodeNetwork"
-                    xmlns:reactiveUi="http://reactiveui.net" xmlns:circle="clr-namespace:NodeNetwork.Utilities">
+                    xmlns:reactiveUi="http://reactiveui.net">
 
     <Style x:Key="constant" TargetType="{x:Type views:NodeView}">
         <Setter Property="Background" Value="Green"/>

@@ -78,7 +78,7 @@
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
                     <!--фрейм -->
-                    <Frame x:Name="ToolsFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
+                    <Frame x:Name="ToolsFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
@@ -86,8 +86,13 @@
             <!--Правая половина (справочная)-->
             <!--Область отображения информации-->
             <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
-                <TextBox Margin="0,0,-0.8,-0.2" Grid.RowSpan="2">Отображение полезной информации</TextBox>
-                <TabControl SelectionChanged="TabControl_SelectionChanged">
+               
+                <Grid Background="White"  Grid.Row="1" x:Name="Buttonss" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,-0.4,-0.2" Height="35">
+                    <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
+                    <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
+                
+                </Grid>
+                <TabControl SelectionChanged="TabControl_SelectionChanged" Margin="0,40,0,0">
                     <TabItem >
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -97,9 +102,7 @@
                         </TabItem.Header>
 
                         <StackPanel>
-
                             <TreeView   Name="TreeFiles"/>
-
                         </StackPanel>
                     </TabItem>
 
@@ -110,16 +113,23 @@
                             </StackPanel>
                         </TabItem.Header>
 
-                        <StackPanel>
-                            <TextBlock>Здесь уравнения</TextBlock>
+                        <StackPanel Name ="formuls" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+                            <DockPanel>
+                            <TextBox Name ="input_formul"  DockPanel.Dock="Left" Width="299"  ></TextBox>
+                            <Button DockPanel.Dock="Right" Content="+" Width="44" Click="Button_Click_Add_Formule"/>
+                        </DockPanel>
                         </StackPanel>
+
+                       
+
+
                     </TabItem>
 
                 </TabControl>
             </Grid>
             <!--Область редактирования элементов-->
-            <Grid Grid.Row="1"  x:Name="PropertyArea" Margin="3,3,-3.4,10.4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                <Frame x:Name="PropertyFrame" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"  />
+            <Grid Grid.Row="2"  x:Name="PropertyArea" Grid.Column="2">
+                <Frame x:Name="PropertyFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
             </Grid>
         </Grid>
         <Grid Background="White"  Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">

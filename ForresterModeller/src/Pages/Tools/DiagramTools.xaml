@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ForresterModeller"
       mc:Ignorable="d"
-      Title="GraphElements" Height="195.899" Width="530.386">
+      Title="GraphElements">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -32,22 +32,22 @@
                 </TabItem.Header>
 
 
-                <StackPanel Height="166">
-                    <Button Margin="0,0,390.8,0" Height="30" Click="But_Click_tool_inf" >
+                <StackPanel>
+                    <Button Width="175" Height="30" HorizontalAlignment="Left" Click="But_Click_tool_inf"  >
                         <Canvas Height="16" Width="38" >
                             <Image Source="/src/Pages/Tools/but2.png" Canvas.Left="-37" Height="26" Width="30" Canvas.Top="-5" />
                             <Label Canvas.Top="-5" Canvas.Left="-2" >Информация</Label>
                         </Canvas>
                     </Button>
 
-                    <Button Margin="0,0,390.8,0" Height="30" Click="But_Click_tool_mat" >
+                    <Button Width="175" Height="30" HorizontalAlignment="Left" Click="But_Click_tool_mat" >
                         <Canvas Height="16" Width="38" >
                             <Image Source="/src/Pages/Tools/but1.png" Canvas.Left="-37" Height="26" Width="30" Canvas.Top="-5" />
                             <Label Canvas.Top="-5" Canvas.Left="-2" >Материал</Label>
                         </Canvas>
                     </Button>
 
-                    <Button Margin="0,0,390.8,0" Height="30" Click="But_Click_tool_ord" >
+                    <Button Width="175" Height="30" HorizontalAlignment="Left" Click="But_Click_tool_ord" >
                         <Canvas Height="16" Width="38" >
                             <Image Source="/src/Pages/Tools/but3.png" Canvas.Left="-37" Height="26" Width="30" Canvas.Top="-5" />
                             <Label Canvas.Top="-5" Canvas.Left="-2" >Заказы</Label>

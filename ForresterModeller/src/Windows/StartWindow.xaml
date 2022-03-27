@@ -28,45 +28,36 @@
 
 
             <Grid Grid.Row="0" Height="30">
-                <TextBlock Text="   Недавние проекты" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25"/>
+                <TextBlock Text="   Недавние проекты" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="-7,0,0,0"/>
             </Grid>
 
 
-            <Grid Grid.Row="1">
+            <Grid Background="DarkGray" Grid.Row="1">
                 <DockPanel Height="15">
 
 
                     <Grid HorizontalAlignment="Stretch" >
-                        <TextBlock Text="       Имя"  VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                        <TextBlock Text="       Имя"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-7,2,0,0" />
                     </Grid>
                     <Grid  HorizontalAlignment="Stretch" >
 
                     </Grid>
                     <Grid HorizontalAlignment="Stretch" >
-                        <TextBlock Text="Дата создания  Дата изменения  "  VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                        <TextBlock Text="Дата создания  Дата изменения  "  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="345,0,0,0"/>
                     </Grid>
 
                 </DockPanel>
             </Grid>
             <Grid Grid.Row="2" VerticalAlignment="Top">
-                <DockPanel x:Name="LastFilesPanel">
-                    <Button x:Name ="Project1" DockPanel.Dock="Top" Height="50" >
-                        <Canvas Height="Auto" Width="Auto" >
-                            <Label x:Name="NameProject" Canvas.Top="-13" Canvas.Left="-280"  Width="Auto " Content="Project1"/>
-                            <Label x:Name="FirstDate" Canvas.Top="-13" Canvas.Left="110"  Width="Auto " Content="12.12.20"/>
-                            <Label x:Name="SecondDate" Canvas.Top="-13" Canvas.Left="200"  Width="Auto " Content="26.12.20"/>
-                        </Canvas>
+                <ScrollViewer Height="225" VerticalScrollBarVisibility="Visible"  >
 
-                    </Button>
-                    <Button x:Name ="Project13" DockPanel.Dock="Top" Height="50" >
-                        <Canvas Height="Auto" Width="Auto" >
-                            <Label x:Name="NameProject1" Canvas.Top="-13" Canvas.Left="-280"  Width="Auto " Content="Project12"/>
-                            <Label x:Name="FirstDate1" Canvas.Top="-13" Canvas.Left="110"  Width="Auto " Content="12.03.21"/>
-                            <Label x:Name="SecondDate1" Canvas.Top="-13" Canvas.Left="200"  Width="Auto " Content="21.12.21"/>
-                        </Canvas>
 
-                    </Button>
-                </DockPanel >
+                    <DockPanel x:Name="LastFilesPanel">
+
+                        
+                    </DockPanel >
+
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

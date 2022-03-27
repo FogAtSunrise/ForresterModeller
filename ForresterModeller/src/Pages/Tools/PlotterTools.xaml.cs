@@ -1,10 +1,11 @@
-﻿using ForresterModeller.Entities;
+﻿
 using ForresterModeller.src.Pages.Tools;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using WPFtest1.src.Entities;
+
+using ForresterModeller.src.Nodes.Models;
 
 namespace ForresterModeller.src.Pages.Tools
 {
@@ -26,22 +27,22 @@ namespace ForresterModeller.src.Pages.Tools
         /// </summary>
         /// <param name="elements"></param>
         
-        public void ChangeListInPlotterTools(List<IDiagramEntity> elements, string name)
+        public void ChangeListInPlotterTools(List<ForesterNodeModel> elements, string name)
         {
             
 
-          /*  Node treeHead = new Node() { NodeName = name, Nodes = new List<Node>()};
+            Node treeHead = new Node() { NodeName = name, Nodes = new List<Node>()};
             Node tree1 = new Node() { NodeName = "Уровни",   Nodes = new List<Node>()};
             Node tree2 = new Node() { NodeName = "Уравнения", Nodes = new List<Node>()};
             foreach (var elem in elements)
-                if (elem is DiagramLevel)
+                if (elem is LevelNodeModel)
                     tree1.Nodes.Add(new Node() { NodeName = elem.Name, Nodes = new List<Node>()});
-                else if (elem is DiagramFunction)
+                else if (elem is FunkNodeModel)
                     tree2.Nodes.Add(new Node() { NodeName = elem.Name, Nodes = new List<Node>() });
             treeHead.Nodes.Add(tree1);
             treeHead.Nodes.Add(tree2);
-            nodeList = new List<Node>() { treeHead};*/
-            nodeList=GetNodeList();
+            nodeList = new List<Node>() { treeHead};
+           // nodeList=GetNodeList();
             this.TreeView_NodeList.ItemsSource = nodeList;
           
 

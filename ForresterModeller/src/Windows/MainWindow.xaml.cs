@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using DynamicData;
-using ForresterModeller.Entities;
+
 using ForresterModeller.src.Pages;
 using ForresterModeller.src.Pages.Properties;
 using ForresterModeller.src.Pages.Tools;
@@ -12,13 +12,11 @@ using ForresterModeller.src.Tools;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using System.Windows.Media;
-using WPFtest1.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Models;
 using Brushes = System.Windows.Media.Brushes;
 using ScottPlot.Plottable;
 using ScottPlot;
-
-
-
+using WpfMath.Controls;
 
 namespace ForresterModeller
 {
@@ -40,14 +38,26 @@ namespace ForresterModeller
             var node2 = new LevelNodeModel();
             network.Nodes.Add(node2);
             networkView.ViewModel = network;
+         
 
+            ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
 
             OpenProperty();
+
+            //тест вывода формулы
+           PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
+           PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
         }
 
         private void OpenProperty()
         {
-            Open_Page(PropertyFrame, new ConstantProperty());
+            var model = new ConstantNodeViewModel("SUR", "Surface", 12);
+            model.Description =
+                "Очень сюрреалистичная константа! Очень подробное описание. Чтобы проверить, что верстка устоит перед испытанием судьбы.";    
+            var model2 = new FunkNodeModel("FUR", "Функция запаздывания", "a = 2b + c");
+            model2.Description =
+                "Вот это функционал!";
+            Open_Page(PropertyFrame, new PropertyTemplate(model2));
         }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -82,15 +92,15 @@ namespace ForresterModeller
 
             PlotterTools t = new PlotterTools();
 
-            List<IDiagramEntity> test = new List<IDiagramEntity>();
+            List<ForesterNodeModel> test = new List<ForesterNodeModel>();
             for (int i = 0; i < 6; i++)
-                test.Add(new DiagramConstant() { Name = "константа" + i });
+                test.Add(new LevelNodeModel());
 
             for (int i = 0; i < 6; i++)
                 t.ChangeListInPlotterTools(test, "name" + i);
 
             Open_Page(ToolsFrame, t);
-            ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
+            
 
         }
         /// <summary>
@@ -239,5 +249,18 @@ namespace ForresterModeller
 
             openNewPage("file1", "diagram");
         }
+
+        private void PrintFormule(string form)
+        {
+            FormulaControl forml = new FormulaControl();
+            forml.Formula = form;
+            formuls.Children.Add(forml);
+        }
+        private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
+        { PrintFormule(input_formul.Text.ToString());
+          input_formul.Text = "";
+         }
+
+        
     }
 }
