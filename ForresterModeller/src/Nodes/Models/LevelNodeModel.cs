@@ -5,6 +5,7 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -24,6 +25,8 @@ namespace ForresterModeller.src.Nodes.Models
             this.InputRate = input;
             this.OutputRate = output;
             this.FullName = fulname;
+            this.TypeName = this.GetType().ToString();
+            this.Description="";
 
             var a = new NodeOutputViewModel();
             a.PortPosition = PortPosition.Right;
@@ -42,6 +45,29 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));
         }
+
+        public override JsonObject ToJSON() {
+            JsonObject obj = new JsonObject() {
+                ["Id"] = Id,
+                ["Type"] = this.GetType().ToString(),
+                ["Name"] = Name,
+                ["FullName"] = FullName,
+                ["InputRate"] = InputRate,
+                ["OutputRate"] = OutputRate,
+                ["Description"] = Description == null ? "" : Description
+            };
+
+            return obj;
+        }
+
+        public override bool FromJSON(JsonObject obj) {
+            Id = obj!["Id"]!.GetValue<string>();
+            Name = obj!["Name"]!.GetValue<string>();
+            FullName = obj!["FullName"]!.GetValue<string>();
+            InputRate = obj!["InputRate"]!.GetValue<string>();
+            OutputRate = obj!["OutputRate"]!.GetValue<string>();
+            Description = obj!["Description"]!.GetValue<string>();
+            return true; }
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json.Nodes;
 using ForresterModeller.src.Pages.Properties;
 
 namespace ForresterModeller.src.Nodes.Models
@@ -16,6 +17,8 @@ namespace ForresterModeller.src.Nodes.Models
         /// </summary>
         public string Id { get; set; }
         public abstract ObservableCollection<Property> GetProperties();
-       // public abstract void ToJSON();
+        public abstract JsonObject ToJSON();
+        public abstract bool FromJSON(JsonObject obj);
+
     }
 }

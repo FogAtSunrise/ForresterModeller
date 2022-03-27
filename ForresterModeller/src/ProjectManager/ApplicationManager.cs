@@ -22,7 +22,7 @@ namespace ForresterModeller.src.ProjectManager
         private IForesterModel activeModel;
         private List<ForesterNodeModel> diagramsNode = new();
 
-            //todo сделать нормально из файла с данными о диаграмме
+        //todo сделать нормально из файла с данными о диаграмме
         /// <summary>
         /// Создает предствление конкретной диаграммы по списку ее узлов 
         /// </summary>
@@ -40,7 +40,7 @@ namespace ForresterModeller.src.ProjectManager
 
         public ApplicationManager()
         {
-            var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12 );
+            var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12);
             n1.Description = "Стабильная константа";
             var n2 = new ConstantNodeViewModel();
             var n3 = new LevelNodeModel();
@@ -73,7 +73,7 @@ namespace ForresterModeller.src.ProjectManager
             WpfPlot1.Plot.Legend();
             WpfPlot1.Refresh();
         }
-        
+
         /// <summary>
         /// Сформировать содержимое таба
         /// </summary>
@@ -98,11 +98,5 @@ namespace ForresterModeller.src.ProjectManager
 
             return cc;
         }
-
-        public void ObjectSelected(IForesterModel model)
-        {
-
-        }
-        // Frame tools;//? 
     }
 }

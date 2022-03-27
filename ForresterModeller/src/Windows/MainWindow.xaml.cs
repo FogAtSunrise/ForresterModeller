@@ -8,6 +8,8 @@ using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using WpfMath.Controls;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller
 {
@@ -46,7 +48,28 @@ namespace ForresterModeller
 
         private void Test1(object sender, RoutedEventArgs e)
         {
+            // openNewPage("file_name");
+            // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
             OpenPageInFrame(ToolsFrame, new GraphElements());
+
+            List<IForesterModel> elem = new List<IForesterModel>() { new LevelNodeModel("lev1", "levelishe1", "in", "out"), new ConstantNodeViewModel("uuuu", "jkjkjkjkj", 6.8f) };
+            
+            foreach (var el in elem)
+            {
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                MessageBox.Show(el.ToJSON().ToJsonString(options));
+               
+                
+                JsonObject test = el.ToJSON();
+                test["Name"] = "Another name";
+            
+                el.FromJSON(test);
+                options = new JsonSerializerOptions { WriteIndented = true };
+                MessageBox.Show(el.ToJSON().ToJsonString(options));
+               
+            }
+
+
         }
         //фрейм plottertools
         private void Test2(object sender, RoutedEventArgs e)

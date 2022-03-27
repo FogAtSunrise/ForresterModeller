@@ -1,9 +1,14 @@
 ﻿
 using ForresterModeller.src.ProjectManager;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+
+using Button = System.Windows.Controls.Button;
+using Label = System.Windows.Controls.Label;
 
 namespace ForresterModeller
 {
@@ -16,6 +21,9 @@ namespace ForresterModeller
         {
             InitializeComponent();
             OpenStartList();
+
+            ApplicationManager nnn = new ApplicationManager();
+                
         }
         /// <summary>
         /// СОЗДАТЬ НОВЫЙ ПРОЕКТ
@@ -24,6 +32,9 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void CreateNewProject_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow dialog = new MainWindow();
+            this.Close();
+            dialog.ShowDialog();
 
         }
         /// <summary>
@@ -33,9 +44,37 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void OpenOldProject_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow dialog = new MainWindow();
+            Stream stream = null;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Файлы json|*.json";
+           // openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+
+            if (openFileDialog1.ShowDialog()==true)
+            {
+                System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
+               /* try
+                {
+                    if ((stream = openFileDialog1.OpenFile()) != null)
+                    {  
+                        using (stream)
+                        {
+                            // Insert code to read the stream here.
+                      
+                        }
+                       
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Error: Could not read file: " + ex.Message);
+                }*/
+            }
+           
+            /*MainWindow dialog = new MainWindow();
             this.Close();
             dialog.ShowDialog();
+            */
 
         }
 
@@ -67,7 +106,7 @@ namespace ForresterModeller
 
         foreach(var lis in list)
         {
-                Button but = new Button() { Name = lis.getName(), Height = 50 };
+                System.Windows.Controls.Button but = new Button() { Name = lis.getName(), Height = 50 };
                 DockPanel.SetDock(but, System.Windows.Controls.Dock.Top); 
 
                 Canvas can = new Canvas(){ Height = Double.NaN,  Width = Double.NaN };
@@ -92,5 +131,12 @@ namespace ForresterModeller
                 LastFilesPanel.Children.Add(but);
             }
     }
+
+        private void OpenOldProject_C(object sender, RoutedEventArgs e)
+        {
+            MainWindow dialog = new MainWindow();
+            this.Close();
+            dialog.ShowDialog();
+        }
     }
 }
