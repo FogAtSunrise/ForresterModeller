@@ -24,7 +24,9 @@
 
             </MenuItem>
             <MenuItem Header="О программе">
-
+            </MenuItem>
+            <MenuItem Header="> Моделировать" Click="MenuGetGraphics_OnClick">
+                
             </MenuItem>
         </Menu>
 

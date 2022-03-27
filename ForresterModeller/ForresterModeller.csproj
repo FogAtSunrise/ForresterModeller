@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ForesterNodeCore\ForesterNodeCore.csproj" />
     <ProjectReference Include="..\NodeNetwork\NodeNetwork.csproj" />
   </ItemGroup>
 

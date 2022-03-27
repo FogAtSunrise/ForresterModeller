@@ -10,6 +10,7 @@ using ForresterModeller.src.ProjectManager.WorkArea;
 using WpfMath.Controls;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using ForesterNodeCore ;
 
 namespace ForresterModeller
 {
@@ -167,6 +168,11 @@ namespace ForresterModeller
         {
             PrintFormule(input_formul.Text.ToString());
             input_formul.Text = "";
+        }
+
+        private void MenuGetGraphics_OnClick(object sender, RoutedEventArgs e)
+        { 
+            OpenedPages.add("PlotFromCore", manager.ExecuteCore());
         }
     }
 }

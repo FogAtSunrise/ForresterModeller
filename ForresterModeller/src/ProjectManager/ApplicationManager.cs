@@ -1,9 +1,11 @@
 ﻿using System;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
 using DynamicData;
+using ForesterNodeCore;
 using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
@@ -68,6 +70,48 @@ namespace ForresterModeller.src.ProjectManager
             var a = new ScatterPlot(dataX, dataY);
             WpfPlot1.Plot.AddScatter(dataX, dataY, System.Drawing.Color.Aqua, Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, "DUR");
             WpfPlot1.Plot.AddScatter(dataX2, dataY2, System.Drawing.Color.Blue, Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, "DHR");
+            WpfPlot1.Plot.YLabel("Объем товара (единицы)");
+            WpfPlot1.Plot.XLabel("Время (недели)");
+            WpfPlot1.Plot.Legend();
+            WpfPlot1.Refresh();
+        }
+
+        public ContentControl ExecuteCore()
+        {
+            float t = 1, dt = 0.1f;
+            var c = ForesterNodeCore.Program.GetCurve(
+                "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
+                new List<NodeIdentificator> {
+                    new NodeIdentificator("dc"),
+                    new NodeIdentificator("nt"),
+                    new NodeIdentificator("boo"),
+                    new NodeIdentificator("loo"),
+                },
+                t,
+                dt
+            );
+            WpfPlot plot = new WpfPlot() { Name = "WpfPlotFromCore" };
+            FillPlot(plot, c, t, dt);
+            return plot;
+        }
+        public void FillPlot(WpfPlot WpfPlot1, Dictionary<string, double[]> resultMap, float t, float dt)
+        {
+            int count = resultMap.First().Value.Length;
+            double[] weeks = new double[count];
+            if(count > 0)
+                weeks[0] = 0;
+            for (int i = 1; i < count; i++)
+            {
+                weeks[i] = weeks[i - 1] + dt;
+            }
+            Random rnd = new();
+            foreach (var plot in resultMap)
+            {
+                double[] value = plot.Value;
+                WpfPlot1.Plot.AddScatter(weeks, value, null,
+                    Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, plot.Key);
+            }
+
             WpfPlot1.Plot.YLabel("Объем товара (единицы)");
             WpfPlot1.Plot.XLabel("Время (недели)");
             WpfPlot1.Plot.Legend();
