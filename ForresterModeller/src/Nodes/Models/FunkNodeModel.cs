@@ -53,27 +53,23 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 ["Id"] = Id ,
                 ["Type"] = type,
-                ["Name"] = Name == null ? "" :"Name",
-               
+                ["Name"] = Name == null ? "" :"Name",            
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
-              //  ["OutputRate"] = OutputRate,
                 ["Description"] = Description == null ? "" : Description
             };
 
             return obj;
         }
 
-        public override bool FromJSON(JsonObject obj)
+        public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-           
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
-           // OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-            return true;
+    
         }
     }
 }
@@ -81,7 +77,8 @@ namespace ForresterModeller.src.Nodes.Models
 
     public class ChouseNodeModel:FunkNodeModel
     {
-        public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
+    public static string type = "ChouseNodeModel";
+    public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
         {
 
         }

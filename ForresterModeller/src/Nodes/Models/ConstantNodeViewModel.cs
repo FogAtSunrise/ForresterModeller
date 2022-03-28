@@ -13,6 +13,7 @@ namespace ForresterModeller.src.Nodes.Models
     public class ConstantNodeViewModel : ForesterNodeModel
     {
         public override string TypeName => Resource.constType;
+
        public static string type = "ConstantNodeViewModel";
        
 
@@ -59,7 +60,6 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Name"] = Name == null ? "" : "Name",
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Value"] = Value,
-                //  ["OutputRate"] = OutputRate,
                 ["Description"] = Description == null ? "" : Description
 
             };
@@ -67,16 +67,14 @@ namespace ForresterModeller.src.Nodes.Models
             return obj;
         }
 
-        public override bool FromJSON(JsonObject obj)
+        public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-         
             FullName = obj!["FullName"]!.GetValue<string>();
             Value = obj!["Value"]!.GetValue<float>();
-            // OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-            return true;
+ 
         }
 
         public override T AcceptViseter<T>(INodeViseters<T> viseter)

@@ -54,17 +54,17 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Id"] = Id,
                 ["Type"] = type,
                 ["Name"] = Name,
-                
                 ["FullName"] = FullName,
                 ["InputRate"] = InputRate,
                 ["OutputRate"] = OutputRate,
-                ["Description"] = Description == null ? "" : Description
+                ["Description"] = Description == null ? "" : Description,
+                ["StartValue"] = StartValue == null ? "" : StartValue
             };
 
             return obj;
         }
 
-        public override bool FromJSON(JsonObject obj) {
+        public override void FromJSON(JsonObject obj) {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
             
@@ -72,7 +72,8 @@ namespace ForresterModeller.src.Nodes.Models
             InputRate = obj!["InputRate"]!.GetValue<string>();
             OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-            return true; }
+            StartValue = obj!["StartValue"]!.GetValue<string>();
+        }
 
 
 

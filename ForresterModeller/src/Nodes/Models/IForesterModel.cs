@@ -22,7 +22,7 @@ namespace ForresterModeller.src.Nodes.Models
         public string Id { get; set; }
         public abstract ObservableCollection<Property> GetProperties();
         public abstract JsonObject ToJSON();
-        public abstract bool FromJSON(JsonObject obj);
+        public abstract void FromJSON(JsonObject obj);
 
     }
 }

@@ -3,11 +3,13 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class DelayNodeModel : ForesterNodeModel
     {
+        public static string type = "DelayNodeModel";
         public override string TypeName => Resource.levelType;
 
         public string InputRate { get; set; }
@@ -65,6 +67,40 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<DelayNodeModel>));
         }
+    
+        public override JsonObject ToJSON()
+        {
+            JsonObject obj = new JsonObject()
+            {
+                ["Id"] = Id,
+                ["Type"] = type,
+                ["Name"] = Name == null ? "" : "Name",
+                ["FullName"] = FullName == null ? "" : FullName,
+                ["InputRate"] = InputRate == null ? "" : InputRate,
+                ["OutputRateName"] = OutputRateName == null ? "" : OutputRateName,
+                ["DeepDelay"] =  DeepDelay,
+                ["DelayValueName"] = DelayValueName == null ? "" : DelayValueName,
+                ["DelayValue"] = DelayValue,
+                ["StartValue"] = StartValue == null ? "" : StartValue
+            };
+
+            return obj;
+        }
+
+        public override void FromJSON(JsonObject obj)
+        {
+            Id = obj!["Id"]!.GetValue<string>();
+            Name = obj!["Name"]!.GetValue<string>();
+            FullName = obj!["FullName"]!.GetValue<string>();
+            InputRate = obj!["InputRate"]!.GetValue<string>();
+            OutputRateName = obj!["OutputRateName"]!.GetValue<string>();
+            DeepDelay = obj!["DeepDelay"]!.GetValue<int>();
+            DelayValueName = obj!["DelayValueName"]!.GetValue<string>();
+            DelayValue = obj!["DelayValue"]!.GetValue<float>();
+            StartValue = obj!["StartValue"]!.GetValue<string>();
+
+        }
+
     }
 
 }

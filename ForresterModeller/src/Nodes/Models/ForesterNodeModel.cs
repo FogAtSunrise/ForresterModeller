@@ -38,7 +38,7 @@ namespace ForresterModeller.src.Nodes.Models
         }
 
         public virtual JsonObject ToJSON() { return new JsonObject(); }
-        public virtual bool FromJSON(JsonObject obj) { return new bool(); }
+        public virtual void FromJSON(JsonObject obj) {  }
     }
 
 
