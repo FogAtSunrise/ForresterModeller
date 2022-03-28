@@ -15,12 +15,13 @@ using ScottPlot.Plottable;
 
 namespace ForresterModeller.src.ProjectManager
 {
+    
     class ApplicationManager
     {
         //Project activeProject;
         private List<IForesterModel> allnodes = new();
-        WorkAreaManager active;
-        List<WorkAreaManager> opened = new();
+        ActionTabItem active;
+        List<ActionTabItem> opened = new();
         private IForesterModel activeModel;
         private List<ForesterNodeModel> diagramsNode = new();
 
@@ -61,22 +62,8 @@ namespace ForresterModeller.src.ProjectManager
             diag.ViewModel = GetNetworkViewModel(diagramsNode);
         }
 
-        public void FillPlot(WpfPlot WpfPlot1)
-        {
-            double[] dataX = { 1, 2, 3, 4, 5 };
-            double[] dataY = { 1, 4, 9, 16, 25 };
-            double[] dataX2 = { 1, 2, 3, 4, 5 };
-            double[] dataY2 = { 1, 6, 11, 19, 10 };
-            var a = new ScatterPlot(dataX, dataY);
-            WpfPlot1.Plot.AddScatter(dataX, dataY, System.Drawing.Color.Aqua, Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, "DUR");
-            WpfPlot1.Plot.AddScatter(dataX2, dataY2, System.Drawing.Color.Blue, Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, "DHR");
-            WpfPlot1.Plot.YLabel("Объем товара (единицы)");
-            WpfPlot1.Plot.XLabel("Время (недели)");
-            WpfPlot1.Plot.Legend();
-            WpfPlot1.Refresh();
-        }
 
-        public ContentControl ExecuteCore()
+        public WpfPlot ExecuteCore()
         {
             float t = 1, dt = 0.1f;
             var c = ForesterNodeCore.Program.GetCurve(
@@ -90,33 +77,12 @@ namespace ForresterModeller.src.ProjectManager
                 t,
                 dt
             );
-            WpfPlot plot = new WpfPlot() { Name = "WpfPlotFromCore" };
-            FillPlot(plot, c, t, dt);
-            return plot;
+            var plotmodel = new PlotManager(c, t, dt);
+            plotmodel.XLabel = "Время (недели)FFF";
+            plotmodel.YLabel = "Объем товара (единицы) ";
+            return plotmodel.GenerateActualPlot();
         }
-        public void FillPlot(WpfPlot WpfPlot1, Dictionary<string, double[]> resultMap, float t, float dt)
-        {
-            int count = resultMap.First().Value.Length;
-            double[] weeks = new double[count];
-            if(count > 0)
-                weeks[0] = 0;
-            for (int i = 1; i < count; i++)
-            {
-                weeks[i] = weeks[i - 1] + dt;
-            }
-            Random rnd = new();
-            foreach (var plot in resultMap)
-            {
-                double[] value = plot.Value;
-                WpfPlot1.Plot.AddScatter(weeks, value, null,
-                    Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, plot.Key);
-            }
 
-            WpfPlot1.Plot.YLabel("Объем товара (единицы)");
-            WpfPlot1.Plot.XLabel("Время (недели)");
-            WpfPlot1.Plot.Legend();
-            WpfPlot1.Refresh();
-        }
 
         /// <summary>
         /// Сформировать содержимое таба
@@ -134,10 +100,7 @@ namespace ForresterModeller.src.ProjectManager
             }
             else if (type == "plotter")
             {
-
-                WpfPlot plot = new WpfPlot() { Name = "WpfPlot1" };
-                FillPlot(plot);
-                cc = plot;
+                cc = ExecuteCore();
             }
 
             return cc;
