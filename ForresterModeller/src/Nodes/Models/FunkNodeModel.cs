@@ -54,7 +54,7 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Id"] = Id ,
                 ["Type"] = type,
                 ["Name"] = Name == null ? "" :"Name",
-                ["TypeName"] = TypeName == null ? "" : "TypeName",
+               
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
               //  ["OutputRate"] = OutputRate,
@@ -68,7 +68,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-            TypeName = obj!["TypeName"]!.GetValue<string>();
+           
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
            // OutputRate = obj!["OutputRate"]!.GetValue<string>();
@@ -77,7 +77,7 @@ namespace ForresterModeller.src.Nodes.Models
         }
     }
 }
-    }
+    
 
     public class ChouseNodeModel:FunkNodeModel
     {
@@ -101,4 +101,4 @@ namespace ForresterModeller.src.Nodes.Models
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<ChouseNodeModel>));
         }
     }
-}
+

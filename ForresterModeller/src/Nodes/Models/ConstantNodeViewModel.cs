@@ -57,7 +57,6 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Id"] = Id,
                 ["Type"] = type,
                 ["Name"] = Name == null ? "" : "Name",
-                ["TypeName"] = TypeName == null ? "" : "TypeName",
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Value"] = Value,
                 //  ["OutputRate"] = OutputRate,
@@ -72,7 +71,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-            TypeName = obj!["TypeName"]!.GetValue<string>();
+         
             FullName = obj!["FullName"]!.GetValue<string>();
             Value = obj!["Value"]!.GetValue<float>();
             // OutputRate = obj!["OutputRate"]!.GetValue<string>();

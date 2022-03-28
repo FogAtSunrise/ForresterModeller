@@ -28,7 +28,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.InputRate = input;
             this.OutputRate = output;
             this.FullName = fulname;
-            this.TypeName = this.GetType().ToString();
+         
             this.Description="";
 
             var a = new NodeOutputViewModel();
@@ -54,7 +54,7 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Id"] = Id,
                 ["Type"] = type,
                 ["Name"] = Name,
-                ["TypeName"] = TypeName == null ? "" : "TypeName",
+                
                 ["FullName"] = FullName,
                 ["InputRate"] = InputRate,
                 ["OutputRate"] = OutputRate,
@@ -67,7 +67,7 @@ namespace ForresterModeller.src.Nodes.Models
         public override bool FromJSON(JsonObject obj) {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-            TypeName = obj!["TypeName"]!.GetValue<string>();
+            
             FullName = obj!["FullName"]!.GetValue<string>();
             InputRate = obj!["InputRate"]!.GetValue<string>();
             OutputRate = obj!["OutputRate"]!.GetValue<string>();

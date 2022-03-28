@@ -12,7 +12,7 @@ namespace ForresterModeller.src.Nodes.Models
         /// <summary>
         /// Литерал, обозначающий тип узла
         /// </summary>
-        public string TypeName { get;}
+        public string TypeName { get; }
 
         public T AcceptViseter<T>(INodeViseters<T> viseter);
 
