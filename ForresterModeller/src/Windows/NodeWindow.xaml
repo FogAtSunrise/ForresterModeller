@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
+        xmlns:nodelist="clr-namespace:NodeNetwork.Toolkit.NodeList;assembly=NodeNetworkToolkit"
         mc:Ignorable="d"
         Title="" Height="500" Width="600">
     <Grid>
-        <nodenetwork:NetworkView x:Name="networkView" Background="AliceBlue"/>
+        <nodenetwork:NetworkView x:Name="networkView" Background="AliceBlue" Margin="10,10,10,195"/>
+        <nodelist:NodeListView Grid.Column="0" x:Name="nodeList" Margin="10,0,10,10" Height="180" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

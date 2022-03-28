@@ -5,20 +5,22 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class LevelNodeModel : ForesterNodeModel
     {
+        public override string TypeName => Resource.levelType;
+
         public static string type = "LevelNodeModel";
-        public override string TypeName
-        {
-            get => Resource.levelType;
-            set {}
-        }
+      
         public string InputRate { get; set; }
         public string OutputRate { get; set; }
+
+        public string StartValue { get; set; }
+
         public LevelNodeModel(string name, string fulname, string input, string output) : base()
         {
             this.Name = name;
@@ -71,7 +73,13 @@ namespace ForresterModeller.src.Nodes.Models
             OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
             return true; }
-    }
 
+
+
+        public override T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            return viseter.VisitLevel(this);
+        }
+    }
 
 }
