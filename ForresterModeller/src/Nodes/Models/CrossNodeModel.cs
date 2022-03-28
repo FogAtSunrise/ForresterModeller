@@ -48,9 +48,9 @@ namespace ForresterModeller.src.Nodes.Models
         {
             JsonObject obj = new JsonObject()
             {
-                ["Id"] = Id,
+                ["Id"] = Id == null ? "" : Id,
                 ["Type"] = type,
-                ["Name"] = Name == null ? "" : "Name",
+                ["Name"] = Name == null ? "" : Name,
                 ["FullName"] = FullName == null ? "" : FullName,
             };
 

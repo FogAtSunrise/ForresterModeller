@@ -57,7 +57,7 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 ["Id"] = Id,
                 ["Type"] = type,
-                ["Name"] = Name == null ? "" : "Name",
+                ["Name"] = Name == null ? "" : Name,
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Value"] = Value,
                 ["Description"] = Description == null ? "" : Description

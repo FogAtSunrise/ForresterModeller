@@ -4,45 +4,88 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ForresterModeller.src.ProjectManager
 {
     public class Project
     {
+        string DefaultName = "New Project";
+        string DefaultPath = Directory.GetCurrentDirectory();
+
+        List<IForesterModel> allProjectModels = new List<IForesterModel>();
+        List<string> listAllFiles = new List<string>();
+
         string Name;
         public string getName() { return Name; }
         string PathToFile;
 
         DateTime CreationDate;
         public DateTime getCreationDate() { return CreationDate; }
-        DateTime ChangeDate; 
+        DateTime ChangeDate;
         public DateTime getChangeDate() { return ChangeDate; }
-        public  Project(string name)
+
+        public Project(string name, string pathTofile)
         {
-            Name = name;
+            Name = (name == null || name == "") ? DefaultName : Name;
+            PathToFile = (pathTofile == null || pathTofile == "") ? DefaultPath : pathTofile;
             CreationDate = DateTime.Now;
-            ChangeDate= DateTime.Now;
+            ChangeDate = DateTime.Now;
         }
+
+
+        //привер вызова:   CreateDirectory(path + "\\" + "имя новой папки");
+        private string CreateDirectory(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                int index = 1;
+                while (Directory.Exists(path + index))
+                {
+                    index++;
+                }
+                path = path + index;
+            }
+            Directory.CreateDirectory(path);
+            return path;
+        }
+
+        private string CreateFile(string filename, string path)
+        {
+            if (Directory.Exists(path + "\\" + filename + ".json"))
+            {
+                int index = 1;
+                while (Directory.Exists(path + "\\" + filename + index + ".json"))
+                {
+                    index++;
+                }
+                filename = filename + index;
+            }
+
+
+
+            return filename;
+        }
+
         public Project() { }
 
-
-
-        public void CreateStructJson()
+        public void ToJson()
         {
-
+            string path = PathToFile;
             //Объект проекта, он один
             JsonObject obj = new JsonObject
             {
 
                 //Информация о проекте
-                ["Name"] = "project",
-                ["CreationDate"] = new DateTime(2019, 8, 1),
-                ["ChangeDate"] = new DateTime(2019, 8, 1),
+                ["Name"] = Name,
+                ["CreationDate"] = CreationDate,
+                ["ChangeDate"] = ChangeDate,
 
                 //Список файлов проекта
-                ["FilesInProject"] = new JsonArray("file1", "file2", "file3"),
+                ["ListAllFiles"] = new JsonArray(),
 
                 //Список моделей проекта
                 ["ModelsInProject"] = new JsonObject
@@ -66,19 +109,22 @@ namespace ForresterModeller.src.ProjectManager
             string nameId = "3456";
 
             //Добавить
-            obj!["ModelsInProject"]![nameId] = new JsonObject { ["Id"] = 1289, ["Low"] = 20 };
+            //    obj!["ModelsInProject"]![nameId] = new JsonObject { ["Id"] = 1289, ["Low"] = 20 };
 
             //Удалить
             // obj!["ModelsInProject"].Remove("Model2");
             //  (JsonObject)obj["ModelsInProject"].Remove("Model2");
 
-            StreamWriter file = File.CreateText("test.json");
+          
+            string name = CreateDirectory(path);
+/*
+            StreamWriter file = new StreamWriter(path + "\\" + name + ".json");
             file.WriteLine(obj);
             file.Close();
-
-            //  var options = new JsonSerializerOptions { WriteIndented = true };
-            // MessageBox.Show(obj.ToJsonString(options));
-
+          
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            MessageBox.Show(obj.ToJsonString(options));
+*/
         }
 
         public IForesterModel createModel(string type)
@@ -89,14 +135,29 @@ namespace ForresterModeller.src.ProjectManager
                 return new LevelNodeModel();
             }
             else
-              if (LevelNodeModel.type == type)
+              if (ChouseNodeModel.type == type)
             {
-                return new LevelNodeModel();
+                return new ChouseNodeModel();
             }
             else
-                if (LevelNodeModel.type == type)
+                if (ConstantNodeViewModel.type == type)
             {
-                return new LevelNodeModel();
+                return new ConstantNodeViewModel();
+            }
+            else
+                if (CrossNodeModel.type == type)
+            {
+                return new CrossNodeModel();
+            }
+            else
+                if (FunkNodeModel.type == type)
+            {
+                return new FunkNodeModel();
+            }
+            else
+                if (DelayNodeModel.type == type)
+            {
+                return new DelayNodeModel();
             }
 
             return null;
