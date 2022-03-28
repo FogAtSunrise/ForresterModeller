@@ -5,17 +5,17 @@ using System;
 using System.Collections.ObjectModel;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class ConstantNodeViewModel : ForesterNodeModel
     {
-        public override string TypeName
-        {
-            get => Resource.constType;
-            set { }
-        }
+        public override string TypeName => Resource.constType;
+
+       public static string type = "ConstantNodeViewModel";
+       
 
         /// <summary>
         /// Значение всех констант по умолчанию
@@ -56,11 +56,10 @@ namespace ForresterModeller.src.Nodes.Models
             JsonObject obj = new JsonObject()
             {
                 ["Id"] = Id,
-                ["Type"] = this.GetType().ToString(),
-                ["Name"] = Name == null ? "" : "Name",
+                ["Type"] = type,
+                ["Name"] = Name == null ? "" : Name,
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Value"] = Value,
-                //  ["OutputRate"] = OutputRate,
                 ["Description"] = Description == null ? "" : Description
 
             };
@@ -68,15 +67,19 @@ namespace ForresterModeller.src.Nodes.Models
             return obj;
         }
 
-        public override bool FromJSON(JsonObject obj)
+        public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             Value = obj!["Value"]!.GetValue<float>();
-            // OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-            return true;
+ 
+        }
+
+        public override T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            return viseter.VisitConstant(this);
         }
     }
 

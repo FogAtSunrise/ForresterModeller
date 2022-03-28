@@ -5,19 +5,22 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class LevelNodeModel : ForesterNodeModel
     {
-        public override string TypeName
-        {
-            get => Resource.levelType;
-            set {}
-        }
+        public override string TypeName => Resource.levelType;
+
+        public static string type = "LevelNodeModel";
+      
         public string InputRate { get; set; }
         public string OutputRate { get; set; }
+
+        public string StartValue { get; set; }
+
         public LevelNodeModel(string name, string fulname, string input, string output) : base()
         {
             this.Name = name;
@@ -25,7 +28,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.InputRate = input;
             this.OutputRate = output;
             this.FullName = fulname;
-            this.TypeName = this.GetType().ToString();
+         
             this.Description="";
 
             var a = new NodeOutputViewModel();
@@ -49,26 +52,35 @@ namespace ForresterModeller.src.Nodes.Models
         public override JsonObject ToJSON() {
             JsonObject obj = new JsonObject() {
                 ["Id"] = Id,
-                ["Type"] = this.GetType().ToString(),
+                ["Type"] = type,
                 ["Name"] = Name,
                 ["FullName"] = FullName,
                 ["InputRate"] = InputRate,
                 ["OutputRate"] = OutputRate,
-                ["Description"] = Description == null ? "" : Description
+                ["Description"] = Description == null ? "" : Description,
+                ["StartValue"] = StartValue == null ? "" : StartValue
             };
 
             return obj;
         }
 
-        public override bool FromJSON(JsonObject obj) {
+        public override void FromJSON(JsonObject obj) {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            
             FullName = obj!["FullName"]!.GetValue<string>();
             InputRate = obj!["InputRate"]!.GetValue<string>();
             OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-            return true; }
-    }
+            StartValue = obj!["StartValue"]!.GetValue<string>();
+        }
 
+
+
+        public override T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            return viseter.VisitLevel(this);
+        }
+    }
 
 }

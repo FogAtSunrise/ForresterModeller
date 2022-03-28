@@ -53,7 +53,13 @@ namespace ForresterModeller
             // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
             OpenPageInFrame(ToolsFrame, new GraphElements());
 
-            List<IForesterModel> elem = new List<IForesterModel>() { new LevelNodeModel("lev1", "levelishe1", "in", "out"), new ConstantNodeViewModel("uuuu", "jkjkjkjkj", 6.8f) };
+            List<IForesterModel> elem = new List<IForesterModel>() {
+                new LevelNodeModel("lev1", "levelishe1", "in", "out"), 
+                new ConstantNodeViewModel("const1", "constanta", 6.8f),
+                new ChouseNodeModel("chous", "comment", "34x^2+11*6x=34"),
+                new FunkNodeModel("chous", "comment", "34x^2+11*6x=34"),
+                new DelayNodeModel(),
+            };
             
             foreach (var el in elem)
             {

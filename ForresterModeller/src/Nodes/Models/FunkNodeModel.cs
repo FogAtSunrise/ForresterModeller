@@ -7,16 +7,17 @@ using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class FunkNodeModel : ForesterNodeModel
     {
-        public override string TypeName { 
-            get => Resource.funcType;
-            set {}
-        }
+        public static string type = "FunkNodeModel";
+
+        public override string TypeName => Resource.funcType;
+
         public string Funk { get; set; }
         public FunkNodeModel(string name, string fulname, string funk) : base()
         {
@@ -25,15 +26,13 @@ namespace ForresterModeller.src.Nodes.Models
             this.Funk = funk;
             this.FullName = fulname;
             var a = new NodeOutputViewModel();
-            a.PortPosition = PortPosition.Left;
+            a.PortPosition = PortPosition.Right;
             this.Outputs.Add(a);
 
-            for (int i = 0; i < 5; i++)
-            {
-                var b = new NodeInputViewModel();
-                b.PortPosition = PortPosition.Circle;
-                Inputs.Add(b);
-            }
+            var b = new NodeInputViewModel();
+            b.Name = "boopa";
+            b.PortPosition = PortPosition.Left;
+            Inputs.Add(b);
         }
         public FunkNodeModel() : this("LVL", "Уровень", "1") { }
         static FunkNodeModel()
@@ -53,29 +52,50 @@ namespace ForresterModeller.src.Nodes.Models
             JsonObject obj = new JsonObject()
             {
                 ["Id"] = Id ,
-                ["Type"] = this.GetType().ToString(),
-                ["Name"] = Name == null ? "" :"Name",
+                ["Type"] = type,
+                ["Name"] = Name == null ? "" :Name,            
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
-              //  ["OutputRate"] = OutputRate,
                 ["Description"] = Description == null ? "" : Description
             };
 
             return obj;
         }
 
-        public override bool FromJSON(JsonObject obj)
+        public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
-           // OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-            return true;
+    
         }
     }
 }
+    
 
+    public class ChouseNodeModel:FunkNodeModel
+    {
+    public static string type = "ChouseNodeModel";
+    public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
+        {
 
+        }
+
+        public ChouseNodeModel() : base()
+        {
+
+        }
+
+        public override T AcceptViseter<T>(INodeViseters<T> viseter)
+        {
+            return viseter.VisitFunc(this);
+        }
+
+        static ChouseNodeModel()
+        {
+            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<ChouseNodeModel>));
+        }
+    }
 

@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using Label = System.Windows.Controls.Label;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace ForresterModeller
 {
@@ -44,33 +45,25 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void OpenOldProject_Click(object sender, RoutedEventArgs e)
         {
-            Stream stream = null;
+         /*
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Файлы json|*.json";
-           // openFileDialog1.FilterIndex = 2;
+          
             openFileDialog1.RestoreDirectory = true;
 
             if (openFileDialog1.ShowDialog()==true)
             {
                 System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
-               /* try
-                {
-                    if ((stream = openFileDialog1.OpenFile()) != null)
-                    {  
-                        using (stream)
-                        {
-                            // Insert code to read the stream here.
-                      
-                        }
                        
-                    }
-                }
-                catch (Exception ex)
-                {
-                    System.Windows.MessageBox.Show("Error: Could not read file: " + ex.Message);
-                }*/
             }
-           
+         */
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+               // System.Windows.MessageBox.Show("Выбран вот этот файл " + fbd.SelectedPath);
+                Project j = new Project("", fbd.SelectedPath); 
+                j.ToJson();
+            }
             /*MainWindow dialog = new MainWindow();
             this.Close();
             dialog.ShowDialog();
@@ -79,29 +72,16 @@ namespace ForresterModeller
         }
 
 
-        /*
-         * 
-          <DockPanel x:Name="LastFilesPanel">
-
-                        <Button x:Name ="Project1" DockPanel.Dock="Top" Height="50" >
-                            <Canvas Height="Auto" Width="Auto" >
-                                <Label x:Name="NameProject" Canvas.Top="-13" Canvas.Left="-273"  Width="Auto " Content="Project1"/>
-                                <Label x:Name="FirstDate" Canvas.Top="-13" Canvas.Left="94"  Width="Auto " Content="12.12.20"/>
-                                <Label x:Name="SecondDate" Canvas.Top="-13" Canvas.Left="181"  Width="Auto " Content="26.12.20"/>
-                            </Canvas>
-
-                        </Button>
-         
-         */
+     
 
         public void OpenStartList()
         {
-            List<Project> list = new List<Project>() { new Project("project1"),
-                new Project("project2"),
-                new Project("project3"),
-                new Project("project4"),
-                new Project("project5"),
-                new Project("project6")};
+            List<Project> list = new List<Project>() { new Project("project1", Directory.GetCurrentDirectory()),
+                new Project("project2", Directory.GetCurrentDirectory()),
+                new Project("project3", Directory.GetCurrentDirectory()),
+                new Project("project4", Directory.GetCurrentDirectory()),
+                new Project("project5", Directory.GetCurrentDirectory()),
+                new Project("project6", Directory.GetCurrentDirectory())};
       
 
         foreach(var lis in list)
