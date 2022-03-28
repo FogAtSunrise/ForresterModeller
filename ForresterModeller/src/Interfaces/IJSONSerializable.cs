@@ -5,6 +5,6 @@ namespace ForresterModeller.src.Nodes.Models
     public interface IJSONSerializable
     {
         public abstract JsonObject ToJSON();
-        public abstract bool FromJSON(JsonObject obj);
+        public abstract void FromJSON(JsonObject obj);
     }
 }
