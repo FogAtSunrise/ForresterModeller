@@ -26,7 +26,7 @@
             <MenuItem Header="О программе">
             </MenuItem>
             <MenuItem Header="> Моделировать" Click="MenuGetGraphics_OnClick">
-                
+
             </MenuItem>
         </Menu>
 
@@ -51,27 +51,31 @@
                 </Grid.RowDefinitions>
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
-                <Grid>
-                    <TabControl x:Name="PagesTabControl" DockPanel.Dock="Right" Background="White">
-                        <TabControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0" Orientation="Horizontal">
-                                    <TextBlock MinWidth="80"  Padding="0,0" Margin="0" Text="{Binding Header}"/>
-                                    <Button Name="CloseButton" HorizontalAlignment="Right" Height="15"  BorderThickness="0"
-                                            Background="Transparent" Click="ButtonDelete_OnClick" >X</Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </TabControl.ItemTemplate>
-                        <TabControl.ContentTemplate>
+                    <Grid>
+                        <TabControl x:Name="PagesTabControl" DockPanel.Dock="Right" Background="White" >
+                            <TabControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" MinWidth="80" Text="{Binding Header}"/>
+                                        <Button Grid.Column="1"  Name="CloseButton"   BorderThickness="0"
+                                                Background="Transparent" Click="ButtonDelete_OnClick" Content="&#x2715;" />
+                                    </Grid>
+                                </DataTemplate>
+                            </TabControl.ItemTemplate>
+                            <TabControl.ContentTemplate>
                                 <DataTemplate >
                                     <ContentControl  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
-                            </DataTemplate>
-                        </TabControl.ContentTemplate>
-                    </TabControl>
-                </Grid>
+                                </DataTemplate>
+                            </TabControl.ContentTemplate>
+                        </TabControl>
+                    </Grid>
 
-            </Grid>
-            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
+                </Grid>
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
                     <!--фрейм -->
@@ -83,11 +87,11 @@
             <!--Правая половина (справочная)-->
             <!--Область отображения информации-->
             <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
-               
+
                 <Grid Background="White"  Grid.Row="1" x:Name="Buttonss" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,-0.4,-0.2" Height="35">
                     <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
                     <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
-                
+
                 </Grid>
                 <TabControl Margin="0,40,0,0">
                     <TabItem >
@@ -112,14 +116,10 @@
 
                         <StackPanel Name ="formuls" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
                             <DockPanel>
-                            <TextBox Name ="input_formul"  DockPanel.Dock="Left" Width="299"  ></TextBox>
-                            <Button DockPanel.Dock="Right" Content="+" Width="44" Click="Button_Click_Add_Formule"/>
-                        </DockPanel>
+                                <TextBox Name ="input_formul"  DockPanel.Dock="Left" Width="299"></TextBox>
+                                <Button DockPanel.Dock="Right" Content="+" Width="44" Click="Button_Click_Add_Formule"/>
+                            </DockPanel>
                         </StackPanel>
-
-                       
-
-
                     </TabItem>
 
                 </TabControl>
