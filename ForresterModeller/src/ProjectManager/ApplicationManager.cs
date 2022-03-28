@@ -98,5 +98,27 @@ namespace ForresterModeller.src.ProjectManager
 
             return cc;
         }
-    }
+
+        public IForesterModel createModel(string type)
+        {
+
+            if (LevelNodeModel.type == type)
+            {
+                return new LevelNodeModel();
+            }
+            else
+              if (LevelNodeModel.type == type)
+            {
+                return new LevelNodeModel();
+            }
+            else
+                if (LevelNodeModel.type == type)
+            {
+                return new LevelNodeModel();
+            }
+
+            return null;
+        }
+    
+}
 }

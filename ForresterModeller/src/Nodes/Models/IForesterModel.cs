@@ -6,6 +6,7 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public interface IForesterModel
     {
+        public static string type="";
         public string Description { get; set; }
         /// <summary>
         /// Литерал, обозначающий тип узла
