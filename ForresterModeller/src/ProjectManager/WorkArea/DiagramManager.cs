@@ -11,21 +11,12 @@ using NodeNetwork.Views;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
-    public class DiagramManager : IWorkAreaManager
+    public class DiagramManager : WorkAreaManager
     {
-        public string Name { get; set; }
-        public string PathToFile { get; set; }
-        public IPropertyChangable ActiveModel { get; }
-        public ContentControl Content => GetNetworkView();
-
-        public ObservableCollection<Property> GetProperties()
-        {
-            var properties = new ObservableCollection<Property>();
-
-            properties.Add(new Property("Тип", "Диаграмма"));
-            properties.Add(new Property("Название", Name, (String str) => { Name = str; }));
-            return properties;
-        }
+        public override IPropertyChangable ActiveModel { get; }
+        public override ContentControl Content => GetNetworkView();
+        
+        public override string TypeName => "Диаграмма потоков";
 
         public NetworkView GetNetworkView()
         {
@@ -49,8 +40,14 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             {
                 network.Nodes.Add(node);
             }
+            //network.PropertyChanged += Network_PropertyChanged;
             graf.ViewModel = network;
             return graf;
+        }
+
+        private void Network_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

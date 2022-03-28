@@ -18,9 +18,11 @@
                     <RowDefinition Height="5*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Row="0">
-                    <!--todo починить верстку-->
-                    <TextBlock Name="TypeName" Margin="5,5,0,6">typename</TextBlock>
-                    <TextBlock Name="FullName" Margin="66,5,0,6">name</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="TypeName"></TextBlock>
+                        <TextBlock Text=" "/>
+                        <TextBlock Name="FullName"></TextBlock>
+                    </StackPanel>
                 </Grid>
                 <Grid Row="1">
                     <Border Margin="5" BorderBrush="DimGray" BorderThickness="1">

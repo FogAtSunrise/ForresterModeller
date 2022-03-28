@@ -20,8 +20,9 @@ namespace ForresterModeller.src.ProjectManager
     {
         //Project activeProject;
         private List<IForesterModel> allnodes = new();
-        ActionTabItem active;
-        List<ActionTabItem> opened = new();
+      //  ActionTabItem active;
+        private ActionTabViewModal OpenedPages;
+
         private IForesterModel activeModel;
         private List<ForesterNodeModel> diagramsNode = new();
 
@@ -41,6 +42,10 @@ namespace ForresterModeller.src.ProjectManager
             return network;
         }
 
+        public void OpenNewTab()
+        {
+
+        }
         public ApplicationManager()
         {
             var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12);

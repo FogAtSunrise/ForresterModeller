@@ -9,18 +9,13 @@ using ScottPlot;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
-    public class PlotManager : IWorkAreaManager
+    public class PlotManager : WorkAreaManager
     {
-        public string Name { get; set; }
-        public string PathToFile { get; set; }
-        public IPropertyChangable ActiveModel => this;
-        public ContentControl Content => GenerateActualPlot();
-        public ObservableCollection<Property> GetProperties()
+        public override IPropertyChangable ActiveModel => this;
+        public override ContentControl Content => GenerateActualPlot();
+        public override ObservableCollection<Property> GetProperties()
         {
-            var properties = new ObservableCollection<Property>();
-
-            properties.Add(new Property("Тип", "График"));
-            properties.Add(new Property("Название", Name, (String str) => { Name = str; }));
+            var properties = base.GetProperties();
             properties.Add(new Property("Ось абсцисс", XLabel, (String str) => {
                 XLabel = str;
                 GenerateActualPlot();
@@ -31,6 +26,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             }));
             return properties;
         }
+
+        public override string TypeName => "График"; 
+
         /// <summary>
         /// Построить модель графа на основе данных от ядра
         /// </summary>

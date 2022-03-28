@@ -29,7 +29,7 @@ namespace ForresterModeller.src.Pages.Properties
         private Binding nameBinding;
         private Binding typeNameBinding;
 
-        public PropertyTemplate(ForesterNodeModel model)
+        public PropertyTemplate(IPropertyChangable model)
         {
             nameBinding = new Binding("Name") { Source = model };
             typeNameBinding = new Binding("TypeName") { Source = model };

@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using ForresterModeller.src.Pages.Properties;
+using ReactiveUI;
 
 namespace ForresterModeller.src.Nodes.Models
 {
-    public interface IPropertyChangable
+    public interface IPropertyChangable 
     {
         /// <summary>
         /// Вернуть перечень объектов, которые будут отражены пользователю
@@ -11,5 +12,7 @@ namespace ForresterModeller.src.Nodes.Models
         /// </summary>
         /// <returns></returns>
         public abstract ObservableCollection<Property> GetProperties();
+        public string TypeName { get;  }
+     
     }
 }

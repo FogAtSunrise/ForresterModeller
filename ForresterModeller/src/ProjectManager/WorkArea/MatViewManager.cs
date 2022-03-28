@@ -10,15 +10,10 @@ using ForresterModeller.src.Pages.Properties;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
-    class MatViewManager : IWorkAreaManager
+    class MatViewManager : WorkAreaManager
     {
-        public ObservableCollection<Property> GetProperties()
-        {
-            throw new NotImplementedException();
-        }
+     public override string TypeName => "Математическое представление";
 
-        public string Name { get; set; }
-        public string PathToFile { get; set; }
         public IPropertyChangable ActiveModel { get; }
         public ContentControl Content { get; }
     }

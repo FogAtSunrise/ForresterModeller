@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ForresterModeller.src.Pages.Properties;
@@ -19,15 +20,17 @@ namespace ForresterModeller
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ApplicationManager manager = new ApplicationManager();
+        private ApplicationManager manager = new();
         private ActionTabViewModal OpenedPages;
 
         public MainWindow()
         {
             InitializeComponent();
             OpenedPages = new ActionTabViewModal(PagesTabControl);
+        
            // OpenedPages.Populate();
-            OpenProperty();
+           ConstantNodeViewModel ctx = new ConstantNodeViewModel("DIR", "sur", 12);
+           OpenProperty(ctx);
 
 
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
@@ -36,15 +39,9 @@ namespace ForresterModeller
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
         }
 
-        private void OpenProperty()
+        private void OpenProperty(IPropertyChangable objChangable)
         {
-            var model = new ConstantNodeViewModel("SUR", "Surface", 12);
-            model.Description =
-                "Очень сюрреалистичная константа! Очень подробное описание. Чтобы проверить, что верстка устоит перед испытанием судьбы.";
-            var model2 = new FunkNodeModel("FUR", "Функция запаздывания", "a = 2b + c");
-            model2.Description =
-                "Вот это функционал!";
-            OpenPageInFrame(PropertyFrame, new PropertyTemplate(model2));
+            OpenPageInFrame(PropertyFrame, new PropertyTemplate(objChangable));
         }
 
         private void Test1(object sender, RoutedEventArgs e)
@@ -134,13 +131,15 @@ namespace ForresterModeller
         {
             TreeViewItem item = sender as TreeViewItem;
             //  MessageBox.Show("Должен открыться " + item.Header);
-            OpenNewPage(new DiagramManager { Name = "Диаграмма12331" });
+      
 
         }
 
         private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
             OpenedPages.Tabs.RemoveAt(PagesTabControl.SelectedIndex);
+            
+           
         }
 
         /// <summary>
@@ -148,10 +147,14 @@ namespace ForresterModeller
         /// </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
-        private void OpenNewPage(IWorkAreaManager workareafile)
+        private void OpenNewPage(WorkAreaManager workareafile)
         {
             //OpenedPages.add(name, manager.CreateContentControl(type));
-            OpenedPages.add(workareafile);
+            OpenedPages.add(workareafile); 
+            OpenedPages.tc.SelectedIndex = OpenedPages.Tabs.Count - 1;
+            var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
+            OpenProperty(active.wamanager);
+
         }
 
         private void TestPlot(object sender, RoutedEventArgs e)
@@ -160,8 +163,7 @@ namespace ForresterModeller
         }
         private void TestGraf(object sender, RoutedEventArgs e)
         {
-            OpenNewPage(new DiagramManager{Name = "Диаграмма"});
-            
+            OpenNewPage(new DiagramManager{Name = "D12"});
         }
 
         private void PrintFormule(string form)
@@ -194,7 +196,7 @@ namespace ForresterModeller
             plotmodel.XLabel = "Время (недели)FFF";
             plotmodel.YLabel = "Объем товара (единицы) ";
             plotmodel.Name = "График123";
-            OpenedPages.add(plotmodel);
+            OpenNewPage(plotmodel);
         }
     }
 }
