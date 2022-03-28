@@ -38,6 +38,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.DelayValueName = delayName;
             this.DelayValue = delayValue;
 
+
             var a = new NodeOutputViewModel();
             a.PortPosition = PortPosition.Right;
             a.Name = this.Name;

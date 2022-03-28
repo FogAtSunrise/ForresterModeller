@@ -2,6 +2,7 @@
 using NodeNetwork.ViewModels;
 using System.Windows;
 using ForresterModeller.src.Nodes.Models;
+using NodeNetwork.Toolkit.NodeList;
 
 namespace ForresterModeller
 {
@@ -15,35 +16,21 @@ namespace ForresterModeller
 
             InitializeComponent();
             var network = new NetworkViewModel();
-
-
-            var node1 = new ConstantNodeViewModel();
-            network.Nodes.Add(node1);
-
-            var node2 = new LevelNodeModel();
-            network.Nodes.Add(node2);
-
-            var node3 = new FunkNodeModel();
-            network.Nodes.Add(node3);
-
-
-            var node4 = new CrossNodeModel();
-            network.Nodes.Add(node4);
-
-            var node5 = new ChouseNodeModel();
-            network.Nodes.Add(node5);
-
-            var node6 = new DelayNodeModel();
-            network.Nodes.Add(node6);
-
-
             networkView.ViewModel = network;
-            
+
+            nodeList.ShowTitle = false;
+            nodeList.ShowSearch = false;
+            nodeList.ShowDisplayModeSelector = false;
+            var nodelistModel = new NodeListViewModel();
+            nodelistModel.AddNodeType<ConstantNodeViewModel>(() => new ConstantNodeViewModel());
+            nodelistModel.AddNodeType<CrossNodeModel>(() => new CrossNodeModel());
+            nodelistModel.AddNodeType<LevelNodeModel>(() => new LevelNodeModel());
+            nodelistModel.AddNodeType<ChouseNodeModel>(() => new ChouseNodeModel());
+            nodelistModel.AddNodeType<FunkNodeModel>(() => new FunkNodeModel());
+            nodelistModel.AddNodeType<DelayNodeModel>(() => new DelayNodeModel());
+            nodeList.ViewModel = nodelistModel;
+
         }
 
-        private void networkView_Loaded()
-        {
-
-        }
     }
 }
