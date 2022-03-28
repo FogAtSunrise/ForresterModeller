@@ -26,7 +26,7 @@ namespace ForresterModeller
         {
             InitializeComponent();
             OpenedPages = new ActionTabViewModal(PagesTabControl);
-            OpenedPages.Populate();
+           // OpenedPages.Populate();
             OpenProperty();
 
 
@@ -75,8 +75,6 @@ namespace ForresterModeller
                 MessageBox.Show(el.ToJSON().ToJsonString(options));
                
             }
-
-
         }
         //фрейм plottertools
         private void Test2(object sender, RoutedEventArgs e)
@@ -136,7 +134,7 @@ namespace ForresterModeller
         {
             TreeViewItem item = sender as TreeViewItem;
             //  MessageBox.Show("Должен открыться " + item.Header);
-            OpenNewPage((string)item.Header, "plotter");
+            OpenNewPage(new DiagramManager { Name = "Диаграмма12331" });
 
         }
 
@@ -150,18 +148,20 @@ namespace ForresterModeller
         /// </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
-        private void OpenNewPage(string name, string type)
+        private void OpenNewPage(IWorkAreaManager workareafile)
         {
-            OpenedPages.add(name, manager.CreateContentControl(type));
+            //OpenedPages.add(name, manager.CreateContentControl(type));
+            OpenedPages.add(workareafile);
         }
 
         private void TestPlot(object sender, RoutedEventArgs e)
         {
-            OpenNewPage("file2", "plotter");
+           // OpenNewPage(new PlotManager());
         }
         private void TestGraf(object sender, RoutedEventArgs e)
         {
-            OpenNewPage("file1", "diagram");
+            OpenNewPage(new DiagramManager{Name = "Диаграмма"});
+            
         }
 
         private void PrintFormule(string form)
@@ -177,8 +177,24 @@ namespace ForresterModeller
         }
 
         private void MenuGetGraphics_OnClick(object sender, RoutedEventArgs e)
-        { 
-            OpenedPages.add("PlotFromCore", manager.ExecuteCore());
+        {
+            float t = 1, dt = 0.1f;
+            var c = ForesterNodeCore.Program.GetCurve(
+                "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
+                new List<NodeIdentificator> {
+                    new NodeIdentificator("dc"),
+                    new NodeIdentificator("nt"),
+                    new NodeIdentificator("boo"),
+                    new NodeIdentificator("loo"),
+                },
+                t,
+                dt
+            );
+            PlotManager plotmodel = new (c, t, dt);
+            plotmodel.XLabel = "Время (недели)FFF";
+            plotmodel.YLabel = "Объем товара (единицы) ";
+            plotmodel.Name = "График123";
+            OpenedPages.add(plotmodel);
         }
     }
 }

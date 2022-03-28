@@ -1,11 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using ForresterModeller.src.Nodes.Viters;
-using System.Text.Json.Nodes;
-using ForresterModeller.src.Pages.Properties;
+﻿using ForresterModeller.src.Nodes.Viters;
 
 namespace ForresterModeller.src.Nodes.Models
 {
-    public interface IForesterModel
+    public interface IForesterModel : IJSONSerializable, IPropertyChangable
     {
         public static string type="";
         public string Description { get; set; }
@@ -20,9 +17,5 @@ namespace ForresterModeller.src.Nodes.Models
         /// Уникальный идентификатор модели
         /// </summary>
         public string Id { get; set; }
-        public abstract ObservableCollection<Property> GetProperties();
-        public abstract JsonObject ToJSON();
-        public abstract void FromJSON(JsonObject obj);
-
     }
 }

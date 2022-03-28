@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ForresterModeller.src.Nodes.Models;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
@@ -14,10 +15,14 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     public class ActionTabItem
     {
         // This will be the text in the tab control
-        public string Header { get; set; }
+        public string Header => wamanager.Name;
         // This will be the content of the tab control It is a UserControl whits you need to create manualy
-        public ContentControl Content { get; set; }
+        //public ContentControl Content => ContentModel.Content;
+        public ContentControl Content => wamanager.Content;
+        //содержимое
+        public IWorkAreaManager wamanager;
     }
+
     ///Контейнер для закрывающихся табов
     /// (view model for the TabControl To bind on)
     public class ActionTabViewModal
@@ -37,21 +42,20 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public void Populate()
         {
             // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 1", Content = new UserControl() });
+    /*        Tabs.Add(new ActionTabItem { Header = "UserControl 1", Content = new UserControl() });
             // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });
+            Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });*/
         }
-        /// <summary>
+      
         /// Добавить страницу
         /// </summary>
         /// <param name="header">Заголовок страницы</param>
         /// <param name="uc">Содержимое</param>
-        public void add(string header, ContentControl uc)
+        public void add(IWorkAreaManager uc)
         {
-            Tabs.Add(new ActionTabItem { Header = header, Content = uc});
+            Tabs.Add(new ActionTabItem 
+                { wamanager = uc});
         }
     }
-    class Diagram:WorkAreaManager
-    {
-    }
 }
+
