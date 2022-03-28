@@ -53,6 +53,7 @@ namespace ForresterModeller
             if (openFileDialog1.ShowDialog()==true)
             {
                 System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
+            //    LoaderInterface.puth = openFileDialog1.FileName;
                /* try
                 {
                     if ((stream = openFileDialog1.OpenFile()) != null)

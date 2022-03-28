@@ -11,6 +11,7 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class ConstantNodeViewModel : ForesterNodeModel
     {
+       public static string type = "ConstantNodeViewModel";
         public override string TypeName
         {
             get => Resource.constType;
@@ -56,8 +57,9 @@ namespace ForresterModeller.src.Nodes.Models
             JsonObject obj = new JsonObject()
             {
                 ["Id"] = Id,
-                ["Type"] = this.GetType().ToString(),
+                ["Type"] = type,
                 ["Name"] = Name == null ? "" : "Name",
+                ["TypeName"] = TypeName == null ? "" : "TypeName",
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Value"] = Value,
                 //  ["OutputRate"] = OutputRate,
@@ -72,6 +74,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            TypeName = obj!["TypeName"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             Value = obj!["Value"]!.GetValue<float>();
             // OutputRate = obj!["OutputRate"]!.GetValue<string>();

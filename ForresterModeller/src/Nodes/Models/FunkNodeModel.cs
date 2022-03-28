@@ -13,6 +13,7 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class FunkNodeModel : ForesterNodeModel
     {
+        public static string type = "FunkNodeModel";
         public override string TypeName { 
             get => Resource.funcType;
             set {}
@@ -53,8 +54,9 @@ namespace ForresterModeller.src.Nodes.Models
             JsonObject obj = new JsonObject()
             {
                 ["Id"] = Id ,
-                ["Type"] = this.GetType().ToString(),
+                ["Type"] = type,
                 ["Name"] = Name == null ? "" :"Name",
+                ["TypeName"] = TypeName == null ? "" : "TypeName",
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
               //  ["OutputRate"] = OutputRate,
@@ -68,6 +70,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            TypeName = obj!["TypeName"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
            // OutputRate = obj!["OutputRate"]!.GetValue<string>();

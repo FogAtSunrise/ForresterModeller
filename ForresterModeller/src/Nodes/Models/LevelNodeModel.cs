@@ -11,6 +11,7 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class LevelNodeModel : ForesterNodeModel
     {
+        public static string type = "LevelNodeModel";
         public override string TypeName
         {
             get => Resource.levelType;
@@ -49,8 +50,9 @@ namespace ForresterModeller.src.Nodes.Models
         public override JsonObject ToJSON() {
             JsonObject obj = new JsonObject() {
                 ["Id"] = Id,
-                ["Type"] = this.GetType().ToString(),
+                ["Type"] = type,
                 ["Name"] = Name,
+                ["TypeName"] = TypeName == null ? "" : "TypeName",
                 ["FullName"] = FullName,
                 ["InputRate"] = InputRate,
                 ["OutputRate"] = OutputRate,
@@ -63,6 +65,7 @@ namespace ForresterModeller.src.Nodes.Models
         public override bool FromJSON(JsonObject obj) {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            TypeName = obj!["TypeName"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             InputRate = obj!["InputRate"]!.GetValue<string>();
             OutputRate = obj!["OutputRate"]!.GetValue<string>();
