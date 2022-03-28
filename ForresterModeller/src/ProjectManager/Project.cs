@@ -65,6 +65,7 @@ namespace ForresterModeller.src.ProjectManager
                 filename = filename + index;
             }
 
+        
 
 
             return filename;
@@ -115,16 +116,17 @@ namespace ForresterModeller.src.ProjectManager
             // obj!["ModelsInProject"].Remove("Model2");
             //  (JsonObject)obj["ModelsInProject"].Remove("Model2");
 
-          
-            string name = CreateDirectory(path);
-/*
+            CreateDirectory(path + "\\" + "test");
+
+          /*  string name = CreateFile("test", path);
+
             StreamWriter file = new StreamWriter(path + "\\" + name + ".json");
             file.WriteLine(obj);
             file.Close();
-          
+          */
             var options = new JsonSerializerOptions { WriteIndented = true };
             MessageBox.Show(obj.ToJsonString(options));
-*/
+
         }
 
         public IForesterModel createModel(string type)
