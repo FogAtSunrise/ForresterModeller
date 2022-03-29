@@ -40,9 +40,17 @@ namespace ForresterModeller
             PagesTabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
-        private void OpenProperty(IPropertyChangable objChangable)
+        private void OpenProperty(IPropertyChangable sender)
         {
-            OpenPageInFrame(PropertyFrame, new PropertyTemplate(objChangable));
+            if (sender is WorkAreaManager)
+            {
+                OpenPageInFrame(PropertyFrame, new PropertiesControlView(((WorkAreaManager)sender).ActiveChangableItem));
+            }
+            else
+            {
+                OpenPageInFrame(PropertyFrame, new PropertiesControlView(sender));
+            }
+            
         }
 
         private void Test1(object sender, RoutedEventArgs e)

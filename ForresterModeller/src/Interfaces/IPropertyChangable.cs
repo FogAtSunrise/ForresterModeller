@@ -13,6 +13,7 @@ namespace ForresterModeller.src.Nodes.Models
         /// <returns></returns>
         public abstract ObservableCollection<Property> GetProperties();
         public string TypeName { get;  }
+        public string Name { get;  }
      
     }
 }

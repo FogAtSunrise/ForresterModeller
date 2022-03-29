@@ -52,7 +52,7 @@
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
                     <Grid>
-                        <TabControl x:Name="PagesTabControl" DockPanel.Dock="Right" Background="White" >
+                        <TabControl x:Name="PagesTabControl" SelectedItem="{}" DockPanel.Dock="Right" Background="White" >
                             <TabControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -126,11 +126,12 @@
             </Grid>
             <!--Область редактирования элементов-->
             <Grid Grid.Row="2"  x:Name="PropertyArea" Grid.Column="2">
-                <Frame x:Name="PropertyFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
+                <Frame x:Name="PropertyFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
             </Grid>
         </Grid>
         <Grid Background="White"  Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
-
+          <!--  PagesTabControl
+            Content="{Binding Content}"-->
             <Button Content="Test1" Click ="Test1" Margin="0,0,716,0" />
             <Button Content="Test2" Click ="Test2" Margin="84,0,630,0" />
 

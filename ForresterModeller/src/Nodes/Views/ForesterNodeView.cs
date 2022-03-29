@@ -2,12 +2,15 @@
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Disposables;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ForresterModeller.src.Nodes.Models;
 
 namespace ForresterModeller.src.Nodes.Views
@@ -40,11 +43,15 @@ namespace ForresterModeller.src.Nodes.Views
 
         public ForesterNodeView(string type) : base()
         {
-           
+            this.MouseDown += delegate (object? sender, MouseButtonEventArgs args)
+            {
+                if (ForesterViewModel != null)
+                    ForesterViewModel.IsSelected = true;
+            };
             this.WhenActivated(d =>
             {
                 this.OneWayBind(ForesterViewModel, vm => vm.FullName, v => v.FullName.Text).DisposeWith(d);
-                    //todo исправить, вместо id раньше был code
+                //todo исправить, вместо id раньше был code
                 this.OneWayBind(ForesterViewModel, vm => vm.Id, v => v.Code.Text).DisposeWith(d);
             }
             );

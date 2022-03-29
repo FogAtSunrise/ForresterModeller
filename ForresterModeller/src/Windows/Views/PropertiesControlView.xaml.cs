@@ -22,24 +22,12 @@ namespace ForresterModeller.src.Pages.Properties
     /// Запрашивает от полученной модели список свойств и
     /// передает их представлению.
     /// </summary>
-    public partial class PropertyTemplate : Page
+    public partial class PropertiesControlView : Page
     {
-        public ObservableCollection<Property> Properties { get; set; }
-
-        private Binding nameBinding;
-        private Binding typeNameBinding;
-
-        public PropertyTemplate(IPropertyChangable model)
+      
+        public PropertiesControlView(IPropertyChangable a)
         {
-            nameBinding = new Binding("Name") { Source = model };
-            typeNameBinding = new Binding("TypeName") { Source = model };
-            DataContext = this;
-            Properties = model.GetProperties();
-
             InitializeComponent();
-            FullName.SetBinding(TextBlock.TextProperty, nameBinding);
-            TypeName.SetBinding(TextBlock.TextProperty, typeNameBinding);
-    
         }
     }
 }

@@ -73,6 +73,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="src\Windows\Models\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

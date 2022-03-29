@@ -22,7 +22,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         }
         private string _name;
         //Объект, поля которого отображаются в окне свойств
-        public virtual IPropertyChangable ActiveModel { get; }
+        public virtual IPropertyChangable ActiveChangableItem => this;
         //содержимое рабочей области
         public virtual ContentControl Content { get; }
         public virtual ObservableCollection<Property> GetProperties()

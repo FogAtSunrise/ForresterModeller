@@ -11,7 +11,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class PlotManager : WorkAreaManager
     {
-        public override IPropertyChangable ActiveModel => this;
         public override ContentControl Content => GenerateActualPlot();
         public override ObservableCollection<Property> GetProperties()
         {

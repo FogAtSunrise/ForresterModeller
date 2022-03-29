@@ -45,19 +45,10 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             Tabs = new ObservableCollection<ActionTabItem>();
             tabControl.ItemsSource = this.Tabs;
             tc = tabControl;
+           
         }
 
-        /// <summary>
-        /// Страницы, открывающиеся при запуске по умолчанию
-        /// </summary>
-        public void Populate()
-        {
-            // Add A tab to TabControl With a specific header and Content(UserControl)
-    /*        Tabs.Add(new ActionTabItem { Header = "UserControl 1", Content = new UserControl() });
-            // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });*/
-        }
-      
+ 
         /// Добавить страницу
         /// </summary>
         /// <param name="header">Заголовок страницы</param>
@@ -71,6 +62,18 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         {
             Tabs.RemoveAt(tc.SelectedIndex);
         }
+
+        /// <summary>
+        /// Страницы, открывающиеся при запуске по умолчанию
+        /// </summary>
+        public void Populate()
+        {
+            // Add A tab to TabControl With a specific header and Content(UserControl)
+            /*        Tabs.Add(new ActionTabItem { Header = "UserControl 1", Content = new UserControl() });
+                    // Add A tab to TabControl With a specific header and Content(UserControl)
+                    Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });*/
+        }
+
     }
 }
 
