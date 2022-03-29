@@ -11,7 +11,7 @@ using ForresterModeller.src.ProjectManager.WorkArea;
 using WpfMath.Controls;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using ForesterNodeCore ;
+using ForesterNodeCore;
 
 namespace ForresterModeller
 {
@@ -27,16 +27,17 @@ namespace ForresterModeller
         {
             InitializeComponent();
             OpenedPages = new ActionTabViewModal(PagesTabControl);
-        
-           // OpenedPages.Populate();
-           ConstantNodeViewModel ctx = new ConstantNodeViewModel("DIR", "sur", 12);
-           OpenProperty(ctx);
+
+            // OpenedPages.Populate();
+            ConstantNodeViewModel ctx = new ConstantNodeViewModel("DIR", "sur", 12);
+            OpenProperty(ctx);
 
 
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
+            PagesTabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
         private void OpenProperty(IPropertyChangable objChangable)
@@ -51,26 +52,26 @@ namespace ForresterModeller
             OpenPageInFrame(ToolsFrame, new GraphElements());
 
             List<IForesterModel> elem = new List<IForesterModel>() {
-                new LevelNodeModel("lev1", "levelishe1", "in", "out"), 
+                new LevelNodeModel("lev1", "levelishe1", "in", "out"),
                 new ConstantNodeViewModel("const1", "constanta", 6.8f),
                 new ChouseNodeModel("chous", "comment", "34x^2+11*6x=34"),
                 new FunkNodeModel("chous", "comment", "34x^2+11*6x=34"),
                 new DelayNodeModel(),
             };
-            
+
             foreach (var el in elem)
             {
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 MessageBox.Show(el.ToJSON().ToJsonString(options));
-               
-                
+
+
                 JsonObject test = el.ToJSON();
                 test["Name"] = "Another name";
-            
+
                 el.FromJSON(test);
                 options = new JsonSerializerOptions { WriteIndented = true };
                 MessageBox.Show(el.ToJSON().ToJsonString(options));
-               
+
             }
         }
         //фрейм plottertools
@@ -131,15 +132,13 @@ namespace ForresterModeller
         {
             TreeViewItem item = sender as TreeViewItem;
             //  MessageBox.Show("Должен открыться " + item.Header);
-      
+
 
         }
 
         private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
             OpenedPages.Tabs.RemoveAt(PagesTabControl.SelectedIndex);
-            
-           
         }
 
         /// <summary>
@@ -150,7 +149,7 @@ namespace ForresterModeller
         private void OpenNewPage(WorkAreaManager workareafile)
         {
             //OpenedPages.add(name, manager.CreateContentControl(type));
-            OpenedPages.add(workareafile); 
+            OpenedPages.add(workareafile);
             OpenedPages.tc.SelectedIndex = OpenedPages.Tabs.Count - 1;
             var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
             OpenProperty(active.wamanager);
@@ -159,11 +158,11 @@ namespace ForresterModeller
 
         private void TestPlot(object sender, RoutedEventArgs e)
         {
-           // OpenNewPage(new PlotManager());
+            // OpenNewPage(new PlotManager());
         }
         private void TestGraf(object sender, RoutedEventArgs e)
         {
-            OpenNewPage(new DiagramManager{Name = "D12"});
+            OpenNewPage(new DiagramManager { Name = "D12" });
         }
 
         private void PrintFormule(string form)
@@ -192,11 +191,20 @@ namespace ForresterModeller
                 t,
                 dt
             );
-            PlotManager plotmodel = new (c, t, dt);
+            PlotManager plotmodel = new(c, t, dt);
             plotmodel.XLabel = "Время (недели)FFF";
             plotmodel.YLabel = "Объем товара (единицы) ";
             plotmodel.Name = "График123";
             OpenNewPage(plotmodel);
+        }
+
+        void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            {
+                var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
+                OpenProperty(active.wamanager);
+            }
         }
     }
 }
