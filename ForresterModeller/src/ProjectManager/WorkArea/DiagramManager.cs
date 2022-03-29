@@ -14,13 +14,15 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     public class DiagramManager : WorkAreaManager
     {
         public override IPropertyChangable ActiveModel { get; }
-        public override ContentControl Content => GetNetworkView();
-        
+        private NetworkView _contentView;
+
+        public override ContentControl Content => _contentView ?? GetNetworkView();
+
         public override string TypeName => "Диаграмма потоков";
 
         public NetworkView GetNetworkView()
         {
-            NetworkView graf = new NetworkView() { Background = Brushes.AliceBlue };
+            _contentView = new NetworkView() { Background = Brushes.AliceBlue };
             var network = new NetworkViewModel();
             ///
             ///
@@ -41,8 +43,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 network.Nodes.Add(node);
             }
             //network.PropertyChanged += Network_PropertyChanged;
-            graf.ViewModel = network;
-            return graf;
+            _contentView.ViewModel = network;
+            return _contentView;
         }
 
         private void Network_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
