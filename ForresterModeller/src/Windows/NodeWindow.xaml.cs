@@ -3,6 +3,7 @@ using NodeNetwork.ViewModels;
 using System.Windows;
 using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.Toolkit.NodeList;
+using ForresterModeller.src.Nodes.Viters;
 
 namespace ForresterModeller
 {
@@ -17,7 +18,6 @@ namespace ForresterModeller
             InitializeComponent();
             var network = new NetworkViewModel();
             networkView.ViewModel = network;
-
             nodeList.ShowTitle = false;
             nodeList.ShowSearch = false;
             nodeList.ShowDisplayModeSelector = false;
@@ -32,5 +32,9 @@ namespace ForresterModeller
 
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var a = NodeTranslator.Translate(networkView.ViewModel);
+        }
     }
 }

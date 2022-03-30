@@ -30,11 +30,11 @@ namespace ForresterModeller.src.Nodes.Models
             this.Outputs.Add(a);
 
             var b = new NodeInputViewModel();
-            b.Name = "boopa";
+            b.Name = "x";
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
         }
-        public FunkNodeModel() : this("LVL", "Уровень", "1") { }
+        public FunkNodeModel() : this("FUN", "функция", "x") { }
         static FunkNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("funk"), typeof(IViewFor<FunkNodeModel>));
@@ -91,11 +91,6 @@ namespace ForresterModeller.src.Nodes.Models
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
             return viseter.VisitFunc(this);
-        }
-
-        static ChouseNodeModel()
-        {
-            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<ChouseNodeModel>));
         }
     }
 
