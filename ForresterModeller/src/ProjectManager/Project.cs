@@ -1,4 +1,8 @@
-﻿using ForresterModeller.src.Nodes.Models;
+﻿
+using ForresterModeller.src.Nodes.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +13,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
+
 
 namespace ForresterModeller.src.ProjectManager
 {
@@ -35,6 +40,7 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         string PathToProject;
 
+
         /// <summary>
         /// Добавить в проект новую модель
         /// </summary>
@@ -55,6 +61,16 @@ namespace ForresterModeller.src.ProjectManager
 
             listAllFiles.Add(name);
         }
+        /// <summary>
+        /// конструктор, принимает путь включающий имя json проекта, для существующего файла
+        /// </summary>
+        /// <param name="path"></param>
+        public Project(string path):this( Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path))
+        {
+            openOldProject();
+        }
+
+
         public Project(string name, string pathTofile)
         {
             Name = (name == null || name == "") ? DefaultName : name;
@@ -71,6 +87,22 @@ namespace ForresterModeller.src.ProjectManager
             ChangeDate = DateTime.Now;
 
         }
+
+  
+        public void openOldProject()
+        {
+            using (StreamReader r = new StreamReader(PathToProject + "\\" + Name + ".json"))
+            {
+               string json = r.ReadToEnd();
+               
+               var jobj = JsonObject.Parse(json); 
+                r.Close();
+                FromJson(jobj.AsObject());
+                var options = new JsonSerializerOptions { WriteIndented = true };////////////////////
+                MessageBox.Show(jobj.ToJsonString(options));
+            }
+        }
+
 
         public void SaveOldProject()
         {
@@ -178,6 +210,7 @@ namespace ForresterModeller.src.ProjectManager
             foreach (var model in allProjectModels)
             {
                 projectModuls![model.Id] = model.ToJSON();
+
             }
 
             //Объект проекта, он один
@@ -198,6 +231,61 @@ namespace ForresterModeller.src.ProjectManager
             };
 
             return ProjectJson;
+        }
+
+        public void FromJson(JsonObject obj)
+        {
+
+            Name = obj!["Name"]!.GetValue<string>();
+            CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
+
+
+            //   JsonArray studentsArray = root["Students"]!.AsArray();
+
+            string k = "";
+            JsonArray projectFiles =obj["ListAllFiles"]!.AsArray();
+            foreach (var file in projectFiles)
+            {
+                listAllFiles.Add(file.ToString());
+            //    k += listAllFiles[listAllFiles.Count - 1]+"--";
+            }
+
+            //  MessageBox.Show(k);
+
+            JsonObject projectModuls = obj["ModelsInProject"]!.AsObject();
+            foreach (var model in projectModuls)
+            {
+           
+                   // k += model!["Name"]!.GetValue<string>() + "--";
+            }
+
+            //  MessageBox.Show(k);
+            /* JsonObject projectModuls = new JsonObject();
+
+
+             foreach (var model in allProjectModels)
+             {
+                 projectModuls![model.Id] = model.ToJSON();
+             }
+
+             //Объект проекта, он один
+             JsonObject ProjectJson = new JsonObject
+
+             {
+                 //Информация о проекте
+                 ["Name"] = Name,
+                 ["CreationDate"] = CreationDate,
+                 ["ChangeDate"] = DateTime.Now,
+
+                 //Список файлов проекта
+                 ["ListAllFiles"] = projectFiles,
+
+                 //Список моделей проекта
+                 ["ModelsInProject"] = projectModuls
+
+             };
+
+ */
         }
         public void ToJson11()
         {

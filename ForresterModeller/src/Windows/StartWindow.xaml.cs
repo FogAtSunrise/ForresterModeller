@@ -45,7 +45,6 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void OpenOldProject_Click(object sender, RoutedEventArgs e)
         {
-         /*
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Файлы json|*.json";
           
@@ -53,24 +52,29 @@ namespace ForresterModeller
 
             if (openFileDialog1.ShowDialog()==true)
             {
-                System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
-                       
+                //System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
+                TestClass f = new TestClass();
+                f.test4(openFileDialog1.FileName);
+
             }
-         */
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
+         
+          
+         /*  FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                // System.Windows.MessageBox.Show("Выбран вот этот файл " + fbd.SelectedPath);
                 Project j = new Project("", fbd.SelectedPath); 
                 j.ToJson();
             }
+*/
+
             /*MainWindow dialog = new MainWindow();
             this.Close();
             dialog.ShowDialog();
             */
 
         }
-        TestClass f = new TestClass();
+        
 
         private void OpenOle_Click(object sender, RoutedEventArgs e)
         {

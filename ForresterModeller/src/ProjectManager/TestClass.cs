@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -14,7 +15,22 @@ namespace ForresterModeller.src.ProjectManager
     {
 
         Project proj;
-        public void test1()
+
+
+        public TestClass(Project p)
+        { proj = p; }
+
+        public TestClass() { }
+
+
+        public void test4(string path)
+        {
+    
+
+            proj = new Project(path);
+      
+        }
+            public void test1()
         {
             proj = new Project();
            // proj.SaveNewProject();
