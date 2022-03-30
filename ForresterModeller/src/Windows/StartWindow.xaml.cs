@@ -70,12 +70,20 @@ namespace ForresterModeller
             */
 
         }
+        TestClass f = new TestClass();
 
-
-     
+        private void OpenOle_Click(object sender, RoutedEventArgs e)
+        {
+            // Project j = new Project();
+           // TestClass f = new TestClass();
+            // f.test1(); 
+            //f.test2();////////////////////
+         //   f.test3();
+        }
 
         public void OpenStartList()
         {
+           
             List<Project> list = new List<Project>() { new Project("project1", Directory.GetCurrentDirectory()),
                 new Project("project2", Directory.GetCurrentDirectory()),
                 new Project("project3", Directory.GetCurrentDirectory()),
@@ -118,5 +126,7 @@ namespace ForresterModeller
             this.Close();
             dialog.ShowDialog();
         }
+
+
     }
 }
