@@ -1,4 +1,5 @@
 ﻿using ForresterModeller.src.Nodes.Models;
+using NodeNetwork.ViewModels;
 using System;
 using System.Linq;
 
@@ -12,7 +13,7 @@ namespace ForresterModeller.src.Nodes.Viters
 
             foreach (var inputs in node.Inputs.Items)
             {
-                preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
+                preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).Id);
             }
 
             string translatedNode = String.Format("|f {0} {1}|", node.Id, preEquals);
@@ -40,8 +41,8 @@ namespace ForresterModeller.src.Nodes.Viters
 
             foreach (var inputs in node.Inputs.Items)
             {
-                preInEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
-                preStart.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
+                preInEquals = preInEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
+                preStart = preStart.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
             }
 
             string translatedNode = String.Format("|d {0} {1} {2} {3}|",
@@ -66,7 +67,14 @@ namespace ForresterModeller.src.Nodes.Viters
 
             foreach (var inputs in node.Inputs.Items)
             {
-                preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
+                if (inputs.Connections.Items.Count() == 0)
+                {
+                    inputs.Port.IsInErrorMode = true;
+                }
+                else
+                {
+                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).Id);
+                }
             }
 
             string translatedNode = String.Format("|h {0} {1}|", node.Id, preEquals);
@@ -81,9 +89,14 @@ namespace ForresterModeller.src.Nodes.Viters
 
             foreach (var inputs in node.Inputs.Items)
             {
-                preInEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
-                preOutEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
-                preStart.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
+                if (inputs.Connections.Items.Count() == 0)
+                {
+                    inputs.Port.IsInErrorMode = true;
+                }
+                else
+                {
+                    preInEquals =  ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).Id;
+                }
             }
 
             string translatedNode = String.Format("|l {0} {1} {2} {3}|", node.Id, preInEquals, preOutEquals, preStart);
@@ -91,4 +104,19 @@ namespace ForresterModeller.src.Nodes.Viters
         }
     }
 
+
+    public class NodeTranslator{
+        public static string Translate(NetworkViewModel model)
+        {
+            var result = "";
+            var viseter = new TransltateViseter();
+            foreach (ForesterNodeModel node in model.Nodes.Items)
+            {
+                result += node.AcceptViseter<string>(viseter);
+            }
+            return result;
+        }
+    }
+
 }
+

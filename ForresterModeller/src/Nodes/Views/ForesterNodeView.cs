@@ -40,6 +40,8 @@ namespace ForresterModeller.src.Nodes.Views
 
         public ForesterNodeView(string type) : base()
         {
+
+
            
             this.WhenActivated(d =>
             {

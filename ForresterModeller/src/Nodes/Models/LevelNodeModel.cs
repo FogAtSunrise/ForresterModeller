@@ -25,6 +25,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.InputRate = input;
             this.OutputRate = output;
             this.FullName = fulname;
+            this.StartValue = "0";
 
             var a = new NodeOutputViewModel();
             a.PortPosition = PortPosition.Right;
@@ -37,10 +38,15 @@ namespace ForresterModeller.src.Nodes.Models
             var b = new NodeInputViewModel();
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
+
+
+
         }
         public LevelNodeModel() : this("LVL", "Уровень", "1", "1") { }
         static LevelNodeModel()
         {
+
+
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));
         }
 
