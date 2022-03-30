@@ -113,6 +113,11 @@ namespace ForresterModeller.src.ProjectManager
             else SaveNewProject();
         }
 
+        public IForesterModel getModelById(string id)
+        {
+            IForesterModel find = allProjectModels.Find((item) =>  item.Id == id);
+            return find;
+        }
         public void SaveNewProject()
         {
 
@@ -288,37 +293,14 @@ namespace ForresterModeller.src.ProjectManager
             JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
             foreach (var model in projectModuls)
             {
-           
-                    k += model!["Name"]!.GetValue<string>() + "--";
+                IForesterModel m= createModel(model!["Type"]!.GetValue<string>());
+                m.FromJSON(model.AsObject());
+                allProjectModels.Add(m);
+                k += m.TypeName + m.Id+"\n";
             }
 
               MessageBox.Show(k);
-            /* JsonObject projectModuls = new JsonObject();
-
-
-             foreach (var model in allProjectModels)
-             {
-                 projectModuls![model.Id] = model.ToJSON();
-             }
-
-             //Объект проекта, он один
-             JsonObject ProjectJson = new JsonObject
-
-             {
-                 //Информация о проекте
-                 ["Name"] = Name,
-                 ["CreationDate"] = CreationDate,
-                 ["ChangeDate"] = DateTime.Now,
-
-                 //Список файлов проекта
-                 ["ListAllFiles"] = projectFiles,
-
-                 //Список моделей проекта
-                 ["ModelsInProject"] = projectModuls
-
-             };
-
- */
+            
         }
         public void ToJson11()
         {

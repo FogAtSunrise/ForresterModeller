@@ -83,7 +83,8 @@ namespace ForresterModeller
             // f.test1(); 
             TestClass f = new TestClass();
             f.test2();////////////////////
-         //   f.test3();
+            System.Windows.MessageBox.Show("Сохранился тестовый проект в папке по умолчанию ");
+            //   f.test3();
         }
 
         public void OpenStartList()

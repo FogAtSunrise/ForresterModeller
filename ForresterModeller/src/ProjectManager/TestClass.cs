@@ -28,7 +28,29 @@ namespace ForresterModeller.src.ProjectManager
     
 
             proj = new Project(path);
-      
+
+            IForesterModel u;
+             u=proj.getModelById("lev1895459376");
+            if(u!=null)
+                MessageBox.Show(u.TypeName);
+            else MessageBox.Show("1111111111111");
+
+            u = proj.getModelById("const11547155641");
+            if (u != null)
+                MessageBox.Show(u.TypeName);
+            else MessageBox.Show("22222222");
+
+            u = proj.getModelById("lev1680152890");
+            if (u != null)
+                MessageBox.Show(u.TypeName);
+            else MessageBox.Show("33333333333");
+
+            u = proj.getModelById("u0");
+            if (u != null)
+                MessageBox.Show(u.TypeName);
+            else MessageBox.Show("44444444");
+
+
         }
             public void test1()
         {
@@ -44,7 +66,7 @@ namespace ForresterModeller.src.ProjectManager
             proj.addModel(new LevelNodeModel("lev1", "levelishe1", "in", "out"));
             proj.addModel(new ConstantNodeViewModel("const1", "constanta", 6.8f));
             proj.addModel(new ChouseNodeModel("chous", "comment", "34x^2+11*6x=34"));
-            proj.addModel(new FunkNodeModel("chous", "comment", "34x^2+11*6x=34"));
+            proj.addModel(new FunkNodeModel("9999999s", "comment", "34x^2+11*6x=34"));
             proj.addModel(new DelayNodeModel("lev1", "levelishe1", "in", "out", 76, "constanta", 6.8f));
            
             proj.addFiles("sss");
