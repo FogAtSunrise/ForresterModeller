@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -37,7 +38,7 @@ namespace ForresterModeller.src.ProjectManager
         }
 
 
-        //привер вызова:   CreateDirectory(path + "\\" + "имя новой папки");
+        //пример вызова:   CreateDirectory(path + "\\" + "имя новой папки");
         private string CreateDirectory(string path)
         {
             if (Directory.Exists(path))
@@ -55,25 +56,76 @@ namespace ForresterModeller.src.ProjectManager
 
         private string CreateFile(string filename, string path)
         {
-            if (Directory.Exists(path + "\\" + filename + ".json"))
+            if (File.Exists(path + "\\" + filename + ".json"))
             {
                 int index = 1;
-                while (Directory.Exists(path + "\\" + filename + index + ".json"))
+                while (File.Exists(path + "\\" + filename + index + ".json"))
                 {
                     index++;
                 }
                 filename = filename + index;
             }
-
-        
-
-
+            StreamWriter file = File.CreateText(path + "\\" + filename + ".json");
+            file.Close();
             return filename;
+        }
+
+        private void WriteFileJson(string filename, string path, JsonObject inf)
+        {
+            using (StreamWriter file = new StreamWriter(path + "\\" + filename + ".json"))
+            {
+         
+                file.WriteLine(inf);
+                file.Close();
+
+            }    
         }
 
         public Project() { }
 
         public void ToJson()
+        {
+
+          /*  KeyValuePair<String, JsonValue> obj = new KeyValuePair<String, JsonValue>("fkkjds", new JsonObject
+            {
+                ["Id"] = 123,
+                ["Name"] = "const"
+            });
+
+
+            KeyValuePair<String, JsonValue> obj = new KeyValuePair<String, JsonValue>("fkkjds", new JsonValue
+            {
+                ["Id"] = 123,
+                ["Name"] = "const"
+            });
+*/
+
+
+            JsonObject projectModuls = new JsonObject();
+            JsonArray projectFiles = new JsonArray();
+            //Объект проекта, он один
+            JsonObject ProjectJson = new JsonObject
+
+            {
+                //Информация о проекте
+                ["Name"] = Name,
+                ["CreationDate"] = CreationDate,
+                ["ChangeDate"] = ChangeDate,
+
+                //Список файлов проекта
+                ["ListAllFiles"] = new JsonArray(),
+
+                //Список моделей проекта
+                ["ModelsInProject"] = new JsonObject()
+
+            };
+
+
+
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            MessageBox.Show(ProjectJson.ToJsonString(options));
+        }
+        public void ToJson11()
         {
             string path = PathToFile;
             //Объект проекта, он один
@@ -89,25 +141,41 @@ namespace ForresterModeller.src.ProjectManager
                 ["ListAllFiles"] = new JsonArray(),
 
                 //Список моделей проекта
-                ["ModelsInProject"] = new JsonObject
-                { //Пример модели
-                    ["Model1"] = new JsonObject
-                    {
-                        ["Id"] = 123,
-                        ["Name"] = "const",
-                        ["Type"] = "ConstantNodeViewModel",
-                        ["Value"] = "3.456"
-                    },
+                ["ModelsInProject"] = new JsonObject { }
+                //Пример модели
+                /*            ["Model1"] = new JsonObject
+                            {
+                                ["Id"] = 123,
+                                ["Name"] = "const",
+                                ["Type"] = "ConstantNodeViewModel",
+                                ["Value"] = "3.456"
+                            },
 
-                    ["Model2"] = new JsonObject
-                    {
-                        ["Id"] = 1253,
-                        ["Name"] = "const"
-                    }
-                }
+                            ["Model2"] = new JsonObject
+                            {
+                                ["Id"] = 1253,
+                                ["Name"] = "const"
+                            }*/
+
+
             };
 
+            JsonObject ray = obj!["ModelsInProject"]!.AsObject();
             string nameId = "3456";
+
+            JsonObject array = new JsonObject { ["Id"] = "hhh", ["Low"] = 20 };
+
+
+
+            obj!["ModelsInProject"]![array!["Id"]!.GetValue<string>()] = array; //Добавить 
+
+
+            obj!["ModelsInProject"]![nameId+"fddf"] = new JsonObject { ["Id"] = 888888889, ["Low"] = 20 };
+
+            
+            
+
+            // obj["ModelsInProject"] = ray;
 
             //Добавить
             //    obj!["ModelsInProject"]![nameId] = new JsonObject { ["Id"] = 1289, ["Low"] = 20 };
@@ -116,14 +184,16 @@ namespace ForresterModeller.src.ProjectManager
             // obj!["ModelsInProject"].Remove("Model2");
             //  (JsonObject)obj["ModelsInProject"].Remove("Model2");
 
-            CreateDirectory(path + "\\" + "test");
+            // CreateDirectory(path + "\\" + "test");
 
-          /*  string name = CreateFile("test", path);
+            // string name = CreateFile("test", path);
 
-            StreamWriter file = new StreamWriter(path + "\\" + name + ".json");
-            file.WriteLine(obj);
-            file.Close();
-          */
+            //  WriteFileJson(name, path, obj);
+            /*
+                       StreamWriter file = new StreamWriter(path + "\\" + name + ".json");
+                        file.WriteLine(obj);
+                        file.Close();
+                      */
             var options = new JsonSerializerOptions { WriteIndented = true };
             MessageBox.Show(obj.ToJsonString(options));
 
