@@ -79,9 +79,10 @@ namespace ForresterModeller
         private void OpenOle_Click(object sender, RoutedEventArgs e)
         {
             // Project j = new Project();
-           // TestClass f = new TestClass();
+            // TestClass f = new TestClass();
             // f.test1(); 
-            //f.test2();////////////////////
+            TestClass f = new TestClass();
+            f.test2();////////////////////
          //   f.test3();
         }
 

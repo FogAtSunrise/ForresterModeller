@@ -197,19 +197,19 @@ namespace ForresterModeller.src.ProjectManager
        public  JsonObject  ToJson()
         {
 
-
             JsonArray projectFiles = new JsonArray();
             foreach (var file in listAllFiles)
             {
                 projectFiles.Add(file);
             }
 
-            JsonObject projectModuls = new JsonObject();
+            JsonArray projectModuls = new JsonArray();
 
 
             foreach (var model in allProjectModels)
             {
-                projectModuls![model.Id] = model.ToJSON();
+                projectModuls.Add(model.ToJSON());
+              
 
             }
 
@@ -230,6 +230,39 @@ namespace ForresterModeller.src.ProjectManager
 
             };
 
+            /*
+                        JsonArray projectFiles = new JsonArray();
+                        foreach (var file in listAllFiles)
+                        {
+                            projectFiles.Add(file);
+                        }
+
+                        JsonObject projectModuls = new JsonObject();
+
+
+                        foreach (var model in allProjectModels)
+                        {
+                            projectModuls![model.Id] = model.ToJSON();
+
+                        }
+
+                        //Объект проекта, он один
+                        JsonObject ProjectJson = new JsonObject
+
+                        {
+                            //Информация о проекте
+                            ["Name"] = Name,
+                            ["CreationDate"] = CreationDate,
+                            ["ChangeDate"] = DateTime.Now,
+
+                            //Список файлов проекта
+                            ["ListAllFiles"] = projectFiles,
+
+                            //Список моделей проекта
+                            ["ModelsInProject"] = projectModuls
+
+                        };
+            */
             return ProjectJson;
         }
 
@@ -252,14 +285,14 @@ namespace ForresterModeller.src.ProjectManager
 
             //  MessageBox.Show(k);
 
-            JsonObject projectModuls = obj["ModelsInProject"]!.AsObject();
+            JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
             foreach (var model in projectModuls)
             {
            
-                   // k += model!["Name"]!.GetValue<string>() + "--";
+                    k += model!["Name"]!.GetValue<string>() + "--";
             }
 
-            //  MessageBox.Show(k);
+              MessageBox.Show(k);
             /* JsonObject projectModuls = new JsonObject();
 
 
