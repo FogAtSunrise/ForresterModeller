@@ -9,17 +9,17 @@ namespace ForresterModeller.ViewModels
 {
     public class TabViewModel : ReactiveObject
     {
-        public string Header => wamanager.Name;
-        public ContentControl Content => wamanager.Content;
+        public string Header => WAManager.Name;
+        public ContentControl Content => WAManager.Content;
         //содержимое
-        private WorkAreaManager wamanager;
+        public WorkAreaManager WAManager { get; set; }
 
         public TabViewModel(WorkAreaManager WAManager)
         {
-            wamanager = WAManager;
+            this.WAManager = WAManager;
             //Биндим данные с помощью инструментов Reactive
-            wamanager.WhenAnyValue(w => w.Name).ToProperty(this, o => o.Header);
-            wamanager.WhenAnyValue(w => w.Content).ToProperty(this, o => o.Content);
+            this.WAManager.WhenAnyValue(w => w.Name).ToProperty(this, o => o.Header);
+            this.WAManager.WhenAnyValue(w => w.Content).ToProperty(this, o => o.Content);
         }
     }
 }

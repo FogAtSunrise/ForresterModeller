@@ -11,7 +11,9 @@ using ForresterModeller.src.ProjectManager.WorkArea;
 using WpfMath.Controls;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Windows.Navigation;
 using ForesterNodeCore;
+using ForresterModeller.ViewModels;
 
 namespace ForresterModeller
 {
@@ -21,34 +23,33 @@ namespace ForresterModeller
     public partial class MainWindow : Window
     {
         private ApplicationManager manager = new();
-        private ActionTabViewModal OpenedPages;
 
         public MainWindow()
         {
             InitializeComponent();
-            OpenedPages = new ActionTabViewModal(PagesTabControl);
+            DataContext = new MainWindowViewModel();
 
             // OpenedPages.Populate();
             ConstantNodeViewModel ctx = new ConstantNodeViewModel("DIR", "sur", 12);
-            OpenProperty(ctx);
+           // OpenProperty(ctx);
 
 
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
-            PagesTabControl.SelectionChanged += TabControl_SelectionChanged;
+            //PagesTabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
         private void OpenProperty(IPropertyChangable sender)
         {
             if (sender is WorkAreaManager)
             {
-                OpenPageInFrame(PropertyFrame, new PropertiesControlView(((WorkAreaManager)sender).ActiveChangableItem));
+               // OpenPageInFrame(PropertyFrame, new PropertiesControlView(((WorkAreaManager)sender).ActiveChangableItem));
             }
             else
             {
-                OpenPageInFrame(PropertyFrame, new PropertiesControlView(sender));
+              //  OpenPageInFrame(PropertyFrame, new PropertiesControlView(sender));
             }
             
         }
@@ -146,7 +147,7 @@ namespace ForresterModeller
 
         private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenedPages.Tabs.RemoveAt(PagesTabControl.SelectedIndex);
+           // OpenedPages.Tabs.RemoveAt(PagesTabControl.SelectedIndex);
         }
 
         /// <summary>
@@ -157,10 +158,10 @@ namespace ForresterModeller
         private void OpenNewPage(WorkAreaManager workareafile)
         {
             //OpenedPages.add(name, manager.CreateContentControl(type));
-            OpenedPages.add(workareafile);
+/*            OpenedPages.add(workareafile);
             OpenedPages.tc.SelectedIndex = OpenedPages.Tabs.Count - 1;
             var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
-            OpenProperty(active.wamanager);
+            OpenProperty(active.wamanager);*/
 
         }
 
@@ -210,9 +211,11 @@ namespace ForresterModeller
         {
             if (e.Source is TabControl)
             {
-                var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
-                OpenProperty(active.wamanager);
+             //   var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
+             //   OpenProperty(active.wamanager);
             }
         }
+
+     
     }
 }

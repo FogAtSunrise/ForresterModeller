@@ -21,7 +21,7 @@ namespace ForresterModeller.src.ProjectManager
         //Project activeProject;
         private List<IForesterModel> allnodes = new();
       //  ActionTabItem active;
-        private ActionTabViewModal OpenedPages;
+       // private ActionTabViewModal OpenedPages;
 
         private IForesterModel activeModel;
         private List<ForesterNodeModel> diagramsNode = new();

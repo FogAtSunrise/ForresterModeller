@@ -3,7 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
+        xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork" 
+        xmlns:viewmodels="clr-namespace:ForresterModeller.ViewModels"
+        xmlns:properties="clr-namespace:ForresterModeller.src.Pages.Properties"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
 
@@ -52,7 +55,13 @@
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
                     <Grid>
-                        <TabControl x:Name="PagesTabControl" SelectedItem="{}" DockPanel.Dock="Right" Background="White" >
+                        <TabControl x:Name="PagesTabControl"  ItemsSource="{Binding TabControlVM.Tabs }" 
+                                    SelectedItem="{Binding TabControlVM.ActiveTab, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged }" DockPanel.Dock="Right" Background="White" >
+                            <TabControl.ContentTemplate>
+                                <DataTemplate >
+                                    <ContentControl  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
+                                </DataTemplate>
+                            </TabControl.ContentTemplate>
                             <TabControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -66,11 +75,6 @@
                                     </Grid>
                                 </DataTemplate>
                             </TabControl.ItemTemplate>
-                            <TabControl.ContentTemplate>
-                                <DataTemplate >
-                                    <ContentControl  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
-                                </DataTemplate>
-                            </TabControl.ContentTemplate>
                         </TabControl>
                     </Grid>
 
@@ -124,13 +128,14 @@
 
                 </TabControl>
             </Grid>
-            <!--Область редактирования элементов-->
+            <!--Область редактирования свойств элементов-->
             <Grid Grid.Row="2"  x:Name="PropertyArea" Grid.Column="2">
-                <Frame x:Name="PropertyFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
+                <properties:PropertiesControl x:Name="PropertyFrame" DataContext="{Binding PropertiesVM }" 
+                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </Grid>
         </Grid>
         <Grid Background="White"  Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
-          <!--  PagesTabControl
+            <!--  PagesTabControl
             Content="{Binding Content}"-->
             <Button Content="Test1" Click ="Test1" Margin="0,0,716,0" />
             <Button Content="Test2" Click ="Test2" Margin="84,0,630,0" />
@@ -138,11 +143,7 @@
             <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
             <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
             <Button Content="OPenPlot" Click ="TestPlot" Margin="170,0,563,0" />
-            <Button Content="OPenGraf" Click ="TestGraf" Margin="237,2,495,-2" />
+            <Button Content="OPenGraf"  Command="{Binding OpenTabCommand}" Margin="237,2,495,-2" />
         </Grid>
-
-
     </Grid>
-
-
 </Window>

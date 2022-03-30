@@ -13,21 +13,32 @@ namespace ForresterModeller.ViewModels
     public class TabControlViewModel : ReactiveObject
     {
         public ObservableCollection<TabViewModel> Tabs { get; }
+
         /// <summary>
         /// Биндится к SelectedItem на View
         /// </summary>
-        public TabViewModel ActiveTab { get; set; }
+        private TabViewModel _activeTab;
+        public TabViewModel ActiveTab
+        {
+            set { this.RaiseAndSetIfChanged(ref _activeTab, value); }
+            get => _activeTab;
+        }
+
         #region Commands
 
         public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
-        public ReactiveCommand<String, Unit> AddTab { get; }
+     
 
         #endregion
 
+        public void AddTab(WorkAreaManager contentManager)
+        {
+            Tabs.Add(new TabViewModel(contentManager));
+        }
         public TabControlViewModel()
         {
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => Tabs.Remove(o));
-            AddTab = ReactiveCommand.Create<String>(s => Tabs.Add(new TabViewModel(new WorkAreaManager { Name = s })));
+            
             Tabs = new ObservableCollection<TabViewModel>
             {
                 new TabViewModel(new DiagramManager { Name = "Very Big Title 1" }),

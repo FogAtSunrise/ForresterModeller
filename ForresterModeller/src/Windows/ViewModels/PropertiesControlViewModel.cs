@@ -1,29 +1,42 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 
 namespace ForresterModeller.ViewModels
 {
-    public class PropertiesControlViewModel: ReactiveObject
+    public class PropertiesControlViewModel : ReactiveObject
     {
-        public ObservableCollection<Property> Properties { get; set; }
 
-        //Элементы заголовка
-        public string Name { get; set; }
-        public string TypeName { get; set; }
-
-        public PropertiesControlViewModel(IPropertyChangable model)
+        public ObservableCollection<Property> _properties;
+        public ObservableCollection<Property> Properties
         {
-            model.WhenAnyValue(w => w.TypeName).ToProperty(this, o => o.TypeName);
-            model.WhenAnyValue(w => w.Name).ToProperty(this, o => o.Name);
-            Properties = model.GetProperties();
+            get
+            {
+                _properties = ActiveItem?.GetProperties();
+                return _properties;
+            }
+            set => this.RaiseAndSetIfChanged(ref _properties, value);
         }
 
-        //todo  SetProperty(IPropertyChangable model)
+        //Элементы заголовка
 
+        private IPropertyChangable _activeItem;
+        public IPropertyChangable ActiveItem
+        {
+            get => _activeItem;
+            set
+            {
+                _activeItem = value;
+                Properties = _activeItem.GetProperties();
+            }
+        }
+ 
+       
     }
 }
