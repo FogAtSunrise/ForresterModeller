@@ -9,6 +9,7 @@ using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using ForresterModeller.Windows.ViewModels;
+using System.Linq;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -29,12 +30,9 @@ namespace ForresterModeller.src.Nodes.Models
             a.PortPosition = PortPosition.Right;
             this.Outputs.Add(a);
 
-            var b = new NodeInputViewModel();
-            b.Name = "x";
-            b.PortPosition = PortPosition.Left;
-            Inputs.Add(b);
+            RefreshInput();
         }
-        public FunkNodeModel() : this("FUN", "функция", "x") { }
+        public FunkNodeModel() : this("FUN", "функция", "(x+y)/2") { }
         static FunkNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("funk"), typeof(IViewFor<FunkNodeModel>));
@@ -42,9 +40,34 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
-            properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; }));
+            properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; RefreshInput(); }));
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
+        }
+
+        public void RefreshInput()
+        {
+            var vars = ForesterNodeCore.Program.GetArgs(this.Funk);
+            foreach(var _var in vars)
+            {
+                if(this.Inputs.Items.ToList().FindAll(port => port.Name == _var).Count == 0)
+                {
+                    var b = new NodeInputViewModel();
+                    b.Name = _var;
+                    b.PortPosition = PortPosition.Left;
+                    Inputs.Add(b);
+                }
+            }
+
+            foreach (var _var in this.Inputs.Items.ToList())
+            {
+                if (! vars.ToList().Contains(_var.Name) )
+                {
+                    Inputs.Remove(_var);
+                }
+            }
+
+
         }
 
         public override JsonObject ToJSON()

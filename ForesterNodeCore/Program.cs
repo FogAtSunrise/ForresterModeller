@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace ForesterNodeCore
@@ -90,9 +91,25 @@ namespace ForesterNodeCore
             return answer;
         }
 
+        public static string[] GetArgs(string aq)
+        {
+            var args = aq.Split(
+                '(', ')', '+', '-', '/', '*', ' ', '.', ',',
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+                ).ToList();
+            args = args.Distinct().ToList();
+            args.Remove("sin");
+            args.Remove("");
+            args.Remove("cos");
+            return args.ToArray();
+
+        }
 
         static void Main(string[] args)
         {
+            GetArgs("sin(x + y)/2.19").ToList().ForEach(Console.WriteLine);
+
+
             var c = GetCurve(
                 "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
                 new List<NodeIdentificator> {
