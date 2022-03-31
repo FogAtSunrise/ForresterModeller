@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Reactive;
-using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 
-namespace ForresterModeller.ViewModels
+namespace ForresterModeller.Windows.ViewModels
 {
     /// <summary>
     /// Биндится к TabControl
@@ -23,15 +20,12 @@ namespace ForresterModeller.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _activeTab, value);
-                 ActiveTab?.WAManager.OnPropertySelected(ActiveTab.WAManager);
+                ActiveTab?.WAManager.OnPropertySelected(ActiveTab.WAManager);
             }
             get => _activeTab;
         }
 
         #region Commands
-
-        public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
-     
 
         #endregion
 
@@ -40,18 +34,6 @@ namespace ForresterModeller.ViewModels
             var item = new TabViewModel(contentManager);
             Tabs.Add(item);
             ActiveTab = item;
-        }
-        public void DeleteTab(TabViewModel tabVM)
-        {
-       /*     if(ActiveTab == tabVM)
-                ActiveTab = 
-            var item = new TabViewModel(contentManager);
-            Tabs.Add(item);
-            ActiveTab = item;*/
-        }
-        public TabControlViewModel()
-        {
-            CloseTab = ReactiveCommand.Create<TabViewModel>(o => Tabs.Remove(o));
         }
     }
 }

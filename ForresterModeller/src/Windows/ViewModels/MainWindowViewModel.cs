@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Reactive;
 using ForesterNodeCore;
-using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 using WpfMath.Controls;
 
-namespace ForresterModeller.ViewModels
+namespace ForresterModeller.Windows.ViewModels
 {
     public class MainWindowViewModel: ReactiveObject
     {
-        public TabControlViewModel TabControlVM { get; set; } = new();
+        public TabControlViewModel TabControlVM { get;  } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
 
