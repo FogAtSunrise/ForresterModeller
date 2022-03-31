@@ -10,7 +10,7 @@ namespace ForresterModeller.src.Pages.Properties
     /// Для каждой строки (как редактируемой, так и нет) необходимо создать
     /// свой экземпляр Property и передать их массив в view
     /// </summary>
-    public class Property
+    public class PropertyViewModel
     {
         /// <summary>
         /// Конструктор для редактируемых полей объекта
@@ -18,7 +18,7 @@ namespace ForresterModeller.src.Pages.Properties
         /// <param name="name">Имя поля</param>
         /// <param name="value">Значение поля</param>
         /// <param name="updateAction">Метод, обрабатывающий обновление поля на форме</param>
-        public Property(String name, String value, Action<String> updateAction)
+        public PropertyViewModel(String name, String value, Action<String> updateAction)
         {
             Name = name;
             _value = value;
@@ -30,7 +30,7 @@ namespace ForresterModeller.src.Pages.Properties
         /// </summary>
         /// <param name="name">Имя поля</param>
         /// <param name="value">Значение поля</param>
-        public Property(String name, String value)
+        public PropertyViewModel(String name, String value)
         {
             Name = name;
             _value = value;

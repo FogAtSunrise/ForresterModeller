@@ -44,11 +44,11 @@ namespace ForresterModeller.src.Nodes.Models
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("constant"), typeof(IViewFor<ConstantNodeViewModel>));
         }
 
-        public override ObservableCollection<Property> GetProperties()
+        public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
             //todo validation
-            properties.Add(new Property( Resource.value,  Value.ToString(), (String str) => { Value = float.Parse(str); }));
+            properties.Add(new PropertyViewModel( Resource.value,  Value.ToString(), (String str) => { Value = float.Parse(str); }));
             return properties;
         }
 

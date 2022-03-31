@@ -12,14 +12,14 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     public class PlotManager : WorkAreaManager
     {
         public override ContentControl Content => GenerateActualPlot();
-        public override ObservableCollection<Property> GetProperties()
+        public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
-            properties.Add(new Property("Ось абсцисс", XLabel, (String str) => {
+            properties.Add(new PropertyViewModel("Ось абсцисс", XLabel, (String str) => {
                 XLabel = str;
                 GenerateActualPlot();
             }));
-            properties.Add(new Property("Ось ординат", YLabel, (String str) => {
+            properties.Add(new PropertyViewModel("Ось ординат", YLabel, (String str) => {
                 XLabel = str;
                 GenerateActualPlot();
             }));

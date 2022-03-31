@@ -39,10 +39,10 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("funk"), typeof(IViewFor<FunkNodeModel>));
         }
-        public override ObservableCollection<Property> GetProperties()
+        public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
-            properties.Add(new Property(Resource.equationType, Funk, (String str) => { Funk = str; }));
+            properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; }));
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
         }

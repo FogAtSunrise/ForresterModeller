@@ -13,8 +13,8 @@ namespace ForresterModeller.ViewModels
     public class PropertiesControlViewModel : ReactiveObject
     {
 
-        public ObservableCollection<Property> _properties;
-        public ObservableCollection<Property> Properties
+        public ObservableCollection<PropertyViewModel> _properties;
+        public ObservableCollection<PropertyViewModel> Properties
         {
             get
             {

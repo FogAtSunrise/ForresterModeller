@@ -12,7 +12,7 @@ using ReactiveUI;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
-    public class WorkAreaManager : ReactiveObject, IPropertyOwner
+    public abstract class WorkAreaManager : ReactiveObject, IPropertyOwner
     {
         public string PathToFile { get; set; }
         public string Name
@@ -20,16 +20,23 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             get => _name;
             set => this.RaiseAndSetIfChanged(ref _name, value);
         }
+
+        public event IPropertyOwner.PropertySelectedEventHandler PropertySelectedEvent;
+        public void OnPropertySelected(IPropertyOwner sender)
+        {
+            PropertySelectedEvent?.Invoke(sender);
+        }
+
         private string _name;
         //Объект, поля которого отображаются в окне свойств
-        public virtual IPropertyOwner ActiveOwnerItem => this;
+        public virtual IPropertyOwner ActiveOwnerItem { get; set; }
         //содержимое рабочей области
         public virtual ContentControl Content { get; }
-        public virtual ObservableCollection<Property> GetProperties()
+        public virtual ObservableCollection<PropertyViewModel> GetProperties()
         {
-            var properties = new ObservableCollection<Property>();
-            properties.Add(new Property("Тип", TypeName));
-            properties.Add(new Property("Название", Name, (string s) => Name = s));
+            var properties = new ObservableCollection<PropertyViewModel>();
+            properties.Add(new PropertyViewModel("Тип", TypeName));
+            properties.Add(new PropertyViewModel("Название", Name, (string s) => Name = s));
             return properties;
         }
 
