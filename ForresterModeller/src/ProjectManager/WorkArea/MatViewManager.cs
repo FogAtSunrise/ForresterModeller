@@ -14,7 +14,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     {
      public override string TypeName => "Математическое представление";
 
-        public IPropertyChangable ActiveModel { get; }
+        public IPropertyOwner ActiveModel { get; }
         public ContentControl Content { get; }
     }
 }

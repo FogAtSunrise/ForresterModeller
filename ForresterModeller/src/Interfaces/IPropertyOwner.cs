@@ -4,7 +4,7 @@ using ReactiveUI;
 
 namespace ForresterModeller.src.Nodes.Models
 {
-    public interface IPropertyChangable 
+    public interface IPropertyOwner 
     {
         /// <summary>
         /// Вернуть перечень объектов, которые будут отражены пользователю

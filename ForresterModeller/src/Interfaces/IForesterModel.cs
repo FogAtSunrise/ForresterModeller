@@ -2,7 +2,7 @@
 
 namespace ForresterModeller.src.Nodes.Models
 {
-    public interface IForesterModel : IJSONSerializable, IPropertyChangable
+    public interface IForesterModel : IJSONSerializable, IPropertyOwner
     {
         public static string type="";
         public string Description { get; set; }

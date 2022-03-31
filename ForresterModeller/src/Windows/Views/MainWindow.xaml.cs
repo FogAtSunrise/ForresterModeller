@@ -41,7 +41,7 @@ namespace ForresterModeller
             //PagesTabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
-        private void OpenProperty(IPropertyChangable sender)
+        private void OpenProperty(IPropertyOwner sender)
         {
             if (sender is WorkAreaManager)
             {
