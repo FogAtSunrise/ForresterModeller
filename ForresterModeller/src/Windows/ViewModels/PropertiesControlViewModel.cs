@@ -32,7 +32,7 @@ namespace ForresterModeller.ViewModels
             get => _activeItem;
             set
             {
-                _activeItem = value;
+                this.RaiseAndSetIfChanged(ref _activeItem, value);
                 Properties = _activeItem.GetProperties();
             }
         }
