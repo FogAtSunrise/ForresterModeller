@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
 
 namespace ForresterModeller.src.Nodes.Models

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
 using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.src.Pages.Properties;
+using ForresterModeller.Windows.ViewModels;
 using ScottPlot;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea

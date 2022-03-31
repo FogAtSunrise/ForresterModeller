@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Controls;
-using DynamicData.Binding;
+﻿using System.Windows.Controls;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 
-namespace ForresterModeller.ViewModels
+namespace ForresterModeller.Windows.ViewModels
 {
     public class TabViewModel : ReactiveObject
     {
@@ -21,8 +18,8 @@ namespace ForresterModeller.ViewModels
             //Биндим данные с помощью инструментов Reactive
             WAManager.WhenAnyValue(w => w.Name).ToProperty(this, o => o.Header);
             WAManager.WhenAnyValue(w => w.Content).ToProperty(this, o => o.Content);
-         
+
         }
 
-       }
+    }
 }

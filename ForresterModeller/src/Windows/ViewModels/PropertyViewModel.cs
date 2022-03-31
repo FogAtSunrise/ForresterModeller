@@ -1,9 +1,6 @@
-﻿
+﻿using System;
 
-using System;
-using System.Windows.Navigation;
-
-namespace ForresterModeller.src.Pages.Properties
+namespace ForresterModeller.Windows.ViewModels
 {
     /// <summary>
     /// Класс, определяющий поле в окне свойств объекта.

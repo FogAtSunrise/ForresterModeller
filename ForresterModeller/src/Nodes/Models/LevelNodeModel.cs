@@ -4,7 +4,6 @@ using DynamicData;
 using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
-using ForresterModeller.src.Pages.Properties;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 

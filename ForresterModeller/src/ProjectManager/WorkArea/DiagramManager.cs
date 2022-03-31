@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using DynamicData;
 using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.src.Pages.Properties;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using ReactiveUI;
