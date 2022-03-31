@@ -43,11 +43,6 @@ namespace ForresterModeller.src.Nodes.Views
 
         public ForesterNodeView(string type) : base()
         {
-            this.MouseDown += delegate (object? sender, MouseButtonEventArgs args)
-            {
-                if (ForesterViewModel != null)
-                    ForesterViewModel.IsSelected = true;
-            };
             this.WhenActivated(d =>
             {
                 this.OneWayBind(ForesterViewModel, vm => vm.FullName, v => v.FullName.Text).DisposeWith(d);

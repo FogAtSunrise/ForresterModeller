@@ -45,7 +45,6 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void OpenOldProject_Click(object sender, RoutedEventArgs e)
         {
-         /*
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Файлы json|*.json";
           
@@ -53,29 +52,44 @@ namespace ForresterModeller
 
             if (openFileDialog1.ShowDialog()==true)
             {
-                System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
-                       
+                //System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
+                TestClass f = new TestClass();
+                f.test4(openFileDialog1.FileName);
+
             }
-         */
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
+         
+          
+         /*  FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                // System.Windows.MessageBox.Show("Выбран вот этот файл " + fbd.SelectedPath);
                 Project j = new Project("", fbd.SelectedPath); 
                 j.ToJson();
             }
+*/
+
             /*MainWindow dialog = new MainWindow();
             this.Close();
             dialog.ShowDialog();
             */
 
         }
+        
 
-
-     
+        private void OpenOle_Click(object sender, RoutedEventArgs e)
+        {
+            // Project j = new Project();
+            // TestClass f = new TestClass();
+            // f.test1(); 
+            TestClass f = new TestClass();
+            f.test2();////////////////////
+            System.Windows.MessageBox.Show("Сохранился тестовый проект в папке по умолчанию ");
+            //   f.test3();
+        }
 
         public void OpenStartList()
         {
+           
             List<Project> list = new List<Project>() { new Project("project1", Directory.GetCurrentDirectory()),
                 new Project("project2", Directory.GetCurrentDirectory()),
                 new Project("project3", Directory.GetCurrentDirectory()),
@@ -118,5 +132,7 @@ namespace ForresterModeller
             this.Close();
             dialog.ShowDialog();
         }
+
+
     }
 }

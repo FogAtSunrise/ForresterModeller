@@ -20,7 +20,7 @@ namespace ForresterModeller.ViewModels
 
         public MainWindowViewModel()
         {
-            OpenTabCommand = ReactiveCommand.Create<WorkAreaManager>(o => TabControlVM.AddTab(new WorkAreaManager{Name = "писбка"}));
+            OpenTabCommand = ReactiveCommand.Create<WorkAreaManager>(o => TabControlVM.AddTab(new WorkAreaManager{Name = "Новый таб"}));
 
             TabControlVM.PropertyChanged += TabControlUpdate;
         }

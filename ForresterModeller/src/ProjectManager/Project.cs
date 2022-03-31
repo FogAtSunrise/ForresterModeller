@@ -1,4 +1,8 @@
-﻿using ForresterModeller.src.Nodes.Models;
+﻿
+using ForresterModeller.src.Nodes.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,51 +14,154 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 
+
 namespace ForresterModeller.src.ProjectManager
 {
     public class Project
     {
         string DefaultName = "New Project";
-        string DefaultPath = Directory.GetCurrentDirectory();
+        string DefaultPath = Directory.GetCurrentDirectory() + "\\";
 
         List<IForesterModel> allProjectModels = new List<IForesterModel>();
         List<string> listAllFiles = new List<string>();
 
+
         string Name;
         public string getName() { return Name; }
-        string PathToFile;
+
 
         DateTime CreationDate;
         public DateTime getCreationDate() { return CreationDate; }
         DateTime ChangeDate;
         public DateTime getChangeDate() { return ChangeDate; }
 
+        /// <summary>
+        /// хранит директорию, в которой хранится json проекта!!!
+        /// </summary>
+        string PathToProject;
+
+
+        /// <summary>
+        /// Добавить в проект новую модель
+        /// </summary>
+        /// <param name="mod"></param>
+        public void addModel(IForesterModel model)
+        {
+            Random rnd = new Random();
+            model.Id = model.Id + rnd.Next();
+
+            allProjectModels.Add(model);
+        }
+        /// <summary>
+        /// добавить имя файла в список файлов проекта
+        /// </summary>
+        /// <param name="name"></param>
+        public void addFiles(string name)
+        {
+
+            listAllFiles.Add(name);
+        }
+        /// <summary>
+        /// конструктор, принимает путь включающий имя json проекта, для существующего файла
+        /// </summary>
+        /// <param name="path"></param>
+        public Project(string path):this( Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path))
+        {
+            openOldProject();
+        }
+
+
         public Project(string name, string pathTofile)
         {
-            Name = (name == null || name == "") ? DefaultName : Name;
-            PathToFile = (pathTofile == null || pathTofile == "") ? DefaultPath : pathTofile;
+            Name = (name == null || name == "") ? DefaultName : name;
+            PathToProject = (pathTofile == null || pathTofile == "") ? DefaultPath + Name : pathTofile;
             CreationDate = DateTime.Now;
             ChangeDate = DateTime.Now;
         }
 
+        public Project()
+        {
+            Name = DefaultName;
+            PathToProject = DefaultPath + Name;
+            CreationDate = DateTime.Now;
+            ChangeDate = DateTime.Now;
 
+        }
+
+  
+        public void openOldProject()
+        {
+            using (StreamReader r = new StreamReader(PathToProject + "\\" + Name + ".json"))
+            {
+               string json = r.ReadToEnd();
+               
+               var jobj = JsonObject.Parse(json); 
+                r.Close();
+                FromJson(jobj.AsObject());
+                var options = new JsonSerializerOptions { WriteIndented = true };////////////////////
+                MessageBox.Show(jobj.ToJsonString(options));
+            }
+        }
+
+
+        public void SaveOldProject()
+        {
+            if (Directory.Exists(PathToProject))
+            {
+                WriteFileJson(Name, PathToProject, ToJson());
+            }
+            else SaveNewProject();
+        }
+
+        public IForesterModel getModelById(string id)
+        {
+            IForesterModel find = allProjectModels.Find((item) =>  item.Id == id);
+            return find;
+        }
+        public void SaveNewProject()
+        {
+
+            string ind = CreateDirectory(PathToProject);
+            Name += ind;
+            PathToProject += ind;
+            CreateFile(Name, PathToProject);
+            JsonObject jsonVerst = ToJson();
+            WriteFileJson(Name, PathToProject, jsonVerst);
+
+        }
+
+        /// <summary>
+        /// Создать новую директорию (не важно, для целого проекта или в самом проекте)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         //пример вызова:   CreateDirectory(path + "\\" + "имя новой папки");
         private string CreateDirectory(string path)
         {
+            int index = 0;
             if (Directory.Exists(path))
-            {
-                int index = 1;
+             {
+                index = 1;
+
                 while (Directory.Exists(path + index))
-                {
-                    index++;
-                }
-                path = path + index;
+                 {
+                     index++;
+                 }
+                 path = path + index;
+                
             }
-            Directory.CreateDirectory(path);
-            return path;
+             Directory.CreateDirectory(path);
+             return (index==0)?"": index.ToString();
         }
 
-        private string CreateFile(string filename, string path)
+
+            /// <summary>
+            /// Создать файл json для записи
+            /// </summary>
+            /// <param name="filename"></param>
+            /// <param name="path"></param>
+            /// <returns></returns>
+            private string CreateFile(string filename, string path)
         {
             if (File.Exists(path + "\\" + filename + ".json"))
             {
@@ -70,39 +177,47 @@ namespace ForresterModeller.src.ProjectManager
             return filename;
         }
 
+
+        /// <summary>
+        /// запись в файл json, причем он перезаписывает файл
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="path"></param>
+        /// <param name="inf"></param>
         private void WriteFileJson(string filename, string path, JsonObject inf)
         {
-            using (StreamWriter file = new StreamWriter(path + "\\" + filename + ".json"))
+            using (StreamWriter file = new StreamWriter(path + "\\" + filename + ".json", false))
             {
          
-                file.WriteLine(inf);
+                file.Write(inf);
                 file.Close();
 
             }    
         }
 
-        public Project() { }
+        /// <summary>
+        /// переводит содержимое проекта в json, использовать при сохранении
+        /// </summary>
 
-        public void ToJson()
+       public  JsonObject  ToJson()
         {
 
-          /*  KeyValuePair<String, JsonValue> obj = new KeyValuePair<String, JsonValue>("fkkjds", new JsonObject
-            {
-                ["Id"] = 123,
-                ["Name"] = "const"
-            });
-
-
-            KeyValuePair<String, JsonValue> obj = new KeyValuePair<String, JsonValue>("fkkjds", new JsonValue
-            {
-                ["Id"] = 123,
-                ["Name"] = "const"
-            });
-*/
-
-
-            JsonObject projectModuls = new JsonObject();
             JsonArray projectFiles = new JsonArray();
+            foreach (var file in listAllFiles)
+            {
+                projectFiles.Add(file);
+            }
+
+            JsonArray projectModuls = new JsonArray();
+
+
+            foreach (var model in allProjectModels)
+            {
+                projectModuls.Add(model.ToJSON());
+              
+
+            }
+
             //Объект проекта, он один
             JsonObject ProjectJson = new JsonObject
 
@@ -110,24 +225,86 @@ namespace ForresterModeller.src.ProjectManager
                 //Информация о проекте
                 ["Name"] = Name,
                 ["CreationDate"] = CreationDate,
-                ["ChangeDate"] = ChangeDate,
+                ["ChangeDate"] = DateTime.Now,
 
                 //Список файлов проекта
-                ["ListAllFiles"] = new JsonArray(),
+                ["ListAllFiles"] = projectFiles,
 
                 //Список моделей проекта
-                ["ModelsInProject"] = new JsonObject()
+                ["ModelsInProject"] = projectModuls
 
             };
 
+            /*
+                        JsonArray projectFiles = new JsonArray();
+                        foreach (var file in listAllFiles)
+                        {
+                            projectFiles.Add(file);
+                        }
+
+                        JsonObject projectModuls = new JsonObject();
 
 
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            MessageBox.Show(ProjectJson.ToJsonString(options));
+                        foreach (var model in allProjectModels)
+                        {
+                            projectModuls![model.Id] = model.ToJSON();
+
+                        }
+
+                        //Объект проекта, он один
+                        JsonObject ProjectJson = new JsonObject
+
+                        {
+                            //Информация о проекте
+                            ["Name"] = Name,
+                            ["CreationDate"] = CreationDate,
+                            ["ChangeDate"] = DateTime.Now,
+
+                            //Список файлов проекта
+                            ["ListAllFiles"] = projectFiles,
+
+                            //Список моделей проекта
+                            ["ModelsInProject"] = projectModuls
+
+                        };
+            */
+            return ProjectJson;
+        }
+
+        public void FromJson(JsonObject obj)
+        {
+
+            Name = obj!["Name"]!.GetValue<string>();
+            CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
+
+
+            //   JsonArray studentsArray = root["Students"]!.AsArray();
+
+            string k = "";
+            JsonArray projectFiles =obj["ListAllFiles"]!.AsArray();
+            foreach (var file in projectFiles)
+            {
+                listAllFiles.Add(file.ToString());
+            //    k += listAllFiles[listAllFiles.Count - 1]+"--";
+            }
+
+            //  MessageBox.Show(k);
+
+            JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
+            foreach (var model in projectModuls)
+            {
+                IForesterModel m= createModel(model!["Type"]!.GetValue<string>());
+                m.FromJSON(model.AsObject());
+                allProjectModels.Add(m);
+                k += m.TypeName + m.Id+"\n";
+            }
+
+              MessageBox.Show(k);
+            
         }
         public void ToJson11()
         {
-            string path = PathToFile;
+           // string path = PathToProject;
             //Объект проекта, он один
             JsonObject obj = new JsonObject
             {
@@ -167,10 +344,10 @@ namespace ForresterModeller.src.ProjectManager
 
 
 
-            obj!["ModelsInProject"]![array!["Id"]!.GetValue<string>()] = array; //Добавить 
+            obj![array!["Id"]!.GetValue<string>()] = array; //Добавить 
 
 
-            obj!["ModelsInProject"]![nameId+"fddf"] = new JsonObject { ["Id"] = 888888889, ["Low"] = 20 };
+         //   obj!["ModelsInProject"]![nameId+"fddf"] = new JsonObject { ["Id"] = 888888889, ["Low"] = 20 };
 
             
             
@@ -199,6 +376,11 @@ namespace ForresterModeller.src.ProjectManager
 
         }
 
+        /// <summary>
+        /// создает модель нужного типа
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public IForesterModel createModel(string type)
         {
 

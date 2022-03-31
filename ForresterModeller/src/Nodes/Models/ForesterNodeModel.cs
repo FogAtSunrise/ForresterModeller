@@ -17,10 +17,12 @@ namespace ForresterModeller.src.Nodes.Models
     /// <summary>
     /// Базовая модель узла в схеме форестера
     /// </summary>
-    
-    public class ForesterNodeModel : NodeViewModel, IForesterModel
+
+    public abstract class ForesterNodeModel : NodeViewModel, IForesterModel
     {
         
+        
+
         public string Description { get; set; }
         public virtual string TypeName { get; } 
         public string FullName { get; set; } 
@@ -28,10 +30,7 @@ namespace ForresterModeller.src.Nodes.Models
         public bool IsSelected { get; set; }
         
 
-        public virtual T AcceptViseter<T>(INodeViseters<T> viseter)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract T AcceptViseter<T>(INodeViseters<T> viseter);
 
         public virtual ObservableCollection<Property> GetProperties()
         {

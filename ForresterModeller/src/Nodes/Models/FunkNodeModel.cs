@@ -30,11 +30,11 @@ namespace ForresterModeller.src.Nodes.Models
             this.Outputs.Add(a);
 
             var b = new NodeInputViewModel();
-            b.Name = "boopa";
+            b.Name = "x";
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
         }
-        public FunkNodeModel() : this("LVL", "Уровень", "1") { }
+        public FunkNodeModel() : this("FUN", "функция", "x") { }
         static FunkNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("funk"), typeof(IViewFor<FunkNodeModel>));
@@ -71,31 +71,11 @@ namespace ForresterModeller.src.Nodes.Models
             Description = obj!["Description"]!.GetValue<string>();
     
         }
-    }
-}
-    
-
-    public class ChouseNodeModel:FunkNodeModel
-    {
-    public static string type = "ChouseNodeModel";
-    public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
-        {
-
-        }
-
-        public ChouseNodeModel() : base()
-        {
-
-        }
 
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
             return viseter.VisitFunc(this);
         }
-
-        static ChouseNodeModel()
-        {
-            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<ChouseNodeModel>));
-        }
     }
-
+}
+    
