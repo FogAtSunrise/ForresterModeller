@@ -23,14 +23,21 @@ namespace ForresterModeller.src.ProjectManager
         public TestClass() { }
 
 
+        public void test7(string str)
+        {
+            proj = new Project(str);
+
+            proj.SaveNewProject();
+
+        }
         public void test4(string path)
         {
     
 
             proj = new Project(path);
-
+            proj.openOldProject();
             IForesterModel u;
-             u=proj.getModelById("lev1895459376");
+         /*    u=proj.getModelById("lev1895459376");
             if(u!=null)
                 MessageBox.Show(u.TypeName);
             else MessageBox.Show("1111111111111");
@@ -49,7 +56,7 @@ namespace ForresterModeller.src.ProjectManager
             if (u != null)
                 MessageBox.Show(u.TypeName);
             else MessageBox.Show("44444444");
-
+         */
 
         }
             public void test1()

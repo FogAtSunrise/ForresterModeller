@@ -11,6 +11,7 @@ using ForresterModeller.Windows.Views;
 using Button = System.Windows.Controls.Button;
 using Label = System.Windows.Controls.Label;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using ForresterModeller.src.Windows;
 
 namespace ForresterModeller
 {
@@ -34,9 +35,13 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void CreateNewProject_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow dialog = new MainWindow();
+           /* MainWindow dialog = new MainWindow();
             this.Close();
             dialog.ShowDialog();
+           */
+
+        CreateProject jjj = new CreateProject();
+            jjj.ShowDialog();
 
         }
         /// <summary>

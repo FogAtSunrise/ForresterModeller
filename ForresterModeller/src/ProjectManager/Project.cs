@@ -62,12 +62,12 @@ namespace ForresterModeller.src.ProjectManager
             listAllFiles.Add(name);
         }
         /// <summary>
-        /// конструктор, принимает путь включающий имя json проекта, для существующего файла
+        /// конструктор, принимает путь к json проекта
         /// </summary>
         /// <param name="path"></param>
         public Project(string path):this( Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path))
         {
-            openOldProject();
+           // openOldProject();
         }
 
 
@@ -121,7 +121,7 @@ namespace ForresterModeller.src.ProjectManager
         public void SaveNewProject()
         {
 
-            string ind = CreateDirectory(PathToProject);
+            string ind = CreateDirectory(PathToProject + "\\" + Name);
             Name += ind;
             PathToProject += ind;
             CreateFile(Name, PathToProject);
