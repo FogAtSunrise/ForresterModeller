@@ -71,26 +71,11 @@ namespace ForresterModeller.src.Nodes.Models
             Description = obj!["Description"]!.GetValue<string>();
     
         }
-    }
-}
-    
-
-    public class ChouseNodeModel:FunkNodeModel
-    {
-    public static string type = "ChouseNodeModel";
-    public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
-        {
-
-        }
-
-        public ChouseNodeModel() : base()
-        {
-
-        }
 
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
             return viseter.VisitFunc(this);
         }
     }
-
+}
+    

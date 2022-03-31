@@ -6,6 +6,7 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class ChouseNodeModel:FunkNodeModel
     {
+        public static string type = "ChouseNodeModel";
         public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
         {
 

@@ -7,12 +7,13 @@ using NodeNetwork.Toolkit.ValueNode;
 using NodeNetwork.Views;
 using System.Linq;
 using NodeNetwork;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class CrossNodeModel : ForesterNodeModel
     {
-        public static string type = "ChouseNodeModel";
+        public static string type = "CrossNodeModel";
         public CrossNodeModel()
         {
 
