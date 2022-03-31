@@ -48,7 +48,7 @@ namespace ForresterModeller.Windows.Views
             foreach (var el in elem)
             {
                 var options = new JsonSerializerOptions { WriteIndented = true };
-                MessageBox.Show(el.ToJSON().ToJsonString(options));
+                //MessageBox.Show(el.ToJSON().ToJsonString(options));
 
 
                 JsonObject test = el.ToJSON();
@@ -56,7 +56,7 @@ namespace ForresterModeller.Windows.Views
 
                 el.FromJSON(test);
                 options = new JsonSerializerOptions { WriteIndented = true };
-                MessageBox.Show(el.ToJSON().ToJsonString(options));
+                //MessageBox.Show(el.ToJSON().ToJsonString(options));
 
             }
         }
@@ -133,6 +133,6 @@ namespace ForresterModeller.Windows.Views
             input_formul.Text = "";
         }
 
-      
+
     }
 }

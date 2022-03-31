@@ -22,7 +22,6 @@ namespace ForresterModeller.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> OpenTestGraph { get; }
 
         #endregion
-
         public MainWindowViewModel()
         {
             OpenTab = ReactiveCommand.Create<WorkAreaManager>(o =>AddTab(new DiagramManager{Name = "Диаграмма12"}));

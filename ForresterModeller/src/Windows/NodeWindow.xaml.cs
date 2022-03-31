@@ -29,12 +29,16 @@ namespace ForresterModeller
             nodelistModel.AddNodeType<FunkNodeModel>(() => new FunkNodeModel());
             nodelistModel.AddNodeType<DelayNodeModel>(() => new DelayNodeModel());
             nodeList.ViewModel = nodelistModel;
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var a = NodeTranslator.Translate(networkView.ViewModel);
+        }
+
+        private void nodeList_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

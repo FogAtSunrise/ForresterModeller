@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using ForresterModeller.src.Nodes.Models;
+using NodeNetwork.Toolkit.NodeList;
+using System.Windows.Controls;
 
 
 namespace ForresterModeller.src.Tools
@@ -11,6 +13,26 @@ namespace ForresterModeller.src.Tools
         public GraphElements()
         {
             InitializeComponent();
+
+            var nodelistModel = new NodeListViewModel();
+            nodelistModel.AddNodeType<ConstantNodeViewModel>(() => new ConstantNodeViewModel());
+            otherNodeList.ViewModel = nodelistModel;
+
+
+            nodelistModel = new NodeListViewModel();
+            nodelistModel.AddNodeType<LevelNodeModel>(() => new LevelNodeModel());
+            nodelistModel.AddNodeType<DelayNodeModel>(() => new DelayNodeModel());
+            levelNodeList.ViewModel = nodelistModel;
+
+
+
+            nodelistModel = new NodeListViewModel();
+            nodelistModel.AddNodeType<CrossNodeModel>(() => new CrossNodeModel());
+            nodelistModel.AddNodeType<ChouseNodeModel>(() => new ChouseNodeModel());
+            nodelistModel.AddNodeType<FunkNodeModel>(() => new FunkNodeModel());
+            equasionNodeList.ViewModel = nodelistModel;
+
+
         }
 
         //ИНСТРУМЕНТЫ

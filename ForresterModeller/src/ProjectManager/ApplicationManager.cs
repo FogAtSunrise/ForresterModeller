@@ -42,29 +42,25 @@ namespace ForresterModeller.src.ProjectManager
             return network;
         }
 
+        public NetworkViewModel GetNetworkViewModel()
+        {
+            var network = new NetworkViewModel();
+            return network;
+        }
+
+
         public void OpenNewTab()
         {
 
         }
         public ApplicationManager()
         {
-            var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12);
-            n1.Description = "Стабильная константа";
-            var n2 = new ConstantNodeViewModel();
-            var n3 = new LevelNodeModel();
-            n3.Description = "Невероятный уровень";
-            //var n4 = new FunkNodeModel();
-            allnodes.Add(n1);
-            allnodes.Add(n2);
-            allnodes.Add(n3);
-            diagramsNode.Add(n1);
-            diagramsNode.Add(n2);
-            diagramsNode.Add(n3);
+
         }
 
         public void FillDiagram(NetworkView diag)
         {
-            diag.ViewModel = GetNetworkViewModel(diagramsNode);
+            diag.ViewModel = GetNetworkViewModel();
         }
 
 

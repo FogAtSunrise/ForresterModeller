@@ -30,7 +30,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 OnPropertySelected(_activeItem);
             }
         }
-
         private NetworkView _contentView;
         private ObservableCollection<ForesterNodeModel> _selectedNodes = new();
         public ObservableCollection<ForesterNodeModel> SelectedNodes
@@ -38,10 +37,13 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             get => _selectedNodes;
             set => this.RaiseAndSetIfChanged(ref _selectedNodes, value);
         }
-
         public override ContentControl Content => _contentView ?? GetNetworkView();
-
         public override string TypeName => "Диаграмма потоков";
+
+        private void AddDragNode(ForesterNodeModel node)
+        {
+            node.PropertyChanged += NodeOnPropertyChanged;
+        }
 
         public NetworkView GetNetworkView()
         {
@@ -50,6 +52,10 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             var network = new NetworkViewModel();
             ///
             ///
+            this._contentView.Drop += (o, e) => {
+                AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM")); 
+            };
+
             List<ForesterNodeModel> nods = new();
             var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12);
             n1.Description = "Стабильная константа";
@@ -70,7 +76,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             _contentView.ViewModel = network;
             return _contentView;
         }
-
         private void NodeOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(ForesterNodeModel.IsSelected))
