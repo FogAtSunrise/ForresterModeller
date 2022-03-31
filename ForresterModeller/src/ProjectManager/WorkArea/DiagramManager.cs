@@ -18,8 +18,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class DiagramManager : WorkAreaManager
     {
-        private IPropertyChangable _activeItem;
-        public override IPropertyChangable ActiveChangableItem => _activeItem ?? this;
+        private IPropertyOwner _activeItem;
+        public override IPropertyOwner ActiveOwnerItem => _activeItem ?? this;
         private NetworkView _contentView;
         private IObservableList<NodeViewModel> _selectedNodes;
         public IObservableList<NodeViewModel> SelectedNodes

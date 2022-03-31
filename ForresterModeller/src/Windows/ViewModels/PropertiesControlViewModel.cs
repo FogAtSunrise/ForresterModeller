@@ -26,8 +26,8 @@ namespace ForresterModeller.ViewModels
 
         //Элементы заголовка
 
-        private IPropertyChangable _activeItem;
-        public IPropertyChangable ActiveItem
+        private IPropertyOwner _activeItem;
+        public IPropertyOwner ActiveItem
         {
             get => _activeItem;
             set

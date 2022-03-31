@@ -28,6 +28,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public override string TypeName => "График"; 
 
+        public PlotManager(){}
         /// <summary>
         /// Построить модель графа на основе данных от ядра
         /// </summary>
@@ -72,7 +73,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         ///Информация, оторбараюжаяся на графике
         ///
         /// Перечень линий
-        public ObservableCollection<Line> lines;
+        public ObservableCollection<Line> lines = new();
         /// <summary>
         /// Подписи для осей
         /// </summary>

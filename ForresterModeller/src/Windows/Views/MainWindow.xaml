@@ -28,7 +28,7 @@
             </MenuItem>
             <MenuItem Header="О программе">
             </MenuItem>
-            <MenuItem Header="> Моделировать" Click="MenuGetGraphics_OnClick">
+            <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}">
 
             </MenuItem>
         </Menu>
@@ -71,7 +71,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" MinWidth="80" Text="{Binding Header}"/>
                                         <Button Grid.Column="1"  Name="CloseButton"   BorderThickness="0"
-                                                Background="Transparent" Click="ButtonDelete_OnClick" Content="&#x2715;" />
+                                                Background="Transparent"  Content="&#x2715;" />
                                     </Grid>
                                 </DataTemplate>
                             </TabControl.ItemTemplate>
@@ -118,7 +118,7 @@
                             </StackPanel>
                         </TabItem.Header>
 
-                        <StackPanel Name ="formuls" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+                        <StackPanel Name ="formuls" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath" >
                             <DockPanel>
                                 <TextBox Name ="input_formul"  DockPanel.Dock="Left" Width="299"></TextBox>
                                 <Button DockPanel.Dock="Right" Content="+" Width="44" Click="Button_Click_Add_Formule"/>
@@ -140,10 +140,8 @@
             <Button Content="Test1" Click ="Test1" Margin="0,0,716,0" />
             <Button Content="Test2" Click ="Test2" Margin="84,0,630,0" />
 
-            <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
-            <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
-            <Button Content="OPenPlot" Click ="TestPlot" Margin="170,0,563,0" />
-            <Button Content="OPenGraf"  Command="{Binding OpenTabCommand}" Margin="237,2,495,-2" />
+            <Button Content="AddPlot" Command="{Binding OpenTestGraph}" Margin="170,0,563,0" />
+            <Button Content="AddDiagramm" Command="{Binding OpenTabCommand}" Margin="237,2,495,-2" />
         </Grid>
     </Grid>
 </Window>

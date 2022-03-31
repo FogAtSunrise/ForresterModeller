@@ -28,31 +28,13 @@ namespace ForresterModeller
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
-
-            // OpenedPages.Populate();
-            ConstantNodeViewModel ctx = new ConstantNodeViewModel("DIR", "sur", 12);
-           // OpenProperty(ctx);
-
-
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
-            //PagesTabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
-        private void OpenProperty(IPropertyOwner sender)
-        {
-            if (sender is WorkAreaManager)
-            {
-               // OpenPageInFrame(PropertyFrame, new PropertiesControlView(((WorkAreaManager)sender).ActiveChangableItem));
-            }
-            else
-            {
-              //  OpenPageInFrame(PropertyFrame, new PropertiesControlView(sender));
-            }
-            
-        }
+       
 
         private void Test1(object sender, RoutedEventArgs e)
         {
@@ -86,7 +68,6 @@ namespace ForresterModeller
         //фрейм plottertools
         private void Test2(object sender, RoutedEventArgs e)
         {
-
             PlotterTools t = new PlotterTools();
             List<ForesterNodeModel> test = new List<ForesterNodeModel>();
             for (int i = 0; i < 6; i++)
@@ -144,36 +125,7 @@ namespace ForresterModeller
 
 
         }
-
-        private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
-        {
-           // OpenedPages.Tabs.RemoveAt(PagesTabControl.SelectedIndex);
-        }
-
-        /// <summary>
-        /// Открыть вкладку в табах
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        private void OpenNewPage(WorkAreaManager workareafile)
-        {
-            //OpenedPages.add(name, manager.CreateContentControl(type));
-/*            OpenedPages.add(workareafile);
-            OpenedPages.tc.SelectedIndex = OpenedPages.Tabs.Count - 1;
-            var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
-            OpenProperty(active.wamanager);*/
-
-        }
-
-        private void TestPlot(object sender, RoutedEventArgs e)
-        {
-            // OpenNewPage(new PlotManager());
-        }
-        private void TestGraf(object sender, RoutedEventArgs e)
-        {
-            OpenNewPage(new DiagramManager { Name = "D12" });
-        }
-
+  
         private void PrintFormule(string form)
         {
             FormulaControl forml = new FormulaControl();
@@ -186,36 +138,6 @@ namespace ForresterModeller
             input_formul.Text = "";
         }
 
-        private void MenuGetGraphics_OnClick(object sender, RoutedEventArgs e)
-        {
-            float t = 1, dt = 0.1f;
-            var c = ForesterNodeCore.Program.GetCurve(
-                "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
-                new List<NodeIdentificator> {
-                    new NodeIdentificator("dc"),
-                    new NodeIdentificator("nt"),
-                    new NodeIdentificator("boo"),
-                    new NodeIdentificator("loo"),
-                },
-                t,
-                dt
-            );
-            PlotManager plotmodel = new(c, t, dt);
-            plotmodel.XLabel = "Время (недели)FFF";
-            plotmodel.YLabel = "Объем товара (единицы) ";
-            plotmodel.Name = "График123";
-            OpenNewPage(plotmodel);
-        }
-
-        void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.Source is TabControl)
-            {
-             //   var active = OpenedPages.Tabs[PagesTabControl.SelectedIndex];
-             //   OpenProperty(active.wamanager);
-            }
-        }
-
-     
+      
     }
 }
