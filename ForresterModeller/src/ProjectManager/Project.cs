@@ -14,6 +14,7 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 
+using MessageBox = System.Windows.MessageBox;
 
 namespace ForresterModeller.src.ProjectManager
 {
@@ -127,7 +128,7 @@ namespace ForresterModeller.src.ProjectManager
             Name += ind;
             PathToProject += ind;
             CreateFile(Name, PathToProject);
-            PathToDiagram = PathToProject + "\\diagram";
+            PathToDiagram = PathToProject + "\\diagrams";
             CreateDirectory(PathToDiagram);
             JsonObject jsonVerst = ToJson();
             WriteFileJson(Name, PathToProject, jsonVerst);
@@ -249,7 +250,6 @@ namespace ForresterModeller.src.ProjectManager
             {
                 Name = obj!["Name"]!.GetValue<string>();
                 CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
-
 
                 //   JsonArray studentsArray = root["Students"]!.AsArray();
 
