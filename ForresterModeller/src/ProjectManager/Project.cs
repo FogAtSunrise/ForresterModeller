@@ -40,6 +40,10 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         string PathToProject;
 
+        /// <summary>
+        /// хранит директорию с диаграммами
+        /// </summary>
+        string PathToDiagram="";
 
         /// <summary>
         /// Добавить в проект новую модель
@@ -61,14 +65,7 @@ namespace ForresterModeller.src.ProjectManager
 
             listAllFiles.Add(name);
         }
-        /// <summary>
-        /// конструктор, принимает путь к json проекта
-        /// </summary>
-        /// <param name="path"></param>
-        public Project(string path):this( Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path))
-        {
-           // openOldProject();
-        }
+   
 
 
         public Project(string name, string pathTofile)
@@ -79,7 +76,7 @@ namespace ForresterModeller.src.ProjectManager
             ChangeDate = DateTime.Now;
         }
 
-        public Project()
+        public Project() 
         {
             Name = DefaultName;
             PathToProject = DefaultPath + Name;
@@ -88,9 +85,14 @@ namespace ForresterModeller.src.ProjectManager
 
         }
 
-  
-        public void openOldProject()
+ 
+        //прочитать json ужe существующего проекта и заполнить данные проекта
+        //получает на вход путь к json
+       
+        public void openOldProject(string path)
         {
+            PathToProject = Path.GetDirectoryName(path);
+            Name = Path.GetFileNameWithoutExtension(path);
             using (StreamReader r = new StreamReader(PathToProject + "\\" + Name + ".json"))
             {
                string json = r.ReadToEnd();
@@ -121,10 +123,12 @@ namespace ForresterModeller.src.ProjectManager
         public void SaveNewProject()
         {
 
-            string ind = CreateDirectory(PathToProject + "\\" + Name);
+            string ind = CreateDirectory(PathToProject);
             Name += ind;
             PathToProject += ind;
             CreateFile(Name, PathToProject);
+            PathToDiagram = PathToProject + "\\diagram";
+            CreateDirectory(PathToDiagram);
             JsonObject jsonVerst = ToJson();
             WriteFileJson(Name, PathToProject, jsonVerst);
 
@@ -235,146 +239,49 @@ namespace ForresterModeller.src.ProjectManager
 
             };
 
-            /*
-                        JsonArray projectFiles = new JsonArray();
-                        foreach (var file in listAllFiles)
-                        {
-                            projectFiles.Add(file);
-                        }
-
-                        JsonObject projectModuls = new JsonObject();
-
-
-                        foreach (var model in allProjectModels)
-                        {
-                            projectModuls![model.Id] = model.ToJSON();
-
-                        }
-
-                        //Объект проекта, он один
-                        JsonObject ProjectJson = new JsonObject
-
-                        {
-                            //Информация о проекте
-                            ["Name"] = Name,
-                            ["CreationDate"] = CreationDate,
-                            ["ChangeDate"] = DateTime.Now,
-
-                            //Список файлов проекта
-                            ["ListAllFiles"] = projectFiles,
-
-                            //Список моделей проекта
-                            ["ModelsInProject"] = projectModuls
-
-                        };
-            */
+          
             return ProjectJson;
         }
 
         public void FromJson(JsonObject obj)
         {
-
-            Name = obj!["Name"]!.GetValue<string>();
-            CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
-
-
-            //   JsonArray studentsArray = root["Students"]!.AsArray();
-
-            string k = "";
-            JsonArray projectFiles =obj["ListAllFiles"]!.AsArray();
-            foreach (var file in projectFiles)
+            try
             {
-                listAllFiles.Add(file.ToString());
-            //    k += listAllFiles[listAllFiles.Count - 1]+"--";
+                Name = obj!["Name"]!.GetValue<string>();
+                CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
+
+
+                //   JsonArray studentsArray = root["Students"]!.AsArray();
+
+              //  string k = "";
+                JsonArray projectFiles = obj["ListAllFiles"]!.AsArray();
+                foreach (var file in projectFiles)
+                {
+                    listAllFiles.Add(file.ToString());
+                    //    k += listAllFiles[listAllFiles.Count - 1]+"--";
+                }
+
+                //  MessageBox.Show(k);
+
+                JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
+                foreach (var model in projectModuls)
+                {
+                    IForesterModel m = createModel(model!["Type"]!.GetValue<string>());
+                    m.FromJSON(model.AsObject());
+                    allProjectModels.Add(m);
+                 //   k += m.TypeName + m.Id + "\n";
+                }
+
+                //   MessageBox.Show(k);
+
             }
-
-            //  MessageBox.Show(k);
-
-            JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
-            foreach (var model in projectModuls)
+            catch 
             {
-                IForesterModel m= createModel(model!["Type"]!.GetValue<string>());
-                m.FromJSON(model.AsObject());
-                allProjectModels.Add(m);
-                k += m.TypeName + m.Id+"\n";
+                MessageBox.Show("Не верно выбран файл проекта");
             }
-
-              MessageBox.Show(k);
             
         }
-        public void ToJson11()
-        {
-           // string path = PathToProject;
-            //Объект проекта, он один
-            JsonObject obj = new JsonObject
-            {
 
-                //Информация о проекте
-                ["Name"] = Name,
-                ["CreationDate"] = CreationDate,
-                ["ChangeDate"] = ChangeDate,
-
-                //Список файлов проекта
-                ["ListAllFiles"] = new JsonArray(),
-
-                //Список моделей проекта
-                ["ModelsInProject"] = new JsonObject { }
-                //Пример модели
-                /*            ["Model1"] = new JsonObject
-                            {
-                                ["Id"] = 123,
-                                ["Name"] = "const",
-                                ["Type"] = "ConstantNodeViewModel",
-                                ["Value"] = "3.456"
-                            },
-
-                            ["Model2"] = new JsonObject
-                            {
-                                ["Id"] = 1253,
-                                ["Name"] = "const"
-                            }*/
-
-
-            };
-
-            JsonObject ray = obj!["ModelsInProject"]!.AsObject();
-            string nameId = "3456";
-
-            JsonObject array = new JsonObject { ["Id"] = "hhh", ["Low"] = 20 };
-
-
-
-            obj![array!["Id"]!.GetValue<string>()] = array; //Добавить 
-
-
-         //   obj!["ModelsInProject"]![nameId+"fddf"] = new JsonObject { ["Id"] = 888888889, ["Low"] = 20 };
-
-            
-            
-
-            // obj["ModelsInProject"] = ray;
-
-            //Добавить
-            //    obj!["ModelsInProject"]![nameId] = new JsonObject { ["Id"] = 1289, ["Low"] = 20 };
-
-            //Удалить
-            // obj!["ModelsInProject"].Remove("Model2");
-            //  (JsonObject)obj["ModelsInProject"].Remove("Model2");
-
-            // CreateDirectory(path + "\\" + "test");
-
-            // string name = CreateFile("test", path);
-
-            //  WriteFileJson(name, path, obj);
-            /*
-                       StreamWriter file = new StreamWriter(path + "\\" + name + ".json");
-                        file.WriteLine(obj);
-                        file.Close();
-                      */
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            MessageBox.Show(obj.ToJsonString(options));
-
-        }
 
         /// <summary>
         /// создает модель нужного типа

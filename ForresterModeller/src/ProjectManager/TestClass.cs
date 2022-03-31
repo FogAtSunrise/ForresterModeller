@@ -1,6 +1,7 @@
 ﻿using ForresterModeller.src.Nodes.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -25,8 +26,7 @@ namespace ForresterModeller.src.ProjectManager
 
         public void test7(string str)
         {
-            proj = new Project(str);
-
+            proj = new Project(Path.GetFileNameWithoutExtension(str), str);
             proj.SaveNewProject();
 
         }
@@ -34,8 +34,8 @@ namespace ForresterModeller.src.ProjectManager
         {
     
 
-            proj = new Project(path);
-            proj.openOldProject();
+            proj = new Project();
+            proj.openOldProject(path);
             IForesterModel u;
          /*    u=proj.getModelById("lev1895459376");
             if(u!=null)
@@ -63,7 +63,7 @@ namespace ForresterModeller.src.ProjectManager
         {
             proj = new Project();
            // proj.SaveNewProject();
-            proj.ToJson11();
+           
 
         }
         public void test2()
