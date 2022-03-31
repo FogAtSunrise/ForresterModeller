@@ -94,16 +94,20 @@ namespace ForresterModeller.src.ProjectManager
         {
             PathToProject = Path.GetDirectoryName(path);
             Name = Path.GetFileNameWithoutExtension(path);
-            using (StreamReader r = new StreamReader(PathToProject + "\\" + Name + ".json"))
-            {
+            try {
+                StreamReader r = new StreamReader(PathToProject + "\\" + Name + ".json");
+
+
                string json = r.ReadToEnd();
-               
-               var jobj = JsonObject.Parse(json); 
+
+                var jobj = JsonObject.Parse(json);
                 r.Close();
                 FromJson(jobj.AsObject());
                 var options = new JsonSerializerOptions { WriteIndented = true };////////////////////
-                MessageBox.Show(jobj.ToJsonString(options));
+                MessageBox.Show(jobj.ToJsonString(options));//////////////////////////////
             }
+            catch {  MessageBox.Show("Ошибка файла проекта"); }
+
         }
 
 
