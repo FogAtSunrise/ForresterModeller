@@ -12,14 +12,17 @@ namespace ForresterModeller.ViewModels
         public string Header => WAManager.Name;
         public ContentControl Content => WAManager.Content;
         //содержимое
+        private WorkAreaManager _wamanager;
         public WorkAreaManager WAManager { get; set; }
 
-        public TabViewModel(WorkAreaManager WAManager)
+        public TabViewModel(WorkAreaManager workAreaManager)
         {
-            this.WAManager = WAManager;
+            WAManager = workAreaManager;
             //Биндим данные с помощью инструментов Reactive
-            this.WAManager.WhenAnyValue(w => w.Name).ToProperty(this, o => o.Header);
-            this.WAManager.WhenAnyValue(w => w.Content).ToProperty(this, o => o.Content);
+            WAManager.WhenAnyValue(w => w.Name).ToProperty(this, o => o.Header);
+            WAManager.WhenAnyValue(w => w.Content).ToProperty(this, o => o.Content);
+         
         }
-    }
+
+       }
 }

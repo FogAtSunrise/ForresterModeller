@@ -28,22 +28,24 @@ namespace ForresterModeller.ViewModels
 
         public MainWindowViewModel()
         {
-            OpenTab = ReactiveCommand.Create<WorkAreaManager>(o => TabControlVM.AddTab(new DiagramManager(){Name = "Новый таб"}));
+            OpenTab = ReactiveCommand.Create<WorkAreaManager>(o =>AddTab(new DiagramManager{Name = "Диаграмма12"}));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
-            CalculateByCore = ReactiveCommand.Create<String>(str => TabControlVM.AddTab(CalculateGraphByCore()));
-            OpenTestGraph = ReactiveCommand.Create<Unit>(u => TabControlVM.AddTab(TestPlot()));
-            TabControlVM.PropertyChanged += TabControlUpdate;
+            CalculateByCore = ReactiveCommand.Create<String>(str => AddTab(CalculateGraphByCore()));
+            OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
         }
 
-        private void TabControlUpdate(object? sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// ДДОБАВЛЯТЬ ВКЛАДКИ ТОЛЬКО ЧЕРЕЗ ЭТОТ МЕТОД!!!
+        /// иначе окно пропертей не будет обновляться
+        /// </summary>
+        /// <param name="contentManager"></param>
+        private void AddTab(WorkAreaManager contentManager)
         {
-            if (e.PropertyName == nameof(TabControlVM.ActiveTab))
-            {
-                PropertiesVM.ActiveItem = TabControlVM.ActiveTab.WAManager;
-            }
+            contentManager.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
+            TabControlVM.AddTabFromWAManager(contentManager);
+            
         }
 
-      
         private PlotManager CalculateGraphByCore()
         {
             float t = 1, dt = 0.1f;
@@ -74,6 +76,7 @@ namespace ForresterModeller.ViewModels
             plotmodel.Name = "График продуктивности";
             return plotmodel;
         }
+
 
     }
 }

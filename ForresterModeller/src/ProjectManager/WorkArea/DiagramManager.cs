@@ -20,12 +20,18 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class DiagramManager : WorkAreaManager
     {
+
         private IPropertyOwner _activeItem;
-        public IPropertyOwner ActiveItem
+        public override IPropertyOwner ActiveOwnerItem
         {
             get => _activeItem ?? this;
-            set => this.RaiseAndSetIfChanged(ref _activeItem, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _activeItem, value);
+                OnPropertySelected(_activeItem);
+            }
         }
+
         private NetworkView _contentView;
         private ObservableCollection<ForesterNodeModel> _selectedNodes = new();
         public ObservableCollection<ForesterNodeModel> SelectedNodes
@@ -40,6 +46,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public NetworkView GetNetworkView()
         {
+
             _contentView = new NetworkView() { Background = Brushes.AliceBlue };
             var network = new NetworkViewModel();
             ///
@@ -78,8 +85,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 }
                 ///
                 if (SelectedNodes.Count == 1)
-                    ActiveItem = node;
-                else ActiveItem = this;
+                {
+                    ActiveOwnerItem = node;
+                }
+                else ActiveOwnerItem = this;
+                OnPropertySelected(ActiveOwnerItem);
             }
         }
 
