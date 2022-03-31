@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Controls;
@@ -19,10 +21,14 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     public class DiagramManager : WorkAreaManager
     {
         private IPropertyOwner _activeItem;
-        public override IPropertyOwner ActiveOwnerItem => _activeItem ?? this;
+        public IPropertyOwner ActiveItem
+        {
+            get => _activeItem ?? this;
+            set => this.RaiseAndSetIfChanged(ref _activeItem, value);
+        }
         private NetworkView _contentView;
-        private IObservableList<NodeViewModel> _selectedNodes;
-        public IObservableList<NodeViewModel> SelectedNodes
+        private ObservableCollection<ForesterNodeModel> _selectedNodes = new();
+        public ObservableCollection<ForesterNodeModel> SelectedNodes
         {
             get => _selectedNodes;
             set => this.RaiseAndSetIfChanged(ref _selectedNodes, value);
@@ -48,29 +54,34 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             nods.Add(n1);
             nods.Add(n2);
             nods.Add(n3);
-          
-            ///
+
             foreach (var node in nods)
             {
                 network.Nodes.Add(node);
-                
+                node.PropertyChanged += NodeOnPropertyChanged;
+
             }
-            network.PropertyChanged += Network_PropertyChanged;
             _contentView.ViewModel = network;
-            SelectedNodes = network.SelectedNodes.Connect().AsObservableList();
-            int a;
-          //  network.SelectedNodes.CountChanged.Subscribe().
-
-
             return _contentView;
         }
 
-        private void Network_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void NodeOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "CountChanged")
+            if (e.PropertyName == nameof(ForesterNodeModel.IsSelected))
             {
-                this.Name = "12";
+                var node = (ForesterNodeModel)sender;
+                if (node.IsSelected)
+                    SelectedNodes.Add(node);
+                else if (SelectedNodes.Contains(node))
+                {
+                    SelectedNodes.Remove(node);
+                }
+                ///
+                if (SelectedNodes.Count == 1)
+                    ActiveItem = node;
+                else ActiveItem = this;
             }
         }
+
     }
 }

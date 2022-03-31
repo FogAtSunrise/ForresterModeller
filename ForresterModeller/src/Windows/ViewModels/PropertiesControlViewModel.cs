@@ -24,8 +24,7 @@ namespace ForresterModeller.ViewModels
             set => this.RaiseAndSetIfChanged(ref _properties, value);
         }
 
-        //Элементы заголовка
-
+        //Модель, свойства которой отображаются 
         private IPropertyOwner _activeItem;
         public IPropertyOwner ActiveItem
         {
