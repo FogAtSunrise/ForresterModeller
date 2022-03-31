@@ -54,30 +54,74 @@
                 </Grid.RowDefinitions>
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
-                    <Grid>
-                        <TabControl x:Name="PagesTabControl"  ItemsSource="{Binding TabControlVM.Tabs }" 
-                                    SelectedItem="{Binding TabControlVM.ActiveTab, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged }" DockPanel.Dock="Right" Background="White" >
+                    <Grid >
+                        <TabControl Grid.Row="1" Grid.Column="0" Name="TabControl" ItemsSource="{Binding TabControlVM.Tabs}"
+                           SelectedItem="{Binding TabControlVM.ActiveTab, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged }" DockPanel.Dock="Right" Background="White" >
+                            <!-- Tab Content Template -->
                             <TabControl.ContentTemplate>
-                                <DataTemplate >
-                                    <ContentControl  Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}"/>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding Content}"></ContentControl>
                                 </DataTemplate>
                             </TabControl.ContentTemplate>
-                            <TabControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" MinWidth="80" Text="{Binding Header}"/>
-                                        <Button Grid.Column="1"  Name="CloseButton"   BorderThickness="0"
-                                                Background="Transparent"  Content="&#x2715;" />
-                                    </Grid>
-                                </DataTemplate>
-                            </TabControl.ItemTemplate>
+                            <TabControl.Resources>
+                                <!-- Tabs Panel Template -->
+                                <Style TargetType="{x:Type TabControl}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TabControl}">
+                                                <Grid KeyboardNavigation.TabNavigation="Local">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <!-- Tabs Panel. Property IsItemsHost means that the panel is for tabs -->
+                                                    <Border Grid.Row="0"  BorderBrush="#006cbe"  BorderThickness="0,0,0,2">
+                                                        <WrapPanel x:Name="HeaderPanel" Panel.ZIndex="1" IsItemsHost="True"   KeyboardNavigation.TabIndex="1" Background="GhostWhite" />
+                                                    </Border>
+                                                    <!-- Tab Content Presenter  -->
+                                                    <ContentPresenter Grid.Row="1" x:Name="PART_SelectedContentHost" Margin="4" ContentSource="SelectedContent" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                                <!-- Tab Item Template -->
+                                <Style TargetType="TabItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TabItem">
+                                                <Border Name="ActiveTabBorder" BorderBrush="LightGray" BorderThickness="1">
+                                                    <Grid Name="Panel" Margin="-1,0" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Name="TextBlock"  Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="3,2"/>
+                                                    <Button  Name="CloseButton"  Grid.Column="1" Content="&#10761;" Background="Transparent" BorderThickness="0" 
+                                                              
+                                             VerticalAlignment="Center"  Margin="8,0,3,0"
+                                             Command="{Binding DataContext.CloseTab, ElementName=TabControl}"
+                                             CommandParameter="{Binding }"/>
+                                                </Grid>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <!-- Selected Tab -->
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                                    </Trigger>
+                                                    <!-- Unselected Tab -->
+                                                    <Trigger Property="IsSelected" Value="False">
+                                                        <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
                         </TabControl>
-                    </Grid>
 
+                    </Grid>
                 </Grid>
                 <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Инструменты-->
@@ -141,7 +185,7 @@
             <Button Content="Test2" Click ="Test2" Margin="84,0,630,0" />
 
             <Button Content="AddPlot" Command="{Binding OpenTestGraph}" Margin="170,0,563,0" />
-            <Button Content="AddDiagramm" Command="{Binding OpenTabCommand}" Margin="237,2,495,-2" />
+            <Button Content="AddDiagramm" Command="{Binding OpenTab}" Margin="237,2,495,-2" />
         </Grid>
     </Grid>
 </Window>

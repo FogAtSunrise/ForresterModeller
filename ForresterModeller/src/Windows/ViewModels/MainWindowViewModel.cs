@@ -19,7 +19,8 @@ namespace ForresterModeller.ViewModels
         public ObservableCollection<FormulaControl> Formulas { get; set; }
 
         #region commands
-        public ReactiveCommand<WorkAreaManager, Unit> OpenTabCommand { get; }
+        public ReactiveCommand<WorkAreaManager, Unit> OpenTab { get; }
+        public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
         public ReactiveCommand<String, Unit> CalculateByCore { get; }
         public ReactiveCommand<Unit, Unit> OpenTestGraph { get; }
 
@@ -27,7 +28,8 @@ namespace ForresterModeller.ViewModels
 
         public MainWindowViewModel()
         {
-            OpenTabCommand = ReactiveCommand.Create<WorkAreaManager>(o => TabControlVM.AddTab(new DiagramManager(){Name = "Новый таб"}));
+            OpenTab = ReactiveCommand.Create<WorkAreaManager>(o => TabControlVM.AddTab(new DiagramManager(){Name = "Новый таб"}));
+            CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<String>(str => TabControlVM.AddTab(CalculateGraphByCore()));
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => TabControlVM.AddTab(TestPlot()));
             TabControlVM.PropertyChanged += TabControlUpdate;
