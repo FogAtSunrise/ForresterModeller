@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Pages.Tools;
-using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Tools;
-using ForresterModeller.Windows.ViewModels;
+using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.ProjectManager.WorkArea;
 using WpfMath.Controls;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Windows.Navigation;
+using ForesterNodeCore;
+using ForresterModeller.Windows.ViewModels;
 
-namespace ForresterModeller.Windows.Views
+namespace ForresterModeller
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

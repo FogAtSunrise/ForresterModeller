@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using ForesterNodeCore;
+using ForresterModeller.ProjectManager.WorkArea;
+using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 using WpfMath.Controls;
@@ -74,6 +76,10 @@ namespace ForresterModeller.Windows.ViewModels
             return plotmodel;
         }
 
+        private MatViewManager CreateMatView(Project proj)
+        {
+
+        }
 
     }
 }
