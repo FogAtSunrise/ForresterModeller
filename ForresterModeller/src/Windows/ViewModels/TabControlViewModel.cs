@@ -23,7 +23,7 @@ namespace ForresterModeller.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _activeTab, value);
-                ActiveTab.WAManager.OnPropertySelected(ActiveTab.WAManager);
+                 ActiveTab?.WAManager.OnPropertySelected(ActiveTab.WAManager);
             }
             get => _activeTab;
         }
@@ -40,7 +40,14 @@ namespace ForresterModeller.ViewModels
             var item = new TabViewModel(contentManager);
             Tabs.Add(item);
             ActiveTab = item;
-
+        }
+        public void DeleteTab(TabViewModel tabVM)
+        {
+       /*     if(ActiveTab == tabVM)
+                ActiveTab = 
+            var item = new TabViewModel(contentManager);
+            Tabs.Add(item);
+            ActiveTab = item;*/
         }
         public TabControlViewModel()
         {

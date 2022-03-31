@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork" 
         xmlns:viewmodels="clr-namespace:ForresterModeller.ViewModels"
         xmlns:properties="clr-namespace:ForresterModeller.src.Pages.Properties"
+        xmlns:views="clr-namespace:ForresterModeller.Windows.Views"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
@@ -174,7 +175,7 @@
             </Grid>
             <!--Область редактирования свойств элементов-->
             <Grid Grid.Row="2"  x:Name="PropertyArea" Grid.Column="2">
-                <properties:PropertiesControl x:Name="PropertyFrame" DataContext="{Binding PropertiesVM }" 
+                <views:PropertiesControl x:Name="PropertyFrame" DataContext="{Binding PropertiesVM }" 
                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </Grid>
         </Grid>
