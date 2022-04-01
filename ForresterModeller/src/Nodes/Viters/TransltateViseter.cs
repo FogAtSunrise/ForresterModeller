@@ -13,10 +13,12 @@ namespace ForresterModeller.src.Nodes.Viters
 
             foreach (var inputs in node.Inputs.Items)
             {
-                preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).Id);
+                preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).GetCoreCode());
             }
 
-            string translatedNode = String.Format("|f {0} {1}|", node.Id, preEquals);
+            preEquals = preEquals.Replace(" ","");
+
+            string translatedNode = String.Format("f {0} {1}|", node.GetCoreCode(), preEquals);
             return translatedNode;
         }
 
@@ -24,7 +26,7 @@ namespace ForresterModeller.src.Nodes.Viters
         {
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            string translatedNode = String.Format("|c {0} {1}|", node.Id, node.Value.ToString());
+            string translatedNode = String.Format("c {0} {1}|", node.GetCoreCode(), node.Value.ToString());
             System.Threading.Thread.CurrentThread.CurrentCulture = save_localization;
             return translatedNode;
         }
@@ -39,14 +41,14 @@ namespace ForresterModeller.src.Nodes.Viters
             var preInEquals = node.InputRate;
             var preStart = node.StartValue;
 
-            foreach (var inputs in node.Inputs.Items)
-            {
-                preInEquals = preInEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
-                preStart = preStart.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Input.Parent).Id);
-            }
 
-            string translatedNode = String.Format("|d {0} {1} {2} {3}|",
-                node.Id,
+            preInEquals = preInEquals.Replace(" ", "");
+            preStart = preStart.Replace(" ", "");
+
+            //TODO prestat find
+
+            string translatedNode = String.Format("d {0} {1} {2} {3}|",
+                node.GetCoreCode(),
                 node.OutputRateName,
                 node.DeepDelay.ToString(),
                 node.DelayValueName,
@@ -56,7 +58,7 @@ namespace ForresterModeller.src.Nodes.Viters
 
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            translatedNode += String.Format("|c {0} {1}|", node.Id, node.DelayValue.ToString());
+            translatedNode += String.Format("c {0} {1}|", node.GetCoreCode(), node.DelayValue.ToString());
             System.Threading.Thread.CurrentThread.CurrentCulture = save_localization;
             return translatedNode;
         }
@@ -64,6 +66,7 @@ namespace ForresterModeller.src.Nodes.Viters
         public string VisitFunc(FunkNodeModel node)
         {
             var preEquals = node.Funk;
+            preEquals = preEquals.Replace(" ", "");
 
             foreach (var inputs in node.Inputs.Items)
             {
@@ -73,11 +76,11 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).Id);
+                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).GetCoreCode());
                 }
             }
 
-            string translatedNode = String.Format("|h {0} {1}|", node.Id, preEquals);
+            string translatedNode = String.Format("h {0} {1}|", node.GetCoreCode(), preEquals);
             return translatedNode;
         }
 
@@ -87,6 +90,12 @@ namespace ForresterModeller.src.Nodes.Viters
             var preOutEquals = node.OutputRate;
             var preStart = node.StartValue;
 
+
+            preInEquals = preInEquals.Replace(" ", "");
+            preOutEquals = preOutEquals.Replace(" ", "");
+            preStart = preStart.Replace(" ", "");
+
+
             foreach (var inputs in node.Inputs.Items)
             {
                 if (inputs.Connections.Items.Count() == 0)
@@ -95,11 +104,11 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preInEquals =  ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).Id;
+                    preInEquals =  ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).GetCoreCode();
                 }
             }
 
-            string translatedNode = String.Format("|l {0} {1} {2} {3}|", node.Id, preInEquals, preOutEquals, preStart);
+            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode(), preInEquals, preOutEquals, preStart);
             return translatedNode;
         }
     }
@@ -114,7 +123,7 @@ namespace ForresterModeller.src.Nodes.Viters
             {
                 result += node.AcceptViseter<string>(viseter);
             }
-            return result;
+            return result.Remove(result.Length - 1);
         }
     }
 

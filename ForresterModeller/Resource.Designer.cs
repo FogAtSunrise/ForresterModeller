@@ -61,7 +61,16 @@ namespace ForresterModeller {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на  Константа.
+        ///   Ищет локализованную строку, похожую на ФункцияВыбора.
+        /// </summary>
+        internal static string chooseFuncName {
+            get {
+                return ResourceManager.GetString("chooseFuncName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Константа.
         /// </summary>
         internal static string constType {
             get {

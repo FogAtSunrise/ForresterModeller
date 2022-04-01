@@ -38,7 +38,6 @@ namespace ForresterModeller.src.Nodes.Views
             base.OnApplyTemplate();
             FullName = GetTemplateChild(nameof(FullName)) as TextBlock;
             Code = GetTemplateChild(nameof(Code)) as TextBlock;
-
         }
 
         public ForesterNodeView(string type) : base()

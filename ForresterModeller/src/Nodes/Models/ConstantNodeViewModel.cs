@@ -31,7 +31,6 @@ namespace ForresterModeller.src.Nodes.Models
         public ConstantNodeViewModel(string name, string fulname, float value) : base()
         {
             this.Name = name;
-            this.Id = name;
             this.Value = value;
             this.FullName = fulname;
             var a = new NodeOutputViewModel();

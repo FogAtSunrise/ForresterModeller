@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
+using System.Windows.Annotations.Storage;
 using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
 
@@ -23,9 +24,17 @@ namespace ForresterModeller.src.Nodes.Models
         public string Description { get; set; }
         public virtual string TypeName { get; }
    
-        public string FullName { get; set; } 
+        public string FullName { get; set; }
         public string Id { get; set; }
 
+        public virtual string GetCoreCode()
+        {
+            return Id;
+        }
+        public ForesterNodeModel()
+        {
+            Id = TypeName + new Random().Next();
+        }
         public abstract T AcceptViseter<T>(INodeViseters<T> viseter);
 
         public virtual ObservableCollection<PropertyViewModel> GetProperties()
@@ -39,7 +48,7 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
-
+        
         public virtual JsonObject ToJSON() { return new JsonObject(); }
         public virtual void FromJSON(JsonObject obj) {  }
 

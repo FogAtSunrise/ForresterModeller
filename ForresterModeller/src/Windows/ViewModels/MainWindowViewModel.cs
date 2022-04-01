@@ -6,16 +6,19 @@ using System.Windows;
 using System.Windows.Forms;
 using ForesterNodeCore;
 using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Views;
+using ForresterModeller.src.Nodes.Viters;
 using ForresterModeller.src.ProjectManager.WorkArea;
+using NodeNetwork.Views;
 using ReactiveUI;
 using WpfMath.Controls;
 
 namespace ForresterModeller.Windows.ViewModels
 {
-
-    public class MainWindowViewModel: ReactiveObject
+    public class MainWindowViewModel : ReactiveObject
     {
-        public TabControlViewModel TabControlVM { get;  } = new();
+        public TabControlViewModel TabControlVM { get; } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
 
@@ -23,7 +26,12 @@ namespace ForresterModeller.Windows.ViewModels
 
 
         #region commands
-        public ReactiveCommand<WorkAreaManager, Unit> OpenTab { get; }
+        //Создать новую диаграмму
+        public ReactiveCommand<WorkAreaManager, Unit> CreateDiagram { get; }
+        /// <summary>
+        /// Открыть элемент по имени
+        /// </summary>
+        public ReactiveCommand<String, Unit> OpenTab { get; }
         public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
         public ReactiveCommand<String, Unit> CalculateByCore { get; }
         public ReactiveCommand<Unit, Unit> OpenTestGraph { get; }
@@ -37,9 +45,20 @@ namespace ForresterModeller.Windows.ViewModels
         #endregion
         public MainWindowViewModel()
         {
-            OpenTab = ReactiveCommand.Create<WorkAreaManager>(o =>AddTab(new DiagramManager{Name = "Диаграмма12"}));
+            CreateDiagram = ReactiveCommand.Create<WorkAreaManager>(o => AddTab(new DiagramManager { Name = "Диаграмма12" }));
+            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager { Name = "Диаграмма12" }));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
-            CalculateByCore = ReactiveCommand.Create<String>(str => AddTab(CalculateGraphByCore()));
+            CalculateByCore = ReactiveCommand.Create<String>(str =>
+            {
+                try
+                {
+                    AddTab(CalculateGraphByCore());
+                }
+                catch
+                {
+                    MessageBox.Show("Ваша модель некорректна!");
+                }
+            });
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
 
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => {
@@ -68,20 +87,25 @@ namespace ForresterModeller.Windows.ViewModels
         {
             contentManager.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
             TabControlVM.AddTabFromWAManager(contentManager);
-            
+
         }
 
         private PlotManager CalculateGraphByCore()
         {
-            float t = 1, dt = 0.1f;
-            var c = ForesterNodeCore.Program.GetCurve(
-                "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
-                new List<NodeIdentificator> {
-                    new NodeIdentificator("dc"),
-                    new NodeIdentificator("nt"),
-                    new NodeIdentificator("boo"),
-                    new NodeIdentificator("loo"),
-                },
+            if (TabControlVM.ActiveTab.WAManager is not DiagramManager)
+                return null;
+            var manager = (DiagramManager)TabControlVM.ActiveTab.WAManager;
+            double t = manager.AllTime, dt = manager.DeltaTime;
+            var network = ((NetworkView)manager.Content).ViewModel;
+            string text = NodeTranslator.Translate(network);
+            List<NodeIdentificator> ids = new();
+            foreach (var nod in network.Nodes.Items)
+            {
+                if (nod is not CrossNodeModel)
+                    ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
+            }
+            var c = ForesterNodeCore.Program.GetCurve(text,
+               ids,
                 t,
                 dt
             );
@@ -95,7 +119,7 @@ namespace ForresterModeller.Windows.ViewModels
         private PlotManager TestPlot()
         {
             PlotManager plotmodel = new();
-            plotmodel.lines.Add(new PlotManager.Line(new double[]{1, 2, 3, 4}, new double[]{1, 2, 3, 4}, "Продуктивность студента"));
+            plotmodel.lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 1, 2, 3, 4 }, "Продуктивность студента"));
             plotmodel.XLabel = "Степень окончания семестра";
             plotmodel.YLabel = "Скорость сдачи лаб ";
             plotmodel.Name = "График продуктивности";

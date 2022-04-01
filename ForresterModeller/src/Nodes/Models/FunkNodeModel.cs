@@ -23,7 +23,6 @@ namespace ForresterModeller.src.Nodes.Models
         public FunkNodeModel(string name, string fulname, string funk) : base()
         {
             this.Name = name;
-            this.Id = name;
             this.Funk = funk;
             this.FullName = fulname;
             var a = new NodeOutputViewModel();

@@ -35,7 +35,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         /// <param name="resultMap"></param>
         /// <param name="t"></param>
         /// <param name="dt"></param>
-        public PlotManager(Dictionary<string, double[]> resultMap, float t, float dt)
+        public PlotManager(Dictionary<string, double[]> resultMap, double t, double dt)
         {
             lines = new();
             int count = resultMap.First().Value.Length;
