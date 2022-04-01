@@ -53,31 +53,17 @@ namespace ForresterModeller
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Файлы json|*.json";
-          
             openFileDialog1.RestoreDirectory = true;
 
             if (openFileDialog1.ShowDialog()==true)
             {
-                //System.Windows.MessageBox.Show("Выбран вот этот файл " + openFileDialog1.FileName);
-                TestClass f = new TestClass();
-                f.test4(openFileDialog1.FileName);
+            MainWindow dialog = new MainWindow(openFileDialog1.FileName);
+           this.Close();
+           dialog.ShowDialog();
+           
 
             }
-         
-          
-         /*  FolderBrowserDialog fbd = new FolderBrowserDialog();
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-               // System.Windows.MessageBox.Show("Выбран вот этот файл " + fbd.SelectedPath);
-                Project j = new Project("", fbd.SelectedPath); 
-                j.ToJson();
-            }
-*/
 
-            /*MainWindow dialog = new MainWindow();
-            this.Close();
-            dialog.ShowDialog();
-            */
 
         }
         

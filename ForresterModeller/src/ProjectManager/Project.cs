@@ -23,8 +23,16 @@ namespace ForresterModeller.src.ProjectManager
         string DefaultName = "New Project";
         string DefaultPath = Directory.GetCurrentDirectory() + "\\";
 
-        List<IForesterModel> allProjectModels = new List<IForesterModel>();
+        List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
         List<string> listAllFiles = new List<string>();
+
+        //тест метод, удалите его обязательно
+        public string getIdMod(int numb)
+        {
+            if (allProjectModels.Count >= numb)
+                return allProjectModels[numb].Id;
+            return "";
+        }
 
 
         string Name;
@@ -40,33 +48,11 @@ namespace ForresterModeller.src.ProjectManager
         /// хранит директорию, в которой хранится json проекта!!!
         /// </summary>
         string PathToProject;
-
+        public string getPath() { return PathToProject; }
         /// <summary>
         /// хранит директорию с диаграммами
         /// </summary>
         string PathToDiagram="";
-
-        /// <summary>
-        /// Добавить в проект новую модель
-        /// </summary>
-        /// <param name="mod"></param>
-        public void addModel(IForesterModel model)
-        {
-            Random rnd = new Random();
-            model.Id = model.Id + rnd.Next();
-
-            allProjectModels.Add(model);
-        }
-        /// <summary>
-        /// добавить имя файла в список файлов проекта
-        /// </summary>
-        /// <param name="name"></param>
-        public void addFiles(string name)
-        {
-
-            listAllFiles.Add(name);
-        }
-   
 
 
         public Project(string name, string pathTofile)
@@ -77,7 +63,7 @@ namespace ForresterModeller.src.ProjectManager
             ChangeDate = DateTime.Now;
         }
 
-        public Project() 
+        public Project()
         {
             Name = DefaultName;
             PathToProject = DefaultPath + Name;
@@ -86,123 +72,82 @@ namespace ForresterModeller.src.ProjectManager
 
         }
 
- 
-        //прочитать json ужe существующего проекта и заполнить данные проекта
-        //получает на вход путь к json
-       
-        public void openOldProject(string path)
+
+        /// <summary>
+        /// Добавить в проект новую модель
+        /// </summary>
+        /// <param name="mod"></param>
+        public void addModel(ForesterNodeModel model)
         {
-            PathToProject = Path.GetDirectoryName(path);
-            Name = Path.GetFileNameWithoutExtension(path);
-            try {
-                StreamReader r = new StreamReader(PathToProject + "\\" + Name + ".json");
+            Random rnd = new Random();
+            model.Id = model.Id + rnd.Next();
 
-
-               string json = r.ReadToEnd();
-
-                var jobj = JsonObject.Parse(json);
-                r.Close();
-                FromJson(jobj.AsObject());
-                var options = new JsonSerializerOptions { WriteIndented = true };////////////////////
-                MessageBox.Show(jobj.ToJsonString(options));//////////////////////////////
-            }
-            catch {  MessageBox.Show("Ошибка файла проекта"); }
-
+            allProjectModels.Add(model);
         }
 
+        /// <summary>
+        /// удаление модели
+        /// </summary>
+        /// <param name="id"></param>
+        public void deleteModel(string id)
+        {
+            ForesterNodeModel find = allProjectModels.Find((item) => item.Id == id);
+            if (find != null)
+                allProjectModels.Remove(find);
+           
+        }
+        /// <summary>
+        /// добавить имя файла в список файлов проекта
+        /// </summary>
+        /// <param name="name"></param>
+        public void addFiles(string name)
+        {
+
+            listAllFiles.Add(name);
+            //...
+        }
+
+
+        public void deleteFile(string name)
+        {
+
+            listAllFiles.Add(name);
+            //...
+        }
+
+
+ 
+
+
+        public ForesterNodeModel getModelById(string id)
+        {
+            ForesterNodeModel find = allProjectModels.Find((item) =>  item.Id == id);
+            return find;
+        }
 
         public void SaveOldProject()
         {
             if (Directory.Exists(PathToProject))
             {
-                WriteFileJson(Name, PathToProject, ToJson());
+                Loader.WriteFileJson(Name, PathToProject, ToJson());
             }
             else SaveNewProject();
-        }
-
-        public IForesterModel getModelById(string id)
-        {
-            IForesterModel find = allProjectModels.Find((item) =>  item.Id == id);
-            return find;
         }
         public void SaveNewProject()
         {
 
-            string ind = CreateDirectory(PathToProject);
+            string ind = Loader.CreateDirectory(PathToProject);
             Name += ind;
             PathToProject += ind;
-            CreateFile(Name, PathToProject);
+            Loader.CreateFile(Name, PathToProject);
             PathToDiagram = PathToProject + "\\diagrams";
-            CreateDirectory(PathToDiagram);
+            Loader.CreateDirectory(PathToDiagram);
             JsonObject jsonVerst = ToJson();
-            WriteFileJson(Name, PathToProject, jsonVerst);
+            Loader.WriteFileJson(Name, PathToProject, jsonVerst);
 
         }
 
-        /// <summary>
-        /// Создать новую директорию (не важно, для целого проекта или в самом проекте)
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        //пример вызова:   CreateDirectory(path + "\\" + "имя новой папки");
-        private string CreateDirectory(string path)
-        {
-            int index = 0;
-            if (Directory.Exists(path))
-             {
-                index = 1;
-
-                while (Directory.Exists(path + index))
-                 {
-                     index++;
-                 }
-                 path = path + index;
-                
-            }
-             Directory.CreateDirectory(path);
-             return (index==0)?"": index.ToString();
-        }
-
-
-            /// <summary>
-            /// Создать файл json для записи
-            /// </summary>
-            /// <param name="filename"></param>
-            /// <param name="path"></param>
-            /// <returns></returns>
-            private string CreateFile(string filename, string path)
-        {
-            if (File.Exists(path + "\\" + filename + ".json"))
-            {
-                int index = 1;
-                while (File.Exists(path + "\\" + filename + index + ".json"))
-                {
-                    index++;
-                }
-                filename = filename + index;
-            }
-            StreamWriter file = File.CreateText(path + "\\" + filename + ".json");
-            file.Close();
-            return filename;
-        }
-
-
-        /// <summary>
-        /// запись в файл json, причем он перезаписывает файл
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="path"></param>
-        /// <param name="inf"></param>
-        private void WriteFileJson(string filename, string path, JsonObject inf)
-        {
-            using (StreamWriter file = new StreamWriter(path + "\\" + filename + ".json", false))
-            {
-         
-                file.Write(inf);
-                file.Close();
-
-            }    
-        }
+       
 
         /// <summary>
         /// переводит содержимое проекта в json, использовать при сохранении
@@ -270,7 +215,7 @@ namespace ForresterModeller.src.ProjectManager
                 JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
                 foreach (var model in projectModuls)
                 {
-                    IForesterModel m = createModel(model!["Type"]!.GetValue<string>());
+                    ForesterNodeModel m = createModel(model!["Type"]!.GetValue<string>());
                     m.FromJSON(model.AsObject());
                     allProjectModels.Add(m);
                  //   k += m.TypeName + m.Id + "\n";
@@ -292,7 +237,7 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public IForesterModel createModel(string type)
+        public ForesterNodeModel createModel(string type)
         {
 
             if (LevelNodeModel.type == type)

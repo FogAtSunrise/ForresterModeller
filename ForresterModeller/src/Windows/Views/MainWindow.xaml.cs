@@ -23,15 +23,26 @@ namespace ForresterModeller.Windows.Views
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+
+
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
         }
 
-       
+        public MainWindow(string path)
+        {
+            InitializeComponent();
+            var windowmodel = new MainWindowViewModel();
+           windowmodel.activeProject = Loader.InitProjectByPath(path);
+            DataContext = windowmodel;
+            
 
-        private void Test1(object sender, RoutedEventArgs e)
+
+        }
+        
+            private void Test1(object sender, RoutedEventArgs e)
         {
             // openNewPage("file_name");
             // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());

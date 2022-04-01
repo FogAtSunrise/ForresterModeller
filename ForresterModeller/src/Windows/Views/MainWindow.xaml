@@ -14,7 +14,7 @@
         <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Проект">
                 <MenuItem Header="Создать" />
-                <MenuItem Header="Открыть" />
+                <MenuItem Header="Открыть"   Command="{Binding  InitProjectByPath}"/>
                 <MenuItem Header="Сохранить" />
                 <MenuItem Header="Сохранить как" />
             </MenuItem>

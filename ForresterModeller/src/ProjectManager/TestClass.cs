@@ -35,7 +35,7 @@ namespace ForresterModeller.src.ProjectManager
     
 
             proj = new Project();
-            proj.openOldProject(path);
+         //   proj.openOldProject(path);
             IForesterModel u;
          /*    u=proj.getModelById("lev1895459376");
             if(u!=null)
@@ -81,7 +81,25 @@ namespace ForresterModeller.src.ProjectManager
             proj.addFiles("jj");
 
             proj.SaveNewProject();
+            MessageBox.Show("ЗАПИСАЛСЯ");
 
+/*
+            proj.openOldProject(proj.getPath()+"\\"+proj.getName());
+
+            MessageBox.Show("СЧИТАЛСЯ ");
+
+            int num = 0;
+            MessageBox.Show("Должен удалить "+ proj.getIdMod(num));
+            proj.deleteModel(proj.getIdMod(num));
+
+            proj.SaveOldProject();
+            MessageBox.Show("ЗАПИСАЛСЯ");
+
+
+            proj.openOldProject(proj.getPath() + "\\" + proj.getName());
+
+            MessageBox.Show("СЧИТАЛСЯ ");
+*/
             /*
             List<IForesterModel> elem = new List<IForesterModel>() {
                 new LevelNodeModel("lev1", "levelishe1", "in", "out"),

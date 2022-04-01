@@ -2,24 +2,37 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Windows;
+using System.Windows.Forms;
 using ForesterNodeCore;
+using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 using WpfMath.Controls;
 
 namespace ForresterModeller.Windows.ViewModels
 {
+
     public class MainWindowViewModel: ReactiveObject
     {
         public TabControlViewModel TabControlVM { get;  } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
 
+        public Project activeProject { get; set; }
+
+
         #region commands
         public ReactiveCommand<WorkAreaManager, Unit> OpenTab { get; }
         public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
         public ReactiveCommand<String, Unit> CalculateByCore { get; }
         public ReactiveCommand<Unit, Unit> OpenTestGraph { get; }
+
+        /// <summary>
+        /// Открыть существующий проект
+        /// Открывает диаологовое окно, по выбранному json инициализирует активный проект необходимыми данными
+        /// </summary>
+        public ReactiveCommand<Unit, Unit> InitProjectByPath { get; } 
 
         #endregion
         public MainWindowViewModel()
@@ -28,6 +41,22 @@ namespace ForresterModeller.Windows.ViewModels
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<String>(str => AddTab(CalculateGraphByCore()));
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
+
+            InitProjectByPath = ReactiveCommand.Create<Unit>(u => {
+
+                if (activeProject != null)
+                    activeProject.SaveOldProject();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Файлы json|*.json";
+            openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog()==DialogResult.OK)
+                {
+                    activeProject = Loader.InitProjectByPath(openFileDialog.FileName);
+                    if (activeProject != null)
+                        System.Windows.MessageBox.Show("Открылся " + activeProject.getName());
+                }
+            });
+            
         }
 
         /// <summary>
