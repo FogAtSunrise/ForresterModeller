@@ -14,6 +14,18 @@ namespace ForresterModeller.src.Nodes.Models
     public class CrossNodeModel : ForesterNodeModel
     {
         public static string type = "CrossNodeModel";
+        public override string TypeName => "crossnode";
+        public override string GetCoreCode()
+        {
+            if (_source.Connections.Items.Count() != 0)
+            {
+                return ((ForesterNodeModel)_source.Connections.Items.ToList()[0].Output.Parent).GetCoreCode();
+            }
+            return base.GetCoreCode();
+        }
+
+        private CrossNodeModelSourceRate _source;
+
         public CrossNodeModel()
         {
 
@@ -25,13 +37,13 @@ namespace ForresterModeller.src.Nodes.Models
             Inputs.Add(input);
 
 
-            var value = new CrossNodeModelSourceRate();
+            _source = new CrossNodeModelSourceRate();
 
-            value.PortPosition = PortPosition.Centr;
-            Inputs.Add(value);
+            _source.PortPosition = PortPosition.Centr;
+            Inputs.Add(_source);
 
-            input.Source = value;
-            value.Target = input;
+            input.Source = _source;
+            _source.Target = input;
 
             var outp = new NodeOutputViewModel();
             outp.PortPosition = PortPosition.Centr;
@@ -89,7 +101,7 @@ namespace ForresterModeller.src.Nodes.Models
                 var level = con.Output.Parent as LevelNodeModel;
                 if (Source.Connections.Items.Count() != 0)
                 {
-                    level.OutputRate = ((ForesterNodeModel)Source.Connections.Items.ToList()[0].Output.Parent).Id;
+                    level.OutputRate = ((ForesterNodeModel)Source.Connections.Items.ToList()[0].Output.Parent).GetCoreCode();
                 }
                 return new ConnectionValidationResult(true, null);
             };
@@ -115,7 +127,7 @@ namespace ForresterModeller.src.Nodes.Models
                 var level = con.Output.Parent as LevelNodeModel;
                 if (Target.Connections.Items.Count() != 0)
                 {
-                    ((LevelNodeModel)Target.Connections.Items.ToList()[0].Output.Parent).OutputRate = ((ForesterNodeModel)con.Output.Parent).Id;
+                    ((LevelNodeModel)Target.Connections.Items.ToList()[0].Output.Parent).OutputRate = ((ForesterNodeModel)con.Output.Parent).GetCoreCode();
                 }
                 return new ConnectionValidationResult(true, null);
             };

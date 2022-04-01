@@ -47,7 +47,7 @@ namespace ForesterNodeCore
 			return p.StandardOutput.ReadToEnd();
 		}
 
-        private static string PackageArgs(string model, IEnumerable<NodeIdentificator> order, float t, float delta)
+        private static string PackageArgs(string model, IEnumerable<NodeIdentificator> order, double t, double delta)
         {
             string args = "";
             args += "\"" + model + "\" \"";
@@ -66,7 +66,7 @@ namespace ForesterNodeCore
             return parseValue;
         }
 
-		public static Dictionary<string,double[]> GetCurve(string model, IList<NodeIdentificator> order, float t, float delta = 0.1f)
+		public static Dictionary<string,double[]> GetCurve(string model, IList<NodeIdentificator> order, double t, double delta = 0.1f)
         {
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
 

@@ -19,7 +19,7 @@
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
             <MenuItem Header="Инструменты">
-                <MenuItem Header="Создать диаграмму" />
+                <MenuItem Header="Создать диаграмму"  Command="{Binding CreateDiagram }" />
                 <MenuItem Header="Создать представление" />
                 <MenuItem Header="Построить график" />
             </MenuItem>

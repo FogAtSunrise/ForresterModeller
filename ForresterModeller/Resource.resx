@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="chooseFuncName" xml:space="preserve">
+    <value>ФункцияВыбора</value>
+  </data>
   <data name="constType" xml:space="preserve">
-    <value> Константа</value>
+    <value>Константа</value>
   </data>
   <data name="description" xml:space="preserve">
     <value>Описание</value>

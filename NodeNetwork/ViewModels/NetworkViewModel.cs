@@ -234,7 +234,9 @@ namespace NodeNetwork.ViewModels
         /// </summary>
         public ReactiveCommand<Unit, NetworkValidationResult> UpdateValidation { get; }
         #endregion
+        public delegate void ViewModelDeleteEventHandler(NodeViewModel[] sender);
 
+        public event ViewModelDeleteEventHandler NodeDeletedEvent ;
         public NetworkViewModel()
         {
             // Setup parent relationship in nodes.
@@ -252,7 +254,12 @@ namespace NodeNetwork.ViewModels
             // When DeleteSelectedNodes is invoked, remove all nodes that are user-removable and selected.
             DeleteSelectedNodes = ReactiveCommand.Create(() =>
             {
-                Nodes.RemoveMany(SelectedNodes.Items.Where(n => n.CanBeRemovedByUser).ToArray());
+
+                var nodes = SelectedNodes.Items.Where(n => n.CanBeRemovedByUser).ToArray();
+                NodeDeletedEvent.Invoke(nodes);
+
+                Nodes.RemoveMany(nodes);
+
             });
 
 			// When a node is removed, delete any connections from/to that node.

@@ -1,9 +1,12 @@
-﻿using DynamicData;
+﻿using System;
+using System.Collections.ObjectModel;
+using DynamicData;
 using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
+using ForresterModeller.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -13,7 +16,7 @@ namespace ForresterModeller.src.Nodes.Models
         public override string TypeName => Resource.levelType;
 
         public string InputRate { get; set; }
-        
+
         public string OutputRateName { get; set; }
 
         public int DeepDelay { get; set;}
@@ -23,6 +26,16 @@ namespace ForresterModeller.src.Nodes.Models
         public float DelayValue { get; set;}
 
         public string StartValue { get; set; }
+        public override ObservableCollection<PropertyViewModel> GetProperties()
+        {
+            var prop = base.GetProperties();
+            prop.Add(new PropertyViewModel("Имя исходящего потока", OutputRateName, (String str) =>
+            {
+                OutputRateName = str;
+            }));
+            prop.Add(new PropertyViewModel("Величина запаздывания принятия решений", DelayValue.ToString(), (String str) => { DelayValue = float.Parse(str); }));
+            return prop;
+        }
 
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
@@ -32,7 +45,6 @@ namespace ForresterModeller.src.Nodes.Models
         public DelayNodeModel(string name, string fulname, string input, string output, int deep, string delayName, float delayValue) : base()
         {
             this.Name = name;
-            this.Id = name;
             this.InputRate = input;
             this.OutputRateName = output;
             this.FullName = fulname;

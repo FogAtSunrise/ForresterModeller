@@ -23,7 +23,6 @@ namespace ForresterModeller.src.Nodes.Models
         public LevelNodeModel(string name, string fulname, string input, string output) : base()
         {
             this.Name = name;
-            this.Id = name;
             this.InputRate = input;
             this.OutputRate = output;
             this.FullName = fulname;
@@ -41,13 +40,14 @@ namespace ForresterModeller.src.Nodes.Models
             Outputs.Add(a);
 
             var b = new NodeInputViewModel();
+            b.Name = "in";
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
 
 
 
         }
-        public LevelNodeModel() : this("LVL", "Уровень", "1", "1") { }
+        public LevelNodeModel() : this("LVL", "Уровень", "in", "in") { }
         static LevelNodeModel()
         {
 

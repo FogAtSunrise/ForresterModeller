@@ -6,6 +6,7 @@ namespace ForresterModeller.src.Nodes.Models
 {
     public class ChouseNodeModel:FunkNodeModel
     {
+        public override string TypeName => Resource.chooseFuncName;
         public static string type = "ChouseNodeModel";
         public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
         {
@@ -18,6 +19,7 @@ namespace ForresterModeller.src.Nodes.Models
         }
 
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
+
         {
             return viseter.VisitChoose(this);
         }
