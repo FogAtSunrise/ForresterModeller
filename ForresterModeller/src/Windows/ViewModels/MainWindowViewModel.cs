@@ -56,7 +56,7 @@ namespace ForresterModeller.Windows.ViewModels
                 }
                 catch
                 {
-                    MessageBox.Show("Ваша модель некорректна!");
+                    System.Windows.MessageBox.Show("Ваша модель некорректна!");
                 }
             });
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
