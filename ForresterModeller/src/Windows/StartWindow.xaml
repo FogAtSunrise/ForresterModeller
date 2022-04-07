@@ -14,8 +14,8 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" >
-            <Button x:Name="CreateNewProject"  Click="CreateNewProject_Click" Content="Создать новый проект" Margin="148,41,148.6,109"/>
-            <Button x:Name  ="OpenOldProject"   Click="OpenOldProject_Click" Content="Открыть существующий проект" Margin="148,112,148.6,38"/>
+            <Button x:Name="CreateNewProject"  Command="{Binding CreateProject}"  Content="Создать новый проект" Margin="148,41,148.6,109"/>
+            <Button x:Name  ="OpenOldProject"  Command="{Binding OpenProject}" Content="Открыть существующий проект" Margin="148,112,148.6,38"/>
             <Button x:Name  ="OpenOl"   Click="OpenOldProject_C" Content="Все те тесты" Margin="10,69,485,69"/>
             <Button x:Name  ="OpenOle"   Click="OpenOle_Click" Content="for proj" Margin="10,136,485,10"/>
         </Grid>

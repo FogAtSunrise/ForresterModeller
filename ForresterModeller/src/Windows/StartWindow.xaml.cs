@@ -12,22 +12,37 @@ using Button = System.Windows.Controls.Button;
 using Label = System.Windows.Controls.Label;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using ForresterModeller.src.Windows;
+using ForresterModeller.src.Windows.ViewModels;
+using ReactiveUI;
+using System.Reactive.Linq;
 
 namespace ForresterModeller
 {
     /// <summary>
     /// Логика взаимодействия для Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Window1 : Window, IViewFor<StartWindowViewModel>
     {
         public Window1()
         {
             InitializeComponent();
-            OpenStartList();
+           
+          
+            this.ViewModel = new StartWindowViewModel();
+            this.DataContext = this.ViewModel;
 
-            ApplicationManager nnn = new ApplicationManager();
-                
+     
+            OpenStartList();
         }
+
+        public StartWindowViewModel ViewModel { get; set; }
+        object IViewFor.ViewModel
+        {
+            get => ViewModel;
+            set => ViewModel = (StartWindowViewModel)value;
+        }
+
+
         /// <summary>
         /// СОЗДАТЬ НОВЫЙ ПРОЕКТ
         /// </summary>
@@ -35,20 +50,14 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void CreateNewProject_Click(object sender, RoutedEventArgs e)
         {
-            /* MainWindow dialog = new MainWindow();
-             this.Close();
-             dialog.ShowDialog();
-            */
-      
-           
+            
             CreateProject proj = new CreateProject();
            
             if (proj.ShowDialog() == true)
             {
                // MainWindow dialog = new MainWindow(proj.FileName);
                 this.Close();
-               // dialog.ShowDialog();
-
+               
 
             }
         }

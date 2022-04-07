@@ -25,7 +25,7 @@ namespace ForresterModeller.src.Windows
     /// <summary>
     /// Логика взаимодействия для CreateProject.xaml
     /// </summary>
-    public partial class CreateProject : Window, IViewFor<CreateWindowVievModel>
+    public partial class CreateProject : Window, IViewFor<CreateWindowViewModel>
     {
         //public string FileName = "";
 
@@ -33,7 +33,7 @@ namespace ForresterModeller.src.Windows
         public CreateProject()
         {
             InitializeComponent();
-            this.ViewModel = new CreateWindowVievModel();
+            this.ViewModel = new CreateWindowViewModel();
             this.DataContext = this.ViewModel;
 
             this.ViewModel
@@ -48,11 +48,11 @@ namespace ForresterModeller.src.Windows
       
 
 
-        public CreateWindowVievModel ViewModel { get; set; }
+        public CreateWindowViewModel ViewModel { get; set; }
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (CreateWindowVievModel)value;
+            set => ViewModel = (CreateWindowViewModel)value;
         }
 
 
