@@ -13,6 +13,7 @@ using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
 using ReactiveUI;
 using WpfMath.Controls;
+using ForresterModeller.src.Windows;
 
 namespace ForresterModeller.Windows.ViewModels
 {
@@ -40,7 +41,13 @@ namespace ForresterModeller.Windows.ViewModels
         /// Открыть существующий проект
         /// Открывает диаологовое окно, по выбранному json инициализирует активный проект необходимыми данными
         /// </summary>
-        public ReactiveCommand<Unit, Unit> InitProjectByPath { get; } 
+        public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
+
+        /// <summary>
+        /// Создать проект
+        /// создает и инициализирует активный проект
+        /// </summary>
+        public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
 
         #endregion
         public MainWindowViewModel()
@@ -64,7 +71,10 @@ namespace ForresterModeller.Windows.ViewModels
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => {
 
                 if (activeProject != null)
+                {
                     activeProject.SaveOldProject();
+                    System.Windows.MessageBox.Show("Сохранился текущий активный проект " + activeProject.getName());////////////////////////////////
+                }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Файлы json|*.json";
             openFileDialog.RestoreDirectory = true;
@@ -72,10 +82,33 @@ namespace ForresterModeller.Windows.ViewModels
                 {
                     activeProject = Loader.InitProjectByPath(openFileDialog.FileName);
                     if (activeProject != null)
-                        System.Windows.MessageBox.Show("Открылся " + activeProject.getName());
+                        System.Windows.MessageBox.Show("Открылся " + activeProject.getName());////////////////////////////////
+
+                    //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
                 }
             });
-            
+
+
+            CreateNewProject = ReactiveCommand.Create<Unit>(u => {
+
+                if (activeProject != null)
+                {
+                    activeProject.SaveOldProject();
+                    System.Windows.MessageBox.Show("Сохранился текущий активный проект " + activeProject.getName());////////////////////////////////
+                }
+
+            CreateProject proj = new CreateProject();
+
+                if (proj.ShowDialog() == true)
+                {
+                    activeProject = Loader.InitProjectByPath(proj.FileName);
+                    if (activeProject != null)
+                        System.Windows.MessageBox.Show("Открылся " + activeProject.getName());////////////////////////////////
+                    
+                    //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
+                }
+            });
+
         }
 
         /// <summary>

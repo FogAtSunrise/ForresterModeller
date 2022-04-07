@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace ForresterModeller.src.ProjectManager
 {
+    /// <summary>
+    /// класс Загрузчик, содержит операции, связанные с файловой системой, необходимые проекту 
+    /// </summary>
     public static class Loader
     {
 
@@ -18,7 +21,7 @@ namespace ForresterModeller.src.ProjectManager
         /// Получает на вход путь к файлу проекта и по нему инициализирует экземпляр проекта
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns> экземпляр инициализированного проекта</returns>
         public static Project InitProjectByPath(string path)
         {
    
@@ -40,11 +43,16 @@ namespace ForresterModeller.src.ProjectManager
             return project;
 
         }
+
+
+    
+
         /// <summary>
         /// Создать новую директорию (не важно, для целого проекта или в самом проекте)
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns>возвращает индекс. Вслучае, если папки с аким названием еще не было, вернет 0, 
+        /// а если была, то то вернет индекс, который был преписан к названию для корректного создания </returns>
         //пример вызова:   CreateDirectory(path + "\\" + "имя новой папки");
         public static string CreateDirectory(string path)
         {

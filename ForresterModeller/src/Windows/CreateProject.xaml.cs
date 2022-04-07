@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.Windows.ViewModels;
+using ForresterModeller.Windows.Views;
 
 namespace ForresterModeller.src.Windows
 {
@@ -22,10 +23,13 @@ namespace ForresterModeller.src.Windows
     /// </summary>
     public partial class CreateProject : Window
     {
-       
+        public string FileName = "";
+
         public CreateProject()
         {
             InitializeComponent();
+            
+            
         }
 
 
@@ -51,12 +55,11 @@ namespace ForresterModeller.src.Windows
                 path_to_project.BorderBrush = Brushes.Black;
                 name_project.BorderBrush = Brushes.Black;
 
-                //
-                //Заменить на команду создания
-                //
-                TestClass ghg = new TestClass();
-                ghg.test7(path_to_project.Text + "\\" + name_project.Text);
 
+                Project project = new Project(name_project.Text, path_to_project.Text+"\\"+ name_project.Text);
+                project.SaveNewProject();
+                FileName = project.getPath() + "\\" + project.getName()+".json";
+                DialogResult = true;
                 this.Close();
 
             }

@@ -13,7 +13,7 @@
     <Grid>
         <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Проект">
-                <MenuItem Header="Создать" />
+                <MenuItem Header="Создать" Command="{Binding  CreateNewProject}" />
                 <MenuItem Header="Открыть"   Command="{Binding  InitProjectByPath}"/>
                 <MenuItem Header="Сохранить" />
                 <MenuItem Header="Сохранить как" />

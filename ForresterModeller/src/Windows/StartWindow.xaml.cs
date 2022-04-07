@@ -40,9 +40,16 @@ namespace ForresterModeller
             dialog.ShowDialog();
            */
 
-        CreateProject jjj = new CreateProject();
-            jjj.ShowDialog();
+        CreateProject proj = new CreateProject();
+           
+            if (proj.ShowDialog() == true)
+            {
+                MainWindow dialog = new MainWindow(proj.FileName);
+                this.Close();
+                dialog.ShowDialog();
 
+
+            }
         }
         /// <summary>
         /// ОТКРЫТЬ СУЩЕСТВУЮЩИЙ ПРОЕКТ
@@ -70,13 +77,11 @@ namespace ForresterModeller
 
         private void OpenOle_Click(object sender, RoutedEventArgs e)
         {
-            // Project j = new Project();
-            // TestClass f = new TestClass();
-            // f.test1(); 
+            
             TestClass f = new TestClass();
             f.test2();////////////////////
             System.Windows.MessageBox.Show("Сохранился тестовый проект в папке по умолчанию ");
-            //   f.test3();
+            
         }
 
         public void OpenStartList()

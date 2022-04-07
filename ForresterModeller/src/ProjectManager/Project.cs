@@ -20,10 +20,20 @@ namespace ForresterModeller.src.ProjectManager
 {
     public class Project
     {
+        /// <summary>
+        /// дефолтные значения имени и пути проекта
+        /// </summary>
         string DefaultName = "New Project";
         string DefaultPath = Directory.GetCurrentDirectory() + "\\";
 
+        /// <summary>
+        /// список моделей
+        /// </summary>
         List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
+
+        /// <summary>
+        /// список файлов, описывающих диаграммы
+        /// </summary>
         List<string> listAllFiles = new List<string>();
 
         //тест метод, удалите его обязательно
@@ -38,23 +48,23 @@ namespace ForresterModeller.src.ProjectManager
         string Name;
         public string getName() { return Name; }
 
-
         DateTime CreationDate;
         public DateTime getCreationDate() { return CreationDate; }
         DateTime ChangeDate;
         public DateTime getChangeDate() { return ChangeDate; }
 
         /// <summary>
-        /// хранит директорию, в которой хранится json проекта!!!
+        /// хранит директорию, в которой хранится json проекта!!! т.е. не включает в себя имя json 
         /// </summary>
         string PathToProject;
         public string getPath() { return PathToProject; }
+
+     
         /// <summary>
-        /// хранит директорию с диаграммами
+        /// конструкторы
         /// </summary>
-        string PathToDiagram="";
-
-
+        /// <param name="name"></param>
+        /// <param name="pathTofile"></param>
         public Project(string name, string pathTofile)
         {
             Name = (name == null || name == "") ? DefaultName : name;
@@ -66,7 +76,7 @@ namespace ForresterModeller.src.ProjectManager
         public Project()
         {
             Name = DefaultName;
-            PathToProject = DefaultPath + Name;
+            PathToProject = DefaultPath+Name;
             CreationDate = DateTime.Now;
             ChangeDate = DateTime.Now;
 
@@ -86,7 +96,7 @@ namespace ForresterModeller.src.ProjectManager
         }
 
         /// <summary>
-        /// удаление модели
+        /// удаление модели по id
         /// </summary>
         /// <param name="id"></param>
         public void deleteModel(string id)
@@ -110,7 +120,6 @@ namespace ForresterModeller.src.ProjectManager
 
         public void deleteFile(string name)
         {
-
             listAllFiles.Add(name);
             //...
         }
@@ -118,13 +127,21 @@ namespace ForresterModeller.src.ProjectManager
 
  
 
-
+        /// <summary>
+        /// получить экземпляр модели по id
+        /// если модель не найдена, вернет null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ForesterNodeModel getModelById(string id)
         {
             ForesterNodeModel find = allProjectModels.Find((item) =>  item.Id == id);
             return find;
         }
 
+        /// <summary>
+        /// сохранить изменения существующего проекта
+        /// </summary>
         public void SaveOldProject()
         {
             if (Directory.Exists(PathToProject))
@@ -133,6 +150,10 @@ namespace ForresterModeller.src.ProjectManager
             }
             else SaveNewProject();
         }
+
+        /// <summary>
+        /// сохранить новый проект
+        /// </summary>
         public void SaveNewProject()
         {
 
@@ -140,8 +161,7 @@ namespace ForresterModeller.src.ProjectManager
             Name += ind;
             PathToProject += ind;
             Loader.CreateFile(Name, PathToProject);
-            PathToDiagram = PathToProject + "\\diagrams";
-            Loader.CreateDirectory(PathToDiagram);
+            Loader.CreateDirectory(PathToProject + "\\diagrams");
             JsonObject jsonVerst = ToJson();
             Loader.WriteFileJson(Name, PathToProject, jsonVerst);
 
