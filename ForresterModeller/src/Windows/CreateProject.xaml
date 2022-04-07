@@ -12,13 +12,13 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" >
         <TextBlock Text="Имя проекта" Height="25" Margin="44,38,442,187"/>
-            
-        <TextBox  x:Name ="name_project" BorderBrush="Black" Width="500"  Height="25" Margin="24,48,47,147" />
+
+            <TextBox  x:Name ="name_project" Text="{Binding NameFile, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Black" Width="500"  Height="25" Margin="24,48,47,147" />
         <TextBlock Text="Расположение" Height="25"  Margin="44,116,442,109"/>
-        <Button Content="..."  Width="25"  Height="25" Margin="529,126,17,69" Click="OpenGuide"   />
-            <TextBox x:Name="path_to_project" IsReadOnly="True" BorderBrush="Black"  Width="500"  Height="25" Margin="24,126,47,69"  />
+            <Button Content="..."  Width="25"  Height="25" Margin="529,126,17,69"  Command= "{Binding SetPath}"   />
+            <TextBox x:Name="path_to_project" Text="{Binding PathToImage, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" BorderBrush="Black"  Width="500"  Height="25" Margin="24,126,47,69"  />
             <Button Content="Отменить"  Height="25" Width="100" Margin="340,185,131,10" IsCancel="True" />
-            <Button Content="Сохранить"  Height="25" Width="100" Margin="454,185,17,10"   Click="Save" />
+            <Button Content="Сохранить"  Height="25" Width="100" Margin="454,185,17,10"   Command= "{Binding SaveProject}"/>
 
         </Grid>
     </Grid>

@@ -14,6 +14,8 @@ using NodeNetwork.Views;
 using ReactiveUI;
 using WpfMath.Controls;
 using ForresterModeller.src.Windows;
+using ForresterModeller.src.Windows.ViewModels;
+using Splat;
 
 namespace ForresterModeller.Windows.ViewModels
 {
@@ -22,7 +24,7 @@ namespace ForresterModeller.Windows.ViewModels
         public TabControlViewModel TabControlVM { get; } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
-
+ 
         public Project activeProject { get; set; }
 
 
@@ -96,12 +98,17 @@ namespace ForresterModeller.Windows.ViewModels
                     activeProject.SaveOldProject();
                     System.Windows.MessageBox.Show("Сохранился текущий активный проект " + activeProject.getName());////////////////////////////////
                 }
+               
+                CreateProject proj = new CreateProject();
+                var window = proj as Window;
+                var dialogResult = window.ShowDialog();
 
-            CreateProject proj = new CreateProject();
+                if (dialogResult == true)
 
-                if (proj.ShowDialog() == true)
                 {
-                    activeProject = Loader.InitProjectByPath(proj.FileName);
+
+                    //System.Windows.MessageBox.Show("Открылсяzzzzzzzzzzzzz " + proj.ViewModel.FileName);
+                    activeProject = Loader.InitProjectByPath(proj.ViewModel.FileName);
                     if (activeProject != null)
                         System.Windows.MessageBox.Show("Открылся " + activeProject.getName());////////////////////////////////
                     

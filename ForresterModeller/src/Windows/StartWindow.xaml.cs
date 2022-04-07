@@ -35,18 +35,19 @@ namespace ForresterModeller
         /// <param name="e"></param>
         private void CreateNewProject_Click(object sender, RoutedEventArgs e)
         {
-           /* MainWindow dialog = new MainWindow();
-            this.Close();
-            dialog.ShowDialog();
-           */
-
-        CreateProject proj = new CreateProject();
+            /* MainWindow dialog = new MainWindow();
+             this.Close();
+             dialog.ShowDialog();
+            */
+      
+           
+            CreateProject proj = new CreateProject();
            
             if (proj.ShowDialog() == true)
             {
-                MainWindow dialog = new MainWindow(proj.FileName);
+               // MainWindow dialog = new MainWindow(proj.FileName);
                 this.Close();
-                dialog.ShowDialog();
+               // dialog.ShowDialog();
 
 
             }

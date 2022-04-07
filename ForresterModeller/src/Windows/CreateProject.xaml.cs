@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,58 +15,46 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.Windows.ViewModels;
 using ForresterModeller.Windows.Views;
+using ReactiveUI;
 
 namespace ForresterModeller.src.Windows
 {
     /// <summary>
     /// Логика взаимодействия для CreateProject.xaml
     /// </summary>
-    public partial class CreateProject : Window
+    public partial class CreateProject : Window, IViewFor<CreateWindowVievModel>
     {
-        public string FileName = "";
+        //public string FileName = "";
+
 
         public CreateProject()
         {
             InitializeComponent();
-            
-            
+            this.ViewModel = new CreateWindowVievModel();
+            this.DataContext = this.ViewModel;
+
+            this.ViewModel
+                .WhenAnyValue(x => x.DialogResult)
+                .Where(x => null != x)
+                .Subscribe(val =>
+                {
+                    this.DialogResult = val;
+                    this.Close();
+                });
         }
+      
 
 
-        private void OpenGuide(object sender, RoutedEventArgs e)
+        public CreateWindowVievModel ViewModel { get; set; }
+        object IViewFor.ViewModel
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                path_to_project.Text = fbd.SelectedPath;
-            }
-
+            get => ViewModel;
+            set => ViewModel = (CreateWindowVievModel)value;
         }
 
-        private void Save(object sender, RoutedEventArgs e)
-        {
-            if (name_project.Text == "" || name_project.Text == null)
-                name_project.BorderBrush = Brushes.Red;
-            else
-            if (path_to_project.Text == "" || path_to_project.Text == null)
-                path_to_project.BorderBrush = Brushes.Red;
-            else
-            {
-                path_to_project.BorderBrush = Brushes.Black;
-                name_project.BorderBrush = Brushes.Black;
 
-
-                Project project = new Project(name_project.Text, path_to_project.Text+"\\"+ name_project.Text);
-                project.SaveNewProject();
-                FileName = project.getPath() + "\\" + project.getName()+".json";
-                DialogResult = true;
-                this.Close();
-
-            }
-        }
-
-       
     }
 }
