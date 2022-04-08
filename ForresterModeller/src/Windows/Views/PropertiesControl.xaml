@@ -10,11 +10,11 @@
       HorizontalAlignment="Stretch"
     >
 
-         
+
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"  >
         <StackPanel>
             <Grid Background="GhostWhite">
-  
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="5*"></RowDefinition>
@@ -41,9 +41,7 @@
                                     <Grid Margin="0,5">
                                         <Grid.Resources>
                                             <DataTemplate x:Key="SubmitTextBox">
-                                                <views:SubmitTextBox Grid.Column="1" Text="{Binding Value}" IsReadOnly="{Binding Path=IsReadOnly}" TextWrapping="Wrap"></views:SubmitTextBox>
-                                              
-
+                                                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsReadOnly}" TextWrapping="Wrap"/>
                                             </DataTemplate>
                                             <DataTemplate x:Key="TextBlock">
                                                 <TextBlock Grid.Column="1" Text="{Binding Value}"  />
@@ -71,7 +69,7 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                                
+
                                             </ContentControl.Style>
 
                                         </ContentControl>
@@ -84,9 +82,9 @@
                 </Grid>
             </Grid>
 
-       
-             
+
+
         </StackPanel>
     </ScrollViewer>
-            
+
 </UserControl>
