@@ -23,7 +23,7 @@ namespace ForresterModeller.src.Nodes.Models
 
         public string DelayValueName { get; set;}
 
-        public float DelayValue { get; set;}
+        public double DelayValue { get; set;}
 
         public string StartValue { get; set; }
         public override ObservableCollection<PropertyViewModel> GetProperties()
@@ -33,7 +33,7 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 OutputRateName = str;
             }));
-            prop.Add(new PropertyViewModel("Величина запаздывания принятия решений", DelayValue.ToString(), (String str) => { DelayValue = float.Parse(str); }));
+            prop.Add(new PropertyViewModel("Величина запаздывания принятия решений", DelayValue.ToString(), (String str) => { DelayValue = Utils.GetDouble(str); }));
             return prop;
         }
 

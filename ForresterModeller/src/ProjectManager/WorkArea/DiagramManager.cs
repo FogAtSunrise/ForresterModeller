@@ -47,16 +47,12 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();
-            prop.Add(new PropertyViewModel("Период исследования", AllTime.ToString(), s => AllTime = Double.Parse(s)));
+            prop.Add(new PropertyViewModel("Период исследования", AllTime.ToString(), s => AllTime = Utils.GetDouble(s)));
 
-            prop.Add(new PropertyViewModel("DT", DeltaTime.ToString(), Aaa));
+            prop.Add(new PropertyViewModel("DT", DeltaTime.ToString(), s =>DeltaTime = Utils.GetDouble(s)));
             return prop;
         }
 
-        private void Aaa(string a)
-        {
-            DeltaTime = Double.Parse(a);
-        }
         private void AddDragNode(ForesterNodeModel node)
         {
             node.PropertyChanged += NodeOnPropertyChanged;
