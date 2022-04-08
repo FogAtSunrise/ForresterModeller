@@ -3,10 +3,10 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Windows;
 using System.Windows.Controls;
+using ForresterModeller.Pages.Tools;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.ProjectManager;
-using ForresterModeller.src.Tools;
 using ForresterModeller.Windows.ViewModels;
 using WpfMath.Controls;
 
@@ -24,7 +24,7 @@ namespace ForresterModeller.Windows.Views
             InitializeComponent();
             DataContext = new MainWindowViewModel();
 
-
+            //OpenPageInFrame(ToolsFrame, new DiagramTools());
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
@@ -35,18 +35,14 @@ namespace ForresterModeller.Windows.Views
         {
             InitializeComponent();
             var windowmodel = new MainWindowViewModel();
-           windowmodel.activeProject = Loader.InitProjectByPath(path);
+            windowmodel.activeProject = Loader.InitProjectByPath(path);
             DataContext = windowmodel;
-            
-
-
         }
-        
-            private void Test1(object sender, RoutedEventArgs e)
+
+        private void Test1(object sender, RoutedEventArgs e)
         {
             // openNewPage("file_name");
             // LeftBelowFrame.NavigationService.Navigate(new LeftBelow.GraphElements());
-            OpenPageInFrame(ToolsFrame, new GraphElements());
 
             List<IForesterModel> elem = new List<IForesterModel>() {
                 new LevelNodeModel("lev1", "levelishe1", "in", "out"),
@@ -71,28 +67,7 @@ namespace ForresterModeller.Windows.Views
 
             }
         }
-        //фрейм plottertools
-        private void Test2(object sender, RoutedEventArgs e)
-        {
-            PlotterTools t = new PlotterTools();
-            List<ForesterNodeModel> test = new List<ForesterNodeModel>();
-            for (int i = 0; i < 6; i++)
-                test.Add(new LevelNodeModel());
 
-            for (int i = 0; i < 6; i++)
-                t.ChangeListInPlotterTools(test, "name" + i);
-
-            OpenPageInFrame(ToolsFrame, t);
-        }
-        /// <summary>
-        /// ОТКРЫТЬ УКАЗАННУЮ СТРАНИЦУ, В УКАЗАННОМ ФРЕЙМЕ
-        /// </summary>
-        /// <param name="frame"></param>
-        /// <param name="page"></param>
-        private void OpenPageInFrame(Frame frame, Page page)
-        {
-            frame.NavigationService.Navigate(page);
-        }
 
         /// <summary>
         /// вывод файлов проекта
@@ -131,7 +106,7 @@ namespace ForresterModeller.Windows.Views
 
 
         }
-  
+
         private void PrintFormule(string form)
         {
             FormulaControl forml = new FormulaControl();

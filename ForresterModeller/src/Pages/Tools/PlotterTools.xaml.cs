@@ -12,7 +12,7 @@ namespace ForresterModeller.src.Pages.Tools
     /// <summary>
     /// Логика взаимодействия для PlotterTools.xaml
     /// </summary>
-    public partial class PlotterTools : Page
+    public partial class PlotterTools : UserControl
     {
         private int countColumn;
         public PlotterTools()
@@ -26,25 +26,25 @@ namespace ForresterModeller.src.Pages.Tools
         /// абстрактному классу определяет в соответствующую группу
         /// </summary>
         /// <param name="elements"></param>
-        
+
         public void ChangeListInPlotterTools(List<ForesterNodeModel> elements, string name)
         {
-            
 
-            Node treeHead = new Node() { NodeName = name, Nodes = new List<Node>()};
-            Node tree1 = new Node() { NodeName = "Уровни",   Nodes = new List<Node>()};
-            Node tree2 = new Node() { NodeName = "Уравнения", Nodes = new List<Node>()};
+
+            Node treeHead = new Node() { NodeName = name, Nodes = new List<Node>() };
+            Node tree1 = new Node() { NodeName = "Уровни", Nodes = new List<Node>() };
+            Node tree2 = new Node() { NodeName = "Уравнения", Nodes = new List<Node>() };
             foreach (var elem in elements)
                 if (elem is LevelNodeModel)
-                    tree1.Nodes.Add(new Node() { NodeName = elem.Name, Nodes = new List<Node>()});
+                    tree1.Nodes.Add(new Node() { NodeName = elem.Name, Nodes = new List<Node>() });
                 else if (elem is FunkNodeModel)
                     tree2.Nodes.Add(new Node() { NodeName = elem.Name, Nodes = new List<Node>() });
             treeHead.Nodes.Add(tree1);
             treeHead.Nodes.Add(tree2);
-            nodeList = new List<Node>() { treeHead};
-           // nodeList=GetNodeList();
+            nodeList = new List<Node>() { treeHead };
+            // nodeList=GetNodeList();
             this.TreeView_NodeList.ItemsSource = nodeList;
-          
+
 
             ExpandTree();
         }
@@ -111,46 +111,47 @@ namespace ForresterModeller.src.Pages.Tools
                     return item;
                 else if (item.Nodes != null) ans = findNode(name, item.Nodes);
                 else return null;
-                
+
             return ans;
-                }
+        }
 
         private void checkNode(bool mean, Node node)
-        {   node.IsSelected = mean;
-            if(node.Nodes!=null)
-            foreach (Node item in node.Nodes)
-            {
+        {
+            node.IsSelected = mean;
+            if (node.Nodes != null)
+                foreach (Node item in node.Nodes)
+                {
                     checkNode(mean, item);
-            }
+                }
         }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-           Node mynode = findNode((sender as CheckBox).Content.ToString(), nodeList);
+            Node mynode = findNode((sender as CheckBox).Content.ToString(), nodeList);
             if (mynode != null)
                 checkNode(true, mynode);
 
-       /*    else
-            {
-                if (nodeList[0].Nodes.Exists(x => x.NodeName == (sender as CheckBox).Content.ToString()))
-                {
-                    if (nodeList[0].Nodes.All(x => x.IsSelected == true))
-                    {
-                        nodeList[0].IsSelected = true;
-                    }
-                    else
-                        nodeList[0].IsSelected = null;
-                }
-                if (nodeList[1].Nodes.Exists(x => x.NodeName == (sender as CheckBox).Content.ToString()))
-                {
-                    if (nodeList[1].Nodes.All(x => x.IsSelected == true))
-                    {
-                        nodeList[1].IsSelected = true;
-                    }
-                    else
-                        nodeList[1].IsSelected = null;
-                }
-            }
-       */
+            /*    else
+                 {
+                     if (nodeList[0].Nodes.Exists(x => x.NodeName == (sender as CheckBox).Content.ToString()))
+                     {
+                         if (nodeList[0].Nodes.All(x => x.IsSelected == true))
+                         {
+                             nodeList[0].IsSelected = true;
+                         }
+                         else
+                             nodeList[0].IsSelected = null;
+                     }
+                     if (nodeList[1].Nodes.Exists(x => x.NodeName == (sender as CheckBox).Content.ToString()))
+                     {
+                         if (nodeList[1].Nodes.All(x => x.IsSelected == true))
+                         {
+                             nodeList[1].IsSelected = true;
+                         }
+                         else
+                             nodeList[1].IsSelected = null;
+                     }
+                 }
+            */
         }
 
 

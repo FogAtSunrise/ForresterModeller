@@ -18,19 +18,12 @@
                 <MenuItem Header="Сохранить" />
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
-            <MenuItem Header="Инструменты">
-                <MenuItem Header="Создать диаграмму"  Command="{Binding CreateDiagram }" />
-                <MenuItem Header="Создать представление" />
-                <MenuItem Header="Построить график" />
-            </MenuItem>
-            <MenuItem Header="Справка">
-
-            </MenuItem>
-            <MenuItem Header="О программе">
-            </MenuItem>
-            <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}">
-
-            </MenuItem>
+            <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagram }"/>
+            <MenuItem Header="Построить график"  Command="{Binding OpenTestGraph }" />
+            <MenuItem Header="Создать представление" />
+            <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}"/>
+            <MenuItem Header="Справка"/>
+            <MenuItem Header="О программе"/>
         </Menu>
 
         <Grid Margin="0,19,0,31"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -92,17 +85,17 @@
                                             <ControlTemplate TargetType="TabItem">
                                                 <Border Name="ActiveTabBorder" BorderBrush="LightGray" BorderThickness="1">
                                                     <Grid Name="Panel" Margin="-1,0" >
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Name="TextBlock"  Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="3,2"/>
-                                                    <Button  Name="CloseButton"  Grid.Column="1" Content="&#10761;" Background="Transparent" BorderThickness="0" 
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Name="TextBlock"  Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="3,2"/>
+                                                        <Button  Name="CloseButton"  Grid.Column="1" Content="&#10761;" Background="Transparent" BorderThickness="0" 
                                                               
                                              VerticalAlignment="Center"  Margin="8,0,3,0"
                                              Command="{Binding DataContext.CloseTab, ElementName=TabControl}"
                                              CommandParameter="{Binding }"/>
-                                                </Grid>
+                                                    </Grid>
                                                 </Border>
                                                 <ControlTemplate.Triggers>
                                                     <!-- Selected Tab -->
@@ -126,8 +119,10 @@
                 <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="3" Background="Black"></GridSplitter>
                 <!--Инструменты-->
                 <Grid Grid.Row="2" x:Name="Tools">
-                    <!--фрейм -->
-                    <Frame x:Name="ToolsFrame" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  />
+                    <!--фрейм 
+                     <views:PropertiesControl x:Name="PropertyFrame" DataContext="{Binding PropertiesVM }" 
+                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
+                    <ContentControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding ToolContent}" />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
@@ -181,11 +176,6 @@
         <Grid Background="White"  Grid.Row="1" x:Name="Buttons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,-0.4,-0.2" Height="35">
             <!--  PagesTabControl
             Content="{Binding Content}"-->
-            <Button Content="Test1" Click ="Test1" Margin="0,0,716,0" />
-            <Button Content="Test2" Click ="Test2" Margin="84,0,630,0" />
-
-            <Button Content="AddPlot" Command="{Binding OpenTestGraph}" Margin="170,0,563,0" />
-            <Button Content="AddDiagramm" Command="{Binding OpenTab}" Margin="237,2,495,-2" />
         </Grid>
     </Grid>
 </Window>

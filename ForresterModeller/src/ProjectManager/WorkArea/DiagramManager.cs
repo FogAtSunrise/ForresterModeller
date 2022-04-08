@@ -62,47 +62,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             node.PropertyChanged += NodeOnPropertyChanged;
         }
 
-        public NetworkView GetForesterExample()
-        {
-            _contentView = new NetworkView() { Background = Brushes.AliceBlue };
-
-            
-            var network = new NetworkViewModel();
-            network.NodeDeletedEvent += (list) =>
-            {
-                foreach (var node in list)
-                {
-                    SelectedNodes.Remove((ForesterNodeModel)node);
-                }
-            };
-            ///
-            ///
-            this._contentView.Drop += (o, e) => {
-                AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));
-            };
-
-            List<ForesterNodeModel> nods = new();
-            var n1 = new ConstantNodeViewModel("DUR", "Задержка поставок констант", 12);
-            n1.Description = "Стабильная константа";
-            var n2 = new ConstantNodeViewModel();
-            var n3 = new LevelNodeModel();
-            n3.Description = "Невероятный уровень";
-            //var n4 = new FunkNodeModel();
-            nods.Add(n1);
-            nods.Add(n2);
-            nods.Add(n3);
-
-
-
-            foreach (var node in nods)
-            {
-                network.Nodes.Add(node);
-                node.PropertyChanged += NodeOnPropertyChanged;
-            }
-            _contentView.ViewModel = network;
-            return _contentView;
-        }
-
         public NetworkView CreateNetworkView()
         {
             _contentView = new NetworkView() { Background = Brushes.AliceBlue };
