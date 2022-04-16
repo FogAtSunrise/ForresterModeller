@@ -43,6 +43,7 @@ namespace ForresterModeller.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> OpenTestGraph { get; }
         public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
+        public ReactiveCommand<Unit, Unit> OpenMathView { get; }
 
         #endregion
         public MainWindowViewModel()
@@ -55,6 +56,11 @@ namespace ForresterModeller.Windows.ViewModels
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
+            OpenMathView = ReactiveCommand.Create<Unit>(o => {
+                if(TabControlVM.ActiveTab!=null)
+                AddTab(new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header });
+                else System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
+            });
         }
 
         /// <summary>

@@ -20,7 +20,7 @@
             </MenuItem>
             <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagram }"/>
             <MenuItem Header="Построить график"  Command="{Binding OpenTestGraph }" />
-            <MenuItem Header="Создать представление" />
+            <MenuItem Header="Создать представление" Command="{Binding OpenMathView}"/>
             <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}"/>
             <MenuItem Header="Справка"/>
             <MenuItem Header="О программе"/>
@@ -48,8 +48,12 @@
                 <!--Рабочая область-->
                 <Grid Grid.Row="0" x:Name="WorkArea">
                     <Grid >
-                        <TabControl Grid.Row="1" Grid.Column="0" Name="TabControl" ItemsSource="{Binding TabControlVM.Tabs}"
-                           SelectedItem="{Binding TabControlVM.ActiveTab, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged }" DockPanel.Dock="Right" Background="White" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="382*"/>
+                            <ColumnDefinition Width="65*"/>
+                        </Grid.ColumnDefinitions>
+                        <TabControl Grid.Column="0" Name="TabControl" ItemsSource="{Binding TabControlVM.Tabs}"
+                           SelectedItem="{Binding TabControlVM.ActiveTab, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged }" Background="White" Grid.ColumnSpan="2" >
                             <!-- Tab Content Template -->
                             <TabControl.ContentTemplate>
                                 <DataTemplate>
