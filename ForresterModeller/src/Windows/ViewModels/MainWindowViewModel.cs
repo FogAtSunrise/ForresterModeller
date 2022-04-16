@@ -56,11 +56,7 @@ namespace ForresterModeller.Windows.ViewModels
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
-            OpenMathView = ReactiveCommand.Create<Unit>(o => {
-                if(TabControlVM.ActiveTab!=null)
-                AddTab(new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header });
-                else System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
-            });
+            OpenMathView = ReactiveCommand.Create<Unit>(o => MathViewOpen());
         }
 
         /// <summary>
@@ -103,8 +99,30 @@ namespace ForresterModeller.Windows.ViewModels
                 }
             }
         }
+        private void MathViewOpen()
+        {
+            if (TabControlVM.ActiveTab.WAManager is not DiagramManager)
+            {
+                System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
+            }
+            else {
 
-        private PlotManager CalculateGraphByCore()
+             /*   var manager = (DiagramManager)TabControlVM.ActiveTab.WAManager;
+                double t = manager.AllTime, dt = manager.DeltaTime;
+                var network = ((NetworkView)manager.Content).ViewModel;
+                string text = NodeTranslator.Translate(network);
+                List<NodeIdentificator> ids = new();
+                foreach (var nod in network.Nodes.Items)
+                {
+                    if (nod is not CrossNodeModel)
+                        ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
+                }*/
+                AddTab(new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header });
+          
+            }
+                
+        }
+            private PlotManager CalculateGraphByCore()
         {
             if (TabControlVM.ActiveTab.WAManager is not DiagramManager)
                 return null;
