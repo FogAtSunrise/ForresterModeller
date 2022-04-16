@@ -25,7 +25,7 @@ namespace ForresterModeller.src.Nodes.Models
         /// <summary>
         /// Значение текщей констнты
         /// </summary>
-        public float Value { get; set; }
+        public double Value { get; set; }
 
         
         public ConstantNodeViewModel(string name, string fulname, float value) : base()
@@ -47,7 +47,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             var properties = base.GetProperties();
             //todo validation
-            properties.Add(new PropertyViewModel( Resource.value,  Value.ToString(), (String str) => { Value = float.Parse(str); }));
+            properties.Add(new PropertyViewModel( Resource.value,  Value.ToString(), (String str) => { Value = Utils.GetDouble(str); }));
             return properties;
         }
 
