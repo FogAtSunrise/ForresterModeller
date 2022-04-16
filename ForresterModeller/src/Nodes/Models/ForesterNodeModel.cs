@@ -50,14 +50,15 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
-        public virtual MathViewModel GetMathView() { return new MathViewModel(Name, ""); }
+      public virtual string GetMathView() { return ""; }
         public virtual JsonObject ToJSON() { return new JsonObject(); }
         public virtual void FromJSON(JsonObject obj) {  }
 
         public event IPropertyOwner.PropertySelectedEventHandler PropertySelectedEvent;
         public void OnPropertySelected(IPropertyOwner sender)
         {
-            PropertySelectedEvent.Invoke(this);
+             PropertySelectedEvent.Invoke(this);
+
         }
 
 

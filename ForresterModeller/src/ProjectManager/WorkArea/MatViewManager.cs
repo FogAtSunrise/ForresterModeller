@@ -9,6 +9,7 @@ using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.src.Windows.Views;
 using ForresterModeller.Windows.ViewModels;
+using ReactiveUI;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
@@ -16,13 +17,25 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     {
      public override string TypeName => "Математическое представление";
 
-        public IPropertyOwner ActiveModel { get; }
+        private IPropertyOwner _activeItem;
+        public override IPropertyOwner ActiveOwnerItem
+        {
+            get => _activeItem ?? this;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _activeItem, value);
+                OnPropertySelected(_activeItem);
+            }
+        }
+
+    
+
         public override ContentControl Content => GenerateActualView();
 
         public MathView GenerateActualView()
         {
             MathView m = new MathView();
-                m.DataContext = new MathViewModels() { Models= new ObservableCollection<MathViewModel> {new MathViewModel("aaa", "bbbb"), new MathViewModel("aeeea", "bbwb") } };
+                m.DataContext = new MathViewModels() { Models= new ObservableCollection<MathViewModel> {new MathViewModel(new FunkNodeModel("fuunc","ddd","d")), new MathViewModel(new ConstantNodeViewModel("const","",23)) } };
             return m;
         }
 

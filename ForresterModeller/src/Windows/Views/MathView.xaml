@@ -10,16 +10,13 @@
              mc:Ignorable="d" 
            >
     <Grid Background="AliceBlue">
-        <TextBlock Text="OOAOAAOAO "/>
 
 
 
-        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models}">
 
-            <ListBox.Resources>
-                <!-- Set SelectedItem Background here -->
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
-            </ListBox.Resources>
+        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveItem, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" >
+
+
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -30,46 +27,26 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    
-                    <Grid Margin="0,5">
-                        <Grid.Resources>
-                            <DataTemplate x:Key="SubmitTextBox">
-                                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsReadOnly}" TextWrapping="Wrap"/>
-                            </DataTemplate>
-                            <DataTemplate x:Key="TextBlock">
-                                <TextBlock Grid.Column="1" Text="{Binding Value}"  />
-                            </DataTemplate>
-                        </Grid.Resources>
+        
+                        <Grid Margin="0,5">
+ 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" SharedSizeGroup="a"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="a"/>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="0" BorderBrush="DimGray" BorderThickness="1">
+                            <TextBlock Margin="5,0"  Text="{Binding Name}"  MaxWidth="200" TextWrapping="Wrap" />
+                        </Border>
 
-                        <TextBlock Grid.Column="0" Margin="5,0"  Text="{Binding Name}"  MaxWidth="200" TextWrapping="Wrap" />
+                            <TextBlock Grid.Row="1" Margin="5,0"  Text="{Binding Value}"  MaxWidth="200" TextWrapping="Wrap" />
+                       
 
-                        <ContentControl Grid.Column="1" Content="{Binding}" Margin="5,0">
-                            <ContentControl.Style>
-                                <Style TargetType="ContentControl">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsReadOnly}" Value="True">
-                                            <Setter Property="ContentTemplate"
-                                                Value="{StaticResource TextBlock}" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsReadOnly}" Value="False">
-                                            <Setter Property="ContentTemplate"
-                                                Value="{StaticResource SubmitTextBox}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-
-                            </ContentControl.Style>
-
-                        </ContentControl>
-                    </Grid>
+                    </Grid>  
+            
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+    
     </Grid>
 </UserControl>

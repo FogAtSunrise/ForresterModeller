@@ -9,6 +9,6 @@ namespace ForresterModeller.src.Interfaces
 {
    public  interface IMathMod
     {
-        public abstract MathViewModel GetMathView();
+        public abstract string GetMathView();
     }
 }

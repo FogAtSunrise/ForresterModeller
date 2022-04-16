@@ -1,4 +1,5 @@
 ﻿using ForresterModeller.src.Nodes.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,25 +8,19 @@ using System.Threading.Tasks;
 
 namespace ForresterModeller.src.Windows.ViewModels
 {
-   public class MathViewModel
+   public class MathViewModel 
     {
-        private ForesterNodeModel nodeForMod;
-            public MathViewModel(String name, String value, Action<String> updateAction)
+
+        public ForesterNodeModel NodeForMod { get; set; }
+        public MathViewModel(ForesterNodeModel node)
             {
-                Name = name;
-                _value = value;
-                _updateValue = updateAction;
-                IsReadOnly = false;
-            }
-     
-            public MathViewModel(String name, String value)
-            {
-                Name = name;
-                _value = value;
-                IsReadOnly = true;
-            }
-            public string Name { get; set; }
-            private Action<String> _updateValue;
+            NodeForMod = node;
+            _value = "opisanie";
+            
+          
+        }
+
+        public string Name => NodeForMod.Name;
             private string _value;
             public string Value
             {
@@ -33,10 +28,10 @@ namespace ForresterModeller.src.Windows.ViewModels
                 set
                 {
                     _value = value;
-                    _updateValue(value);
                 }
 
             }
-            public bool IsReadOnly { get; set; }
+
+        
         }
 }

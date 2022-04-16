@@ -45,7 +45,7 @@ namespace ForresterModeller.src.Nodes.Models
             return properties;
         }
 
-        public override MathViewModel GetMathView() { return new MathViewModel(Name, Funk); }
+       // public override MathViewModel GetMathView() { return new MathViewModel(Name, Funk); }
 
         public void RefreshInput()
         {
