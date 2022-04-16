@@ -22,8 +22,7 @@ namespace ForresterModeller.Windows.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
-
+            DataContext = new MainWindowViewModel(new Project());
             //OpenPageInFrame(ToolsFrame, new DiagramTools());
             ChangeListInFileManager(new List<string> { "file1", "file2", "file3" }, "project1");
             //тест вывода формулы
@@ -34,9 +33,7 @@ namespace ForresterModeller.Windows.Views
         public MainWindow(string path)
         {
             InitializeComponent();
-            var windowmodel = new MainWindowViewModel();
-            windowmodel.activeProject = Loader.InitProjectByPath(path);
-            DataContext = windowmodel;
+            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path)); ;
         }
 
         private void Test1(object sender, RoutedEventArgs e)

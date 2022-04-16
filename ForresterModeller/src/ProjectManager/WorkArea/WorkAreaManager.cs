@@ -39,8 +39,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             properties.Add(new PropertyViewModel("Название", Name, (string s) => Name = s));
             return properties;
         }
-
-
         public virtual string TypeName { get; }
     }
 }

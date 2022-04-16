@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
@@ -13,7 +14,8 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
-
+using ForresterModeller.src.ProjectManager.WorkArea;
+using NodeNetwork.Views;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ForresterModeller.src.ProjectManager
@@ -31,6 +33,15 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
 
+        private List<DiagramManager> diagramsList = new List<DiagramManager>();
+
+        public void AddDiagram(DiagramManager diagram)
+        {
+            diagramsList.Add(diagram);
+            var network = (NetworkView)diagram.Content;
+        }
+
+        
         /// <summary>
         /// список файлов, описывающих диаграммы
         /// </summary>
@@ -135,8 +146,14 @@ namespace ForresterModeller.src.ProjectManager
         /// <returns></returns>
         public ForesterNodeModel getModelById(string id)
         {
-            ForesterNodeModel find = allProjectModels.Find((item) =>  item.Id == id);
-            return find;
+            foreach (var diag in diagramsList)
+            {
+                var node = diag.GetAllNodes.First(x => x.Id == id);
+                if (node != null)
+                    return node;
+            }
+
+            return null;
         }
 
         /// <summary>
