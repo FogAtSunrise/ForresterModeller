@@ -256,7 +256,7 @@ namespace NodeNetwork.ViewModels
             {
 
                 var nodes = SelectedNodes.Items.Where(n => n.CanBeRemovedByUser).ToArray();
-                NodeDeletedEvent.Invoke(nodes);
+                NodeDeletedEvent?.Invoke(nodes);
 
                 Nodes.RemoveMany(nodes);
 
