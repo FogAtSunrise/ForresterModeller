@@ -12,6 +12,7 @@ using System.Text.Json.Nodes;
 using System.Windows.Annotations.Storage;
 using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -19,7 +20,7 @@ namespace ForresterModeller.src.Nodes.Models
     /// Базовая модель узла в схеме форестера
     /// </summary>
 
-    public abstract class ForesterNodeModel : NodeViewModel, IForesterModel
+    public abstract class ForesterNodeModel : NodeViewModel, IForesterModel, IMathMod
     {
         public string Description { get; set; }
         public virtual string TypeName { get; }
@@ -48,7 +49,7 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
-        
+        public virtual MathViewModel GetMathView() { return new MathViewModel(Name, ""); }
         public virtual JsonObject ToJSON() { return new JsonObject(); }
         public virtual void FromJSON(JsonObject obj) {  }
 

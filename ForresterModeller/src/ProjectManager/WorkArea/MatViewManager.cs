@@ -16,7 +16,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
      public override string TypeName => "Математическое представление";
 
         public IPropertyOwner ActiveModel { get; }
-        public ContentControl Content => GenerateActualView();
+        public override ContentControl Content => GenerateActualView();
 
         public MathView GenerateActualView()
         {

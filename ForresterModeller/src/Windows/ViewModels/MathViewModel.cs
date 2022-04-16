@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ForresterModeller.src.Windows.ViewModels
 {
-    class MathViewModel
+   public class MathViewModel
     {
             public MathViewModel(String name, String value, Action<String> updateAction)
             {
