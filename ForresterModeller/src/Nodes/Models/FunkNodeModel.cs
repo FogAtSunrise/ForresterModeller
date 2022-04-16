@@ -10,6 +10,7 @@ using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using ForresterModeller.Windows.ViewModels;
 using System.Linq;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -43,6 +44,8 @@ namespace ForresterModeller.src.Nodes.Models
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
         }
+
+       // public override MathViewModel GetMathView() { return new MathViewModel(Name, Funk); }
 
         public void RefreshInput()
         {
