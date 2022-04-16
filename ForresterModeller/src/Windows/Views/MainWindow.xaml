@@ -18,7 +18,7 @@
                 <MenuItem Header="Сохранить" />
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
-            <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagram }"/>
+            <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagramTab }"/>
             <MenuItem Header="Построить график"  Command="{Binding OpenTestGraph }" />
             <MenuItem Header="Создать представление" />
             <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}"/>

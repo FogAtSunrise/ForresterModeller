@@ -21,6 +21,10 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class DiagramManager : WorkAreaManager
     {
+        public IEnumerable<ForesterNodeModel> GetAllNodes
+        {
+            get => Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
+        }
 
         private IPropertyOwner _activeItem;
         public override IPropertyOwner ActiveOwnerItem
@@ -39,7 +43,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             get => _selectedNodes;
             set => this.RaiseAndSetIfChanged(ref _selectedNodes, value);
         }
-        public override ContentControl Content => _contentView ?? CreateNetworkView();
+        public override NetworkView Content => _contentView ?? CreateNetworkView();
         public override string TypeName => "Диаграмма потоков";
         public double DeltaTime { get; set; }
         public double AllTime { get; set; }

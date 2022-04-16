@@ -31,7 +31,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         //Объект, поля которого отображаются в окне свойств
         public virtual IPropertyOwner ActiveOwnerItem { get; set; }
         //содержимое рабочей области
-        public virtual ContentControl Content { get; }
+        public virtual ContentControl Content { get; set; }
         public virtual ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = new ObservableCollection<PropertyViewModel>();
@@ -39,8 +39,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             properties.Add(new PropertyViewModel("Название", Name, (string s) => Name = s));
             return properties;
         }
-
-
         public virtual string TypeName { get; }
     }
 }

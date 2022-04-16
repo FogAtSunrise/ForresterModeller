@@ -48,66 +48,10 @@ namespace ForresterModeller.src.ProjectManager
             return network;
         }
 
-
-        public void OpenNewTab()
-        {
-
-        }
-        public ApplicationManager()
-        {
-
-        }
-
         public void FillDiagram(NetworkView diag)
         {
             diag.ViewModel = GetNetworkViewModel();
         }
-
-
-        public WpfPlot ExecuteCore()
-        {
-            float t = 1, dt = 0.1f;
-            var c = ForesterNodeCore.Program.GetCurve(
-                "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
-                new List<NodeIdentificator> {
-                    new NodeIdentificator("dc"),
-                    new NodeIdentificator("nt"),
-                    new NodeIdentificator("boo"),
-                    new NodeIdentificator("loo"),
-                },
-                t,
-                dt
-            );
-            var plotmodel = new PlotManager(c, t, dt);
-            plotmodel.XLabel = "Время (недели)FFF";
-            plotmodel.YLabel = "Объем товара (единицы) ";
-            return plotmodel.GenerateActualPlot();
-        }
-
-
-        /// <summary>
-        /// Сформировать содержимое таба
-        /// </summary>
-        /// <returns></returns>
-        public ContentControl CreateContentControl(string type)
-        {
-            ContentControl cc = null;
-
-            if (type == "diagram")
-            {
-                NetworkView graf = new NetworkView() { Background = Brushes.AliceBlue };
-                FillDiagram(graf);
-                cc = graf;
-            }
-            else if (type == "plotter")
-            {
-                cc = ExecuteCore();
-            }
-
-            return cc;
-        }
-
-
-    
+   
 }
 }
