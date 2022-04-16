@@ -10,19 +10,33 @@ using System.Threading.Tasks;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using System.Windows.Annotations.Storage;
+using ForresterModeller.Interfaces;
 using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
+using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.src.Nodes.Views;
 
 namespace ForresterModeller.src.Nodes.Models
 {
+    //!!!!! Для отображения измений свойств на форме представления нужно в сеттере
+    //бросать событие this.RaiseAndSetIfChanged(ref _field_name, value);
+
     /// <summary>
     /// Базовая модель узла в схеме форестера
     /// </summary>
-
-    public abstract class ForesterNodeModel : NodeViewModel, IForesterModel
+    public abstract class ForesterNodeModel : NodeViewModel, IForesterModel, IMathViewable
     {
-        public string Description { get; set; }
+        private string _description;
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _description, value);
+            }
+        }
+
         public virtual string TypeName { get; }
    
         public string FullName { get; set; }
@@ -49,14 +63,15 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
-        
+      public virtual string GetMathView() { return ""; }
         public virtual JsonObject ToJSON() { return new JsonObject(); }
         public virtual void FromJSON(JsonObject obj) {  }
 
         public event IPropertyOwner.PropertySelectedEventHandler PropertySelectedEvent;
         public void OnPropertySelected(IPropertyOwner sender)
         {
-            PropertySelectedEvent.Invoke(this);
+             PropertySelectedEvent.Invoke(this);
+
         }
 
         public virtual void AutoConection(ForesterNetworkViewModel model) {

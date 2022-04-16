@@ -26,7 +26,7 @@ namespace ForresterModeller.Windows.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _activeItem, value);
-                Properties = _activeItem.GetProperties();
+                Properties = _activeItem?.GetProperties();
             }
         }
     }
