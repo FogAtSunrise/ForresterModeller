@@ -1,61 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.src.Windows.ViewModels;
+using ForresterModeller.src.ProjectManager.WorkArea;
 using ForresterModeller.src.Windows.Views;
 using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
 
-namespace ForresterModeller.src.ProjectManager.WorkArea
+namespace ForresterModeller.ProjectManager.WorkArea
 {
     class MatViewManager : WorkAreaManager
     {
-
         public ObservableCollection<MathViewModel> Models { get; set; } = new();
+        public override ContentControl Content => GenerateActualView();
 
         public MatViewManager()
-        { Models = new ObservableCollection<MathViewModel> { new MathViewModel(new FunkNodeModel("fuunc", "ddd", "d")), new MathViewModel(new ConstantNodeViewModel("const", "", 23)) }; }
+        { Models = new ObservableCollection<MathViewModel> { new MathViewModel(new FunkNodeModel("fuunc", "ddd", "d")), new MathViewModel(new ConstantNodeViewModel("conssst", "safdsfd", 23)) }; }
 
         public override string TypeName => "Математическое представление";
 
-        private IPropertyOwner _activeItem;
-        public override IPropertyOwner ActiveOwnerItem
-        {
-            get => _activeItem ?? this;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _activeItem, value);
-                OnPropertySelected(_activeItem);
-            }
-        }
-
-        //Модель, свойства которой отображаются 
-        private MathViewModel _active;
+        //ViewModel модели, свойства которой отображаются 
+        //Биндится как SelectedItem во вью
+        private MathViewModel _activeItem;
         public MathViewModel Active
         {
-            get => _active;
+            get => _activeItem;
             set
             {
-                ActiveOwnerItem = Active?.NodeForMod;
+                _activeItem = value;
+                ActiveOwnerItem = Active.NodeForMod;
             }
         }
-
-        public override ContentControl Content => GenerateActualView();
+        //Сама модель, владеющая проперти
+        private IPropertyOwner _currectProperty;
+        public override IPropertyOwner ActiveOwnerItem
+        {
+            get
+            {
+                if (_activeItem == null || _activeItem.NodeForMod == null) return this;
+                return _activeItem.NodeForMod;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _currectProperty, value);
+                OnPropertySelected(_currectProperty);
+            }
+        }
 
         public MathView GenerateActualView()
         {
             MathView m = new MathView();
-            m.DataContext = this; 
+            m.DataContext = this;
             return m;
         }
 
-
-        //свойства модели
+        //свойства самого матпредставления
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using ForesterNodeCore;
 using ForresterModeller.Pages.Tools;
+using ForresterModeller.ProjectManager.WorkArea;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Viters;
@@ -56,7 +57,7 @@ namespace ForresterModeller.Windows.ViewModels
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
-            OpenMathView = ReactiveCommand.Create<Unit>(o => MathViewOpen());
+            OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
         }
 
         /// <summary>
@@ -99,30 +100,33 @@ namespace ForresterModeller.Windows.ViewModels
                 }
             }
         }
-        private void MathViewOpen()
+        private void AddMathView()
         {
             if (TabControlVM.ActiveTab.WAManager is not DiagramManager)
             {
                 System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
             }
-            else {
+            else
+            {
 
-             /*   var manager = (DiagramManager)TabControlVM.ActiveTab.WAManager;
-                double t = manager.AllTime, dt = manager.DeltaTime;
-                var network = ((NetworkView)manager.Content).ViewModel;
-                string text = NodeTranslator.Translate(network);
-                List<NodeIdentificator> ids = new();
-                foreach (var nod in network.Nodes.Items)
-                {
-                    if (nod is not CrossNodeModel)
-                        ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
-                }*/
-                AddTab(new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header });
-          
+                /*   var manager = (DiagramManager)TabControlVM.ActiveTab.WAManager;
+                   double t = manager.AllTime, dt = manager.DeltaTime;
+                   var network = ((NetworkView)manager.Content).ViewModel;
+                   string text = NodeTranslator.Translate(network);
+                   List<NodeIdentificator> ids = new();
+                   foreach (var nod in network.Nodes.Items)
+                   {
+                       if (nod is not CrossNodeModel)
+                           ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
+                   }*/
+                var math = new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header };
+                math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
+                AddTab(math);
+
             }
-                
+
         }
-            private PlotManager CalculateGraphByCore()
+        private PlotManager CalculateGraphByCore()
         {
             if (TabControlVM.ActiveTab.WAManager is not DiagramManager)
                 return null;
