@@ -72,7 +72,8 @@ namespace ForresterModeller.Windows.ViewModels
         {
             if (args.PropertyName == nameof(TabControlViewModel.ActiveTab))
             {
-                WorkAreaManager manager = ((TabControlViewModel)sender).ActiveTab.WAManager;
+                var tbControl = ((TabControlViewModel)sender);
+                var manager = tbControl.ActiveTab?.WAManager;
                 if (manager is DiagramManager)
                 {
                     ToolContent.Content = DiagramToolsWM;
