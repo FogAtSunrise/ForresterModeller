@@ -11,5 +11,65 @@
            >
     <Grid Background="AliceBlue">
         <TextBlock Text="OOAOAAOAO "/>
+
+
+
+        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models}">
+
+            <ListBox.Resources>
+                <!-- Set SelectedItem Background here -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow"/>
+            </ListBox.Resources>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Grid.IsSharedSizeScope="True"/>
+                </ItemsPanelTemplate>
+
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    
+                    <Grid Margin="0,5">
+                        <Grid.Resources>
+                            <DataTemplate x:Key="SubmitTextBox">
+                                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsReadOnly}" TextWrapping="Wrap"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="TextBlock">
+                                <TextBlock Grid.Column="1" Text="{Binding Value}"  />
+                            </DataTemplate>
+                        </Grid.Resources>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="a"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="5,0"  Text="{Binding Name}"  MaxWidth="200" TextWrapping="Wrap" />
+
+                        <ContentControl Grid.Column="1" Content="{Binding}" Margin="5,0">
+                            <ContentControl.Style>
+                                <Style TargetType="ContentControl">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsReadOnly}" Value="True">
+                                            <Setter Property="ContentTemplate"
+                                                Value="{StaticResource TextBlock}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsReadOnly}" Value="False">
+                                            <Setter Property="ContentTemplate"
+                                                Value="{StaticResource SubmitTextBox}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                            </ContentControl.Style>
+
+                        </ContentControl>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
     </Grid>
 </UserControl>

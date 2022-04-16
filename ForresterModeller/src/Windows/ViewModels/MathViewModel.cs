@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ForresterModeller.src.Nodes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace ForresterModeller.src.Windows.ViewModels
 {
    public class MathViewModel
     {
+        private ForesterNodeModel nodeForMod;
             public MathViewModel(String name, String value, Action<String> updateAction)
             {
                 Name = name;

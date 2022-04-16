@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using ForresterModeller.src.Nodes.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,15 +12,35 @@ namespace ForresterModeller.src.Windows.ViewModels
     class MathViewModels : ReactiveObject
     {
 
-      public ObservableCollection<MathViewModel> _models;
-    public ObservableCollection<MathViewModel> Models
+        public ObservableCollection<MathViewModel> Models { get; set; } = new();
+
+        //Модель, свойства которой отображаются 
+        private IPropertyOwner _activeItem;
+        public IPropertyOwner ActiveItem
         {
-        get
-        {
-            return _models;
+            get => _activeItem;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _activeItem, value);
+                ActiveItem.OnPropertySelected(_activeItem);
+            }
         }
-        set => this.RaiseAndSetIfChanged(ref _models, value);
+        /*  public ObservableCollection<MathViewModel> _models;
+      public ObservableCollection<MathViewModel> Models
+          {
+          get
+          {
+              return _models;
+          }
+          set => this.RaiseAndSetIfChanged(ref _models, value);
+      }
+        */
+        /*
+         * 
+          <TabControl Grid.Column="0" Name="TabControl" ItemsSource="{Binding TabControlVM.Tabs}"
+                           SelectedItem="{Binding TabControlVM.ActiveTab, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged }" Background="White" Grid.ColumnSpan="2" >
+                            <!-- Tab Content Template -->
+                            <TabControl.ContentTemplate>
+         */
     }
-    
-}
 }

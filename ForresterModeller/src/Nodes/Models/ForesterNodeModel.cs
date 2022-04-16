@@ -13,6 +13,7 @@ using System.Windows.Annotations.Storage;
 using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Windows.ViewModels;
+using ForresterModeller.src.Interfaces;
 
 namespace ForresterModeller.src.Nodes.Models
 {

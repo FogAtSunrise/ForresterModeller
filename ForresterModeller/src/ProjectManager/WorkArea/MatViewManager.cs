@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.src.Windows.Views;
 using ForresterModeller.Windows.ViewModels;
 
@@ -20,8 +21,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public MathView GenerateActualView()
         {
-
-            return new MathView();
+            MathView m = new MathView();
+                m.DataContext = new MathViewModels() { Models= new ObservableCollection<MathViewModel> {new MathViewModel("aaa", "bbbb"), new MathViewModel("aeeea", "bbwb") } };
+            return m;
         }
 
 
