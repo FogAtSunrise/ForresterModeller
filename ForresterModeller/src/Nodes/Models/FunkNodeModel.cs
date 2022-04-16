@@ -25,7 +25,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.Name = name;
             this.Funk = funk;
             this.FullName = fulname;
-            var a = new NodeOutputViewModel();
+            var a = new ForesterNodeOutputViewModel();
             a.PortPosition = PortPosition.Right;
             this.Outputs.Add(a);
 

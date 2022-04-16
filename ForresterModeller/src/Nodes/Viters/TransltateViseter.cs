@@ -13,7 +13,7 @@ namespace ForresterModeller.src.Nodes.Viters
 
             foreach (var inputs in node.Inputs.Items)
             {
-                preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).GetCoreCode());
+                preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue);
             }
 
             preEquals = preEquals.Replace(" ","");
@@ -47,18 +47,19 @@ namespace ForresterModeller.src.Nodes.Viters
 
             //TODO prestat find
 
-            string translatedNode = String.Format("d {0} {1} {2} {3}|",
+            string translatedNode = String.Format("d {0} {1} {2} {3} {4} {5}|",
                 node.GetCoreCode(),
                 node.OutputRateName,
                 node.DeepDelay.ToString(),
                 node.DelayValueName,
-                preInEquals
+                preInEquals,
+                preStart
                 );
 
 
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            translatedNode += String.Format("c {0} {1}|", node.GetCoreCode(), node.DelayValue.ToString());
+            translatedNode += String.Format("c {0} {1}|", node.DelayValueName, node.DelayValue.ToString());
             System.Threading.Thread.CurrentThread.CurrentCulture = save_localization;
             return translatedNode;
         }
@@ -76,7 +77,7 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).GetCoreCode());
+                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue);
                 }
             }
 
@@ -104,7 +105,7 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preInEquals =  ((ForesterNodeModel)inputs.Connections.Items.ToList()[0].Output.Parent).GetCoreCode();
+                    preInEquals =  ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
                 }
             }
 

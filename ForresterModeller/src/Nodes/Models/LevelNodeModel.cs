@@ -14,11 +14,13 @@ namespace ForresterModeller.src.Nodes.Models
         public override string TypeName => Resource.levelType;
 
         public static string type = "LevelNodeModel";
-      
+
         public string InputRate { get; set; }
         public string OutputRate { get; set; }
 
         public string StartValue { get; set; }
+
+        public ForesterNodeOutputViewModel Rate {get;set;}
 
         public LevelNodeModel(string name, string fulname, string input, string output) : base()
         {
@@ -27,15 +29,15 @@ namespace ForresterModeller.src.Nodes.Models
             this.OutputRate = output;
             this.FullName = fulname;
             this.StartValue = "0";
-
-         
             this.Description="";
 
-            var a = new NodeOutputViewModel();
+            var a = new ForesterNodeOutputViewModel();
+            a.Name = "Уровень";
             a.PortPosition = PortPosition.Right;
             this.Outputs.Add(a);
 
-            a = new NodeOutputViewModel();
+            a = new ForesterNodeOutputViewModel();
+            a.Name = "Поток";
             a.PortPosition = PortPosition.Right;
             Outputs.Add(a);
 
@@ -43,15 +45,12 @@ namespace ForresterModeller.src.Nodes.Models
             b.Name = "in";
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
-
-
-
         }
+
+
         public LevelNodeModel() : this("LVL", "Уровень", "in", "in") { }
         static LevelNodeModel()
         {
-
-
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));
         }
 

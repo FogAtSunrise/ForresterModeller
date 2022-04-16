@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
+using System.Text.Json.Nodes;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -10,7 +11,6 @@ namespace ForresterModeller.src.Nodes.Models
         public static string type = "ChouseNodeModel";
         public ChouseNodeModel(string name, string fulname, string funk):base(name, fulname, funk)
         {
-
         }
 
         public ChouseNodeModel() : base()
@@ -23,6 +23,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             return viseter.VisitChoose(this);
         }
+
 
         static ChouseNodeModel()
         {

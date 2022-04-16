@@ -45,8 +45,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         }
         public override NetworkView Content => _contentView ?? CreateNetworkView();
         public override string TypeName => "Диаграмма потоков";
-        public double DeltaTime { get; set; }
-        public double AllTime { get; set; }
+        public double DeltaTime { get; set; } = 0.1;
+        public double AllTime { get; set; } = 10;
 
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {

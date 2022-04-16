@@ -82,6 +82,7 @@ namespace NodeNetwork.Views
             public NodeMovementEventArgs(IEnumerable<NodeViewModel> nodes) => Nodes = nodes.ToList();
         }
 
+
         //Start
         public class NodeMoveStartEventArgs : NodeMovementEventArgs
         {

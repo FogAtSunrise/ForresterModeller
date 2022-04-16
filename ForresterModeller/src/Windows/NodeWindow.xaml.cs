@@ -4,6 +4,9 @@ using System.Windows;
 using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.Toolkit.NodeList;
 using ForresterModeller.src.Nodes.Viters;
+using System.Linq;
+using System.Windows.Controls;
+using NodeNetwork.Toolkit.Layout.ForceDirected;
 
 namespace ForresterModeller
 {
@@ -12,15 +15,22 @@ namespace ForresterModeller
     /// </summary>
     public partial class NodeWindow : Window
     {
+        private NetworkViewModel network;
+
         public NodeWindow()
         {
 
             InitializeComponent();
-            var network = new NetworkViewModel();
+            network = new NetworkViewModel();
+            network.Nodes.Add(new ConstantNodeViewModel());
+            
+            
             networkView.ViewModel = network;
             nodeList.ShowTitle = false;
             nodeList.ShowSearch = false;
             nodeList.ShowDisplayModeSelector = false;
+
+
             var nodelistModel = new NodeListViewModel();
             nodelistModel.AddNodeType<ConstantNodeViewModel>(() => new ConstantNodeViewModel());
             nodelistModel.AddNodeType<CrossNodeModel>(() => new CrossNodeModel());
@@ -33,11 +43,24 @@ namespace ForresterModeller
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var a = NodeTranslator.Translate(networkView.ViewModel);
+            ForceDirectedLayouter layouter = new ForceDirectedLayouter();
+            var config = new Configuration
+            {
+                Network = network,
+            };
+
+            layouter.Layout(config, 10000);
         }
 
         private void nodeList_Loaded(object sender, RoutedEventArgs e)
         {
+            ForceDirectedLayouter layouter = new ForceDirectedLayouter();
+            var config = new Configuration
+            {
+                Network = network,
+            };
+
+            layouter.Layout(config, 10000);
 
         }
     }

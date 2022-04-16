@@ -8,6 +8,7 @@ using NodeNetwork.Views;
 using System.Linq;
 using NodeNetwork;
 using System.Text.Json.Nodes;
+using System.Windows;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -15,27 +16,17 @@ namespace ForresterModeller.src.Nodes.Models
     {
         public static string type = "CrossNodeModel";
         public override string TypeName => "crossnode";
-        public override string GetCoreCode()
-        {
-            if (_source.Connections.Items.Count() != 0)
-            {
-                return ((ForesterNodeModel)_source.Connections.Items.ToList()[0].Output.Parent).GetCoreCode();
-            }
-            return base.GetCoreCode();
-        }
+
+
 
         private CrossNodeModelSourceRate _source;
 
         public CrossNodeModel()
         {
-
-
-
             var input = new CrossNodeModelInputRate();
 
             input.PortPosition = PortPosition.Centr;
             Inputs.Add(input);
-
 
             _source = new CrossNodeModelSourceRate();
 
@@ -45,10 +36,10 @@ namespace ForresterModeller.src.Nodes.Models
             input.Source = _source;
             _source.Target = input;
 
-            var outp = new NodeOutputViewModel();
+            var outp = new ForesterNodeOutputViewModel();
+            outp.OutFunc = () => ((ForesterNodeOutputViewModel)this._source.Connections.Items.ToList()[0].Output).OutputValue;
             outp.PortPosition = PortPosition.Centr;
             Outputs.Add(outp);
-
         }
 
         static CrossNodeModel()
@@ -67,8 +58,8 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 ["Id"] = Id == null ? "" : Id,
                 ["Type"] = type,
-                ["Name"] = Name == null ? "" : Name,
-                ["FullName"] = FullName == null ? "" : FullName,
+                ["PositionX"] = Position.X,
+                ["PositionY"] = Position.Y
             };
 
             return obj;
@@ -77,12 +68,13 @@ namespace ForresterModeller.src.Nodes.Models
         public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
-            Name = obj!["Name"]!.GetValue<string>();
-            FullName = obj!["FullName"]!.GetValue<string>();
-
-
+            Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
         }
+
+
+
     }
+
 
     public class CrossNodeModelInputRate : NodeInputViewModel
     {
@@ -101,14 +93,12 @@ namespace ForresterModeller.src.Nodes.Models
                 var level = con.Output.Parent as LevelNodeModel;
                 if (Source.Connections.Items.Count() != 0)
                 {
-                    level.OutputRate = ((ForesterNodeModel)Source.Connections.Items.ToList()[0].Output.Parent).GetCoreCode();
+                    level.OutputRate = ((ForesterNodeOutputViewModel)Source.Connections.Items.ToList()[0].Output).OutputValue;
                 }
                 return new ConnectionValidationResult(true, null);
             };
         }
     }
-
-
 
     public class CrossNodeModelSourceRate : NodeInputViewModel
     {
@@ -127,7 +117,7 @@ namespace ForresterModeller.src.Nodes.Models
                 var level = con.Output.Parent as LevelNodeModel;
                 if (Target.Connections.Items.Count() != 0)
                 {
-                    ((LevelNodeModel)Target.Connections.Items.ToList()[0].Output.Parent).OutputRate = ((ForesterNodeModel)con.Output.Parent).GetCoreCode();
+                    ((LevelNodeModel)Target.Connections.Items.ToList()[0].Output.Parent).OutputRate = ((ForesterNodeOutputViewModel)con.Output).OutputValue;
                 }
                 return new ConnectionValidationResult(true, null);
             };

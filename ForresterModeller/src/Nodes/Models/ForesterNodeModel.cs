@@ -12,6 +12,7 @@ using System.Text.Json.Nodes;
 using System.Windows.Annotations.Storage;
 using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
+using ForresterModeller.src.Nodes.Views;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -58,6 +59,10 @@ namespace ForresterModeller.src.Nodes.Models
             PropertySelectedEvent.Invoke(this);
         }
 
+        public virtual void AutoConection(ForesterNetworkViewModel model) {
+            
+        
+        }
 
     }
 

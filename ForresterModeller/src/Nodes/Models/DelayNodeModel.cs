@@ -13,6 +13,9 @@ namespace ForresterModeller.src.Nodes.Models
     public class DelayNodeModel : ForesterNodeModel
     {
         public static string type = "DelayNodeModel";
+        private ForesterNodeOutputViewModel _constNode;
+        private ForesterNodeOutputViewModel _outNode;
+
         public override string TypeName => Resource.levelType;
 
         public string InputRate { get; set; }
@@ -32,6 +35,18 @@ namespace ForresterModeller.src.Nodes.Models
             prop.Add(new PropertyViewModel("Имя исходящего потока", OutputRateName, (String str) =>
             {
                 OutputRateName = str;
+                _outNode.Name = str;
+            }));
+            prop.Add(new PropertyViewModel("Глубина запаздывания", DeepDelay.ToString(), (String str) =>
+            {
+                try
+                {
+                    DeepDelay = int.Parse(str);
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show("Только целочисленные значения");
+                }
             }));
             prop.Add(new PropertyViewModel("Величина запаздывания принятия решений", DelayValue.ToString(), (String str) => { DelayValue = Utils.GetDouble(str); }));
             return prop;
@@ -42,7 +57,7 @@ namespace ForresterModeller.src.Nodes.Models
             return viseter.VisitDelay(this);
         }
 
-        public DelayNodeModel(string name, string fulname, string input, string output, int deep, string delayName, float delayValue) : base()
+        public DelayNodeModel(string name, string fulname, string input, string output, int deep, string delayName, float delayValue, string startValue) : base()
         {
             this.Name = name;
             this.InputRate = input;
@@ -51,30 +66,32 @@ namespace ForresterModeller.src.Nodes.Models
             this.DeepDelay = deep;
             this.DelayValueName = delayName;
             this.DelayValue = delayValue;
+            this.StartValue = startValue;
 
-
-            var a = new NodeOutputViewModel();
+            var a = new ForesterNodeOutputViewModel();
             a.PortPosition = PortPosition.Right;
             a.Name = this.Name;
             this.Outputs.Add(a);
 
-            a = new NodeOutputViewModel();
-            a.PortPosition = PortPosition.Right;
-            a.Name = this.DelayValueName;
-            Outputs.Add(a);
+            _constNode = new ForesterNodeOutputViewModel();
+            _constNode.PortPosition = PortPosition.Right;
+            _constNode.OutFunc = () => this.DelayValueName;
+            _constNode.Name = this.DelayValueName;
+            Outputs.Add(_constNode);
 
 
-            a = new NodeOutputViewModel();
-            a.PortPosition = PortPosition.Right;
-            a.Name = this.OutputRateName;
-            Outputs.Add(a);
+            _outNode = new ForesterNodeOutputViewModel();
+            _outNode.PortPosition = PortPosition.Right;
+            _outNode.OutFunc = () => this.OutputRateName;
+            _outNode.Name = this.OutputRateName;
+            Outputs.Add(_outNode);
 
 
             var b = new NodeInputViewModel();
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
         }
-        public DelayNodeModel() : this("LЕV", "Запаздывание", "1", "OUT", 1, "DEL", 1) {}
+        public DelayNodeModel() : this("LЕV", "Запаздывание", "1", "OUT", 1, "DEL", 1, "0") {}
         static DelayNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<DelayNodeModel>));

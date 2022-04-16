@@ -168,8 +168,6 @@
 
 
                                     </DockPanel>
-                                    <TextBlock  x:Name="Code" TextWrapping="Wrap" Background="Transparent" Foreground="{TemplateBinding Foreground}"  HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Center"
-                                                           FontFamily="{TemplateBinding TitleFontFamily}" FontSize="{TemplateBinding TitleFontSize}" Margin="10,0,10,0"/>
 
 
 
