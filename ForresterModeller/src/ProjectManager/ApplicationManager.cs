@@ -64,7 +64,7 @@ namespace ForresterModeller.src.ProjectManager
         }
 
 
-        public WpfPlot ExecuteCore()
+        public ContentControl ExecuteCore()
         {
             float t = 1, dt = 0.1f;
             var c = ForesterNodeCore.Program.GetCurve(

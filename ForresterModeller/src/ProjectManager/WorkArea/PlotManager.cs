@@ -3,24 +3,38 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using Accessibility;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.Windows.ViewModels;
+using ReactiveUI;
 using ScottPlot;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class PlotManager : WorkAreaManager
     {
-        public override ContentControl Content => GenerateActualPlot();
+        private ContentControl _content;
+        public override ContentControl Content
+        {
+            get => _content??GenerateActualPlot();
+            set => this.RaiseAndSetIfChanged(ref _content, value);
+        }
+        
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
-            var properties = base.GetProperties();
+            var properties  = new ObservableCollection<PropertyViewModel>();
+            properties.Add(new PropertyViewModel("Тип", TypeName));
+            properties.Add(new PropertyViewModel("Название", Name, (string s) =>
+            {
+                Name = s;
+                GenerateActualPlot();
+            }));
             properties.Add(new PropertyViewModel("Ось абсцисс", XLabel, (String str) => {
                 XLabel = str;
                 GenerateActualPlot();
             }));
             properties.Add(new PropertyViewModel("Ось ординат", YLabel, (String str) => {
-                XLabel = str;
+                YLabel = str;
                 GenerateActualPlot();
             }));
             return properties;
@@ -83,7 +97,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         /// Получить график с актуальными изменениями
         /// </summary>
         /// <returns></returns>
-        public WpfPlot GenerateActualPlot()
+        public ContentControl GenerateActualPlot()
         {
             WpfPlot WpfPlot1 = new();
             foreach (var line in lines)
@@ -94,8 +108,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             WpfPlot1.Plot.YLabel(YLabel);
             WpfPlot1.Plot.XLabel(XLabel);
             WpfPlot1.Plot.Legend();
+            WpfPlot1.Plot.Title(this.Name);
             WpfPlot1.Refresh();
-            return WpfPlot1;
+            Content = WpfPlot1;
+            return Content;
         }
+        
     }
 }
