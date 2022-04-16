@@ -15,7 +15,13 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     class MatViewManager : WorkAreaManager
     {
-     public override string TypeName => "Математическое представление";
+
+        public ObservableCollection<MathViewModel> Models { get; set; } = new();
+
+        public MatViewManager()
+        { Models = new ObservableCollection<MathViewModel> { new MathViewModel(new FunkNodeModel("fuunc", "ddd", "d")), new MathViewModel(new ConstantNodeViewModel("const", "", 23)) }; }
+
+        public override string TypeName => "Математическое представление";
 
         private IPropertyOwner _activeItem;
         public override IPropertyOwner ActiveOwnerItem
@@ -28,14 +34,23 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             }
         }
 
-    
+        //Модель, свойства которой отображаются 
+        private MathViewModel _active;
+        public MathViewModel Active
+        {
+            get => _active;
+            set
+            {
+                ActiveOwnerItem = Active?.NodeForMod;
+            }
+        }
 
         public override ContentControl Content => GenerateActualView();
 
         public MathView GenerateActualView()
         {
             MathView m = new MathView();
-                m.DataContext = new MathViewModels() { Models= new ObservableCollection<MathViewModel> {new MathViewModel(new FunkNodeModel("fuunc","ddd","d")), new MathViewModel(new ConstantNodeViewModel("const","",23)) } };
+            m.DataContext = this; 
             return m;
         }
 

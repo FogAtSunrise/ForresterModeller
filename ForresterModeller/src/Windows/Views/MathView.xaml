@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ForresterModeller.src.Windows.Views"
-              xmlns:viewModels="clr-namespace:ForresterModeller.src.Windows.ViewModels"
-      d:DataContext="{d:DesignInstance viewModels:MathViewModels, IsDesignTimeCreatable=True}"
+              xmlns:viewModels="clr-namespace:ForresterModeller.src.ProjectManager.WorkArea"
+      d:DataContext="{d:DesignInstance viewModels:MatViewManager, IsDesignTimeCreatable=True}"
       HorizontalAlignment="Stretch"
              mc:Ignorable="d" 
            >
@@ -14,7 +14,7 @@
 
 
 
-        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveItem, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" >
+        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding Active, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" >
 
 
 

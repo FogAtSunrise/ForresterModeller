@@ -14,17 +14,7 @@ namespace ForresterModeller.src.Windows.ViewModels
 
         public ObservableCollection<MathViewModel> Models { get; set; } = new();
 
-        //Модель, свойства которой отображаются 
-        private MathViewModel _activeItem;
-        public MathViewModel ActiveItem
-        {
-            get => _activeItem;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _activeItem, value);
-                Active = ActiveItem?.NodeForMod;
-            }
-        }
+       
 
         
     }
