@@ -88,8 +88,7 @@ namespace ForresterModeller
         private void OpenOle_Click(object sender, RoutedEventArgs e)
         {
             
-            TestClass f = new TestClass();
-            f.test2();////////////////////
+            
             System.Windows.MessageBox.Show("Сохранился тестовый проект в папке по умолчанию ");
             
         }
