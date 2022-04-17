@@ -9,6 +9,7 @@ using System.Text.Json.Nodes;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Collections;
 using System.Linq;
+using System.Windows;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -58,8 +59,16 @@ namespace ForresterModeller.src.Nodes.Models
             var data = base.GetMathView();
             foreach (var inputs in Inputs.Items)
             {
+                if (inputs.Connections.Items.Count() > 0)
+               
+                {
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
-                data.Add(new DataForViewModels(inputs.Name, value, false));
+                    ForesterNodeModel nod = MainWindowViewModel._activeProject.getModelById(value);
+                    MessageBox.Show(nod.Name + " aaaaaaaa");
+                    data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
+
+                    data.Add(new DataForViewModels(inputs.Name, value, false));
+                }
             }
             return data;
         }
@@ -105,7 +114,6 @@ namespace ForresterModeller.src.Nodes.Models
         public override void FromJSON(JsonObject obj) {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-            
             FullName = obj!["FullName"]!.GetValue<string>();
             InputRate = obj!["InputRate"]!.GetValue<string>();
             OutputRate = obj!["OutputRate"]!.GetValue<string>();

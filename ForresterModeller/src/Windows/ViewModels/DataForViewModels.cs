@@ -14,14 +14,14 @@ namespace ForresterModeller.src.Windows.ViewModels
                 Left = name;
                 Right = value;
             sim = f ? " = " : " - ";
-                
+            formulOrNot = f;
             }
          
             public string Left { get; set; }
             public string Right { get; set; }
             
             public string sim { get; set; }
-       
+        bool formulOrNot;
    
 
 

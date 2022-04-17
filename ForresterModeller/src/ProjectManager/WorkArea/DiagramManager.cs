@@ -102,6 +102,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             get => Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
         }
 
+
+  
+
         private IPropertyOwner _activeItem;
         public override IPropertyOwner ActiveOwnerItem
         {

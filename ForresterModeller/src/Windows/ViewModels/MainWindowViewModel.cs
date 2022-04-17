@@ -26,7 +26,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public PlotterTools PlotterToolsMW { get; set; } = new();
         public DiagramTools DiagramToolsWM { get; set; } = new();
         public ContentControl ToolContent { get; set; } = new();
-        private Project _activeProject;
+        public static Project _activeProject;
         public Project ActiveProject { get => _activeProject;
             set => this.RaiseAndSetIfChanged(ref _activeProject, value);
         }
@@ -47,6 +47,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
 
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
+        public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
 
         #endregion
         public MainWindowViewModel(Project project)
@@ -63,6 +64,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
 
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
+            CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
         }
 
         /// <summary>
@@ -78,7 +80,11 @@ namespace ForresterModeller.src.Windows.ViewModels
                 TabControlVM.AddTabFromWAManager(contentManager);
             }
         }
-
+        public void CloseAllTabs()
+        {
+            TabControlVM.Tabs.Clear();
+            TabControlVM.ActiveTab = null;
+        }
         public void OpenOrCreateTab(WorkAreaManager contentManager)
         {
             foreach (var tab in TabControlVM.Tabs)
@@ -195,6 +201,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 ActiveProject.SaveOldProject();
                 System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name); ////////////////////////////////
+                CloseAllTabs();
             }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Файлы json|*.json";
