@@ -39,13 +39,38 @@ namespace ForresterModeller.src.ProjectManager
         {
             diagramsList.Add(diagram);
             var network = (NetworkView)diagram.Content;
+
         }
 
-        
-        /// <summary>
-        /// список файлов, описывающих диаграммы
-        /// </summary>
-        List<string> listAllFiles = new List<string>();
+        public DiagramManager getDiagramFromFileByName(string d)
+        {
+            DiagramManager diagram = new DiagramManager(d);
+            try
+            {
+                StreamReader r = new StreamReader(PathToProject + "\\diagrams\\"+d+".json");
+                string json = r.ReadToEnd();
+                var jobj = JsonObject.Parse(json);
+                r.Close();
+                diagram.JsonToDiagram(jobj.AsObject());
+
+            }
+            catch { MessageBox.Show("Ошибка файла диаграммы "+d); }
+
+            return diagram;
+        }
+
+        public void writeDiagramToFile(DiagramManager diagram)
+        {
+            JsonObject json = diagram.DiagramToJson();
+
+            if (!Directory.Exists(PathToProject + "\\diagrams"))
+            {
+                Loader.CreateDirectory(PathToProject + "\\diagrams");
+                
+            }
+            Loader.WriteFileJson(diagram.Name, PathToProject + "\\diagrams", json);
+
+        }
 
         //тест метод, удалите его обязательно
         public string getIdMod(int numb)
@@ -124,14 +149,14 @@ namespace ForresterModeller.src.ProjectManager
         public void addFiles(string name)
         {
 
-            listAllFiles.Add(name);
+          //  listAllFiles.Add(name);
             //...
         }
 
 
         public void deleteFile(string name)
         {
-            listAllFiles.Add(name);
+           // listAllFiles.Add(name);
             //...
         }
 
@@ -194,20 +219,15 @@ namespace ForresterModeller.src.ProjectManager
         {
 
             JsonArray projectFiles = new JsonArray();
-            foreach (var file in listAllFiles)
+            foreach (var file in diagramsList)
             {
-                projectFiles.Add(file);
+                projectFiles.Add(file.Name);
+                writeDiagramToFile(file);
             }
 
             JsonArray projectModuls = new JsonArray();
 
 
-            foreach (var model in allProjectModels)
-            {
-                projectModuls.Add(model.ToJSON());
-              
-
-            }
 
             //Объект проекта, он один
             JsonObject ProjectJson = new JsonObject
@@ -219,10 +239,7 @@ namespace ForresterModeller.src.ProjectManager
                 ["ChangeDate"] = DateTime.Now,
 
                 //Список файлов проекта
-                ["ListAllFiles"] = projectFiles,
-
-                //Список моделей проекта
-                ["ModelsInProject"] = projectModuls
+                ["ListAllFiles"] = projectFiles
 
             };
 
@@ -237,28 +254,13 @@ namespace ForresterModeller.src.ProjectManager
                 Name = obj!["Name"]!.GetValue<string>();
                 CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
 
-                //   JsonArray studentsArray = root["Students"]!.AsArray();
-
-              //  string k = "";
                 JsonArray projectFiles = obj["ListAllFiles"]!.AsArray();
                 foreach (var file in projectFiles)
                 {
-                    listAllFiles.Add(file.ToString());
-                    //    k += listAllFiles[listAllFiles.Count - 1]+"--";
+                    DiagramManager d= getDiagramFromFileByName(file.ToString());
+                    diagramsList.Add(d);
+                   
                 }
-
-                //  MessageBox.Show(k);
-
-                JsonArray projectModuls = obj["ModelsInProject"]!.AsArray();
-                foreach (var model in projectModuls)
-                {
-                    ForesterNodeModel m = createModel(model!["Type"]!.GetValue<string>());
-                    m.FromJSON(model.AsObject());
-                    allProjectModels.Add(m);
-                 //   k += m.TypeName + m.Id + "\n";
-                }
-
-                //   MessageBox.Show(k);
 
             }
             catch 
