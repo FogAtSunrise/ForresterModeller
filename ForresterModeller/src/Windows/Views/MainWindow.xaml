@@ -156,10 +156,34 @@
                             <TreeView ItemsSource="{Binding ActiveProject.Diagrams}" 
                                       SelectedItemChanged="TreeView_OnSelectedItemChanged">
                                 <TreeView.Resources>
-                                        <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
-                                                                  ItemsSource="{Binding GetAllNodes}">
-                                            <TextBlock Text="{Binding Name }" />
+                                    <Style TargetType="TextBlock" x:Key="typeText">
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                        <Setter Property="FontSize" Value="10"/>
+                                        <Setter Property="Foreground" Value="DimGray"/>
+                                        <Setter Property="Width" Value="20"/>
+                                    </Style>
+                                    <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
+                                                              ItemsSource="{Binding GetAllNodes}">
+                                        <TextBlock Margin="5, 0" Text="{Binding Name }" />
                                         </HierarchicalDataTemplate>
+                                    <DataTemplate DataType="{x:Type models:ConstantNodeViewModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource typeText}" Text="const" />
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>   
+                                    <DataTemplate DataType="{x:Type models:LevelNodeModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource typeText}"  Text="lvl"  />
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate> 
+                                    <DataTemplate DataType="{x:Type models:FunkNodeModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Style="{StaticResource typeText}"  Text="func"  />
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>  
                                     <DataTemplate DataType="{x:Type models:ForesterNodeModel}">
                                         <TextBlock Text="{Binding Name}" />
                                     </DataTemplate>
