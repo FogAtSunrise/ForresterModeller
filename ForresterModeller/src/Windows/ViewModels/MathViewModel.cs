@@ -9,5 +9,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             NodeForMod = node;
         }
+
+       public string Name => NodeForMod.Name;
     }
 }

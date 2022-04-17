@@ -14,7 +14,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public override ContentControl Content => GenerateActualView();
 
         public MatViewManager()
-        { Models = new ObservableCollection<MathViewModel> { new MathViewModel(new FunkNodeModel("fuunc", "ddd", "d")), new MathViewModel(new ConstantNodeViewModel("conssst", "safdsfd", 23)) }; }
+        { 
+          //  Models = new ObservableCollection<MathViewModel> { new MathViewModel(new FunkNodeModel("fuunc", "ddd", "d")), new MathViewModel(new ConstantNodeViewModel("conssst", "safdsfd", 23)) }; 
+        }
 
         public override string TypeName => "Математическое представление";
 
@@ -28,6 +30,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             {
                 _activeItem = value;
                 ActiveOwnerItem = Active.NodeForMod;
+                
             }
         }
         //Сама модель, владеющая проперти

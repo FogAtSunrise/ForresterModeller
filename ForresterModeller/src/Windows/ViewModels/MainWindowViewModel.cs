@@ -123,9 +123,15 @@ namespace ForresterModeller.src.Windows.ViewModels
             else
             {
 
-                
+             
                 var math = new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header };
-                math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
+               var manager= ((DiagramManager)TabControlVM.ActiveTab.WAManager).GetAllNodes;
+
+                foreach (var mod in manager)
+                { 
+                math.Models.Add(new MathViewModel(mod));
+                   } 
+            math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
                 AddTab(math);
 
             }

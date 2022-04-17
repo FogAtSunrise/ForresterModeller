@@ -24,13 +24,25 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" SharedSizeGroup="a"/>
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Row="0" BorderBrush="DimGray" BorderThickness="1">
-                            <TextBlock Margin="5,0"  Text="{Binding NodeForMod.Name}"  MaxWidth="200" TextWrapping="Wrap" />
-                        </Border>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                           
+                        </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="1" Margin="5,0"  Text="{Binding NodeForMod.Description}"  MaxWidth="200" TextWrapping="Wrap" />
+                        <Border Grid.Row="0"  Grid.Column="0"   BorderBrush="DimGray" BorderThickness="1">
+                            <TextBlock Margin="5,0"  Text="{Binding NodeForMod.FullName}"  MaxWidth="200" TextWrapping="Wrap" />
+                        </Border>
+                  
+                            <TextBlock Grid.Row="1"  Grid.Column="0"   Text="{Binding NodeForMod.Name}"  MaxWidth="200" TextWrapping="Wrap" > = </TextBlock>
+                            <TextBlock Grid.Row="1"  Grid.Column="1"    Text="{Binding NodeForMod.Description}"  MaxWidth="200" TextWrapping="Wrap" />
+
+                        <Grid Row="2"  Column="0"  >
+
+                        </Grid>
                     </Grid>
 
                 </DataTemplate>
