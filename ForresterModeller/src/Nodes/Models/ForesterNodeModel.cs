@@ -14,6 +14,7 @@ using ForresterModeller.src.Interfaces;
 using ReactiveUI;
 using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.src.Nodes.Views;
+using DynamicData;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -27,6 +28,8 @@ namespace ForresterModeller.src.Nodes.Models
     {
         private string _description;
         private string _full_name;
+        protected List<ConectionModel> _dump_conections;
+
 
         public string Description
         {
@@ -36,8 +39,6 @@ namespace ForresterModeller.src.Nodes.Models
                 this.RaiseAndSetIfChanged(ref _description, value);
             }
         }
-
-
         public string FullName
         {
             get => _full_name;
@@ -46,8 +47,6 @@ namespace ForresterModeller.src.Nodes.Models
                 this.RaiseAndSetIfChanged(ref _full_name, value);
             }
         }
-
-
         public virtual string TypeName { get; }
    
         public string Id { get; set; }
@@ -61,7 +60,6 @@ namespace ForresterModeller.src.Nodes.Models
             Id = TypeName + new Random().Next();
         }
         public abstract T AcceptViseter<T>(INodeViseters<T> viseter);
-
         public virtual ObservableCollection<PropertyViewModel> GetProperties()
         {
             var command = ReactiveCommand.CreateFromObservable<Unit, int>(
@@ -73,7 +71,7 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
-      public virtual string GetMathView() { return ""; }
+        public virtual string GetMathView() { return ""; }
         public virtual JsonObject ToJSON() { return new JsonObject(); }
         public virtual void FromJSON(JsonObject obj) {  }
 
@@ -83,14 +81,18 @@ namespace ForresterModeller.src.Nodes.Models
              PropertySelectedEvent.Invoke(this);
 
         }
-
         public virtual void AutoConection(ForesterNetworkViewModel model) {
-            
-        
+            foreach (var nw in Inputs.Items.Zip(_dump_conections, (n, w) => new { node = n, conections = w }))
+            {
+                if (nw.conections is not null)
+                {
+                    model.Connections.Add(
+                        new ConnectionViewModel(model,
+                            nw.node,
+                            model[nw.conections.SourceId].Outputs.Items.FirstOrDefault(a => a.Name == nw.conections.PointName)
+                        ));
+                }
+            }
         }
-
     }
-
-
-
 }

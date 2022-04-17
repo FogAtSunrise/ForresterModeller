@@ -53,7 +53,7 @@ namespace ForresterModeller.src.Nodes.Models
         }
 
 
-        public LevelNodeModel() : this("LVL", "Уровень", "Поток", "Поток") { }
+        public LevelNodeModel() : this("LVL", "Уровень", "Поток", "0") { }
         static LevelNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));

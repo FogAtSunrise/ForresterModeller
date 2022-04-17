@@ -14,7 +14,6 @@ namespace ForresterModeller.src.Nodes.Models
             PointName = name;
         }
 
-
         public ConectionModel(NodeInputViewModel rate)
         {
             var outs = rate.Connections.Items.First().Output;
