@@ -25,22 +25,48 @@
                             <RowDefinition Height="Auto" SharedSizeGroup="a"/>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                           
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Row="0"  Grid.Column="0"   BorderBrush="DimGray" BorderThickness="1">
+         
+                        <Border Grid.Row="0"   BorderBrush="DimGray" BorderThickness="1">
                             <TextBlock Margin="5,0"  Text="{Binding NodeForMod.FullName}"  MaxWidth="200" TextWrapping="Wrap" />
                         </Border>
-                  
-                            <TextBlock Grid.Row="1"  Grid.Column="0"   Text="{Binding NodeForMod.Name}"  MaxWidth="200" TextWrapping="Wrap" > = </TextBlock>
-                            <TextBlock Grid.Row="1"  Grid.Column="1"    Text="{Binding NodeForMod.Description}"  MaxWidth="200" TextWrapping="Wrap" />
 
-                        <Grid Row="2"  Column="0"  >
+
+                        <TextBlock Grid.Row="1"   Text="Описание: "  MaxWidth="200"  />
+
+                        <TextBlock  Grid.Row="2" Text="{Binding NodeForMod.Description}"  MaxWidth="200"  />
+                        
+                                <Grid Row="3"  >
+
+                            <ItemsControl Name="it"  ItemsSource="{Binding Path=Data, Mode=TwoWay}" >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Grid.IsSharedSizeScope="True"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,5">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+
+                                            <TextBlock Grid.Column="0"   Text="{Binding Left}"  MaxWidth="200" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.Column="1"    Text="{Binding sim}"  TextWrapping="Wrap" />
+                                            <TextBlock Grid.Column="2"    Text="{Binding Right}"  TextWrapping="Wrap" />
+
+                                        </Grid>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
 
                         </Grid>
                     </Grid>

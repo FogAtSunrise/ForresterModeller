@@ -54,6 +54,13 @@ namespace ForresterModeller.src.Nodes.Models
             return properties;
         }
 
+        public override ObservableCollection<DataForViewModels> GetMathView()
+        {
+            var data = base.GetMathView();
+            data.Add(new DataForViewModels(Name, Value.ToString(), true));
+            return data;
+        }
+
         public override JsonObject ToJSON()
         {
             JsonObject obj = new JsonObject()

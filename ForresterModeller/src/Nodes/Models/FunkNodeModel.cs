@@ -44,7 +44,23 @@ namespace ForresterModeller.src.Nodes.Models
             return properties;
         }
 
-       // public override MathViewModel GetMathView() { return new MathViewModel(Name, Funk); }
+        public override ObservableCollection<DataForViewModels> GetMathView()
+        {
+            var data = base.GetMathView();
+            data.Add(new DataForViewModels(Name, Funk, true));
+
+     
+            foreach (var inputs in Inputs.Items)
+            {
+                String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+                data.Add(new DataForViewModels(inputs.Name, value, false));
+            }
+       
+
+            return data;
+        }
+
+       
 
         public void RefreshInput()
         {

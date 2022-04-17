@@ -66,6 +66,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             var command = ReactiveCommand.CreateFromObservable<Unit, int>(
                 _ => Observable.Return(42).Delay(TimeSpan.FromSeconds(2)));
+
             var properties = new ObservableCollection<PropertyViewModel>();
             properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }));
             properties.Add(new PropertyViewModel(Resource.fullName, FullName, (String str) => { FullName = str; }));
@@ -73,7 +74,13 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }));
             return properties;
         }
-      public virtual string GetMathView() { return ""; }
+      
+        public virtual ObservableCollection<DataForViewModels> GetMathView() {
+            var data = new ObservableCollection<DataForViewModels>();
+            data.Add(new DataForViewModels(Name, FullName, false));
+            return data;
+        }
+
         public virtual JsonObject ToJSON() { return new JsonObject(); }
         public virtual void FromJSON(JsonObject obj) {  }
 

@@ -6,6 +6,9 @@ using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
+using ForresterModeller.src.Windows.ViewModels;
+using System.Collections;
+using System.Linq;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -45,6 +48,17 @@ namespace ForresterModeller.src.Nodes.Models
             b.Name = "Поток";
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
+        }
+
+        public override ObservableCollection<DataForViewModels> GetMathView()
+        {
+            var data = base.GetMathView();
+            foreach (var inputs in Inputs.Items)
+            {
+                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+                data.Add(new DataForViewModels(inputs.Name, value, false));
+            }
+            return data;
         }
 
 

@@ -9,6 +9,9 @@ using System.Linq;
 using NodeNetwork;
 using System.Text.Json.Nodes;
 using System.Windows;
+using System;
+using System.Collections.ObjectModel;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -40,6 +43,17 @@ namespace ForresterModeller.src.Nodes.Models
             outp.OutFunc = () => ((ForesterNodeOutputViewModel)this._source.Connections.Items.ToList()[0].Output).OutputValue;
             outp.PortPosition = PortPosition.Centr;
             Outputs.Add(outp);
+        }
+
+        public override ObservableCollection<DataForViewModels> GetMathView()
+        {
+            var data = base.GetMathView();
+            foreach (var inputs in Inputs.Items)
+            {
+                String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+                data.Add(new DataForViewModels(inputs.Name, value, false));
+            }
+            return data;
         }
 
         static CrossNodeModel()
