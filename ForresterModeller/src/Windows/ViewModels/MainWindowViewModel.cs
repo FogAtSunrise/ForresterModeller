@@ -159,12 +159,7 @@ namespace ForresterModeller.src.Windows.ViewModels
 
         private PlotManager TestPlot()
         {
-            PlotManager plotmodel = new();
-            plotmodel.Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 1, 2, 3, 4 }, "Продуктивность студента"));
-            plotmodel.XLabel = "Степень окончания семестра";
-            plotmodel.YLabel = "Скорость сдачи лаб ";
-            plotmodel.Name = "График продуктивности";
-            return plotmodel;
+            return new PlotManager();
         }
 
 
