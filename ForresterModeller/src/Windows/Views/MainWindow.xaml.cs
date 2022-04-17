@@ -4,10 +4,11 @@ using System.Text.Json.Nodes;
 using System.Windows;
 using System.Windows.Controls;
 using ForresterModeller.Pages.Tools;
+using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.ProjectManager;
-using ForresterModeller.Windows.ViewModels;
+using ForresterModeller.src.Windows.ViewModels;
 using WpfMath.Controls;
 
 namespace ForresterModeller.Windows.Views

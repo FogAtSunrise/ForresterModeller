@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ForresterModeller.src.Windows.Views"
               xmlns:viewModels="clr-namespace:ForresterModeller.src.ProjectManager.WorkArea"
-              xmlns:workArea="clr-namespace:ForresterModeller.ProjectManager.WorkArea"
-              d:DataContext="{d:DesignInstance workArea:MatViewManager, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance viewModels:MatViewManager, IsDesignTimeCreatable=True}"
       HorizontalAlignment="Stretch"
              mc:Ignorable="d" 
            >

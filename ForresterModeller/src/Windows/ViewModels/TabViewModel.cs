@@ -2,14 +2,13 @@
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     public class TabViewModel : ReactiveObject
     {
         public string Header => WAManager.Name;
         public ContentControl Content => WAManager.Content;
         //содержимое
-        private WorkAreaManager _wamanager;
         public WorkAreaManager WAManager { get; set; }
 
         public TabViewModel(WorkAreaManager workAreaManager)

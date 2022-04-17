@@ -1,4 +1,4 @@
-﻿namespace ForresterModeller.Interfaces
+﻿namespace ForresterModeller.src.Interfaces
 {
    public  interface IMathViewable
     {

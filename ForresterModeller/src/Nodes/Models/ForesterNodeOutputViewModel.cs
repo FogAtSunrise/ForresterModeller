@@ -1,15 +1,10 @@
-﻿using ForresterModeller.src.Nodes.Models;
+﻿using System;
 using NodeNetwork;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ForresterModeller
+namespace ForresterModeller.src.Nodes.Models
 {
     public class ForesterNodeOutputViewModel: NodeOutputViewModel
     {

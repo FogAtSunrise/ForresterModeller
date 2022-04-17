@@ -8,18 +8,15 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using ForesterNodeCore;
 using ForresterModeller.Pages.Tools;
-using ForresterModeller.ProjectManager.WorkArea;
-using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Viters;
-using ForresterModeller.src.Pages.Tools;
+using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
 using ReactiveUI;
 using WpfMath.Controls;
-using ForresterModeller.src.Windows;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
@@ -94,6 +91,7 @@ namespace ForresterModeller.Windows.ViewModels
                 }
                 else if (manager is PlotManager)
                 {
+                    PlotterToolsMW.DataContext = manager;
                     ToolContent.Content = PlotterToolsMW;
                 }
             }

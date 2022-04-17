@@ -6,8 +6,8 @@ using System.Collections.ObjectModel;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
-using ForresterModeller.Windows.ViewModels;
 using System.Windows;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {

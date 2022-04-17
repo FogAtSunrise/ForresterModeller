@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Interfaces;
 using ReactiveUI;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     public class PropertiesControlViewModel : ReactiveObject
     {

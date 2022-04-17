@@ -8,7 +8,6 @@ using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
-using ForresterModeller.Windows.ViewModels;
 using System.Linq;
 using ForresterModeller.src.Windows.ViewModels;
 

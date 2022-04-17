@@ -1,6 +1,6 @@
 ﻿using ForresterModeller.src.Nodes.Viters;
 
-namespace ForresterModeller.src.Nodes.Models
+namespace ForresterModeller.src.Interfaces
 {
     public interface IForesterModel : IJSONSerializable, IPropertyOwner
     {
