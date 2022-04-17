@@ -6,14 +6,19 @@ using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
+using System.Windows;
+using System.Linq;
 
 namespace ForresterModeller.src.Nodes.Models
 {
+
+
     public class LevelNodeModel : ForesterNodeModel
     {
         public override string TypeName => Resource.levelType;
 
         public static string type = "LevelNodeModel";
+        private NodeInputViewModel _inputRate;
 
         public string InputRate { get; set; }
         public string OutputRate { get; set; }
@@ -41,10 +46,10 @@ namespace ForresterModeller.src.Nodes.Models
             a.PortPosition = PortPosition.Right;
             Outputs.Add(a);
 
-            var b = new NodeInputViewModel();
-            b.Name = "Поток";
-            b.PortPosition = PortPosition.Left;
-            Inputs.Add(b);
+            _inputRate = new NodeInputViewModel();
+            _inputRate.Name = "Поток";
+            _inputRate.PortPosition = PortPosition.Left;
+            Inputs.Add(_inputRate);
         }
 
 
@@ -53,6 +58,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));
         }
+
 
         public override JsonObject ToJSON() {
             JsonObject obj = new JsonObject() {
@@ -63,11 +69,26 @@ namespace ForresterModeller.src.Nodes.Models
                 ["InputRate"] = InputRate,
                 ["OutputRate"] = OutputRate,
                 ["Description"] = Description == null ? "" : Description,
-                ["StartValue"] = StartValue == null ? "" : StartValue
+                ["StartValue"] = StartValue == null ? "" : StartValue,
+                ["PositionX"] = Position.X,
+                ["PositionY"] = Position.Y
             };
+
+            JsonArray con = new();
+            if (_inputRate.Connections.Items.Any()) {
+                con.Add(new ConectionModel(_inputRate).ToJSON());
+            }
+            else
+            {
+                con.Add(null);
+            }
+
+            obj.Add("Conects", con);
 
             return obj;
         }
+
+
 
         public override void FromJSON(JsonObject obj) {
             Id = obj!["Id"]!.GetValue<string>();
@@ -78,6 +99,7 @@ namespace ForresterModeller.src.Nodes.Models
             OutputRate = obj!["OutputRate"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
             StartValue = obj!["StartValue"]!.GetValue<string>();
+            Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
         }
 
 

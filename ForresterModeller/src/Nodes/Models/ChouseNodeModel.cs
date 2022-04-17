@@ -23,6 +23,14 @@ namespace ForresterModeller.src.Nodes.Models
             return viseter.VisitChoose(this);
         }
 
+        public override JsonObject ToJSON()
+        {
+            var json = base.ToJSON();
+            json["Type"] = type;
+            return json;
+        }
+
+
         static ChouseNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<ChouseNodeModel>));

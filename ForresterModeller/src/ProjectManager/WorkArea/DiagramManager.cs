@@ -36,8 +36,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             try
             {
                 Name = json!["Name"]!.GetValue<string>();
-                string test = json!["Test"]!.GetValue<string>();
-                MessageBox.Show("Прочитал: "+ test);
 
             }
             catch
@@ -52,16 +50,22 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public JsonObject DiagramToJson()
         {
              
-            JsonObject json = new JsonObject
 
+
+            JsonArray nodesJson = new();
+            
+            foreach (var node in GetAllNodes) {
+                nodesJson.Add(node.ToJSON());
+            }
+
+            JsonObject json = new JsonObject
             {
                 ["Name"] = Name,
-                ["Test"] = "oaaoaoao"
-
+                ["Time"] = AllTime,
+                ["Delta"] = DeltaTime
             };
 
-            //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПЕРЕВОДИТ ДАННЫЕ ДИАГРАММЫ В JSON
-
+            json.Add("Nodes", nodesJson);
 
             return json;
         }

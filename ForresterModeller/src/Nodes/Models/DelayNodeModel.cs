@@ -7,6 +7,7 @@ using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using ForresterModeller.src.Windows.ViewModels;
+using System.Linq;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -15,6 +16,7 @@ namespace ForresterModeller.src.Nodes.Models
         public static string type = "DelayNodeModel";
         private ForesterNodeOutputViewModel _constNode;
         private ForesterNodeOutputViewModel _outNode;
+        private NodeInputViewModel _inputRate;
 
         public override string TypeName => Resource.levelType;
 
@@ -87,9 +89,9 @@ namespace ForresterModeller.src.Nodes.Models
             Outputs.Add(_outNode);
 
 
-            var b = new NodeInputViewModel();
-            b.PortPosition = PortPosition.Left;
-            Inputs.Add(b);
+            _inputRate = new NodeInputViewModel();
+            _inputRate.PortPosition = PortPosition.Left;
+            Inputs.Add(_inputRate);
         }
         public DelayNodeModel() : this("LЕV", "Запаздывание", "1", "OUT", 1, "DEL", 1, "0") {}
         static DelayNodeModel()
@@ -112,6 +114,18 @@ namespace ForresterModeller.src.Nodes.Models
                 ["DelayValue"] = DelayValue,
                 ["StartValue"] = StartValue == null ? "" : StartValue
             };
+
+            JsonArray con = new();
+            if (_inputRate.Connections.Items.Any())
+            {
+                con.Add(new ConectionModel(_inputRate).ToJSON());
+            }
+            else
+            {
+                con.Add(null);
+            }
+
+            obj.Add("Conects", con);
 
             return obj;
         }

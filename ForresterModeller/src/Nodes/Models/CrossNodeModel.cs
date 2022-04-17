@@ -20,21 +20,22 @@ namespace ForresterModeller.src.Nodes.Models
 
 
         private CrossNodeModelSourceRate _source;
+        private CrossNodeModelInputRate _input;
 
         public CrossNodeModel()
         {
-            var input = new CrossNodeModelInputRate();
+            _input = new CrossNodeModelInputRate();
 
-            input.PortPosition = PortPosition.Centr;
-            Inputs.Add(input);
+            _input.PortPosition = PortPosition.Centr;
+            Inputs.Add(_input);
 
             _source = new CrossNodeModelSourceRate();
 
             _source.PortPosition = PortPosition.Centr;
             Inputs.Add(_source);
 
-            input.Source = _source;
-            _source.Target = input;
+            _input.Source = _source;
+            _source.Target = _input;
 
             var outp = new ForesterNodeOutputViewModel();
             outp.OutFunc = () => ((ForesterNodeOutputViewModel)this._source.Connections.Items.ToList()[0].Output).OutputValue;
@@ -52,15 +53,38 @@ namespace ForresterModeller.src.Nodes.Models
             return viseter.VisitCross(this);
         }
 
+
+
         public override JsonObject ToJSON()
         {
             JsonObject obj = new JsonObject()
             {
-                ["Id"] = Id == null ? "" : Id,
+                ["Id"] = Id,
                 ["Type"] = type,
                 ["PositionX"] = Position.X,
                 ["PositionY"] = Position.Y
             };
+
+            JsonArray con = new();
+            if (_input.Connections.Items.Any())
+            {
+                con.Add(new ConectionModel(_input).ToJSON());
+            }
+            else
+            {
+                con.Add(null);
+            }
+
+            if (_source.Connections.Items.Any())
+            {
+                con.Add(new ConectionModel(_source).ToJSON());
+            }
+            else
+            {
+                con.Add(null);
+            }
+
+            obj.Add("Conects", con);
 
             return obj;
         }
@@ -70,8 +94,6 @@ namespace ForresterModeller.src.Nodes.Models
             Id = obj!["Id"]!.GetValue<string>();
             Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
         }
-
-
 
     }
 
