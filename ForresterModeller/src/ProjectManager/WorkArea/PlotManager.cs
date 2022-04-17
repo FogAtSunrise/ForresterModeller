@@ -57,13 +57,12 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public PlotManager()
         {
             Lines.CollectionChanged += LinesOnCollectionChanged;
-            Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 1, 2, 3, 4 }, "Продуктивность студента"));
-            Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 4, 3, 2, 1 }, "Психическое здоровье студента"));
+            Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 4, 3, 2, 1 }, "1Психическое здоровье студента"));
+            Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 1, 2, 3, 4 }, "2Продуктивность студента"));
             XLabel = "Степень окончания семестра";
             YLabel = "Скорость сдачи лаб ";
             Name = "График продуктивности";
             GenerateActualPlot();
-
         }
 
         private void LinesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -85,7 +84,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         /// <param name="dt"></param>
         public PlotManager(Dictionary<string, double[]> resultMap, double t, double dt, Project ActiveProject)
         {
-            Lines = new();
+            Lines.CollectionChanged += LinesOnCollectionChanged;
             int count = resultMap.First().Value.Length;
             double[] weeks = new double[count];
             if (count > 0)
@@ -100,6 +99,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 var line = new Line(weeks, value, ActiveProject.getModelById(plot.Key).Name);
                 Lines.Add(line);
             }
+
         }
 
         private void LineOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -135,8 +135,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             WpfPlot WpfPlot1 = new();
             foreach (var line in Lines)
             {
-                WpfPlot1.Plot.AddScatter(line.X, line.Y, null,
-                    Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, line.Description);
+                if (line.IsVisible)
+                    WpfPlot1.Plot.AddScatter(line.X, line.Y, null,
+                        Single.Epsilon, Single.Epsilon, MarkerShape.asterisk, LineStyle.Solid, line.Description);
             }
             WpfPlot1.Plot.YLabel(YLabel);
             WpfPlot1.Plot.XLabel(XLabel);
