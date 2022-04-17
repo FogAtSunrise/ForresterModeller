@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -21,6 +22,49 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class DiagramManager : WorkAreaManager
     {
+        public DiagramManager() { }
+ 
+
+        public DiagramManager(string name)
+        {
+            Name = Name;
+        }
+
+        public void JsonToDiagram(JsonObject json)
+        {
+            try
+            {
+                Name = json!["Name"]!.GetValue<string>();
+                string test = json!["Test"]!.GetValue<string>();
+                MessageBox.Show("Прочитал: "+ test);
+
+            }
+            catch
+            {
+                MessageBox.Show("Не верно выбран файл проекта");
+            }
+
+            //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПО JSON ЗАПОЛНЯЕТ ПОЛЯ ДИАГРАММЫ
+
+        }
+
+        public JsonObject DiagramToJson()
+        {
+             
+            JsonObject json = new JsonObject
+
+            {
+                ["Name"] = Name,
+                ["Test"] = "oaaoaoao"
+
+            };
+
+            //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПЕРЕВОДИТ ДАННЫЕ ДИАГРАММЫ В JSON
+
+
+            return json;
+        }
+
         public IEnumerable<ForesterNodeModel> GetAllNodes
         {
             get => Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);

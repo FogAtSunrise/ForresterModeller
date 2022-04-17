@@ -46,6 +46,8 @@ namespace ForresterModeller.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
 
+        public ReactiveCommand<Unit, Unit> SaveProject { get; }
+
         #endregion
         public MainWindowViewModel(Project project)
         {
@@ -59,6 +61,8 @@ namespace ForresterModeller.Windows.ViewModels
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
+
+            SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
         }
 
         /// <summary>
@@ -121,16 +125,7 @@ namespace ForresterModeller.Windows.ViewModels
             else
             {
 
-                /*   var manager = (DiagramManager)TabControlVM.ActiveTab.WAManager;
-                   double t = manager.AllTime, dt = manager.DeltaTime;
-                   var network = ((NetworkView)manager.Content).ViewModel;
-                   string text = NodeTranslator.Translate(network);
-                   List<NodeIdentificator> ids = new();
-                   foreach (var nod in network.Nodes.Items)
-                   {
-                       if (nod is not CrossNodeModel)
-                           ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
-                   }*/
+                
                 var math = new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header };
                 math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
                 AddTab(math);
@@ -225,6 +220,21 @@ namespace ForresterModeller.Windows.ViewModels
 
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
+        }
+
+
+        /// <summary>
+        /// Создать проект
+        /// создает и инициализирует активный проект
+        /// </summary>
+        private void SaveProj()
+        {
+            if (ActiveProject != null)
+            {
+                ActiveProject.SaveOldProject();
+                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.getName());////////////////////////////////
+            }
+
         }
         public ContentControl ExecuteCore()
         {
