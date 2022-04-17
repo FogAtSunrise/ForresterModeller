@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
-using Accessibility;
-using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.Windows.ViewModels;
+using ForresterModeller.src.Windows.ViewModels;
 using ReactiveUI;
 using ScottPlot;
 
@@ -17,14 +16,15 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         private ContentControl _content;
         public override ContentControl Content
         {
-            get => _content??GenerateActualPlot();
+            get => _content ?? GenerateActualPlot();
             set => this.RaiseAndSetIfChanged(ref _content, value);
         }
         ///
         ///Информация, оторбараюжаяся на графике
         ///
         /// Перечень линий
-        public ObservableCollection<Line> Lines = new();
+        public ObservableCollection<Line> Lines { get; set; } = new();
+
         /// <summary>
         /// Подписи для осей
         /// </summary>
@@ -32,27 +32,51 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
-            var properties  = new ObservableCollection<PropertyViewModel>();
+            var properties = new ObservableCollection<PropertyViewModel>();
             properties.Add(new PropertyViewModel("Тип", TypeName));
             properties.Add(new PropertyViewModel("Название", Name, (string s) =>
             {
                 Name = s;
                 GenerateActualPlot();
             }));
-            properties.Add(new PropertyViewModel("Ось абсцисс", XLabel, (String str) => {
+            properties.Add(new PropertyViewModel("Ось абсцисс", XLabel, (String str) =>
+            {
                 XLabel = str;
                 GenerateActualPlot();
             }));
-            properties.Add(new PropertyViewModel("Ось ординат", YLabel, (String str) => {
+            properties.Add(new PropertyViewModel("Ось ординат", YLabel, (String str) =>
+            {
                 YLabel = str;
                 GenerateActualPlot();
             }));
             return properties;
         }
 
-        public override string TypeName => "График"; 
+        public override string TypeName => "График";
 
-        public PlotManager(){}
+        public PlotManager()
+        {
+            Lines.CollectionChanged += LinesOnCollectionChanged;
+            Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 1, 2, 3, 4 }, "Продуктивность студента"));
+            Lines.Add(new PlotManager.Line(new double[] { 1, 2, 3, 4 }, new double[] { 4, 3, 2, 1 }, "Психическое здоровье студента"));
+            XLabel = "Степень окончания семестра";
+            YLabel = "Скорость сдачи лаб ";
+            Name = "График продуктивности";
+            GenerateActualPlot();
+
+        }
+
+        private void LinesOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var line in e.NewItems)
+                {
+                    ((Line)line).PropertyChanged += LineOnPropertyChanged;
+                }
+            }
+        }
+
         /// <summary>
         /// Построить модель графа на основе данных от ядра
         /// </summary>
@@ -74,7 +98,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             {
                 double[] value = plot.Value;
                 var line = new Line(weeks, value, ActiveProject.getModelById(plot.Key).Name);
-                line.PropertyChanged += LineOnPropertyChanged;
                 Lines.Add(line);
             }
         }
@@ -98,10 +121,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             public double[] X { get; }
             public double[] Y { get; }
             private bool _isVisible = true;
-            public bool IsVisible { get => _isVisible; set => this.RaiseAndSetIfChanged(ref _isVisible, value);}
-            public string Description { get; }
+            private string _description;
+            public bool IsVisible { get => _isVisible; set => this.RaiseAndSetIfChanged(ref _isVisible, value); }
+            public string Description { get => _description; set => this.RaiseAndSetIfChanged(ref _description, value); }
         }
-    
+
         /// <summary>
         /// Получить график с актуальными изменениями
         /// </summary>
@@ -122,6 +146,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             Content = WpfPlot1;
             return Content;
         }
-        
+
     }
 }
