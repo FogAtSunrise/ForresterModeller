@@ -15,7 +15,7 @@ namespace ForresterModeller.src.Nodes.Models
     {
         public override string TypeName => Resource.constType;
 
-       public static string type = "ConstantNodeViewModel";
+        public static string type = "ConstantNodeViewModel";
        
 
         /// <summary>
@@ -85,6 +85,4 @@ namespace ForresterModeller.src.Nodes.Models
             return viseter.VisitConstant(this);
         }
     }
-
-
 }

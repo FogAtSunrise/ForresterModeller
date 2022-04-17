@@ -42,13 +42,13 @@ namespace ForresterModeller.src.Nodes.Models
             Outputs.Add(a);
 
             var b = new NodeInputViewModel();
-            b.Name = "in";
+            b.Name = "Поток";
             b.PortPosition = PortPosition.Left;
             Inputs.Add(b);
         }
 
 
-        public LevelNodeModel() : this("LVL", "Уровень", "in", "in") { }
+        public LevelNodeModel() : this("LVL", "Уровень", "Поток", "Поток") { }
         static LevelNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LevelNodeModel>));

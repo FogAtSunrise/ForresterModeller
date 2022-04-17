@@ -27,6 +27,7 @@ namespace ForresterModeller.src.Nodes.Models
     public abstract class ForesterNodeModel : NodeViewModel, IForesterModel, IMathViewable
     {
         private string _description;
+        private string _full_name;
 
         public string Description
         {
@@ -37,9 +38,19 @@ namespace ForresterModeller.src.Nodes.Models
             }
         }
 
+
+        public string FullName
+        {
+            get => _full_name;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _full_name, value);
+            }
+        }
+
+
         public virtual string TypeName { get; }
    
-        public string FullName { get; set; }
         public string Id { get; set; }
 
         public virtual string GetCoreCode()

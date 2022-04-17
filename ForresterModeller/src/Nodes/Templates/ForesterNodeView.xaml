@@ -6,11 +6,11 @@
                     xmlns:reactiveUi="http://reactiveui.net">
 
     <Style x:Key="constant" TargetType="{x:Type views:NodeView}">
-        <Setter Property="Background" Value="Green"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TitleFontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="TitleFontSize" Value="18"/>
-        <Setter Property="BorderBrush" Value="Orange"/>
+        <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="CornerRadius" Value="100"/>
         <Setter Property="EndpointsStackingOrientation" Value="Vertical"/>
         <Setter Property="IsTabStop" Value="False"/>
@@ -22,15 +22,12 @@
                             <VisualStateGroup Name="{x:Static views:NodeView.SelectedVisualStatesGroup}">
                                 <VisualState Name="{x:Static views:NodeView.SelectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="-3" 
-                                                            Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="3" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Orange" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState Name="{x:Static views:NodeView.UnselectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Gray" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -45,7 +42,7 @@
 
 
                         <Border x:Name="Border" Margin="10,0,10,0" CornerRadius="{TemplateBinding CornerRadius}"
-                                Width="40" Height="40" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                Width="40" Height="40" BorderThickness ="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                             <Grid>
                                 <Thumb VerticalAlignment="Bottom" Height="10"  Visibility="Hidden" x:Name="ResizeVerticalThumb">
                                 </Thumb>
@@ -84,11 +81,11 @@
     </Style>
 
     <Style x:Key="level" TargetType="{x:Type views:NodeView }">
-        <Setter Property="Background" Value="#FFC14646"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TitleFontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="TitleFontSize" Value="18"/>
-        <Setter Property="BorderBrush" Value="Orange"/>
+        <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="CornerRadius" Value="0"/>
         <Setter Property="EndpointsStackingOrientation" Value="Vertical"/>
         <Setter Property="IsTabStop" Value="False"/>
@@ -100,22 +97,19 @@
                             <VisualStateGroup Name="{x:Static views:NodeView.SelectedVisualStatesGroup}">
                                 <VisualState Name="{x:Static views:NodeView.SelectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="-3" 
-                                                            Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="3" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Orange" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState Name="{x:Static views:NodeView.UnselectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Gray" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
                         <Border x:Name="Border" Margin="10,0,10,0" CornerRadius="{TemplateBinding CornerRadius}"
-                                MinWidth="250" MinHeight="70" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                MinWidth="350" MinHeight="170" BorderThickness ="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                             <Grid>
                                 <Thumb VerticalAlignment="Bottom" Height="10"  Visibility="Hidden" x:Name="ResizeVerticalThumb">
                                 </Thumb>
@@ -183,10 +177,10 @@
     </Style>
 
     <Style x:Key="funk" TargetType="{x:Type views:NodeView }">
-        <Setter Property="Background" Value="Blue"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TitleFontFamily" Value="Segoe UI Semibold"/>
-        <Setter Property="TitleFontSize" Value="18"/>
+        <Setter Property="TitleFontSize" Value="16"/>
         <Setter Property="BorderBrush" Value="Orange"/>
         <Setter Property="CornerRadius" Value="100"/>
         <Setter Property="EndpointsStackingOrientation" Value="Vertical"/>
@@ -200,22 +194,19 @@
                             <VisualStateGroup Name="{x:Static views:NodeView.SelectedVisualStatesGroup}">
                                 <VisualState Name="{x:Static views:NodeView.SelectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="-3" 
-                                                            Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="3" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Orange" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState Name="{x:Static views:NodeView.UnselectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Gray" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
                         <Border x:Name="Border" Margin="10,0,10,0" CornerRadius="{TemplateBinding CornerRadius}"
-                                MinWidth="250" MinHeight="70" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                MinWidth="140" MinHeight="50" BorderThickness ="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                             <Grid>
                                 <Thumb VerticalAlignment="Bottom" Height="10"  Visibility="Hidden" x:Name="ResizeVerticalThumb">
                                 </Thumb>
@@ -290,7 +281,7 @@
 
     <Style x:Key="cross" TargetType="{x:Type views:NodeView }">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TitleFontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="TitleFontSize" Value="18"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
@@ -302,25 +293,8 @@
 
                 <ControlTemplate x:Name="default" TargetType="views:NodeView">
                     <controls:FillPanel x:Name="Container">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="{x:Static views:NodeView.SelectedVisualStatesGroup}">
-                                <VisualState Name="{x:Static views:NodeView.SelectedState}">
-                                    <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="-3" 
-                                                            Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="3" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState Name="{x:Static views:NodeView.UnselectedState}">
-                                    <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Border" Margin="10,0,10,0" CornerRadius="{TemplateBinding CornerRadius}"
-                                MinWidth="25" MinHeight="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                MinWidth="25" MinHeight="20" BorderThickness ="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                             <Grid>
                                 <Thumb VerticalAlignment="Bottom" Height="10"  Visibility="Hidden" x:Name="ResizeVerticalThumb">
                                 </Thumb>
@@ -337,10 +311,10 @@
                                     <Canvas Background="LightGray">
                                         <Polygon  
                                             Points="50,15 85,0 85,32 50,15  15,0  15,32  50,15" 
-                                            Stroke="Purple"
+                                            Stroke="Gray"
                                             StrokeThickness="2">
                                             <Polygon.Fill>
-                                                <SolidColorBrush Color="Blue" Opacity="0.4"/>
+                                                <SolidColorBrush Color="Transparent" Opacity="0.4"/>
                                             </Polygon.Fill>
                                         </Polygon>
                                     </Canvas>
@@ -400,8 +374,8 @@
 
 
     <Style x:Key="chouse" TargetType="{x:Type views:NodeView }">
-        <Setter Property="Background" Value="YellowGreen"/>
-        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TitleFontFamily" Value="Segoe UI Semibold"/>
         <Setter Property="TitleFontSize" Value="18"/>
         <Setter Property="BorderBrush" Value="Orange"/>
@@ -416,22 +390,19 @@
                             <VisualStateGroup Name="{x:Static views:NodeView.SelectedVisualStatesGroup}">
                                 <VisualState Name="{x:Static views:NodeView.SelectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="-3" 
-                                                            Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="3" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Orange" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState Name="{x:Static views:NodeView.UnselectedState}">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Container" Storyboard.TargetProperty="Margin"/>
-                                        <ThicknessAnimation Duration="0" To="0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderThickness"/>
+                                        <ColorAnimation Duration="0" To="Gray" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
                         <Border x:Name="Border" Margin="10,0,10,0" CornerRadius="0, 60, 60, 0"
-                                MinWidth="250" MinHeight="70" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                MinWidth="200" MinHeight="70" BorderThickness ="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
                             <Grid>
                                 <Thumb VerticalAlignment="Bottom" Height="10"  Visibility="Hidden" x:Name="ResizeVerticalThumb">
                                 </Thumb>

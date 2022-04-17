@@ -19,7 +19,7 @@
             <!--це подпись -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
                 <Image x:Name="Icon" MaxWidth="20" MaxHeight="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" Visibility="{Binding Icon, Mode=OneWay, Converter={StaticResource NullConverter}}"/>
-                <TextBlock x:Name="NameLabel" TextTrimming="CharacterEllipsis" FontSize="14" Width="auto" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock x:Name="NameLabel" TextTrimming="CharacterEllipsis" FontSize="14" Width="auto" Foreground="Black" VerticalAlignment="Center"/>
             </StackPanel>
 
             <reactiveUi:ViewModelViewHost x:Name="EndpointHost" Grid.Column="0" Grid.Row="0" Margin="0,4.9,10,4.9" Width="20" Height="20" 
@@ -42,7 +42,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">
-                <TextBlock x:Name="NameLabel" TextTrimming="CharacterEllipsis" FontSize="14" Width="auto" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock x:Name="NameLabel" TextTrimming="CharacterEllipsis" FontSize="14" Width="auto" Foreground="Black" VerticalAlignment="Center"/>
                 <Image x:Name="Icon" MaxWidth="20" MaxHeight="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="{Binding Icon, Mode=OneWay, Converter={StaticResource NullConverter}}"/>
             </StackPanel>
 

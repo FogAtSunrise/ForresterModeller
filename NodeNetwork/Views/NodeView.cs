@@ -134,7 +134,6 @@ namespace NodeNetwork.Views
         public NodeView()
         {
             DefaultStyleKey = typeof(NodeView);
-
             SetupBindings();
             SetupEvents();
             SetupVisualStateBindings();
