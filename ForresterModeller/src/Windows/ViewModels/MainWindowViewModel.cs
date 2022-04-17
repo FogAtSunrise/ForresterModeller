@@ -26,9 +26,16 @@ namespace ForresterModeller.src.Windows.ViewModels
         public PlotterTools PlotterToolsMW { get; set; } = new();
         public DiagramTools DiagramToolsWM { get; set; } = new();
         public ContentControl ToolContent { get; set; } = new();
-        public static Project _activeProject;
-        public Project ActiveProject { get => _activeProject;
-            set => this.RaiseAndSetIfChanged(ref _activeProject, value);
+        public static Project ProjectInstance;
+        private  Project _activeProject;
+        public Project ActiveProject
+        {
+            get => _activeProject;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _activeProject, value);
+                ProjectInstance = _activeProject;
+            }
         }
 
 

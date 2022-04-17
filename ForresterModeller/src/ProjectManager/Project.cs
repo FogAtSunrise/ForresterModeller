@@ -177,9 +177,12 @@ namespace ForresterModeller.src.ProjectManager
         {
             foreach (var diag in Diagrams)
             {
-                var node = diag.GetAllNodes.First(x => x.Id == id);
-                if (node != null)
-                    return node;
+                if (diag.GetAllNodes.Any())
+                {
+                    var node = diag.GetAllNodes.First(x => x.Id == id);
+                    if (node != null)
+                        return node;
+                }
             }
 
             return null;
