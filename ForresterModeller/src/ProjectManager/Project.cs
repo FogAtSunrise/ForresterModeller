@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -16,11 +17,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
+using ReactiveUI;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ForresterModeller.src.ProjectManager
 {
-    public class Project
+    public class Project: ReactiveObject
     {
         /// <summary>
         /// дефолтные значения имени и пути проекта
@@ -33,11 +35,14 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
 
-        private List<DiagramManager> diagramsList = new List<DiagramManager>();
+        private ObservableCollection<DiagramManager> _diagrams = new();
+        public ObservableCollection<DiagramManager> Diagrams { get => _diagrams; 
+            set => this.RaiseAndSetIfChanged(ref _diagrams, value);
+        }
 
         public void AddDiagram(DiagramManager diagram)
         {
-            diagramsList.Add(diagram);
+            Diagrams.Add(diagram);
             var network = (NetworkView)diagram.Content;
 
         }
@@ -81,8 +86,7 @@ namespace ForresterModeller.src.ProjectManager
         }
 
 
-        string Name;
-        public string getName() { return Name; }
+        public string Name { get; set; }
 
         DateTime CreationDate;
         public DateTime getCreationDate() { return CreationDate; }
@@ -171,7 +175,7 @@ namespace ForresterModeller.src.ProjectManager
         /// <returns></returns>
         public ForesterNodeModel getModelById(string id)
         {
-            foreach (var diag in diagramsList)
+            foreach (var diag in Diagrams)
             {
                 var node = diag.GetAllNodes.First(x => x.Id == id);
                 if (node != null)
@@ -219,7 +223,7 @@ namespace ForresterModeller.src.ProjectManager
         {
 
             JsonArray projectFiles = new JsonArray();
-            foreach (var file in diagramsList)
+            foreach (var file in Diagrams)
             {
                 projectFiles.Add(file.Name);
                 writeDiagramToFile(file);
@@ -258,7 +262,7 @@ namespace ForresterModeller.src.ProjectManager
                 foreach (var file in projectFiles)
                 {
                     DiagramManager d= getDiagramFromFileByName(file.ToString());
-                    diagramsList.Add(d);
+                    Diagrams.Add(d);
                    
                 }
 

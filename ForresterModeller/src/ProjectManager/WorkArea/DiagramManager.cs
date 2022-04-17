@@ -28,7 +28,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public DiagramManager(string name)
         {
-            Name = Name;
+            Name = name;
         }
 
         public void JsonToDiagram(JsonObject json)

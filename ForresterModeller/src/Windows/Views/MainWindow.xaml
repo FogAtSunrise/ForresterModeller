@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
         xmlns:views="clr-namespace:ForresterModeller.Windows.Views"
         xmlns:viewModels1="clr-namespace:ForresterModeller.src.Windows.ViewModels"
+        xmlns:self="clr-namespace:ForresterModeller.src.ProjectManager"
+        xmlns:workArea="clr-namespace:ForresterModeller.src.ProjectManager.WorkArea"
         d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
@@ -149,9 +151,15 @@
 
                         </TabItem.Header>
 
-                        <StackPanel>
-                            <TreeView   Name="TreeFiles"/>
-                        </StackPanel>
+                        <Grid>
+                            <TreeView ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
+                                <TreeView.Resources>
+                                        <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" >
+                                            <TextBlock Text="{Binding Name }" />
+                                        </HierarchicalDataTemplate>
+                                </TreeView.Resources>
+                            </TreeView>
+                        </Grid>
                     </TabItem>
 
                     <TabItem >

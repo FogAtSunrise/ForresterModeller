@@ -107,11 +107,11 @@ namespace ForresterModeller
 
         foreach(var lis in list)
         {
-                System.Windows.Controls.Button but = new Button() { Name = lis.getName(), Height = 50 };
+                System.Windows.Controls.Button but = new Button() { Name = lis.Name, Height = 50 };
                 DockPanel.SetDock(but, System.Windows.Controls.Dock.Top); 
 
                 Canvas can = new Canvas(){ Height = Double.NaN,  Width = Double.NaN };
-                Label one = new Label() { Width = Double.NaN, Content = lis.getName() };
+                Label one = new Label() { Width = Double.NaN, Content = lis.Name };
                 Canvas.SetTop(one, -13);
                 Canvas.SetLeft(one, -273);
 
