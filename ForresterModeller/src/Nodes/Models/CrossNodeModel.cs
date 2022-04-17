@@ -51,8 +51,12 @@ namespace ForresterModeller.src.Nodes.Models
             var data = base.GetMathView();
             foreach (var inputs in Inputs.Items)
             {
-                String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
-                data.Add(new DataForViewModels(inputs.Name, value, false));
+                if (inputs.Connections.Items.Count() > 0)
+
+                {
+                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+                    data.Add(new DataForViewModels(inputs.Name, value, false));
+                }
             }
             return data;
         }
