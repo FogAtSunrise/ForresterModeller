@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     /// <summary>
     /// Класс, определяющий поле в окне свойств объекта.

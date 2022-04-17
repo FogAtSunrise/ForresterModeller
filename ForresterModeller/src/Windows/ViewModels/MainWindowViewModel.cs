@@ -8,18 +8,15 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using ForesterNodeCore;
 using ForresterModeller.Pages.Tools;
-using ForresterModeller.ProjectManager.WorkArea;
-using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Viters;
-using ForresterModeller.src.Pages.Tools;
+using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
 using ReactiveUI;
 using WpfMath.Controls;
-using ForresterModeller.src.Windows;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
@@ -46,6 +43,8 @@ namespace ForresterModeller.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
 
+        public ReactiveCommand<Unit, Unit> SaveProject { get; }
+
         #endregion
         public MainWindowViewModel(Project project)
         {
@@ -59,6 +58,8 @@ namespace ForresterModeller.Windows.ViewModels
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
+
+            SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
         }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace ForresterModeller.Windows.ViewModels
                 }
                 else if (manager is PlotManager)
                 {
+                    PlotterToolsMW.DataContext = manager;
                     ToolContent.Content = PlotterToolsMW;
                 }
             }
@@ -121,16 +123,7 @@ namespace ForresterModeller.Windows.ViewModels
             else
             {
 
-                /*   var manager = (DiagramManager)TabControlVM.ActiveTab.WAManager;
-                   double t = manager.AllTime, dt = manager.DeltaTime;
-                   var network = ((NetworkView)manager.Content).ViewModel;
-                   string text = NodeTranslator.Translate(network);
-                   List<NodeIdentificator> ids = new();
-                   foreach (var nod in network.Nodes.Items)
-                   {
-                       if (nod is not CrossNodeModel)
-                           ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
-                   }*/
+                
                 var math = new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header };
                 math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
                 AddTab(math);
@@ -225,6 +218,21 @@ namespace ForresterModeller.Windows.ViewModels
 
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
+        }
+
+
+        /// <summary>
+        /// Создать проект
+        /// создает и инициализирует активный проект
+        /// </summary>
+        private void SaveProj()
+        {
+            if (ActiveProject != null)
+            {
+                ActiveProject.SaveOldProject();
+                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.getName());////////////////////////////////
+            }
+
         }
         public ContentControl ExecuteCore()
         {

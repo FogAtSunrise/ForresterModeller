@@ -1,8 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using ForresterModeller.Windows.ViewModels;
-using ReactiveUI;
+using ForresterModeller.src.Windows.ViewModels;
 
-namespace ForresterModeller.src.Nodes.Models
+namespace ForresterModeller.src.Interfaces
 {
     public interface IPropertyOwner 
     {

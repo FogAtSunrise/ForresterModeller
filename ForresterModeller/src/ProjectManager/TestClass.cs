@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
+using ForresterModeller.src.Interfaces;
 
 namespace ForresterModeller.src.ProjectManager
 {

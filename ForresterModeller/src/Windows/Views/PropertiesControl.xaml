@@ -5,8 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       xmlns:views="clr-namespace:ForresterModeller.Windows.Views"
-      xmlns:viewModels="clr-namespace:ForresterModeller.Windows.ViewModels"
-      d:DataContext="{d:DesignInstance viewModels:PropertiesControlViewModel, IsDesignTimeCreatable=True}"
+      xmlns:viewModels1="clr-namespace:ForresterModeller.src.Windows.ViewModels"
+      d:DataContext="{d:DesignInstance viewModels1:PropertiesControlViewModel, IsDesignTimeCreatable=True}"
       HorizontalAlignment="Stretch"
     >
 

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using DynamicData;
 using ForesterNodeCore;
+using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;

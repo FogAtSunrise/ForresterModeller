@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.Windows.ViewModels;
+using ForresterModeller.src.Windows.ViewModels;
 using ReactiveUI;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea

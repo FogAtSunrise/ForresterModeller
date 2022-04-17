@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.src.ProjectManager.WorkArea;
+using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.src.Windows.Views;
-using ForresterModeller.Windows.ViewModels;
 using ReactiveUI;
 
-namespace ForresterModeller.ProjectManager.WorkArea
+namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     class MatViewManager : WorkAreaManager
     {

@@ -2,7 +2,7 @@
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     /// <summary>
     /// Биндится к TabControl

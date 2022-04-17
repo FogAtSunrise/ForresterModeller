@@ -1,6 +1,6 @@
 ﻿using ForresterModeller.src.Nodes.Models;
 
-namespace ForresterModeller.Windows.ViewModels
+namespace ForresterModeller.src.Windows.ViewModels
 {
     public class MathViewModel
     {

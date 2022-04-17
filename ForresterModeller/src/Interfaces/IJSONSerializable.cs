@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace ForresterModeller.src.Nodes.Models
+namespace ForresterModeller.src.Interfaces
 {
     public interface IJSONSerializable
     {

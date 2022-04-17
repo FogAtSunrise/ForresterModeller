@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
         xmlns:views="clr-namespace:ForresterModeller.Windows.Views"
-        xmlns:viewModels="clr-namespace:ForresterModeller.Windows.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel}"
+        xmlns:viewModels1="clr-namespace:ForresterModeller.src.Windows.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
 
@@ -15,7 +15,7 @@
             <MenuItem Header="Проект">
                 <MenuItem Header="Создать" Command="{Binding  CreateNewProject}" />
                 <MenuItem Header="Открыть"   Command="{Binding  InitProjectByPath}"/>
-                <MenuItem Header="Сохранить" />
+                <MenuItem Header="Сохранить" Command="{Binding SaveProject}"/>
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
             <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagramTab }"/>
