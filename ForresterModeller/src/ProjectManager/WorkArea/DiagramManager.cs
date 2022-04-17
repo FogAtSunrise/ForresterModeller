@@ -45,6 +45,37 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
             //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПО JSON ЗАПОЛНЯЕТ ПОЛЯ ДИАГРАММЫ
 
+            var nodes = json!["Nodes"];
+            foreach(var node in nodes.AsArray())
+            {
+                ForesterNodeModel newNode = null;
+
+
+                switch(node!["Type"].AsValue().ToString()){
+                    case "ChouseNodeModel":
+                        newNode = new ChouseNodeModel();
+                        break;
+                    case "ConstantNodeViewModel":
+                        newNode = new ConstantNodeViewModel();
+                        break;
+                    case "CrossNodeModel":
+                        newNode = new CrossNodeModel();
+                        break;
+                    case "DelayNodeModel":
+                        newNode = new DelayNodeModel();
+                        break;
+                    case "FunkNodeModel":
+                        newNode = new FunkNodeModel();
+                        break;
+                    case "LevelNodeModel":
+                        newNode = new LevelNodeModel();
+                        break;
+                }
+
+                newNode.FromJSON(node.AsObject());
+
+                this.Content.ViewModel.Nodes.Add(newNode);
+            }
         }
 
         public JsonObject DiagramToJson()
