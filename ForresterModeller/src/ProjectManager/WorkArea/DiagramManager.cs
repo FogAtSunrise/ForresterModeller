@@ -14,6 +14,7 @@ using System.Windows.Media;
 using DynamicData;
 using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Windows.ViewModels;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
@@ -28,7 +29,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public DiagramManager(string name)
         {
-            Name = Name;
+            Name = name;
         }
 
         public void JsonToDiagram(JsonObject json)
@@ -36,8 +37,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             try
             {
                 Name = json!["Name"]!.GetValue<string>();
-                string test = json!["Test"]!.GetValue<string>();
-                MessageBox.Show("Прочитал: "+ test);
 
             }
             catch
@@ -45,23 +44,55 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 MessageBox.Show("Не верно выбран файл проекта");
             }
 
-            //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПО JSON ЗАПОЛНЯЕТ ПОЛЯ ДИАГРАММЫ
 
+            var nodes = json!["Nodes"];
+            foreach(var node in nodes.AsArray())
+            {
+                ForesterNodeModel newNode = null;
+
+
+                switch(node!["Type"].AsValue().ToString()){
+                    case "ChouseNodeModel":
+                        newNode = new ChouseNodeModel();
+                        break;
+                    case "ConstantNodeViewModel":
+                        newNode = new ConstantNodeViewModel();
+                        break;
+                    case "CrossNodeModel":
+                        newNode = new CrossNodeModel();
+                        break;
+                    case "DelayNodeModel":
+                        newNode = new DelayNodeModel();
+                        break;
+                    case "FunkNodeModel":
+                        newNode = new FunkNodeModel();
+                        break;
+                    case "LevelNodeModel":
+                        newNode = new LevelNodeModel();
+                        break;
+                }
+
+                newNode.FromJSON(node.AsObject());
+
+                this.Content.ViewModel.Nodes.Add(newNode);
+            }
         }
 
         public JsonObject DiagramToJson()
         {
-             
-            JsonObject json = new JsonObject
+            JsonArray nodesJson = new();
+            foreach (var node in GetAllNodes) {
+                nodesJson.Add(node.ToJSON());
+            }
 
+            JsonObject json = new JsonObject
             {
                 ["Name"] = Name,
-                ["Test"] = "oaaoaoao"
-
+                ["Time"] = AllTime,
+                ["Delta"] = DeltaTime
             };
 
-            //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПЕРЕВОДИТ ДАННЫЕ ДИАГРАММЫ В JSON
-
+            json.Add("Nodes", nodesJson);
 
             return json;
         }
@@ -110,7 +141,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public NetworkView CreateNetworkView()
         {
             _contentView = new NetworkView() { Background = Brushes.AliceBlue };
-            var network = new NetworkViewModel();
+            var network = new ForesterNetworkViewModel();
             network.NodeDeletedEvent += (list) =>
             {
                 foreach (var node in list)

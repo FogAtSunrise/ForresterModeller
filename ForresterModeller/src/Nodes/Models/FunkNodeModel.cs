@@ -99,6 +99,21 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Description"] = Description == null ? "" : Description
             };
 
+            JsonArray con = new();
+
+
+            foreach (var inputs in this.Inputs.Items)
+            {
+                if (inputs.Connections.Items.Any())
+                {
+                    con.Add(new ConectionModel(inputs).ToJSON());
+                }
+                else
+                {
+                    con.Add(null);
+                }
+            }
+            obj.Add("Conects", con);
             return obj;
         }
 

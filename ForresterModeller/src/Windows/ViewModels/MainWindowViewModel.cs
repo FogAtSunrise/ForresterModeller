@@ -26,7 +26,10 @@ namespace ForresterModeller.src.Windows.ViewModels
         public PlotterTools PlotterToolsMW { get; set; } = new();
         public DiagramTools DiagramToolsWM { get; set; } = new();
         public ContentControl ToolContent { get; set; } = new();
-        public Project ActiveProject { get; set; }
+        private Project _activeProject;
+        public Project ActiveProject { get => _activeProject;
+            set => this.RaiseAndSetIfChanged(ref _activeProject, value);
+        }
 
 
         #region commands
@@ -76,6 +79,18 @@ namespace ForresterModeller.src.Windows.ViewModels
             }
         }
 
+        public void OpenOrCreateTab(WorkAreaManager contentManager)
+        {
+            foreach (var tab in TabControlVM.Tabs)
+            {
+                if (tab.WAManager == contentManager)
+                {
+                    TabControlVM.ActiveTab = tab;
+                    return;
+                }
+            }
+            AddTab(contentManager);
+        }
         public DiagramManager CreateDiagramManager()
         {
             var diagramManager = new DiagramManager();
@@ -179,7 +194,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             if (ActiveProject != null)
             {
                 ActiveProject.SaveOldProject();
-                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.getName()); ////////////////////////////////
+                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name); ////////////////////////////////
             }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Файлы json|*.json";
@@ -188,7 +203,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 ActiveProject = Loader.InitProjectByPath(openFileDialog.FileName);
                 if (ActiveProject != null)
-                    System.Windows.MessageBox.Show("Открылся " + ActiveProject.getName());////////////////////////////////
+                    System.Windows.MessageBox.Show("Открылся " + ActiveProject.Name);////////////////////////////////
 
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
@@ -203,7 +218,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             if (ActiveProject != null)
             {
                 ActiveProject.SaveOldProject();
-                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.getName());////////////////////////////////
+                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name);////////////////////////////////
             }
             CreateProject proj = new CreateProject();
             var window = proj as Window;
@@ -215,7 +230,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 //System.Windows.MessageBox.Show("Открылсяzzzzzzzzzzzzz " + proj.ViewModel.FileName);
                 ActiveProject = Loader.InitProjectByPath(proj.ViewModel.FileName);
                 if (ActiveProject != null)
-                    System.Windows.MessageBox.Show("Открылся " + ActiveProject.getName());////////////////////////////////
+                    System.Windows.MessageBox.Show("Открылся " + ActiveProject.Name);////////////////////////////////
 
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
@@ -231,7 +246,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             if (ActiveProject != null)
             {
                 ActiveProject.SaveOldProject();
-                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.getName());////////////////////////////////
+                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name);////////////////////////////////
             }
 
         }

@@ -77,7 +77,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             Project project = new Project(_nameFile, _pathToImage == "" ? "": (_pathToImage + "\\" + _nameFile));
                 project.SaveNewProject();
-                FileName = project.getPath() + "\\" + project.getName() + ".json";
+                FileName = project.getPath() + "\\" + project.Name + ".json";
             this.DialogResult = true;
 
         }
