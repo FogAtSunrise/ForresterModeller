@@ -53,7 +53,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             ActiveProject = project;
             TabControlVM.PropertyChanged += ActiveTabChanged;
             CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => AddTab(CreateDiagramManager()));
-            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager { Name = "Диаграмма12" }));
+            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager(ActiveProject){ Name = "Диаграмма12" }));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<Unit>(o => ExecuteModelling());
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
@@ -92,7 +92,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         public DiagramManager CreateDiagramManager()
         {
-            var diagramManager = new DiagramManager();
+            var diagramManager = new DiagramManager(ActiveProject);
             diagramManager.Name = "диаграмма 2123у1";
             ActiveProject.AddDiagram(diagramManager);
             return diagramManager;

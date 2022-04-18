@@ -15,6 +15,7 @@ using System.Windows.Media;
 using DynamicData;
 using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Windows.ViewModels;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
@@ -24,8 +25,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class DiagramManager : WorkAreaManager
     {
-        public DiagramManager() { }
-        public DiagramManager(string name)
+
+        private Project _project;
+
+        public DiagramManager(Project project) { _project = project; }
+        public DiagramManager(string name, Project project):this(project)
         {
             Name = name;
         }
@@ -69,6 +73,10 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                     case "LevelNodeModel":
                         newNode = new LevelNodeModel();
                         break;
+                    case "LinkNodeModel":
+                        newNode = new LinkNodeModel(_project);
+                        break;
+
                 }
 
                 newNode.FromJSON(node.AsObject());
@@ -81,6 +89,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public JsonObject DiagramToJson()
         {
+            UpdateNodes();
             JsonArray nodesJson = new();
             
             foreach (var node in GetAllNodes) {
@@ -99,7 +108,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             return json;
         }
 
-        private void UpdateNodes()
+        public void UpdateNodes()
         {
             GetAllNodes = Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
         }
@@ -150,7 +159,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         {
             _contentView = new NetworkView() { Background = Brushes.AliceBlue };
             _contentView.NodeAddedEvent += (sender, args) => UpdateNodes();
-            var network = new NetworkViewModel();
+            var network = new ForesterNetworkViewModel();
             network.NodeDeletedEvent += (list) =>
             {
                 foreach (var node in list)

@@ -22,9 +22,11 @@ namespace ForresterModeller.src.Nodes.Models
     {
         public static string type = "LinkNodeModel";
         private Project _diagrams;
+
+        private bool _isConnected = false;
+
         public string Salt => Id;
         public ForesterNetworkViewModel Modegel => (ForesterNetworkViewModel)_diagrams.Diagrams.FirstOrDefault(a => a.Name == this.Name).Content.ViewModel;
-                
         public override string TypeName => Resource.linkDiagramm;
         public LinkNodeModel(Project diagram, string name) : base()
         {
@@ -39,13 +41,17 @@ namespace ForresterModeller.src.Nodes.Models
                }
            };
 
-
             Modegel.PropertyChanged += (sender, e) => {
                 if (e.PropertyName == "LatestValidation") RefreshInput(); };
 
-
             RefreshInput();
         }
+        
+        public LinkNodeModel(Project diagram)
+        {
+            _diagrams = diagram;
+        }
+
         static LinkNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<LinkNodeModel>));
@@ -115,9 +121,6 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
-            FullName = obj!["FullName"]!.GetValue<string>();
-            Description = obj!["Description"]!.GetValue<string>();
-            RefreshInput();
             Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
             var conList = obj!["Conects"].AsArray();
 
@@ -137,6 +140,33 @@ namespace ForresterModeller.src.Nodes.Models
         {
             return viseter.VisitLink(this);
         }
+
+        public void AutoConectionLinks()
+        {
+            if (!_isConnected)
+            {
+                try
+                {
+                    foreach (var node in Modegel.Nodes.Items)
+                    {
+                        if (node is LinkNodeModel)
+                        {
+                            ((LinkNodeModel)node).AutoConectionLinks();
+                        }
+                    }
+
+                    this._isConnected = true;
+                    RefreshInput();
+                    AutoConection((ForesterNetworkViewModel)this.Parent);
+                    ((ForesterNetworkViewModel)this.Parent).AutoConect();
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
     }
 
 

@@ -25,9 +25,9 @@ namespace ForresterModeller.Windows.Views
         {
             InitializeComponent();
             Project a = new Project{Name = "naaame of proj"};
-            a.Diagrams.Add(new DiagramManager("1"));
-            a.Diagrams.Add(new DiagramManager("12"));
-            a.Diagrams.Add(new DiagramManager("123"));
+            a.Diagrams.Add(new DiagramManager("1", a));
+            a.Diagrams.Add(new DiagramManager("12", a));
+            a.Diagrams.Add(new DiagramManager("123", a));
             DataContext = new MainWindowViewModel(a);
             //OpenPageInFrame(ToolsFrame, new DiagramTools());
             //тест вывода формулы

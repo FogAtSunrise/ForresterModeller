@@ -80,7 +80,7 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue);
+                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.First().Output).OutputValue);
                 }
             }
 
