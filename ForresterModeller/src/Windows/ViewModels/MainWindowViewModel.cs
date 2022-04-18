@@ -27,7 +27,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public DiagramTools DiagramToolsWM { get; set; } = new();
         public ContentControl ToolContent { get; set; } = new();
         public static Project ProjectInstance;
-        private  Project _activeProject;
+        private Project _activeProject;
         public Project ActiveProject
         {
             get => _activeProject;
@@ -150,16 +150,9 @@ namespace ForresterModeller.src.Windows.ViewModels
             }
             else
             {
-
-             
-                var math = new MatViewManager { Name = "MathView_For_" + TabControlVM.ActiveTab.Header };
-               var manager= ((DiagramManager)TabControlVM.ActiveTab.WAManager).GetAllNodes;
-
-                foreach (var mod in manager)
-                { 
-                math.Models.Add(new MathViewModel(mod));
-                   } 
-            math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
+                var diagr = (DiagramManager)TabControlVM.ActiveTab.WAManager;
+                var math = new MatViewManager(diagr); 
+                math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
                 AddTab(math);
 
             }
