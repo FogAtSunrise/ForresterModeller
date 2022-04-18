@@ -10,6 +10,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     class MatViewManager : WorkAreaManager
     {
+        public ObservableCollection<MathViewModel> Models { get; set; } = new();
         public override ContentControl Content => GenerateActualView();
         public DiagramManager Diagram { get; set; }
 
@@ -22,6 +23,12 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 if (args.PropertyName == nameof(DiagramManager.Name))
                     Name = "Матпредставление для " + Diagram.Name;
             };
+
+            var mod = dmanager.GetAllNodes;
+            foreach (var mod1 in mod)
+            {
+                Models.Add(new MathViewModel(mod1));
+            }
         }
 
         public override string TypeName => "Математическое представление";
@@ -45,14 +52,19 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 OnPropertySelected(_activeItem);
             }
         }
-
         public MathView GenerateActualView()
         {
             MathView m = new MathView();
             m.DataContext = this;
             return m;
         }
-
+      /*  public MathView GenerateActualView()
+        {
+            MathView m = new MathView();
+            m.DataContext = this;
+            return m;
+        }
+      */
         //свойства самого матпредставления
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
