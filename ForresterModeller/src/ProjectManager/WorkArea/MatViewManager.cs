@@ -10,42 +10,34 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     class MatViewManager : WorkAreaManager
     {
-        public ObservableCollection<MathViewModel> Models { get; set; } = new();
         public override ContentControl Content => GenerateActualView();
+        public DiagramManager Diagram { get; set; }
 
-        public MatViewManager()
-        { 
-          //  Models = new ObservableCollection<MathViewModel> { new MathViewModel(new FunkNodeModel("fuunc", "ddd", "d")), new MathViewModel(new ConstantNodeViewModel("conssst", "safdsfd", 23)) }; 
+        public MatViewManager(DiagramManager dmanager)
+        {
+            Diagram = dmanager;
+            Name = "MathView_For_" + dmanager.Name;
         }
 
         public override string TypeName => "Математическое представление";
 
+
         //ViewModel модели, свойства которой отображаются 
         //Биндится как SelectedItem во вью
-        private MathViewModel _activeItem;
-        public MathViewModel Active
-        {
-            get => _activeItem;
-            set
-            {
-                _activeItem = value;
-                ActiveOwnerItem = Active.NodeForMod;
-                
-            }
-        }
+        private IPropertyOwner _activeItem;
+       
         //Сама модель, владеющая проперти
-        private IPropertyOwner _currectProperty;
         public override IPropertyOwner ActiveOwnerItem
         {
             get
             {
-                if (_activeItem == null || _activeItem.NodeForMod == null) return this;
-                return _activeItem.NodeForMod;
+                if (_activeItem == null || _activeItem == null) return this;
+                return _activeItem;
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref _currectProperty, value);
-                OnPropertySelected(_currectProperty);
+                this.RaiseAndSetIfChanged(ref _activeItem, value);
+                OnPropertySelected(_activeItem);
             }
         }
 
