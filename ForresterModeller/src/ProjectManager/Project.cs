@@ -175,15 +175,16 @@ namespace ForresterModeller.src.ProjectManager
         /// <returns></returns>
         public ForesterNodeModel getModelById(string id)
         {
+           
+
             foreach (var diag in Diagrams)
             {
-                if (diag.GetAllNodes.Any())
-                {
-                    var node = diag.GetAllNodes.First(x => x.Id == id);
-                    if (node != null)
-                        return node;
-                }
+                var node = diag.GetAllNodes.FirstOrDefault(x => x.Id == id);
+                if (node != null)
+                    return node;
             }
+
+
 
             return null;
         }
