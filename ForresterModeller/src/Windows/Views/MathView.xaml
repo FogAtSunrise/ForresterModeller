@@ -29,13 +29,13 @@
                         </Grid.RowDefinitions>
          
                         <Border Grid.Row="0"   BorderBrush="DimGray" BorderThickness="1">
-                            <TextBlock Margin="5,0" FontSize="20"  FontWeight="Bold" Text="{Binding NodeForMod.FullName}"  MaxWidth="200" TextWrapping="Wrap" />
+                            <TextBlock Margin="5,0" FontSize="20"  FontWeight="Bold" Text="{Binding NodeForMod.TypeName}"  MaxWidth="200" TextWrapping="Wrap" />
                         </Border>
 
 
                         <TextBlock Grid.Row="1"   Text="Описание: "  FontWeight="Bold" />
 
-                        <TextBlock  Grid.Row="2" Text="{Binding NodeForMod.Description}"    />
+                        <TextBlock  Grid.Row="2" Text="{Binding NodeForMod.TypeName}"    />
 
                         <Grid Row="3"  >
 
