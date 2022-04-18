@@ -113,6 +113,7 @@ namespace ForresterModeller.src.Nodes.Models
 
             _inputRate = new NodeInputViewModel();
             _inputRate.PortPosition = PortPosition.Left;
+            _inputRate.Name = "INP";
             Inputs.Add(_inputRate);
         }
         public DelayNodeModel() : this("LЕV", "Запаздывание", "1", "OUT", 1, "DEL", 1, "0") {}
