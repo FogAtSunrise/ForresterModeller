@@ -34,6 +34,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public override string TypeName => "Математическое представление";
 
 
+        public MathViewModel ActiveView
+        {
+            set => ActiveOwnerItem = value.NodeForMod;
+        }
+
         //ViewModel модели, свойства которой отображаются 
         //Биндится как SelectedItem во вью
         private IPropertyOwner _activeItem;
