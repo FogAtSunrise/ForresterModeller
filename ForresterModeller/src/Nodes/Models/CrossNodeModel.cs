@@ -46,6 +46,9 @@ namespace ForresterModeller.src.Nodes.Models
             Outputs.Add(outp);
         }
 
+
+     
+
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();

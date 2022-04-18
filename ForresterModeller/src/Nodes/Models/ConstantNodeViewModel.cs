@@ -26,8 +26,16 @@ namespace ForresterModeller.src.Nodes.Models
         /// <summary>
         /// Значение текщей констнты
         /// </summary>
-        public double Value { get; set; }
-        
+        private double _value;
+        public double Value
+        {
+            get => _value;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _value, value);
+            }
+        }
+
         public ConstantNodeViewModel(string name, string fulname, float value) : base()
         {
             this.Name = name;
