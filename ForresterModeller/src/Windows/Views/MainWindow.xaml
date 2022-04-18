@@ -152,7 +152,18 @@
                         </TabItem.Header>
 
                         <Grid>
-                            <TreeView ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{Binding ActiveProject.Name}" FontWeight="Bold">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Command="" MouseAction="LeftClick" />
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                            
+                                <TreeView BorderThickness="0" Grid.Row="1" ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
                                 <TreeView.Resources>
                                         <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" >
                                             <TextBlock Text="{Binding Name }" />
