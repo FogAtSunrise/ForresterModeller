@@ -54,35 +54,23 @@ namespace ForresterModeller.src.Nodes.Models
             Inputs.Add(_inputRate);
         }
 
-
-
-        private ObservableCollection<DataForViewModels> _getMathView;
-      
-
- public ObservableCollection<DataForViewModels> GetMathView
-{
-            get
+        public override ObservableCollection<DataForViewModels> GetMathView()
+        {
+            var dats = base.GetMathView();
+            foreach (var inputs in Inputs.Items)
             {
-                _getMathView = base.GetMathView();
-                foreach (var inputs in Inputs.Items)
+                if (inputs.Connections.Items.Any())
                 {
-                    if (inputs.Connections.Items.Count() > 0)
-
-                    {
-                        //todo проверить на пустой список
-                        String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
-                        ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                        _getMathView.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
-
-                    }
+                    //todo проверить на пустой список
+                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output)
+                        .OutputValue;
+                    ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
+                    dats.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
                 }
-                return _getMathView;
             }
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _getMathView, value);
-            }
+            return dats;
         }
+
         public LevelNodeModel() : this("LVL", "Уровень", "Поток", "0") { }
         static LevelNodeModel()
         {
