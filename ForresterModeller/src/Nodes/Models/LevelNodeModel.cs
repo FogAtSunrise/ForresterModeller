@@ -65,10 +65,7 @@ namespace ForresterModeller.src.Nodes.Models
                     //todo проверить на пустой список
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                   // MessageBox.Show(nod.Name + " aaaaaaaa");
                     data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
-
-                    data.Add(new DataForViewModels(inputs.Name, value, false));
 
                 }
             }
