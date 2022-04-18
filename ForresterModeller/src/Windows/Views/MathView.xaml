@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
            >
     <Grid Background="AliceBlue">
-        <ListBox ItemsSource="{Binding Path=Diagram.GetAllNodes}" SelectedItem="{Binding Active, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" >
+        <ListBox ItemsSource="{Binding Path=Diagram.GetAllNodes}" SelectedItem="{Binding ActiveOwnerItem, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Grid.IsSharedSizeScope="True"/>

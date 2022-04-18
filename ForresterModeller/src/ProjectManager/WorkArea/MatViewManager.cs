@@ -16,7 +16,12 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public MatViewManager(DiagramManager dmanager)
         {
             Diagram = dmanager;
-            Name = "MathView_For_" + dmanager.Name;
+            Name = "Матпредставление для " + Diagram.Name;
+            dmanager.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(DiagramManager.Name))
+                    Name = "Матпредставление для " + Diagram.Name;
+            };
         }
 
         public override string TypeName => "Математическое представление";
