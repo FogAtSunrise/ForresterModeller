@@ -342,7 +342,6 @@ namespace NodeNetwork.Views
                     .DisposeWith(d);
             });
         }
-
         private void SetupDragAndDrop()
         {
             this.WhenActivated(d =>
@@ -383,6 +382,7 @@ namespace NodeNetwork.Views
                         this.ViewModel.PendingNode = null;
                         newNodeVm.Position = e.GetPosition(contentContainer);
                         this.ViewModel.Nodes.Add(newNodeVm);
+                        NodeAddedEvent?.Invoke(this, newNodeVm);
                     }
                 }).DisposeWith(d);
 
@@ -577,5 +577,9 @@ namespace NodeNetwork.Views
 
             this.dragCanvas?.SetViewport(bounding);
         }
+        public delegate void ViewModeAddedEventHandler(object sender, NodeViewModel args);
+        public event ViewModeAddedEventHandler NodeAddedEvent;
+
+
     }
 }

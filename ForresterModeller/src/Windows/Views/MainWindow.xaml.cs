@@ -57,7 +57,9 @@ namespace ForresterModeller.Windows.Views
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            ((MainWindowViewModel)DataContext).OpenOrCreateTab((WorkAreaManager)((TreeView)sender).SelectedItem);
+            var item = ((TreeView)sender).SelectedItem;
+            if (item is WorkAreaManager)
+              ((MainWindowViewModel)DataContext).OpenOrCreateTab((WorkAreaManager)item);
         }
     }
 }
