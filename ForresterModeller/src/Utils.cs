@@ -10,6 +10,7 @@ namespace ForresterModeller.src
     {
         public static double GetDouble(string str)
         {
+           
             double digit = 1.0;
             try
             {

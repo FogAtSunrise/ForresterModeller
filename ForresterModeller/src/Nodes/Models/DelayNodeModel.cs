@@ -32,14 +32,32 @@ namespace ForresterModeller.src.Nodes.Models
         public double DelayValue { get; set;}
 
         public string StartValue { get; set; }
+
+        private ForesterNodeOutputViewModel _levl;
+
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();
+            prop.RemoveAt(0);
+
+            prop.Insert(0, new PropertyViewModel(Resource.name, Name, (String str) => {
+                Name = str;
+                _levl.Name = str;
+            }));
+
+
             prop.Add(new PropertyViewModel("Имя исходящего потока", OutputRateName, (String str) =>
             {
                 OutputRateName = str;
                 _outNode.Name = str;
             }));
+
+            prop.Add(new PropertyViewModel("Имя велечены запаздывания", DelayValueName, (String str) =>
+            {
+                DelayValueName = str;
+                _constNode.Name = str;
+            }));
+            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str));
             prop.Add(new PropertyViewModel("Глубина запаздывания", DeepDelay.ToString(), (String str) =>
             {
                 try
@@ -71,10 +89,10 @@ namespace ForresterModeller.src.Nodes.Models
             this.DelayValue = delayValue;
             this.StartValue = startValue;
 
-            var a = new ForesterNodeOutputViewModel();
-            a.PortPosition = PortPosition.Right;
-            a.Name = this.Name;
-            this.Outputs.Add(a);
+            _levl = new ForesterNodeOutputViewModel();
+            _levl.PortPosition = PortPosition.Right;
+            _levl.Name = this.Name;
+            this.Outputs.Add(_levl);
 
             _constNode = new ForesterNodeOutputViewModel();
             _constNode.PortPosition = PortPosition.Right;
@@ -137,11 +155,14 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            _levl.Name = Name;
             FullName = obj!["FullName"]!.GetValue<string>();
             InputRate = obj!["InputRate"]!.GetValue<string>();
             OutputRateName = obj!["OutputRateName"]!.GetValue<string>();
+            _outNode.Name = OutputRateName;
             DeepDelay = obj!["DeepDelay"]!.GetValue<int>();
             DelayValueName = obj!["DelayValueName"]!.GetValue<string>();
+            _constNode.Name = DelayValueName;
             DelayValue = obj!["DelayValue"]!.GetValue<float>();
             StartValue = obj!["StartValue"]!.GetValue<string>();
             Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
@@ -152,11 +173,11 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (con is null)
                 {
-                    _dump_conections.Add(null);
+                    DumpConections.Add(null);
                 }
                 else
                 {
-                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
                 }
             }
 

@@ -18,8 +18,11 @@ namespace ForresterModeller.src.Nodes.Models
     public class FunkNodeModel : ForesterNodeModel
     {
         public static string type = "FunkNodeModel";
+        private ForesterNodeOutputViewModel _out;
 
         public override string TypeName => Resource.funcType;
+
+
 
         public string Funk { get; set; }
         public FunkNodeModel(string name, string fulname, string funk) : base()
@@ -27,10 +30,10 @@ namespace ForresterModeller.src.Nodes.Models
             this.Name = name;
             this.Funk = funk;
             this.FullName = fulname;
-            var a = new ForesterNodeOutputViewModel();
-            a.PortPosition = PortPosition.Right;
-            a.Name = Name;
-            this.Outputs.Add(a);
+            _out = new ForesterNodeOutputViewModel();
+            _out.PortPosition = PortPosition.Right;
+            _out.Name = name;
+            this.Outputs.Add(_out);
 
             RefreshInput();
         }
@@ -118,6 +121,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            _out.Name = obj!["Name"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
@@ -129,11 +133,11 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (con is null)
                 {
-                    _dump_conections.Add(null);
+                    DumpConections.Add(null);
                 }
                 else
                 {
-                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
                 }
             }
         }

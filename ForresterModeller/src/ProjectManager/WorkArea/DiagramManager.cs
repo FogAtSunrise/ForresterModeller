@@ -17,6 +17,7 @@ using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Windows.ViewModels;
+using NodeNetwork.Toolkit.Layout.ForceDirected;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using ReactiveUI;

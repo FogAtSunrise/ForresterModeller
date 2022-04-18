@@ -95,12 +95,16 @@ namespace ForesterNodeCore
         {
             var args = aq.Split(
                 '(', ')', '+', '-', '/', '*', ' ', '.', ',',
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>', '=', '<', '!'
                 ).ToList();
             args = args.Distinct().ToList();
             args.Remove("sin");
             args.Remove("");
             args.Remove("cos");
+            args.Remove("Piecewise");
+            args.Remove("True");
+            args.Remove("False");
+            args.Remove("t");
             return args.ToArray();
 
         }

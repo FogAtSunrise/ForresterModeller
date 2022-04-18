@@ -28,7 +28,7 @@ namespace ForresterModeller.src.Nodes.Models
     {
         private string _description;
         private string _full_name;
-        protected List<ConectionModel> _dump_conections = new();
+        public List<ConectionModel> DumpConections { get; set; } = new();
 
 
         public string Description
@@ -82,15 +82,18 @@ namespace ForresterModeller.src.Nodes.Models
 
         }
         public virtual void AutoConection(ForesterNetworkViewModel model) {
-            foreach (var nw in Inputs.Items.Zip(_dump_conections, (n, w) => new { node = n, conections = w }))
+            foreach (var nw in Inputs.Items.Zip(DumpConections, (n, w) => new { node = n, conections = w }))
             {
-                if (nw.conections is not null)
+                if (nw.conections is not null )
                 {
-                    model.Connections.Add(
-                        new ConnectionViewModel(model,
-                            nw.node,
-                            model[nw.conections.SourceId].Outputs.Items.FirstOrDefault(a => a.Name == nw.conections.PointName)
-                        ));
+                    if (model[nw.conections.SourceId] is not LinkNodeModel)
+                    {
+                        model.Connections.Add(
+                            new ConnectionViewModel(model,
+                                nw.node,
+                                model[nw.conections.SourceId].Outputs.Items.FirstOrDefault(a => a.Name == nw.conections.PointName)
+                            ));
+                    }
                 }
             }
         }

@@ -99,11 +99,11 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (con is null)
                 {
-                    _dump_conections.Add(null);
+                    DumpConections.Add(null);
                 }
                 else
                 {
-                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
                 }
             }
         }

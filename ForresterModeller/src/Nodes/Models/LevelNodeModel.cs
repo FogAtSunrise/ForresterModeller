@@ -9,6 +9,7 @@ using System.Text.Json.Nodes;
 using System.Windows;
 using System.Linq;
 using System.Collections.Generic;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -107,13 +108,21 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (con is null)
                 {
-                    _dump_conections.Add(null);
+                    DumpConections.Add(null);
                 }
                 else
                 {
-                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())   ); ;
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())   ); ;
                 }
             }
+        }
+
+        public override ObservableCollection<PropertyViewModel> GetProperties()
+        {
+            var prop = base.GetProperties();
+
+            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str));
+            return prop;
         }
 
 

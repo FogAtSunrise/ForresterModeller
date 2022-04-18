@@ -128,11 +128,11 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (con is null)
                 {
-                    _dump_conections.Add(null);
+                    DumpConections.Add(null);
                 }
                 else
                 {
-                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
                 }
             }
         }
@@ -158,7 +158,23 @@ namespace ForresterModeller.src.Nodes.Models
                     this._isConnected = true;
                     RefreshInput();
                     AutoConection((ForesterNetworkViewModel)this.Parent);
-                    ((ForesterNetworkViewModel)this.Parent).AutoConect();
+                    foreach(var node in Parent.Nodes.Items)
+                    {
+                        foreach (var nw in node.Inputs.Items.Zip(((ForesterNodeModel)node).DumpConections, (n, w) => new { node = n, conections = w }))
+                        {
+                            if (nw.conections is not null)
+                            {
+                                if (((ForesterNetworkViewModel)Parent)[nw.conections.SourceId] == this)
+                                {
+                                    Parent.Connections.Add(
+                                        new ConnectionViewModel(Parent,
+                                            nw.node,
+                                            ((ForesterNetworkViewModel)Parent)[nw.conections.SourceId].Outputs.Items.FirstOrDefault(a => a.Name == nw.conections.PointName)
+                                        ));
+                                }
+                            }
+                        }
+                    }
                 }
                 catch
                 {
