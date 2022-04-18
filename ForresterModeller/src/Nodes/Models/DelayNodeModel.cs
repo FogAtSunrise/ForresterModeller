@@ -8,6 +8,7 @@ using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Linq;
+using System.Windows;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -112,13 +113,15 @@ namespace ForresterModeller.src.Nodes.Models
                 ["DeepDelay"] =  DeepDelay,
                 ["DelayValueName"] = DelayValueName == null ? "" : DelayValueName,
                 ["DelayValue"] = DelayValue,
-                ["StartValue"] = StartValue == null ? "" : StartValue
+                ["StartValue"] = StartValue == null ? "" : StartValue,
+                ["PositionX"] = Position.X,
+                ["PositionY"] = Position.Y
             };
 
             JsonArray con = new();
             if (_inputRate.Connections.Items.Any())
             {
-                con.Add(new ConectionModel(_inputRate).ToJSON());
+                con.Add(new ConectionModel(_inputRate));
             }
             else
             {
@@ -141,6 +144,21 @@ namespace ForresterModeller.src.Nodes.Models
             DelayValueName = obj!["DelayValueName"]!.GetValue<string>();
             DelayValue = obj!["DelayValue"]!.GetValue<float>();
             StartValue = obj!["StartValue"]!.GetValue<string>();
+            Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
+
+            var conList = obj!["Conects"].AsArray();
+
+            foreach (var con in conList)
+            {
+                if (con is null)
+                {
+                    _dump_conections.Add(null);
+                }
+                else
+                {
+                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                }
+            }
 
         }
 

@@ -32,6 +32,18 @@
                 <nodelist:NodeListView Grid.Column="0" x:Name="equasionNodeList" Margin="10,10,10,10"  VerticalAlignment="top" ShowSearch="False" ShowTitle="False" ShowDisplayModeSelector="False"/>
 
             </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3"><Run Text="Диаграммы"/></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <nodelist:NodeListView Grid.Column="0" x:Name="DiagranmNodeList" Margin="10,10,10,10"  VerticalAlignment="top" ShowSearch="False" ShowTitle="False" ShowDisplayModeSelector="False"/>
+
+            </TabItem>
+
         </TabControl>
 
     </Grid>

@@ -8,6 +8,7 @@ using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using System.Windows;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -76,7 +77,7 @@ namespace ForresterModeller.src.Nodes.Models
 
             JsonArray con = new();
             if (_inputRate.Connections.Items.Any()) {
-                con.Add(new ConectionModel(_inputRate).ToJSON());
+                con.Add(new ConectionModel(_inputRate));
             }
             else
             {
@@ -100,6 +101,19 @@ namespace ForresterModeller.src.Nodes.Models
             Description = obj!["Description"]!.GetValue<string>();
             StartValue = obj!["StartValue"]!.GetValue<string>();
             Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
+            var conList = obj!["Conects"].AsArray();
+
+            foreach (var con in conList)
+            {
+                if (con is null)
+                {
+                    _dump_conections.Add(null);
+                }
+                else
+                {
+                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())   ); ;
+                }
+            }
         }
 
 

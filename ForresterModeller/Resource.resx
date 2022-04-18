@@ -138,6 +138,9 @@
   <data name="levelType" xml:space="preserve">
     <value>Уровень</value>
   </data>
+  <data name="linkDiagramm" xml:space="preserve">
+    <value>Сторонняядиаграмма</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Обозначение</value>
   </data>

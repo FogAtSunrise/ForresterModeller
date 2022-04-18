@@ -34,6 +34,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.Value = value;
             this.FullName = fulname;
             var a = new ForesterNodeOutputViewModel();
+            a.Name = Name;
             a.PortPosition = PortPosition.Centr;
             this.Outputs.Add(a);
         }

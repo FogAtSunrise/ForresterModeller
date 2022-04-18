@@ -24,7 +24,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
         public PlotterTools PlotterToolsMW { get; set; } = new();
-        public DiagramTools DiagramToolsWM { get; set; } = new();
+        public DiagramTools DiagramToolsWM { get; set; }
         public ContentControl ToolContent { get; set; } = new();
         private Project _activeProject;
         public Project ActiveProject { get => _activeProject;
@@ -45,7 +45,6 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
-
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
 
         #endregion
@@ -61,7 +60,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
-
+            DiagramToolsWM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
         }
 
@@ -157,7 +156,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             List<NodeIdentificator> ids = new();
             foreach (var nod in network.Nodes.Items)
             {
-                if (nod is not CrossNodeModel)
+                if (nod is not CrossNodeModel && nod is not LinkNodeModel)
                     ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
             }
             var c = ForesterNodeCore.Program.GetCurve(text,

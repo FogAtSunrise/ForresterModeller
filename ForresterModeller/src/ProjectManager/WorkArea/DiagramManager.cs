@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Media;
 using DynamicData;
@@ -25,8 +26,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     public class DiagramManager : WorkAreaManager
     {
         public DiagramManager() { }
- 
-
         public DiagramManager(string name)
         {
             Name = name;
@@ -73,9 +72,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 }
 
                 newNode.FromJSON(node.AsObject());
-
+                newNode.PropertyChanged += NodeOnPropertyChanged;
                 this.Content.ViewModel.Nodes.Add(newNode);
             }
+
+            ((ForesterNetworkViewModel)this.Content.ViewModel).AutoConect();
         }
 
         public JsonObject DiagramToJson()
@@ -154,6 +155,20 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             this._contentView.Drop += (o, e) => {
                 AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM")); 
             };
+
+            this._contentView.Drop += (o, e) => {
+                ForesterNodeModel node = (ForesterNodeModel)e.Data.GetData("nodeVM");
+
+                if (node is LinkNodeModel  )
+                {
+                    if (((LinkNodeModel)node).Modegel == ((NetworkView)o).ViewModel)
+                    {
+                        e.Handled = true;
+                    }
+                }
+            };
+
+
             _contentView.ViewModel = network;
             return _contentView;
         }

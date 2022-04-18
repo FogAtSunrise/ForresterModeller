@@ -28,7 +28,7 @@ namespace ForresterModeller.src.Nodes.Models
     {
         private string _description;
         private string _full_name;
-        protected List<ConectionModel> _dump_conections;
+        protected List<ConectionModel> _dump_conections = new();
 
 
         public string Description
@@ -94,5 +94,6 @@ namespace ForresterModeller.src.Nodes.Models
                 }
             }
         }
+
     }
 }

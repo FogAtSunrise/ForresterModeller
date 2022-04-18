@@ -10,6 +10,8 @@ using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using System.Linq;
 using ForresterModeller.src.Windows.ViewModels;
+using System.Windows;
+using System.Reactive.Linq;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -27,6 +29,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.FullName = fulname;
             var a = new ForesterNodeOutputViewModel();
             a.PortPosition = PortPosition.Right;
+            a.Name = Name;
             this.Outputs.Add(a);
 
             RefreshInput();
@@ -39,6 +42,14 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
+            properties.RemoveAt(0);
+
+            properties.Insert(0,new PropertyViewModel(Resource.name, Name, (String str) => {
+                Name = str;
+                Outputs.Items.First().Name = str;
+            }));
+
+
             properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; RefreshInput(); }));
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
@@ -80,7 +91,9 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Name"] = Name == null ? "" :Name,            
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
-                ["Description"] = Description == null ? "" : Description
+                ["Description"] = Description == null ? "" : Description,
+                ["PositionX"] = Position.X,
+                ["PositionY"] = Position.Y
             };
 
             JsonArray con = new();
@@ -90,7 +103,7 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (inputs.Connections.Items.Any())
                 {
-                    con.Add(new ConectionModel(inputs).ToJSON());
+                    con.Add(new ConectionModel(inputs));
                 }
                 else
                 {
@@ -108,13 +121,29 @@ namespace ForresterModeller.src.Nodes.Models
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-    
+            RefreshInput();
+            Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
+            var conList = obj!["Conects"].AsArray();
+
+            foreach (var con in conList)
+            {
+                if (con is null)
+                {
+                    _dump_conections.Add(null);
+                }
+                else
+                {
+                    _dump_conections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                }
+            }
         }
 
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
             return viseter.VisitFunc(this);
         }
+
+
     }
 }
     

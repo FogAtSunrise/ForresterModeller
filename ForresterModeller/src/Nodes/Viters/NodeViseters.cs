@@ -14,7 +14,7 @@ namespace ForresterModeller.src.Nodes.Viters
         public T VisitChoose(ChouseNodeModel node);
         public T VisitCross(CrossNodeModel node);
         public T VisitDelay(DelayNodeModel node);
-
+        T VisitLink(LinkNodeModel linkNodeModel);
     }
 
 }

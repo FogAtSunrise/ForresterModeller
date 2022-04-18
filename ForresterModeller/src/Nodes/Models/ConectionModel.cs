@@ -22,25 +22,6 @@ namespace ForresterModeller.src.Nodes.Models
             PointName = outs.Name;
         }
 
-        public JsonObject ToJSON()
-        {
-            JsonObject obj = new JsonObject()
-            {
-                ["Id"] = SourceId,
-                ["Point"] = PointName,
-            };
-
-            return obj;
-        }
-
-
-
-        public void FromJSON(JsonObject obj)
-        {
-            SourceId = obj!["Id"]!.GetValue<string>();
-            PointName = obj!["Point"]!.GetValue<string>();
-        }
-
     }
 
 }
