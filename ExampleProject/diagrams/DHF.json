@@ -294,11 +294,13 @@
       "Type": "ChouseNodeModel",
       "Name": "RRR",
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
-      "Funk": "1000",
+      "Funk": "RRR",
       "Description": "",
       "PositionX": -655.4028239814238,
       "PositionY": 807.9929163808438,
-      "Conects": []
+      "Conects": [
+        null
+      ]
     },
     {
       "Id": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1735939235",
@@ -345,7 +347,7 @@
       "Type": "ConstantNodeViewModel",
       "Name": "DT",
       "FullName": "DT",
-      "Value": 0.1,
+      "Value": 0.10000000149011612,
       "Description": "",
       "PositionX": 1091.7804035582778,
       "PositionY": 1522.1839231844135

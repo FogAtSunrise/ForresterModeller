@@ -88,7 +88,7 @@ namespace ForesterNodeCore.NodeEngine
                     this[nodeParam[1]] = new Constant(double.Parse(nodeParam[2], CultureInfo.InvariantCulture));
                     break;
                 case (char)NodeLiterType.Level:
-                    this[nodeParam[1]] = new Level(double.Parse(nodeParam[2]), nodeParam[3], nodeParam[4]);
+                    this[nodeParam[1]] = new Level(double.Parse(nodeParam[2], CultureInfo.InvariantCulture), nodeParam[3], nodeParam[4]);
                     break;
                 case (char)NodeLiterType.Halt:
                     this[nodeParam[1]] = new Halt(nodeParam[2]);

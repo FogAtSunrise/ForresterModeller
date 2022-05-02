@@ -16,25 +16,33 @@ namespace ForresterModeller.src.Nodes.Viters
             preInEquals = preInEquals.Replace(" ", "");
             preStart = preStart.Replace(" ", "");
 
-            //TODO prestat find
+            foreach (var inputs in node.Inputs.Items)
+            {
+                if (inputs.Connections.Items.Count() == 0)
+                {
+                    inputs.Port.IsInErrorMode = true;
+                }
+                else
+                {
+                    preInEquals = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + "_" + Salt;
+                }
+            }
 
             string translatedNode = String.Format("d {0} {1} {2} {3} {4} {5}|",
-                node.GetCoreCode() + Salt,
-                node.OutputRateName + Salt,
+                node.GetCoreCode() + "_" + Salt,
+                node.GetCoreCode() + '_' + node.OutputRateName + "_" + Salt,
                 node.DeepDelay.ToString(),
-                node.DelayValueName + Salt,
+                node.GetCoreCode() + '_' + node.DelayValueName + "_" + Salt,
                 preInEquals,
                 preStart
                 );
 
-
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            translatedNode += String.Format("c {0} {1}|", node.DelayValueName + Salt, node.DelayValue.ToString());
+            translatedNode += String.Format("c {0} {1}|", node.GetCoreCode() + '_' + node.DelayValueName + "_" + Salt, node.DelayValue.ToString());
             System.Threading.Thread.CurrentThread.CurrentCulture = save_localization;
             return translatedNode;
         }
-
 
         public override string VisitChoose(ChouseNodeModel node)
         {
@@ -44,16 +52,15 @@ namespace ForresterModeller.src.Nodes.Viters
             {
                 if (inputs.Connections.Items.Any())
                 {
-                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + Salt);
+                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + '_' + Salt);
                 }
             }
 
             preEquals = preEquals.Replace(" ", "");
 
-            string translatedNode = String.Format("f {0} {1}|", node.GetCoreCode() + Salt, preEquals);
+            string translatedNode = String.Format("f {0} {1}|", node.GetCoreCode() + "_" + Salt,  preEquals);
             return translatedNode;
         }
-
 
         public override string VisitFunc(FunkNodeModel node)
         {
@@ -68,11 +75,11 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + Salt);
+                    preEquals = preEquals.Replace(inputs.Name, ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + '_' + Salt);
                 }
             }
 
-            string translatedNode = String.Format("h {0} {1}|", node.GetCoreCode() + Salt, preEquals);
+            string translatedNode = String.Format("h {0} {1}|", node.GetCoreCode() + "_" + Salt, preEquals);
             return translatedNode;
         }
 
@@ -82,11 +89,9 @@ namespace ForresterModeller.src.Nodes.Viters
             var preOutEquals = node.OutputRate;
             var preStart = node.StartValue;
 
-
             preInEquals = preInEquals.Replace(" ", "");
             preOutEquals = preOutEquals.Replace(" ", "");
             preStart = preStart.Replace(" ", "");
-
 
             foreach (var inputs in node.Inputs.Items)
             {
@@ -96,11 +101,11 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
                 else
                 {
-                    preInEquals = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + Salt;
+                    preInEquals = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue + "_" + Salt;
                 }
             }
 
-            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode() + Salt, preStart, preInEquals + Salt, preOutEquals + Salt);
+            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode() + "_" + Salt, preStart, preInEquals, preOutEquals + "_" + Salt);
             return translatedNode;
         }
 
@@ -109,7 +114,7 @@ namespace ForresterModeller.src.Nodes.Viters
             var resut = "";
 
             var saveId= linkNodeModel.Id;
-            linkNodeModel.Id += Salt;
+            linkNodeModel.Id += "_" + Salt;
 
             TransltateViseter translater = new LinkTranslator() { Salt = linkNodeModel.Salt };
             var targets = linkNodeModel.Inputs.Items.Select(a => (LincNodeModelInputRate)a);
@@ -127,7 +132,7 @@ namespace ForresterModeller.src.Nodes.Viters
                 {
                     if (tryTarget.Connections.Items.Any())
                     {
-                        resultNode = resultNode.Replace(tryTarget.Name + linkNodeModel.Salt, ((ForesterNodeOutputViewModel)tryTarget.Connections.Items.First().Output).OutputValue + Salt);
+                        resultNode = resultNode.Replace(tryTarget.Name + "_" + linkNodeModel.Salt, ((ForesterNodeOutputViewModel)tryTarget.Connections.Items.First().Output).OutputValue + "_" + Salt);
                     }
                 }
                 resut += resultNode;
@@ -136,6 +141,18 @@ namespace ForresterModeller.src.Nodes.Viters
             linkNodeModel.Id = saveId;
             return resut;
         }
+
+
+        public override string VisitConstant(ConstantNodeViewModel node)
+        {
+
+            var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            string translatedNode = String.Format("c {0} {1}|", node.GetCoreCode()  +"_" + Salt, node.Value.ToString());
+            System.Threading.Thread.CurrentThread.CurrentCulture = save_localization;
+            return translatedNode;
+        }
+
     }
 
 }

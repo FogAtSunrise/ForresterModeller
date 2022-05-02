@@ -43,12 +43,6 @@ namespace ForesterNodeCore
             return args;
         }
 
-        private static double[] ParseDataFromString(string data)
-        {
-            var parseValue = Array.ConvertAll<string, double>(data.Split(" "),double.Parse);
-
-            return parseValue;
-        }
 
 		public static Dictionary<string,double[]> GetCurve(string model, IList<NodeIdentificator> order, double t, double delta = 0.1f)
         {

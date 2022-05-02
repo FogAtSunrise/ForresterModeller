@@ -84,7 +84,7 @@ namespace ForresterModeller.src.Nodes.Models
                 {
                     if (inp.Connections.Count == 0 && !Outputs.Items.Contains(inp))
                     {
-                        this.Outputs.Add(new ForesterNodeOutputViewModel() {OutFunc = () => ((ForesterNodeOutputViewModel)inp).OutputValue + Salt, Name = inp.Name} );
+                        this.Outputs.Add(new ForesterNodeOutputViewModel() {OutFunc = () => ((ForesterNodeOutputViewModel)inp).OutputValue + '_' + Salt, Name = inp.Name} );
                     }
                 }
             }
@@ -189,8 +189,8 @@ namespace ForresterModeller.src.Nodes.Models
 
     public class LincNodeModelInputRate : NodeInputViewModel
     {
-
         public ForesterNodeModel Target { get; set; }
+
         static LincNodeModelInputRate()
         {
             Splat.Locator.CurrentMutable.Register(() => new NodeInputView(), typeof(IViewFor<LincNodeModelInputRate>));
