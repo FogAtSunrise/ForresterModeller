@@ -52,9 +52,9 @@ namespace ForresterModeller.src.Nodes.Viters
 
             string translatedNode = String.Format("d {0} {1} {2} {3} {4} {5}|",
                 node.GetCoreCode(),
-                node.OutputRateName,
+                node.GetCoreCode() + '_' + node.OutputRateName,
                 node.DeepDelay.ToString(),
-                node.DelayValueName,
+                node.GetCoreCode() + '_' + node.DelayValueName,
                 preInEquals,
                 preStart
                 );
@@ -62,7 +62,7 @@ namespace ForresterModeller.src.Nodes.Viters
 
             var save_localization = System.Threading.Thread.CurrentThread.CurrentCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            translatedNode += String.Format("c {0} {1}|", node.DelayValueName, node.DelayValue.ToString());
+            translatedNode += String.Format("c {0} {1}|", node.GetCoreCode() + '_' + node.DelayValueName, node.DelayValue.ToString());
             System.Threading.Thread.CurrentThread.CurrentCulture = save_localization;
             return translatedNode;
         }
@@ -112,7 +112,7 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
             }
 
-            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode(), preInEquals, preOutEquals, preStart);
+            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode(), preStart, preInEquals, preOutEquals);
             return translatedNode;
         }
 
@@ -142,9 +142,6 @@ namespace ForresterModeller.src.Nodes.Viters
             }
             return resut;
         }
-
-
-
     }
 
     public class LinkTranslator: TransltateViseter
@@ -243,7 +240,7 @@ namespace ForresterModeller.src.Nodes.Viters
                 }
             }
 
-            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode() + Salt, preInEquals + Salt, preOutEquals + Salt, preStart);
+            string translatedNode = String.Format("l {0} {1} {2} {3}|", node.GetCoreCode() + Salt, preStart, preInEquals + Salt, preOutEquals + Salt);
             return translatedNode;
         }
 

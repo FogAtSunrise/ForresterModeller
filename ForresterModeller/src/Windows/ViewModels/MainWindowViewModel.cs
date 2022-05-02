@@ -122,9 +122,9 @@ namespace ForresterModeller.src.Windows.ViewModels
                 {
                     AddTab(CalculateGraphByCore());
                 }
-                catch
+                catch(Exception e)
                 {
-                    System.Windows.MessageBox.Show("Ваша модель некорректна!");
+                    System.Windows.MessageBox.Show("Ваша модель некорректна!\n" + e.Message);
                 }
             }
         }

@@ -57,7 +57,7 @@ namespace ForresterModeller.src.Nodes.Models
         }
         public ForesterNodeModel()
         {
-            Id = TypeName + new Random().Next();
+            Id = "OBJ" +  new Random().Next().ToString();
         }
         public abstract T AcceptViseter<T>(INodeViseters<T> viseter);
         public virtual ObservableCollection<PropertyViewModel> GetProperties()

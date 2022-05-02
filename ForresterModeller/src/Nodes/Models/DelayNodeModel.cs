@@ -96,14 +96,14 @@ namespace ForresterModeller.src.Nodes.Models
 
             _constNode = new ForesterNodeOutputViewModel();
             _constNode.PortPosition = PortPosition.Right;
-            _constNode.OutFunc = () => this.DelayValueName;
+            _constNode.OutFunc = () => this.GetCoreCode() + '_' + this.DelayValueName;
             _constNode.Name = this.DelayValueName;
             Outputs.Add(_constNode);
 
 
             _outNode = new ForesterNodeOutputViewModel();
             _outNode.PortPosition = PortPosition.Right;
-            _outNode.OutFunc = () => this.OutputRateName;
+            _outNode.OutFunc = () => this.GetCoreCode() + '_' + this.OutputRateName;
             _outNode.Name = this.OutputRateName;
             Outputs.Add(_outNode);
 
