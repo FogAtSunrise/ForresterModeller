@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,7 +85,7 @@ namespace ForesterNodeCore.NodeEngine
             switch (nodeParam[0][0])
             {
                 case (char)NodeLiterType.Constant:
-                    this[nodeParam[1]] = new Constant(double.Parse(nodeParam[2]));
+                    this[nodeParam[1]] = new Constant(double.Parse(nodeParam[2], CultureInfo.InvariantCulture));
                     break;
                 case (char)NodeLiterType.Level:
                     this[nodeParam[1]] = new Level(double.Parse(nodeParam[2]), nodeParam[3], nodeParam[4]);

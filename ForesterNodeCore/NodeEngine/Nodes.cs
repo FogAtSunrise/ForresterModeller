@@ -30,7 +30,7 @@ namespace ForesterNodeCore.NodeEngine
 
     public abstract class Node
     {
-        public readonly SymbolicExpression tine = SymbolicExpression.Variable("t");
+        public readonly string time = "t";
         public static double Delta { get; set; }
 
 
@@ -99,8 +99,8 @@ namespace ForesterNodeCore.NodeEngine
         protected Delegate CompileString(string expr)
         {
             var exp = SymbolicExpression.Parse(expr);
-            var vars = new List<string> { "t" };
-            vars.AddRange(exp.CollectVariables().Select(a => a.ToString()));
+            var vars = new List<string> { time };
+            vars.AddRange(exp.CollectVariables().Select(a => a.ToString()).Except(vars));
             return exp.Compile(vars.ToArray());
         }
 
@@ -110,7 +110,8 @@ namespace ForesterNodeCore.NodeEngine
             objs.Add(t);
             foreach (var symb in expr)
             {
-                objs.Add(this._input_thrads[symb].Value(t));
+                if(symb != time)
+                    objs.Add(this._input_thrads[symb].Value(t));
             }
             return objs.ToArray();
         }
@@ -201,7 +202,7 @@ namespace ForesterNodeCore.NodeEngine
 
                 for (int i = _data_tabe.Keys.ToList()[^1] + 1; i < index + 1; i++)
                 {
-                    var temp = (double)_inputRate.DynamicInvoke( CompileArgs(Delta * (t - 1), _input_vars)) - (double)_outputRate.DynamicInvoke(CompileArgs(Delta * (t - 1), _outpt_vars));
+                    var temp = (double)_inputRate.DynamicInvoke( CompileArgs(Delta * (i - 1), _input_vars)) - (double)_outputRate.DynamicInvoke(CompileArgs(Delta * (i - 1), _outpt_vars));
                     answer += Delta * temp;
                     _data_tabe[i] = answer;
                 }
@@ -211,7 +212,7 @@ namespace ForesterNodeCore.NodeEngine
 
         public double Temp(double t)
         {
-            return (double)_inputRate.DynamicInvoke(CompileArgs(t, _input_vars));
+            return (double)_outputRate.DynamicInvoke(CompileArgs(t, _outpt_vars));
         }
     }
 
@@ -220,7 +221,9 @@ namespace ForesterNodeCore.NodeEngine
         public ExpDelay(double start, string input_rate, string average):base(start, input_rate, "0")
         {
             ParseFreeSybs(input_rate, average);
-            _outputRate = (Func<double,double>) (time => Value(time)/ this._input_thrads[average].Value(time));
+            _outputRate = (Func<double,double>) (
+                time => 
+                Value(time)/ this._input_thrads[average].Value(time));
         }
     }
 

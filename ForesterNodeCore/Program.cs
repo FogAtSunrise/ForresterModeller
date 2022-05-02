@@ -1,4 +1,5 @@
 ﻿
+using MathNet.Symbolics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,25 +29,7 @@ namespace ForesterNodeCore
 
     public class Program
     {
-        public static readonly string ScriptPath = "PythonScripts/main.exe";
-        public static readonly string MainScriptPath = "main.exe";
 
-        public static string  Exequte(string args)
-        {
-			System.Diagnostics.Process p = new System.Diagnostics.Process();
-			p.StartInfo = new System.Diagnostics.ProcessStartInfo(ScriptPath);
-			p.StartInfo.CreateNoWindow = true;
-			p.StartInfo.ErrorDialog = false;
-			p.StartInfo.RedirectStandardError = true;
-			p.StartInfo.RedirectStandardInput = true;
-			p.StartInfo.RedirectStandardOutput = true;
-			p.StartInfo.UseShellExecute = false;
-			p.StartInfo.Arguments = args;
-			p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-			p.Start();
-
-			return p.StandardOutput.ReadToEnd();
-		}
 
         private static string PackageArgs(string model, IEnumerable<NodeIdentificator> order, double t, double delta)
         {
@@ -69,8 +52,14 @@ namespace ForesterNodeCore
 
 		public static Dictionary<string,double[]> GetCurve(string model, IList<NodeIdentificator> order, double t, double delta = 0.1f)
         {
+            
+
+
+
             var engine = new NodeEngine.BuilderEnine();
             var raw = engine.Count(model, String.Join(" ", order.Select(a => a.id)), t, delta);
+
+
 
             var answer = new Dictionary<string, double[]>();
 
@@ -86,22 +75,28 @@ namespace ForesterNodeCore
         {
             var args = aq.Split(
                 '(', ')', '+', '-', '/', '*', ' ', '.', ',',
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>', '=', '<', '!'
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>', '=', '<', '!', '?', ':', ' '
                 ).ToList();
             args = args.Distinct().ToList();
             args.Remove("sin");
-            args.Remove("");
+            args.Remove("min");
+            args.Remove("max");
             args.Remove("cos");
-            args.Remove("Piecewise");
-            args.Remove("True");
-            args.Remove("False");
+            args.Remove("abs");
+            args.Remove("ln");
+            args.Remove("");
+            args.Remove(" ");
             args.Remove("t");
             return args.ToArray();
-
         }
+
+
+
 
         static void Main(string[] args)
         {
+            //MathNet.Symbolics.SymbolicExpression.Parse("(f + s + abs(f-s))/2");
+
             var c = GetCurve(
                     "c a 1|c b 2|l dc 0 b a|f nt dc/2|d boo loo 1 b nt 0",
                     new List<NodeIdentificator> {

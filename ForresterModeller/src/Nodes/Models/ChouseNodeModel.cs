@@ -18,7 +18,6 @@ namespace ForresterModeller.src.Nodes.Models
 
         }
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
-
         {
             return viseter.VisitChoose(this);
         }

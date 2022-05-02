@@ -12,6 +12,7 @@ using System.Linq;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Windows;
 using System.Reactive.Linq;
+using System.Reactive;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -19,11 +20,7 @@ namespace ForresterModeller.src.Nodes.Models
     {
         public static string type = "FunkNodeModel";
         private ForesterNodeOutputViewModel _out;
-
         public override string TypeName => Resource.funcType;
-
-
-
         public string Funk { get; set; }
         public FunkNodeModel(string name, string fulname, string funk) : base()
         {
@@ -58,8 +55,7 @@ namespace ForresterModeller.src.Nodes.Models
             return properties;
         }
 
-       // public override MathViewModel GetMathView() { return new MathViewModel(Name, Funk); }
-
+        // public override MathViewModel GetMathView() { return new MathViewModel(Name, Funk); }
         public void RefreshInput()
         {
             var vars = ForesterNodeCore.Program.GetArgs(this.Funk);
@@ -84,7 +80,6 @@ namespace ForresterModeller.src.Nodes.Models
 
 
         }
-
         public override JsonObject ToJSON()
         {
             JsonObject obj = new JsonObject()
@@ -116,7 +111,6 @@ namespace ForresterModeller.src.Nodes.Models
             obj.Add("Conects", con);
             return obj;
         }
-
         public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
@@ -141,13 +135,36 @@ namespace ForresterModeller.src.Nodes.Models
                 }
             }
         }
-
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
             return viseter.VisitFunc(this);
         }
-
-
     }
+
+    public class MaxNodeModel : ChouseNodeModel
+    {
+        public static string type = "ChouseNodeModel";
+        public MaxNodeModel() : base("max", "max", "(first + second + abs(first-second))/2")
+        {
+        }
+        static MaxNodeModel()
+        {
+            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<MaxNodeModel>));
+        }
+    }
+
+    public class MinNodeModel : ChouseNodeModel
+    {
+        public static string type = "ChouseNodeModel";
+        public MinNodeModel() : base("min", "min", "(first + second - abs(first-second))/2")
+        {
+        }
+        static MinNodeModel()
+        {
+            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<MinNodeModel>));
+        }
+    }
+
+
 }
     
