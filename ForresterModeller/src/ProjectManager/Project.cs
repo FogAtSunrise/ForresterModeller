@@ -81,10 +81,8 @@ namespace ForresterModeller.src.ProjectManager
 
         public string Name { get; set; }
 
-        DateTime CreationDate;
-        public DateTime getCreationDate() { return CreationDate; }
-        DateTime ChangeDate;
-        public DateTime getChangeDate() { return ChangeDate; }
+        public DateTime CreationDate { get; private set; }
+        public DateTime ChangeDate { get; private set; }
 
         /// <summary>
         /// хранит директорию, в которой хранится json проекта!!! т.е. не включает в себя имя json 
