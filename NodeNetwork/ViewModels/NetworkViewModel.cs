@@ -254,12 +254,9 @@ namespace NodeNetwork.ViewModels
             // When DeleteSelectedNodes is invoked, remove all nodes that are user-removable and selected.
             DeleteSelectedNodes = ReactiveCommand.Create(() =>
             {
-
                 var nodes = SelectedNodes.Items.Where(n => n.CanBeRemovedByUser).ToArray();
-                NodeDeletedEvent?.Invoke(nodes);
-
                 Nodes.RemoveMany(nodes);
-
+                NodeDeletedEvent?.Invoke(nodes);
             });
 
 			// When a node is removed, delete any connections from/to that node.

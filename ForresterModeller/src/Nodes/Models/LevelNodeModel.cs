@@ -10,6 +10,8 @@ using ForresterModeller.src.Windows.ViewModels;
 using System.Collections;
 using System.Linq;
 using System.Windows;
+using System.Collections.Generic;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -94,7 +96,7 @@ namespace ForresterModeller.src.Nodes.Models
 
             JsonArray con = new();
             if (_inputRate.Connections.Items.Any()) {
-                con.Add(new ConectionModel(_inputRate).ToJSON());
+                con.Add(new ConectionModel(_inputRate));
             }
             else
             {
@@ -117,6 +119,27 @@ namespace ForresterModeller.src.Nodes.Models
             Description = obj!["Description"]!.GetValue<string>();
             StartValue = obj!["StartValue"]!.GetValue<string>();
             Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
+            var conList = obj!["Conects"].AsArray();
+
+            foreach (var con in conList)
+            {
+                if (con is null)
+                {
+                    DumpConections.Add(null);
+                }
+                else
+                {
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())   ); ;
+                }
+            }
+        }
+
+        public override ObservableCollection<PropertyViewModel> GetProperties()
+        {
+            var prop = base.GetProperties();
+
+            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str));
+            return prop;
         }
 
 

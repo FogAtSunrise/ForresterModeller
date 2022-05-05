@@ -8,6 +8,7 @@
         xmlns:viewModels1="clr-namespace:ForresterModeller.src.Windows.ViewModels"
         xmlns:self="clr-namespace:ForresterModeller.src.ProjectManager"
         xmlns:workArea="clr-namespace:ForresterModeller.src.ProjectManager.WorkArea"
+        xmlns:models="clr-namespace:ForresterModeller.src.Nodes.Models"
         d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
@@ -164,10 +165,15 @@
                             </TextBlock>
                             
                                 <TreeView BorderThickness="0" Grid.Row="1" ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
+
                                 <TreeView.Resources>
-                                        <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" >
+                                        <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
+                                                                  ItemsSource="{Binding GetAllNodes}">
                                             <TextBlock Text="{Binding Name }" />
                                         </HierarchicalDataTemplate>
+                                    <DataTemplate DataType="{x:Type models:ForesterNodeModel}">
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
                                 </TreeView.Resources>
                             </TreeView>
                         </Grid>

@@ -91,7 +91,7 @@ namespace ForresterModeller.src.Nodes.Models
             JsonArray con = new();
             if (_input.Connections.Items.Any())
             {
-                con.Add(new ConectionModel(_input).ToJSON());
+                con.Add(new ConectionModel(_input));
             }
             else
             {
@@ -100,7 +100,7 @@ namespace ForresterModeller.src.Nodes.Models
 
             if (_source.Connections.Items.Any())
             {
-                con.Add(new ConectionModel(_source).ToJSON());
+                con.Add(new ConectionModel(_source));
             }
             else
             {
@@ -116,6 +116,19 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Id = obj!["Id"]!.GetValue<string>();
             Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
+            var conList = obj!["Conects"].AsArray();
+
+            foreach (var con in conList)
+            {
+                if (con is null)
+                {
+                    DumpConections.Add(null);
+                }
+                else
+                {
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                }
+            }
         }
 
     }

@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Media;
 using DynamicData;
@@ -16,6 +17,7 @@ using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Windows.ViewModels;
+using NodeNetwork.Toolkit.Layout.ForceDirected;
 using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using ReactiveUI;
@@ -24,10 +26,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 {
     public class DiagramManager : WorkAreaManager
     {
-        public DiagramManager() { }
- 
 
-        public DiagramManager(string name)
+        private Project _project;
+
+        public DiagramManager(Project project) { _project = project; }
+        public DiagramManager(string name, Project project):this(project)
         {
             Name = name;
         }
@@ -44,6 +47,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 MessageBox.Show("Не верно выбран файл проекта");
             }
 
+            //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПО JSON ЗАПОЛНЯЕТ ПОЛЯ ДИАГРАММЫ
 
             var nodes = json!["Nodes"];
             foreach(var node in nodes.AsArray())
@@ -70,17 +74,25 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                     case "LevelNodeModel":
                         newNode = new LevelNodeModel();
                         break;
+                    case "LinkNodeModel":
+                        newNode = new LinkNodeModel(_project);
+                        break;
+
                 }
 
                 newNode.FromJSON(node.AsObject());
-
+                newNode.PropertyChanged += NodeOnPropertyChanged;
                 this.Content.ViewModel.Nodes.Add(newNode);
             }
+
+            ((ForesterNetworkViewModel)this.Content.ViewModel).AutoConect();
         }
 
         public JsonObject DiagramToJson()
         {
+            UpdateNodes();
             JsonArray nodesJson = new();
+            
             foreach (var node in GetAllNodes) {
                 nodesJson.Add(node.ToJSON());
             }
@@ -97,9 +109,15 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             return json;
         }
 
+        public void UpdateNodes()
+        {
+            GetAllNodes = Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
+        }
+        private IEnumerable<ForesterNodeModel> _allnodes;
         public IEnumerable<ForesterNodeModel> GetAllNodes
         {
-            get => Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
+            get => _allnodes;
+            set { this.RaiseAndSetIfChanged(ref _allnodes, value); }
         }
 
 
@@ -144,6 +162,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public NetworkView CreateNetworkView()
         {
             _contentView = new NetworkView() { Background = Brushes.AliceBlue };
+            _contentView.NodeAddedEvent += (sender, args) => UpdateNodes();
             var network = new ForesterNetworkViewModel();
             network.NodeDeletedEvent += (list) =>
             {
@@ -152,11 +171,27 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                     SelectedNodes.Remove((ForesterNodeModel)node);
                 }
                 OnPropertySelected(this);
+                UpdateNodes();
             };
             ///
             this._contentView.Drop += (o, e) => {
-                AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM")); 
+                AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));
+                UpdateNodes();
             };
+
+            this._contentView.Drop += (o, e) => {
+                ForesterNodeModel node = (ForesterNodeModel)e.Data.GetData("nodeVM");
+
+                if (node is LinkNodeModel  )
+                {
+                    if (((LinkNodeModel)node).Modegel == ((NetworkView)o).ViewModel)
+                    {
+                        e.Handled = true;
+                    }
+                }
+            };
+
+
             _contentView.ViewModel = network;
             return _contentView;
         }

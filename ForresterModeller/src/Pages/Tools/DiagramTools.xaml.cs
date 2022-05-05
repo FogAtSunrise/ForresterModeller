@@ -1,5 +1,9 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Specialized;
+using System.Windows.Controls;
 using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Nodes.Views;
+using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Toolkit.NodeList;
 
 namespace ForresterModeller.Pages.Tools
@@ -9,7 +13,10 @@ namespace ForresterModeller.Pages.Tools
     /// </summary>
     public partial class DiagramTools : UserControl
     {
-        public DiagramTools()
+        private NodeListViewModel _nodelistModel;
+        private Project _project;
+
+        public DiagramTools(Project project)
         {
             InitializeComponent();
 
@@ -20,9 +27,30 @@ namespace ForresterModeller.Pages.Tools
             nodelistModel.AddNodeType<CrossNodeModel>(() => new CrossNodeModel());
             nodelistModel.AddNodeType<ChouseNodeModel>(() => new ChouseNodeModel());
             nodelistModel.AddNodeType<FunkNodeModel>(() => new FunkNodeModel());
+            nodelistModel.AddNodeType<MaxNodeModel>(() => new MaxNodeModel());
+            nodelistModel.AddNodeType<MinNodeModel>(() => new MinNodeModel());
             equasionNodeList.ViewModel = nodelistModel;
 
+            _nodelistModel = new();
+            _project = project;
 
+            project.Diagrams.CollectionChanged += SetDiagrammNodes;
+            foreach (var d in project.Diagrams)
+            {
+                _nodelistModel.AddNodeType<LinkNodeModel>(() => new LinkNodeModel(project, d.Name));
+            }
+            DiagranmNodeList.ViewModel = _nodelistModel;
+        }
+
+        private void SetDiagrammNodes(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var line in e.NewItems)
+                {
+                    _nodelistModel.AddNodeType<LinkNodeModel>(() => new LinkNodeModel(_project, ((DiagramManager)line).Name));
+                }
+            }
         }
     }
 }

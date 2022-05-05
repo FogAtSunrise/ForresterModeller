@@ -49,7 +49,7 @@ namespace ForresterModeller.src.ProjectManager
 
         public DiagramManager getDiagramFromFileByName(string d)
         {
-            DiagramManager diagram = new DiagramManager(d);
+            DiagramManager diagram = new DiagramManager(d, this);
             try
             {
                 StreamReader r = new StreamReader(PathToProject + "\\diagrams\\"+d+".json");
@@ -179,6 +179,7 @@ namespace ForresterModeller.src.ProjectManager
 
             foreach (var diag in Diagrams)
             {
+                diag.UpdateNodes();
                 var node = diag.GetAllNodes.FirstOrDefault(x => x.Id == id);
                 if (node != null)
                     return node;
@@ -267,15 +268,27 @@ namespace ForresterModeller.src.ProjectManager
                 {
                     DiagramManager d= getDiagramFromFileByName(file.ToString());
                     Diagrams.Add(d);
-                   
                 }
-
+                ConnectLinkNodes();
             }
             catch 
             {
                 MessageBox.Show("Не верно выбран файл проекта");
             }
-            
+        }
+
+        private void ConnectLinkNodes()
+        {
+            foreach (var diagram in Diagrams)
+            {
+                foreach(var node in diagram.Content.ViewModel.Nodes.Items)
+                {
+                    if(node is LinkNodeModel)
+                    {
+                        ((LinkNodeModel)node).AutoConectionLinks();
+                    }
+                }
+            }
         }
 
 

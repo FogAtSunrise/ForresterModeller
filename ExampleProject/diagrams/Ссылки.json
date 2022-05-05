@@ -1,0 +1,59 @@
+{
+  "Name": "\u0421\u0441\u044B\u043B\u043A\u0438",
+  "Time": 10,
+  "Delta": 0.1,
+  "Nodes": [
+    {
+      "Id": "OBJ132871600",
+      "Type": "LinkNodeModel",
+      "Name": "DHF",
+      "PositionX": 605,
+      "PositionY": 195.04,
+      "Conects": [
+        {
+          "SourceId": "OBJ417775704",
+          "PointName": "DT"
+        }
+      ]
+    },
+    {
+      "Id": "OBJ417775704",
+      "Type": "ConstantNodeViewModel",
+      "Name": "\u0412\u0445\u043E\u0434",
+      "FullName": "DT",
+      "Value": 1100,
+      "Description": "",
+      "PositionX": 446,
+      "PositionY": 209.04
+    },
+    {
+      "Id": "OBJ1618806102",
+      "Type": "FunkNodeModel",
+      "Name": "\u0412\u044B\u0445\u043E\u0434",
+      "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
+      "Funk": "x",
+      "Description": "",
+      "PositionX": 1618,
+      "PositionY": 215.04,
+      "Conects": [
+        {
+          "SourceId": "OBJ789684771",
+          "PointName": "\u0421\u043A\u043B\u0430\u0434"
+        }
+      ]
+    },
+    {
+      "Id": "OBJ789684771",
+      "Type": "LinkNodeModel",
+      "Name": "DHF",
+      "PositionX": 1054,
+      "PositionY": 201.04,
+      "Conects": [
+        {
+          "SourceId": "OBJ132871600",
+          "PointName": "\u0421\u043A\u043B\u0430\u0434"
+        }
+      ]
+    }
+  ]
+}

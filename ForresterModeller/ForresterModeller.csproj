@@ -49,6 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="src\Nodes\Models\HelpNode\" />
     <Folder Include="src\Windows\Models\" />
   </ItemGroup>
 

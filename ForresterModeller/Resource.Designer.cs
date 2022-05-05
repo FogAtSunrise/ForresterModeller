@@ -124,6 +124,15 @@ namespace ForresterModeller {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Сторонняядиаграмма.
+        /// </summary>
+        internal static string linkDiagramm {
+            get {
+                return ResourceManager.GetString("linkDiagramm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Обозначение.
         /// </summary>
         internal static string name {

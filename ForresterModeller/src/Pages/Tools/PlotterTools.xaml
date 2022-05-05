@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <TextBlock Margin="10,5"  Text="Управление графиками" FontWeight="Bold" TextWrapping="Wrap" />
 
-        <ListBox BorderThickness="0"  Grid.Row="1" ItemsSource="{Binding Path=Lines, Mode=TwoWay}" SelectedItem="{Binding Active, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" >
+        <ListBox BorderThickness="0"  Grid.Row="1" ItemsSource="{Binding Path=Lines, Mode=TwoWay}" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Grid.IsSharedSizeScope="True"/>

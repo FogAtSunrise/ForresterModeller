@@ -27,9 +27,13 @@ namespace ForresterModeller.src.Nodes.Views
 
         public void AutoConect()
         {
+            List<LinkNodeModel> lastConection = new();
+
             foreach (var node in Nodes.Items)
             {
-                ((ForesterNodeModel)node).AutoConection(this);
+  
+                 ((ForesterNodeModel)node).AutoConection(this);
+
             }
         }
     }

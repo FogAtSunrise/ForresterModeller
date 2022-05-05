@@ -10,24 +10,27 @@ using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using System.Linq;
 using ForresterModeller.src.Windows.ViewModels;
+using System.Windows;
+using System.Reactive.Linq;
+using System.Reactive;
 
 namespace ForresterModeller.src.Nodes.Models
 {
     public class FunkNodeModel : ForesterNodeModel
     {
         public static string type = "FunkNodeModel";
-
+        private ForesterNodeOutputViewModel _out;
         public override string TypeName => Resource.funcType;
-
         public string Funk { get; set; }
         public FunkNodeModel(string name, string fulname, string funk) : base()
         {
             this.Name = name;
             this.Funk = funk;
             this.FullName = fulname;
-            var a = new ForesterNodeOutputViewModel();
-            a.PortPosition = PortPosition.Right;
-            this.Outputs.Add(a);
+            _out = new ForesterNodeOutputViewModel();
+            _out.PortPosition = PortPosition.Right;
+            _out.Name = name;
+            this.Outputs.Add(_out);
 
             RefreshInput();
         }
@@ -39,10 +42,19 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
+            properties.RemoveAt(0);
+
+            properties.Insert(0,new PropertyViewModel(Resource.name, Name, (String str) => {
+                Name = str;
+                Outputs.Items.First().Name = str;
+            }));
+
+
             properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; RefreshInput(); }));
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
         }
+
 
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
@@ -64,8 +76,7 @@ namespace ForresterModeller.src.Nodes.Models
             return data;
         }
 
-       
-
+      
         public void RefreshInput()
         {
             var vars = ForesterNodeCore.Program.GetArgs(this.Funk);
@@ -90,7 +101,6 @@ namespace ForresterModeller.src.Nodes.Models
 
 
         }
-
         public override JsonObject ToJSON()
         {
             JsonObject obj = new JsonObject()
@@ -100,7 +110,9 @@ namespace ForresterModeller.src.Nodes.Models
                 ["Name"] = Name == null ? "" :Name,            
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
-                ["Description"] = Description == null ? "" : Description
+                ["Description"] = Description == null ? "" : Description,
+                ["PositionX"] = Position.X,
+                ["PositionY"] = Position.Y
             };
 
             JsonArray con = new();
@@ -110,7 +122,7 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 if (inputs.Connections.Items.Any())
                 {
-                    con.Add(new ConectionModel(inputs).ToJSON());
+                    con.Add(new ConectionModel(inputs));
                 }
                 else
                 {
@@ -120,21 +132,60 @@ namespace ForresterModeller.src.Nodes.Models
             obj.Add("Conects", con);
             return obj;
         }
-
         public override void FromJSON(JsonObject obj)
         {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
+            _out.Name = obj!["Name"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
             Funk = obj!["Funk"]!.GetValue<string>();
             Description = obj!["Description"]!.GetValue<string>();
-    
-        }
+            RefreshInput();
+            Position = new Point(obj!["PositionX"]!.GetValue<double>(), obj!["PositionY"]!.GetValue<double>());
+            var conList = obj!["Conects"].AsArray();
 
+            foreach (var con in conList)
+            {
+                if (con is null)
+                {
+                    DumpConections.Add(null);
+                }
+                else
+                {
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                }
+            }
+        }
         public override T AcceptViseter<T>(INodeViseters<T> viseter)
         {
             return viseter.VisitFunc(this);
         }
     }
+
+    public class MaxNodeModel : ChouseNodeModel
+    {
+        public static string type = "ChouseNodeModel";
+        public MaxNodeModel() : base("max", "max", "(first + second + abs(first-second))/2")
+        {
+        }
+        static MaxNodeModel()
+        {
+            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<MaxNodeModel>));
+        }
+    }
+
+    public class MinNodeModel : ChouseNodeModel
+    {
+        public static string type = "ChouseNodeModel";
+        public MinNodeModel() : base("min", "min", "(first + second - abs(first-second))/2")
+        {
+        }
+        static MinNodeModel()
+        {
+            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<MinNodeModel>));
+        }
+    }
+
+
 }
     

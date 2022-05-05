@@ -24,7 +24,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
         public PlotterTools PlotterToolsMW { get; set; } = new();
-        public DiagramTools DiagramToolsWM { get; set; } = new();
+        public DiagramTools DiagramToolsWM { get; set; }
         public ContentControl ToolContent { get; set; } = new();
         public static Project ProjectInstance;
         private Project _activeProject;
@@ -52,7 +52,6 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
-
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
 
@@ -62,14 +61,14 @@ namespace ForresterModeller.src.Windows.ViewModels
             ActiveProject = project;
             TabControlVM.PropertyChanged += ActiveTabChanged;
             CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => AddTab(CreateDiagramManager()));
-            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager { Name = "Диаграмма12" }));
+            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager(ActiveProject){ Name = "Диаграмма12" }));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<Unit>(o => ExecuteModelling());
             OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
-
+            DiagramToolsWM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
             CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
         }
@@ -106,7 +105,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         public DiagramManager CreateDiagramManager()
         {
-            var diagramManager = new DiagramManager();
+            var diagramManager = new DiagramManager(ActiveProject);
             diagramManager.Name = "диаграмма 2123у1";
             ActiveProject.AddDiagram(diagramManager);
             return diagramManager;
@@ -136,9 +135,9 @@ namespace ForresterModeller.src.Windows.ViewModels
                 {
                     AddTab(CalculateGraphByCore());
                 }
-                catch
+                catch(Exception e)
                 {
-                    System.Windows.MessageBox.Show("Ваша модель некорректна!");
+                    System.Windows.MessageBox.Show("Ваша модель некорректна!\n" + e.Message);
                 }
             }
         }
@@ -169,7 +168,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             List<NodeIdentificator> ids = new();
             foreach (var nod in network.Nodes.Items)
             {
-                if (nod is not CrossNodeModel)
+                if (nod is not CrossNodeModel && nod is not LinkNodeModel)
                     ids.Add(new NodeIdentificator(((ForesterNodeModel)nod).Id));
             }
             var c = ForesterNodeCore.Program.GetCurve(text,
