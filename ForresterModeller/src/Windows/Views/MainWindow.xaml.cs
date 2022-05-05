@@ -8,6 +8,7 @@ using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ForresterModeller.src.Windows.ViewModels;
 using WpfMath.Controls;
@@ -49,8 +50,15 @@ namespace ForresterModeller.Windows.Views
         }
         private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
         {
-            PrintFormule(input_formul.Text.ToString());
-            input_formul.Text = "";
+            MinParser b = new MinParser();
+            Result ho = b.check(input_formul.Text.ToString());
+            if (ho.numb)
+            {
+                PrintFormule(input_formul.Text.ToString());
+                input_formul.Text = "";
+            }
+            else
+                MessageBox.Show(ho.str);
         }
 
         private string a;
