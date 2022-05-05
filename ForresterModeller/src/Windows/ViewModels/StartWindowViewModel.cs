@@ -6,21 +6,32 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 using ForresterModeller.src.Interfaces;
+using ForresterModeller.src.ProjectManager;
 
 namespace ForresterModeller.src.Windows.ViewModels
 {
-    public class StartWindowViewModel : ReactiveObject, IJSONSerializable
+    public class StartWindowViewModel : ReactiveObject
     {
+        private List<Project> _lastProjects;
+        public List<Project> LastProjects
+        {
+            get => _lastProjects;
+            private set => this.RaiseAndSetIfChanged(ref _lastProjects, value);
+        }
         /// <summary>
         /// Имя файла, хранящего информацию о последних проектах
         /// </summary>
-        string FileName = "LastProjects";
-        string FilePath = Directory.GetCurrentDirectory() + "\\";
+        static string FileName = "LastProjects.txt";
+        private static string FullPath
+        {
+            get => Directory.GetCurrentDirectory() + "\\" + FileName;
+        }
         /// <summary>
         /// результат работы формы, если была нажата кнопка "сохранить", принимает значение true
         /// </summary>
@@ -45,7 +56,6 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CreateProjectCommand { get; }
 
         public StartWindowViewModel()
-
         {
             OpenProjectCommand = ReactiveCommand.Create<Unit>(u =>
             {
@@ -55,6 +65,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 if (openFileDialog.ShowDialog() == true)
                 {
                     MainWindow mainWindow = new MainWindow(openFileDialog.FileName);
+                    AddProject(openFileDialog.FileName);
                     this.DialogResult = true;
                     mainWindow.ShowDialog();
                     //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
@@ -66,24 +77,62 @@ namespace ForresterModeller.src.Windows.ViewModels
                 CreateProject proj = new CreateProject();
                 var window = proj as Window;
                 var dialogResult = window.ShowDialog();
-                if (dialogResult == true) {
+                if (dialogResult == true)
+                {
                     MainWindow mainWindow = new MainWindow(proj.ViewModel.FileName);
+                    AddProject(proj.ViewModel.FileName);
                     this.DialogResult = true;
                     mainWindow.ShowDialog();
                     //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
                 }
             });
 
+            LastProjects = GetActualProjectList();
+
         }
 
-        public JsonObject ToJSON()
+        private static List<Project> GetActualProjectList()
         {
-            throw new NotImplementedException();
+            var uniquePaths = new HashSet<string>();
+            var projects = new List<Project>();
+            if (!File.Exists(FullPath))
+            {
+                File.Create(FullPath);
+                return projects;
+            }
+            using (var sr = new StreamReader(FullPath))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var path = sr.ReadLine();
+                    if (File.Exists(path))
+                        uniquePaths.Add(path);
+                }
+                sr.Close();
+            }
+
+            using (var sw = new StreamWriter(FullPath, false))
+            {
+                foreach (var projPath in uniquePaths)
+                {
+                    projects.Add(Loader.InitProjectByPath(projPath));
+                    sw.WriteLine(projPath);
+                }
+                sw.Close();
+            }
+
+            return projects;
         }
 
-        public void FromJSON(JsonObject obj)
+        public void AddProject(string PathToProjectJson)
         {
-            throw new NotImplementedException();
+            using (StreamWriter file = new StreamWriter(FullPath, true))
+            {
+                file.WriteLine(PathToProjectJson);
+                file.Close();
+                LastProjects = GetActualProjectList();
+            }
+
         }
     }
 }

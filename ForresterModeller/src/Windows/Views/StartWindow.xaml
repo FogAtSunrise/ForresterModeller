@@ -51,12 +51,19 @@
             </Grid>
             <Grid Grid.Row="2" VerticalAlignment="Top">
                 <ScrollViewer Height="225" VerticalScrollBarVisibility="Visible"  >
+                    <ListBox Name="LastPtoject"  ItemsSource="{Binding Path=LastProjects}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Grid.IsSharedSizeScope="True"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
 
-
-                    <DockPanel x:Name="LastFilesPanel">
-
-                        
-                    </DockPanel >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
                 </ScrollViewer>
             </Grid>
