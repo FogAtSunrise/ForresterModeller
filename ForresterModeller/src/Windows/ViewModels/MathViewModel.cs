@@ -8,12 +8,12 @@ namespace ForresterModeller.src.Windows.ViewModels
     {
         public ForesterNodeModel NodeForMod { get; set; }
   
-    public MathViewModel(ForesterNodeModel node)
+   
+        public MathViewModel(ForesterNodeModel node)
         {
             NodeForMod = node;
+            node.PropertyChanged += (sender, args) => { Data = node?.GetMathView(); };
         }
-
- 
 
         public ObservableCollection<DataForViewModels> _data;
         public ObservableCollection<DataForViewModels> Data
@@ -21,6 +21,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             get
             {
                 _data = NodeForMod?.GetMathView();
+                
                 return _data;
             }
             set => this.RaiseAndSetIfChanged(ref _data, value);

@@ -59,6 +59,7 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var dats = base.GetMathView();
+            dats.Add(new DataForViewModels("Входной поток", "", 3));
             foreach (var inputs in Inputs.Items)
             {
                 if (inputs.Connections.Items.Any())
@@ -68,7 +69,7 @@ namespace ForresterModeller.src.Nodes.Models
                         .OutputValue;
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
                     if(nod != null)
-                        dats.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
+                        dats.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
                 }
             }
             return dats;

@@ -59,9 +59,10 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
-            data.Add(new DataForViewModels(Name, Funk, true));
+            data.Insert(0, new DataForViewModels("Где", "", 3)) ;
+            data.Insert(0, new DataForViewModels(Name, Funk, 0));
+            
 
-     
             foreach (var inputs in Inputs.Items)
             {
                 if (inputs.Connections.Items.Count() > 0)
@@ -70,7 +71,7 @@ namespace ForresterModeller.src.Nodes.Models
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
                     if(nod != null)
-                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
+                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
                 }
             }
 

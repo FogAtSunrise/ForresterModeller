@@ -83,16 +83,17 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
-         
+    
+            data.Add(new DataForViewModels("Входной поток", "", 3));
             foreach (var inputs in Inputs.Items)
             {
-                if (inputs.Connections.Items.Count() > 0)
-
+                if (inputs.Connections.Items.Any())
                 {
+                    //todo проверить на пустой список
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
-                   
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
+                    if (nod != null)
+                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
                 }
             }
 

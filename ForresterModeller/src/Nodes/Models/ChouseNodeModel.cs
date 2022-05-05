@@ -35,5 +35,6 @@ namespace ForresterModeller.src.Nodes.Models
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<ChouseNodeModel>));
         }
+
     }
 }
