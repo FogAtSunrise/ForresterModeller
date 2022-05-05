@@ -168,7 +168,7 @@
 
                                 <TreeView.Resources>
                                         <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
-                                                                  ItemsSource="{Binding GetAllNodes}">
+                                                                  ItemsSource="{Binding АllNodes}">
                                             <TextBlock Text="{Binding Name }" />
                                         </HierarchicalDataTemplate>
                                     <DataTemplate DataType="{x:Type models:ForesterNodeModel}">

@@ -86,6 +86,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             }
 
             ((ForesterNetworkViewModel)this.Content.ViewModel).AutoConect();
+            UpdateNodes();
         }
 
         public JsonObject DiagramToJson()
@@ -93,7 +94,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             UpdateNodes();
             JsonArray nodesJson = new();
             
-            foreach (var node in GetAllNodes) {
+            foreach (var node in АllNodes) {
                 nodesJson.Add(node.ToJSON());
             }
 
@@ -111,10 +112,10 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public void UpdateNodes()
         {
-            GetAllNodes = Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
+            АllNodes = Content.ViewModel.Nodes.Items.Select(x => (ForesterNodeModel)x);
         }
         private IEnumerable<ForesterNodeModel> _allnodes;
-        public IEnumerable<ForesterNodeModel> GetAllNodes
+        public IEnumerable<ForesterNodeModel> АllNodes
         {
             get => _allnodes;
             set { this.RaiseAndSetIfChanged(ref _allnodes, value); }

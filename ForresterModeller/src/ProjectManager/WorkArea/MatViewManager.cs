@@ -24,7 +24,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                     Name = "Матпредставление для " + Diagram.Name;
             };
 
-            var mod = dmanager.GetAllNodes;
+            var mod = dmanager.АllNodes;
             foreach (var mod1 in mod)
             {if(!(mod1 is CrossNodeModel))
                 Models.Add(new MathViewModel(mod1));

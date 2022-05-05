@@ -143,7 +143,8 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         private void AddMathView()
         {
-            if (TabControlVM.ActiveTab.WAManager is not DiagramManager)
+          
+            if (TabControlVM.ActiveTab == null || TabControlVM.ActiveTab.WAManager is not DiagramManager)
             {
                 System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
             }

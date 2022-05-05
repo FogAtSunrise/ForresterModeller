@@ -180,7 +180,7 @@ namespace ForresterModeller.src.ProjectManager
             foreach (var diag in Diagrams)
             {
                 diag.UpdateNodes();
-                var node = diag.GetAllNodes.FirstOrDefault(x => x.Id == id);
+                var node = diag.АllNodes.FirstOrDefault(x => x.Id == id);
                 if (node != null)
                     return node;
             }
