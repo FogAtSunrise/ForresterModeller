@@ -35,8 +35,8 @@ namespace ForresterModeller.src.ProjectManager
                 r.Close();
                 project.FromJson(jobj.AsObject());
 
-                var options = new JsonSerializerOptions { WriteIndented = true };////////////////////
-                MessageBox.Show(jobj.ToJsonString(options));//////////////////////////////
+                //var options = new JsonSerializerOptions { WriteIndented = true };
+                //MessageBox.Show(jobj.ToJsonString(options));
             }
             catch { MessageBox.Show("Ошибка файла проекта"); }
 

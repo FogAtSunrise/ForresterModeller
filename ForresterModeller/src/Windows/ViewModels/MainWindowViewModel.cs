@@ -272,7 +272,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 dt
             );
             var plotmodel = new PlotManager(c, t, dt, ActiveProject);
-            plotmodel.XLabel = "Время (недели)FFF";
+            plotmodel.XLabel = "Время (недели)";
             plotmodel.YLabel = "Объем товара (единицы) ";
             return plotmodel.GenerateActualPlot();
         }

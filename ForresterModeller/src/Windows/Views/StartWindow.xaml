@@ -27,30 +27,25 @@
                 <RowDefinition Height="Auto" MinHeight="100"></RowDefinition>
             </Grid.RowDefinitions>
 
-
+            
             <Grid Grid.Row="0" Height="30">
-                <TextBlock Text="   Недавние проекты" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="-7,0,0,0"/>
+                <TextBlock Text="Недавние проекты" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="20,0,0,0"/>
             </Grid>
 
-
-            <Grid Background="DarkGray" Grid.Row="1">
+            <Grid Background="LightGray" Grid.Row="1">
                 <DockPanel Height="15">
-
-
                     <Grid HorizontalAlignment="Stretch" >
-                        <TextBlock Text="       Имя"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-7,2,0,0" />
+                        <TextBlock Text="Имя"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0" />
                     </Grid>
-                    <Grid  HorizontalAlignment="Stretch" >
-
-                    </Grid>
-                    <Grid HorizontalAlignment="Stretch" >
-                        <TextBlock Text="Дата создания  Дата изменения  "  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="345,0,0,0"/>
-                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <TextBlock Text="Дата изменения"  VerticalAlignment="Center"/>
+                        <TextBlock Text="Дата создания"  VerticalAlignment="Center"  Margin="20 0"/>
+                    </StackPanel>
 
                 </DockPanel>
             </Grid>
             <Grid Grid.Row="2" VerticalAlignment="Top">
-                <ScrollViewer Height="225" VerticalScrollBarVisibility="Visible"  >
+                <ScrollViewer Height="225" VerticalScrollBarVisibility="Auto"  >
                     <ListBox Name="LastPtoject"  ItemsSource="{Binding Path=LastProjects}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -60,7 +55,24 @@
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <Grid Margin="15, 0, 0, 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="350"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" >
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </Grid>
+                                    <Grid Grid.Column="1" HorizontalAlignment="Left" >
+                                        <Label Content="{Binding ChangeDate}" />
+                                    </Grid>
+                                    <Grid Grid.Column="2" HorizontalAlignment="Left">
+                                        <Label Content="{Binding CreationDate}"/>
+                                    </Grid>
+
+                                </Grid>
+                                
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
