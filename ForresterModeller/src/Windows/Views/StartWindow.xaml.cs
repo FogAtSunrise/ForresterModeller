@@ -1,29 +1,24 @@
-﻿
-using ForresterModeller.src.ProjectManager;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.Windows.ViewModels;
 using ForresterModeller.Windows.Views;
+using ReactiveUI;
 using Button = System.Windows.Controls.Button;
 using Label = System.Windows.Controls.Label;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
-using ForresterModeller.src.Windows;
-using ForresterModeller.src.Windows.ViewModels;
-using ReactiveUI;
-using System.Reactive.Linq;
 
-namespace ForresterModeller
+namespace ForresterModeller.src.Windows.Views
 {
     /// <summary>
     /// Логика взаимодействия для Window1.xaml
     /// </summary>
-    public partial class Window1 : Window, IViewFor<StartWindowViewModel>
+    public partial class StartWindow : Window, IViewFor<StartWindowViewModel>
     {
-        public Window1()
+        public StartWindow()
         {
             InitializeComponent();
            
@@ -77,11 +72,7 @@ namespace ForresterModeller
             MainWindow dialog = new MainWindow(openFileDialog1.FileName);
            this.Close();
            dialog.ShowDialog();
-           
-
             }
-
-
         }
         
 
