@@ -1,17 +1,10 @@
 ﻿using ForresterModeller.Windows.Views;
 using Microsoft.Win32;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reactive;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using System.Windows;
-using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.ProjectManager;
 
 namespace ForresterModeller.src.Windows.ViewModels
@@ -42,7 +35,6 @@ namespace ForresterModeller.src.Windows.ViewModels
             set { this.RaiseAndSetIfChanged(ref _dialogResult, value); }
         }
 
-
         /// <summary>
         /// Открыть существующий проект
         /// Открывает диаологовое окно, по выбранному json инициализирует активный проект необходимыми данными
@@ -64,11 +56,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 openFileDialog.RestoreDirectory = true;
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    MainWindow mainWindow = new MainWindow(openFileDialog.FileName);
-                    AddProject(openFileDialog.FileName);
-                    this.DialogResult = true;
-                    mainWindow.ShowDialog();
-                    //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
+                    OpenProject(openFileDialog.FileName);
                 }
             });
 
@@ -79,11 +67,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 var dialogResult = window.ShowDialog();
                 if (dialogResult == true)
                 {
-                    MainWindow mainWindow = new MainWindow(proj.ViewModel.FileName);
-                    AddProject(proj.ViewModel.FileName);
-                    this.DialogResult = true;
-                    mainWindow.ShowDialog();
-                    //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
+                    OpenProject(proj.ViewModel.FileName);
                 }
             });
 
@@ -91,6 +75,17 @@ namespace ForresterModeller.src.Windows.ViewModels
 
         }
 
+        public void OpenProject(string pathToProj)
+        {
+            if (File.Exists(pathToProj))
+            {
+                MainWindow mainWindow = new MainWindow(pathToProj);
+                AddProject(pathToProj);
+                this.DialogResult = true;
+                mainWindow.ShowDialog();
+                //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
+            }
+        }
         private static List<Project> GetActualProjectList()
         {
             var uniquePaths = new HashSet<string>();
@@ -132,7 +127,6 @@ namespace ForresterModeller.src.Windows.ViewModels
                 file.Close();
                 LastProjects = GetActualProjectList();
             }
-
         }
     }
 }

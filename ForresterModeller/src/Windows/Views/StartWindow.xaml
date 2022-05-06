@@ -27,7 +27,7 @@
                 <RowDefinition Height="Auto" MinHeight="100"></RowDefinition>
             </Grid.RowDefinitions>
 
-            
+
             <Grid Grid.Row="0" Height="30">
                 <TextBlock Text="Недавние проекты" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="25" Margin="20,0,0,0"/>
             </Grid>
@@ -46,7 +46,8 @@
             </Grid>
             <Grid Grid.Row="2" VerticalAlignment="Top">
                 <ScrollViewer Height="225" VerticalScrollBarVisibility="Auto"  >
-                    <ListBox Name="LastPtoject"  ItemsSource="{Binding Path=LastProjects}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
+                    <ListBox Name="LastProject"  ItemsSource="{Binding Path=LastProjects, UpdateSourceTrigger=PropertyChanged}" 
+                             MouseLeftButtonUp="LastPtoject_OnMouseLeftButtonUp">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Grid.IsSharedSizeScope="True"/>
@@ -62,7 +63,7 @@
                                         <ColumnDefinition Width="100"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0" >
-                                        <TextBlock Text="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Name}"  TextWrapping="Wrap"/>
                                     </Grid>
                                     <Grid Grid.Column="1" HorizontalAlignment="Left" >
                                         <Label Content="{Binding ChangeDate}" />
@@ -70,9 +71,7 @@
                                     <Grid Grid.Column="2" HorizontalAlignment="Left">
                                         <Label Content="{Binding CreationDate}"/>
                                     </Grid>
-
                                 </Grid>
-                                
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

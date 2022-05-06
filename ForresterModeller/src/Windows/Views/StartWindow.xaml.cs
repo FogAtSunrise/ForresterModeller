@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Windows.ViewModels;
-using ForresterModeller.Windows.Views;
 using ReactiveUI;
-using Button = System.Windows.Controls.Button;
-using Label = System.Windows.Controls.Label;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace ForresterModeller.src.Windows.Views
 {
@@ -30,6 +24,15 @@ namespace ForresterModeller.src.Windows.Views
         {
             get => ViewModel;
             set => ViewModel = (StartWindowViewModel)value;
+        }
+
+        private void LastPtoject_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (((ListBox)sender).SelectedItem != null)
+            {
+                var selected = (Project)((ListBox)sender).SelectedItem;
+                ViewModel.OpenProject(selected.GetFullName());
+            }
         }
     }
 }
