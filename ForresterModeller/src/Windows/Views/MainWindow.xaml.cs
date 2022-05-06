@@ -3,10 +3,6 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Windows;
 using System.Windows.Controls;
-using ForresterModeller.Pages.Tools;
-using ForresterModeller.src.Interfaces;
-using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ForresterModeller.src.Windows.ViewModels;
@@ -19,26 +15,25 @@ namespace ForresterModeller.Windows.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ApplicationManager manager = new();
 
-        public MainWindow()
+        public MainWindow(StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
             Project a = new Project{Name = "naaame of proj"};
             a.Diagrams.Add(new DiagramManager("1", a));
             a.Diagrams.Add(new DiagramManager("12", a));
             a.Diagrams.Add(new DiagramManager("123", a));
-            DataContext = new MainWindowViewModel(a);
+            DataContext = new MainWindowViewModel(a, startWindowVM);
             //OpenPageInFrame(ToolsFrame, new DiagramTools());
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
         }
 
-        public MainWindow(string path)
+        public MainWindow(string path, StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path)); ;
+            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path), startWindowVM); ;
         }
 
         private void PrintFormule(string form)
@@ -52,8 +47,6 @@ namespace ForresterModeller.Windows.Views
             PrintFormule(input_formul.Text.ToString());
             input_formul.Text = "";
         }
-
-        private string a;
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {

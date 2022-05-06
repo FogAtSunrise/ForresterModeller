@@ -79,7 +79,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             if (File.Exists(pathToProj))
             {
-                MainWindow mainWindow = new MainWindow(pathToProj);
+                MainWindow mainWindow = new MainWindow(pathToProj, this);
                 AddProject(pathToProj);
                 this.DialogResult = true;
                 mainWindow.ShowDialog();

@@ -1,24 +1,16 @@
 ﻿
 using ForresterModeller.src.Nodes.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using System.Windows;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
 using ReactiveUI;
 using MessageBox = System.Windows.MessageBox;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.ProjectManager
 {
@@ -110,7 +102,6 @@ namespace ForresterModeller.src.ProjectManager
             PathToProject = DefaultPath + Name;
             CreationDate = DateTime.Now;
             ChangeDate = DateTime.Now;
-
         }
 
 
@@ -184,13 +175,16 @@ namespace ForresterModeller.src.ProjectManager
         /// <summary>
         /// сохранить изменения существующего проекта
         /// </summary>
-        public void SaveOldProject()
+        public void SaveOldProject(StartWindowViewModel startVM)
         {
+            ChangeDate = DateTime.Now;
             if (Directory.Exists(PathToProject))
             {
                 Loader.WriteFileJson(Name, PathToProject, ToJson());
             }
             else SaveNewProject();
+            startVM.AddProject(PathToProject + "\\" + Name + ".json");
+            System.Windows.MessageBox.Show("Проект \"" + Name + "\" сохранён.");
         }
 
         /// <summary>
@@ -225,23 +219,16 @@ namespace ForresterModeller.src.ProjectManager
 
             JsonArray projectModuls = new JsonArray();
 
-
-
             //Объект проекта, он один
             JsonObject ProjectJson = new JsonObject
-
             {
                 //Информация о проекте
                 ["Name"] = Name,
                 ["CreationDate"] = CreationDate,
                 ["ChangeDate"] = DateTime.Now,
-
                 //Список файлов проекта
                 ["ListAllFiles"] = projectFiles
-
             };
-
-
             return ProjectJson;
         }
 
@@ -251,6 +238,7 @@ namespace ForresterModeller.src.ProjectManager
             {
                 Name = obj!["Name"]!.GetValue<string>();
                 CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
+                ChangeDate = obj!["ChangeDate"]!.GetValue<DateTime>();
 
                 JsonArray projectFiles = obj["ListAllFiles"]!.AsArray();
                 foreach (var file in projectFiles)
