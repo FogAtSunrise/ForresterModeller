@@ -23,8 +23,8 @@ namespace ForresterModeller.src.Windows.ViewModels
         public TabControlViewModel TabControlVM { get; } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
-        public PlotterTools PlotterToolsMW { get; set; } = new();
-        public DiagramTools DiagramToolsWM { get; set; }
+        public PlotterTools PlotterToolsVM { get; set; } = new();
+        public DiagramTools DiagramToolsVM { get; set; }
         public ContentControl ToolContent { get; set; } = new();
         public static Project ProjectInstance;
         private Project _activeProject;
@@ -37,7 +37,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 ProjectInstance = _activeProject;
             }
         }
-
+        private StartWindowViewModel _startWindowVM { get; set; }
 
         #region commands
         //Создать новую диаграмму
@@ -56,21 +56,27 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
 
         #endregion
-        public MainWindowViewModel(Project project)
+        public MainWindowViewModel(Project project, StartWindowViewModel StartWindowVM)
         {
+            _startWindowVM = StartWindowVM;
             ActiveProject = project;
+            ActiveProject.PropertyChanged += ActiveProject_PropertyChanged;
             TabControlVM.PropertyChanged += ActiveTabChanged;
             CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => AddTab(CreateDiagramManager()));
-            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager(ActiveProject){ Name = "Диаграмма12" }));
+            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager(ActiveProject) { Name = "Диаграмма12" }));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<Unit>(o => ExecuteModelling());
-            OpenTestGraph = ReactiveCommand.Create<Unit>(u => AddTab(TestPlot()));
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
-            DiagramToolsWM = new(project: ActiveProject);
+            DiagramToolsVM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
             CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
+        }
+
+        private void ActiveProject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var proj = (Project)sender;
         }
 
         /// <summary>
@@ -118,12 +124,12 @@ namespace ForresterModeller.src.Windows.ViewModels
                 var manager = tbControl.ActiveTab?.WAManager;
                 if (manager is DiagramManager)
                 {
-                    ToolContent.Content = DiagramToolsWM;
+                    ToolContent.Content = DiagramToolsVM;
                 }
                 else if (manager is PlotManager)
                 {
-                    PlotterToolsMW.DataContext = manager;
-                    ToolContent.Content = PlotterToolsMW;
+                    PlotterToolsVM.DataContext = manager;
+                    ToolContent.Content = PlotterToolsVM;
                 }
             }
         }
@@ -135,7 +141,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 {
                     AddTab(CalculateGraphByCore());
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     System.Windows.MessageBox.Show("Ваша модель некорректна!\n" + e.Message);
                 }
@@ -143,7 +149,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         private void AddMathView()
         {
-          
+
             if (TabControlVM.ActiveTab == null || TabControlVM.ActiveTab.WAManager is not DiagramManager)
             {
                 System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
@@ -151,7 +157,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             else
             {
                 var diagr = (DiagramManager)TabControlVM.ActiveTab.WAManager;
-                var math = new MatViewManager(diagr); 
+                var math = new MatViewManager(diagr);
                 math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
                 AddTab(math);
 
@@ -184,12 +190,6 @@ namespace ForresterModeller.src.Windows.ViewModels
             return plotmodel;
         }
 
-        private PlotManager TestPlot()
-        {
-            return new PlotManager();
-        }
-
-
         /// <summary>
         /// Открыть существующий проект
         /// Открывает диаологовое окно, по выбранному json инициализирует активный проект необходимыми данными
@@ -199,8 +199,7 @@ namespace ForresterModeller.src.Windows.ViewModels
 
             if (ActiveProject != null)
             {
-                ActiveProject.SaveOldProject();
-                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name); ////////////////////////////////
+                ActiveProject.SaveOldProject(_startWindowVM);
                 CloseAllTabs();
             }
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -209,9 +208,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ActiveProject = Loader.InitProjectByPath(openFileDialog.FileName);
-                if (ActiveProject != null)
-                    System.Windows.MessageBox.Show("Открылся " + ActiveProject.Name);////////////////////////////////
-
+                _startWindowVM.AddProject(ActiveProject.GetFullName());
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
         }
@@ -224,25 +221,19 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             if (ActiveProject != null)
             {
-                ActiveProject.SaveOldProject();
-                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name);////////////////////////////////
+                ActiveProject.SaveOldProject(_startWindowVM);
             }
             CreateProject proj = new CreateProject();
             var window = proj as Window;
             var dialogResult = window.ShowDialog();
 
             if (dialogResult == true)
-
             {
-                //System.Windows.MessageBox.Show("Открылсяzzzzzzzzzzzzz " + proj.ViewModel.FileName);
                 ActiveProject = Loader.InitProjectByPath(proj.ViewModel.FileName);
-                if (ActiveProject != null)
-                    System.Windows.MessageBox.Show("Открылся " + ActiveProject.Name);////////////////////////////////
-
+                _startWindowVM.AddProject(proj.ViewModel.FileName);
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
         }
-
 
         /// <summary>
         /// Создать проект
@@ -252,30 +243,9 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             if (ActiveProject != null)
             {
-                ActiveProject.SaveOldProject();
-                System.Windows.MessageBox.Show("Сохранился текущий активный проект " + ActiveProject.Name);////////////////////////////////
+                ActiveProject.SaveOldProject(_startWindowVM);
             }
 
         }
-        public ContentControl ExecuteCore()
-        {
-            float t = 1, dt = 0.1f;
-            var c = ForesterNodeCore.Program.GetCurve(
-                "c a 1 | c b 2 | l dc b a 0 | f nt dc/2 | d boo loo 1 b nt 0",
-                new List<NodeIdentificator> {
-                    new NodeIdentificator("dc"),
-                    new NodeIdentificator("nt"),
-                    new NodeIdentificator("boo"),
-                    new NodeIdentificator("loo"),
-                },
-                t,
-                dt
-            );
-            var plotmodel = new PlotManager(c, t, dt, ActiveProject);
-            plotmodel.XLabel = "Время (недели)FFF";
-            plotmodel.YLabel = "Объем товара (единицы) ";
-            return plotmodel.GenerateActualPlot();
-        }
-
     }
 }

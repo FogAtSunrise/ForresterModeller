@@ -16,13 +16,12 @@
     <Grid>
         <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Проект">
-                <MenuItem Header="Создать" Command="{Binding  CreateNewProject}" />
+                <MenuItem Header="Создать" Command="{Binding CreateNewProject}" />
                 <MenuItem Header="Открыть"   Command="{Binding  InitProjectByPath}"/>
                 <MenuItem Header="Сохранить" Command="{Binding SaveProject}"/>
                 <MenuItem Header="Сохранить как" />
             </MenuItem>
             <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagramTab }"/>
-            <MenuItem Header="Построить график"  Command="{Binding OpenTestGraph }" />
             <MenuItem Header="Создать представление" Command="{Binding OpenMathView}"/>
             <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}"/>
             <MenuItem Header="Справка"/>

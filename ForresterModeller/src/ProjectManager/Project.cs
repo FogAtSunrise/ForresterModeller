@@ -1,28 +1,20 @@
 ﻿
 using ForresterModeller.src.Nodes.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using System.Windows;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
 using ReactiveUI;
 using MessageBox = System.Windows.MessageBox;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.ProjectManager
 {
-    public class Project: ReactiveObject
+    public class Project : ReactiveObject
     {
         /// <summary>
         /// дефолтные значения имени и пути проекта
@@ -36,7 +28,9 @@ namespace ForresterModeller.src.ProjectManager
         List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
 
         private ObservableCollection<DiagramManager> _diagrams = new();
-        public ObservableCollection<DiagramManager> Diagrams { get => _diagrams; 
+        public ObservableCollection<DiagramManager> Diagrams
+        {
+            get => _diagrams;
             set => this.RaiseAndSetIfChanged(ref _diagrams, value);
         }
 
@@ -52,14 +46,14 @@ namespace ForresterModeller.src.ProjectManager
             DiagramManager diagram = new DiagramManager(d, this);
             try
             {
-                StreamReader r = new StreamReader(PathToProject + "\\diagrams\\"+d+".json");
+                StreamReader r = new StreamReader(PathToProject + "\\diagrams\\" + d + ".json");
                 string json = r.ReadToEnd();
                 var jobj = JsonObject.Parse(json);
                 r.Close();
                 diagram.JsonToDiagram(jobj.AsObject());
 
             }
-            catch { MessageBox.Show("Ошибка файла диаграммы "+d); }
+            catch { MessageBox.Show("Ошибка файла диаграммы " + d); }
 
             return diagram;
         }
@@ -71,35 +65,24 @@ namespace ForresterModeller.src.ProjectManager
             if (!Directory.Exists(PathToProject + "\\diagrams"))
             {
                 Loader.CreateDirectory(PathToProject + "\\diagrams");
-                
+
             }
             Loader.WriteFileJson(diagram.Name, PathToProject + "\\diagrams", json);
 
         }
 
-        //тест метод, удалите его обязательно
-        public string getIdMod(int numb)
-        {
-            if (allProjectModels.Count >= numb)
-                return allProjectModels[numb].Id;
-            return "";
-        }
-
-
         public string Name { get; set; }
 
-        DateTime CreationDate;
-        public DateTime getCreationDate() { return CreationDate; }
-        DateTime ChangeDate;
-        public DateTime getChangeDate() { return ChangeDate; }
+        public DateTime CreationDate { get; private set; }
+        public DateTime ChangeDate { get; private set; }
 
         /// <summary>
         /// хранит директорию, в которой хранится json проекта!!! т.е. не включает в себя имя json 
         /// </summary>
-        string PathToProject;
-        public string getPath() { return PathToProject; }
+        public string PathToProject { get; set; }
 
-     
+        public string GetFullName() => PathToProject + "\\" + Name + ".json";
+
         /// <summary>
         /// конструкторы
         /// </summary>
@@ -116,10 +99,9 @@ namespace ForresterModeller.src.ProjectManager
         public Project()
         {
             Name = DefaultName;
-            PathToProject = DefaultPath+Name;
+            PathToProject = DefaultPath + Name;
             CreationDate = DateTime.Now;
             ChangeDate = DateTime.Now;
-
         }
 
 
@@ -144,7 +126,7 @@ namespace ForresterModeller.src.ProjectManager
             ForesterNodeModel find = allProjectModels.Find((item) => item.Id == id);
             if (find != null)
                 allProjectModels.Remove(find);
-           
+
         }
         /// <summary>
         /// добавить имя файла в список файлов проекта
@@ -153,19 +135,19 @@ namespace ForresterModeller.src.ProjectManager
         public void addFiles(string name)
         {
 
-          //  listAllFiles.Add(name);
+            //  listAllFiles.Add(name);
             //...
         }
 
 
         public void deleteFile(string name)
         {
-           // listAllFiles.Add(name);
+            // listAllFiles.Add(name);
             //...
         }
 
 
- 
+
 
         /// <summary>
         /// получить экземпляр модели по id
@@ -175,7 +157,7 @@ namespace ForresterModeller.src.ProjectManager
         /// <returns></returns>
         public ForesterNodeModel getModelById(string id)
         {
-           
+
 
             foreach (var diag in Diagrams)
             {
@@ -193,13 +175,16 @@ namespace ForresterModeller.src.ProjectManager
         /// <summary>
         /// сохранить изменения существующего проекта
         /// </summary>
-        public void SaveOldProject()
+        public void SaveOldProject(StartWindowViewModel startVM)
         {
+            ChangeDate = DateTime.Now;
             if (Directory.Exists(PathToProject))
             {
                 Loader.WriteFileJson(Name, PathToProject, ToJson());
             }
             else SaveNewProject();
+            startVM.AddProject(PathToProject + "\\" + Name + ".json");
+            System.Windows.MessageBox.Show("Проект \"" + Name + "\" сохранён.");
         }
 
         /// <summary>
@@ -207,7 +192,6 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         public void SaveNewProject()
         {
-
             string ind = Loader.CreateDirectory(PathToProject);
             Name += ind;
             PathToProject += ind;
@@ -215,16 +199,15 @@ namespace ForresterModeller.src.ProjectManager
             Loader.CreateDirectory(PathToProject + "\\diagrams");
             JsonObject jsonVerst = ToJson();
             Loader.WriteFileJson(Name, PathToProject, jsonVerst);
-
         }
 
-       
+
 
         /// <summary>
         /// переводит содержимое проекта в json, использовать при сохранении
         /// </summary>
 
-       public  JsonObject  ToJson()
+        public JsonObject ToJson()
         {
 
             JsonArray projectFiles = new JsonArray();
@@ -236,23 +219,16 @@ namespace ForresterModeller.src.ProjectManager
 
             JsonArray projectModuls = new JsonArray();
 
-
-
             //Объект проекта, он один
             JsonObject ProjectJson = new JsonObject
-
             {
                 //Информация о проекте
                 ["Name"] = Name,
                 ["CreationDate"] = CreationDate,
                 ["ChangeDate"] = DateTime.Now,
-
                 //Список файлов проекта
                 ["ListAllFiles"] = projectFiles
-
             };
-
-          
             return ProjectJson;
         }
 
@@ -262,16 +238,17 @@ namespace ForresterModeller.src.ProjectManager
             {
                 Name = obj!["Name"]!.GetValue<string>();
                 CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
+                ChangeDate = obj!["ChangeDate"]!.GetValue<DateTime>();
 
                 JsonArray projectFiles = obj["ListAllFiles"]!.AsArray();
                 foreach (var file in projectFiles)
                 {
-                    DiagramManager d= getDiagramFromFileByName(file.ToString());
+                    DiagramManager d = getDiagramFromFileByName(file.ToString());
                     Diagrams.Add(d);
                 }
                 ConnectLinkNodes();
             }
-            catch 
+            catch
             {
                 MessageBox.Show("Не верно выбран файл проекта");
             }
@@ -281,9 +258,9 @@ namespace ForresterModeller.src.ProjectManager
         {
             foreach (var diagram in Diagrams)
             {
-                foreach(var node in diagram.Content.ViewModel.Nodes.Items)
+                foreach (var node in diagram.Content.ViewModel.Nodes.Items)
                 {
-                    if(node is LinkNodeModel)
+                    if (node is LinkNodeModel)
                     {
                         ((LinkNodeModel)node).AutoConectionLinks();
                     }
