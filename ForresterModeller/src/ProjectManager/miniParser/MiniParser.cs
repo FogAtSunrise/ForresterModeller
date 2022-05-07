@@ -127,6 +127,11 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         const int tSave = 46;
         const int tLScob = 47;
         const int tRScob = 48;
+        const int tAbs = 49;
+        const int tMin = 50;
+        const int tMax = 51;
+        const int tFunc = 52;
+        // Piecewise((UOF, UOF<ALF) , (ALF, True))
 
         const int tEnd = 100;
         const int tError = 1000;
@@ -275,9 +280,15 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             {
                 if (lex.numb != tEnd)
                     pointer++;
-                return new Lexem(tError, "Пропущена переменная или константа");
+                return new Lexem(tError, "Пропущен операнд");
             }
 
+        }
+
+        static Lexem minormax()
+        {
+            
+            return new Lexem(4,"");
         }
 
 
@@ -354,7 +365,30 @@ namespace ForresterModeller.src.ProjectManager.miniParser
                 {
                     while ((Char.IsLetterOrDigit(text[pointer]) || text[pointer] == '_') && text[pointer] != '\0' && text[pointer] != ' ')
                         value += text[pointer++];
-                    return new Lexem(tId, value);
+
+
+                    if (value == "Piecewise")
+                    {
+                        return new Lexem(tFunc, value);
+                    }
+                    else
+
+                    if (value == "abs")
+                    {
+                        return new Lexem(tAbs, value);
+                    }
+                    else
+                     if (value == "min")
+                    {
+                        return new Lexem(tMin, value);
+                    }
+                    else
+                        if (value == "max")
+                    {
+                        return new Lexem(tMax, value);
+                    }
+                
+                        return new Lexem(tId, value);
 
                 }
                 else
