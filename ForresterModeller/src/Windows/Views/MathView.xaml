@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
            >
     <Grid Background="AliceBlue">
-        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
+        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Grid.IsSharedSizeScope="True"/>

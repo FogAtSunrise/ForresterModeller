@@ -27,16 +27,16 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         {
             _clearAll();
             return _pars.CheckFormula(t);
-        }  
+        }
 
         public static Result CheckNull(string t)
         {
             string t1 = t.Trim();
             if (t1.Length < 1)
                 return new Result(false, "Введите значение");
-            if(t.All(c => Char.IsLetterOrDigit(c) ||  c == '_' || c == ' '))
-                return new Result(false, "Лишние символы"); 
-            return new Result(true, "");
+            if (t.All(c => Char.IsLetterOrDigit(c) || c == '_' || c == ' '))
+                return new Result(true, "");
+            return new Result(false, "Лишние символы");
         }
     }
 }

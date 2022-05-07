@@ -122,8 +122,18 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             public double[] Y { get; }
             private bool _isVisible = true;
             private string _description;
-            public bool IsVisible { get => _isVisible; set => this.RaiseAndSetIfChanged(ref _isVisible, value); }
-            public string Description { get => _description; set => this.RaiseAndSetIfChanged(ref _description, value); }
+
+            public bool IsVisible
+            {
+                get => _isVisible; 
+                set => this.RaiseAndSetIfChanged(ref _isVisible, value);
+            }
+
+            public string Description
+            {
+                get => _description; 
+                set => this.RaiseAndSetIfChanged(ref _description, value);
+            }
         }
 
         /// <summary>
