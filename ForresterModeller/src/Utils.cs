@@ -19,7 +19,7 @@ namespace ForresterModeller.src
             }
             catch (Exception e)
             {
-                System.Windows.MessageBox.Show(str + " - не дабл!");
+                
             }
 
             return digit;

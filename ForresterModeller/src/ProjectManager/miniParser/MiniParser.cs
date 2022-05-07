@@ -2,9 +2,6 @@
 using ForresterModeller.src.Windows.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ForresterModeller.src.ProjectManager.miniParser
 {
@@ -34,27 +31,27 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         public string str;
 
     };
-    public static class MinParser
+    public class MinParser
     {
         /// <summary>
         /// МЕТОД ПРИНИМАЮЩИЙ ПРОПЕРТИ И В ЗАВИСИМООСТИ ОТ ИХ ВИДА ВЫЗЫВАЮЩИЙ НУЖНУЮ ПРОВЕРКУ
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public static Result isCorrect(String name, String value)
+        public Result isCorrect(String name, String value)
         {
             switch (name)
             {
                 case "Уравнение":
-                    return checkFormula(value);
+                    return CheckFormula(value);
                     break;
 
                 case "Обозначение":
-                    return checkName(value);
+                    return CheckName(value);
 
 
                 case "Значение":
-                    return checkConst(value);
+                    return CheckConst(value);
 
 
                 case "Имя исходящего потока":
@@ -75,8 +72,9 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             return new Result(true, "");
         }
 
+
         //############################---ДЛЯ КОНСТАНТА---###########################################################
-        public static Result checkConst(string val)
+        public Result CheckConst(string val)
         {
             if (val != "")
             {
@@ -102,7 +100,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         //############################---ДЛЯ ОБОЗНАЧЕНИЯ---###########################################################
 
-        public static Result checkName(string name)
+        public Result CheckName(string name)
         {
             if (name != "")
             {
@@ -132,9 +130,9 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         const int tError = 1000;
 
         //переменные
-        static string text;
-        public static List<Lexem> allLex = new List<Lexem>();
-        static int pointer;
+        string text;
+        public List<Lexem> allLex = new List<Lexem>();
+        int pointer;
 
 
         /// <summary>
@@ -142,7 +140,8 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static Result checkFormula(string t)
+
+        public Result CheckFormula(string t)
         {
             if (t == "")
                 return new Result(false, "Уравнение отсутствует");
@@ -191,11 +190,11 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         ///методы для передвижения по лексемам
         /// </summary>
         /// <returns></returns>
-        static Lexem getNextLexeme()
+        Lexem getNextLexeme()
         {
             return allLex[++pointer];
         }
-        static Lexem getCurrentLexeme()
+        Lexem getCurrentLexeme()
         {
             return allLex[pointer];
         }
@@ -203,7 +202,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         /// рекурсивный спуск 
         /// </summary>
         /// <returns></returns>
-        static Lexem checkLexeme()
+        Lexem checkLexeme()
         {
             Lexem type = multiplier();
             Lexem lex = getCurrentLexeme();
@@ -216,7 +215,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             return type;
         }
 
-        static Lexem multiplier()
+        Lexem multiplier()
         {
             Lexem type = stepen();
             Lexem lex = getCurrentLexeme();
@@ -230,7 +229,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         }
 
 
-        static Lexem stepen()
+        Lexem stepen()
         {
             Lexem type = elementaryExpressionAnalysis();
             Lexem lex = getCurrentLexeme();
@@ -243,8 +242,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             return type;
         }
 
-
-        static Lexem elementaryExpressionAnalysis()
+        Lexem elementaryExpressionAnalysis()
         {
             Lexem lex = getCurrentLexeme();
 
@@ -285,7 +283,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
 
         //отделяет от формулы одну лексему, написан по образу и подобию сканера у Крючковой
-        private static Lexem cutForm()
+        private Lexem cutForm()
         {
             string value = "";
 
@@ -367,7 +365,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             }
 
         }
-        public static string scanNumb()
+        public string scanNumb()
         {
             string value = "";
             value += text[pointer++];
