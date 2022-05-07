@@ -109,7 +109,7 @@ namespace ForresterModeller.src.Nodes.Models
 
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
                     if(nod!= null)
-                      data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
+                      data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
                 }
             }
 
