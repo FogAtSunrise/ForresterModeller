@@ -45,9 +45,8 @@ namespace ForresterModeller.Windows.Views
         }
         private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
         {
-            MinParser b = new MinParser();
            
-            Result ho = b.check(input_formul.Text.ToString());
+            Result ho = MinParser.checkFormula(input_formul.Text.ToString());
              if (ho.result)
              {
                  PrintFormule(input_formul.Text.ToString());
@@ -63,7 +62,7 @@ namespace ForresterModeller.Windows.Views
                 input_formul.Text = "";
             }
             else
-                MessageBox.Show("Давай по новой, Миша, Все хуйня! (если что, это тест на константу)"); */
+                MessageBox.Show("Давай по новой, Миша, *заблокировано РКН*! (если что, это тест на константу)"); */
         }
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

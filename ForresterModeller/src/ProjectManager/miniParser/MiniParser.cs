@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ForresterModeller.src.ProjectManager.miniParser
 {
-   
+
 
     public class Lexem
     {
@@ -34,32 +34,30 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         public string str;
 
     };
-    public class MinParser
+    public static class MinParser
     {
-
-
         /// <summary>
         /// МЕТОД ПРИНИМАЮЩИЙ ПРОПЕРТИ И В ЗАВИСИМООСТИ ОТ ИХ ВИДА ВЫЗЫВАЮЩИЙ НУЖНУЮ ПРОВЕРКУ
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public Result isCorrect(String name, String value)
+        public static Result isCorrect(String name, String value)
         {
             switch (name)
             {
                 case "Уравнение":
-                    return check(value);
+                    return checkFormula(value);
                     break;
 
                 case "Обозначение":
                     return checkName(value);
-                   
+
 
                 case "Значение":
                     return checkConst(value);
-                  
 
-               case "Имя исходящего потока":
+
+                case "Имя исходящего потока":
                     if (value == "")
                         return new Result(false, "Пустая строка");
                     else
@@ -78,7 +76,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         }
 
         //############################---ДЛЯ КОНСТАНТА---###########################################################
-        private Result checkConst(string val)
+        public static Result checkConst(string val)
         {
             if (val != "")
             {
@@ -96,7 +94,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
                 } while (allLex[allLex.Count - 1].numb != 100);
 
                 if (allLex.Count > 2 || allLex[0].numb != tNumb)
-                return new Result(false, "Это не константа");    
+                    return new Result(false, "Это не константа");
             }
             else return new Result(false, "Введите значение");
             return new Result(true, "");
@@ -104,14 +102,14 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         //############################---ДЛЯ ОБОЗНАЧЕНИЯ---###########################################################
 
-        private Result checkName(string name)
+        public static Result checkName(string name)
         {
             if (name != "")
             {
                 ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelByName(name);
-            if (nod != null)
-                return new Result(false, "Такое обозначение уже существует");
-            else return new Result(true, "");
+                if (nod != null)
+                    return new Result(false, "Такое обозначение уже существует");
+                else return new Result(true, "");
             }
             else return new Result(false, "Введите обозначение");
 
@@ -134,22 +132,22 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         const int tError = 1000;
 
         //переменные
-        string text;
-        public List<Lexem> allLex = new List<Lexem>();
-        int pointer;
+        static string text;
+        public static List<Lexem> allLex = new List<Lexem>();
+        static int pointer;
 
 
-    /// <summary>
-    /// Этот метод вызывайте для проверки уравнения
-    /// </summary>
-    /// <param name="t"></param>
-    /// <returns></returns>
-        public Result check(string t)
+        /// <summary>
+        /// Этот метод вызывайте для проверки уравнения
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static Result checkFormula(string t)
         {
             if (t == "")
                 return new Result(false, "Уравнение отсутствует");
 
-                text = t + '\0';
+            text = t + '\0';
             //разделяю формулу по запчастям, результат в  allLex
             pointer = 0;
             do
@@ -193,11 +191,11 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         ///методы для передвижения по лексемам
         /// </summary>
         /// <returns></returns>
-        Lexem getNextLexeme()
+        static Lexem getNextLexeme()
         {
             return allLex[++pointer];
         }
-        Lexem getCurrentLexeme()
+        static Lexem getCurrentLexeme()
         {
             return allLex[pointer];
         }
@@ -205,7 +203,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         /// рекурсивный спуск 
         /// </summary>
         /// <returns></returns>
-        Lexem checkLexeme()
+        static Lexem checkLexeme()
         {
             Lexem type = multiplier();
             Lexem lex = getCurrentLexeme();
@@ -218,7 +216,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             return type;
         }
 
-        Lexem multiplier()
+        static Lexem multiplier()
         {
             Lexem type = stepen();
             Lexem lex = getCurrentLexeme();
@@ -232,7 +230,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         }
 
 
-        Lexem stepen()
+        static Lexem stepen()
         {
             Lexem type = elementaryExpressionAnalysis();
             Lexem lex = getCurrentLexeme();
@@ -246,7 +244,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         }
 
 
-        Lexem elementaryExpressionAnalysis()
+        static Lexem elementaryExpressionAnalysis()
         {
             Lexem lex = getCurrentLexeme();
 
@@ -272,7 +270,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
                 pointer++;
                 return type;
             }
-           
+
             else
             {
                 if (lex.numb != tEnd)
@@ -287,7 +285,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
 
         //отделяет от формулы одну лексему, написан по образу и подобию сканера у Крючковой
-        private Lexem cutForm()
+        private static Lexem cutForm()
         {
             string value = "";
 
@@ -369,7 +367,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             }
 
         }
-        string scanNumb()
+        public static string scanNumb()
         {
             string value = "";
             value += text[pointer++];
