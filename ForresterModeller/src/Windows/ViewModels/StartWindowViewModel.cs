@@ -1,5 +1,4 @@
-﻿using ForresterModeller.Windows.Views;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.IO;

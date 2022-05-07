@@ -16,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Windows.ViewModels;
-using ForresterModeller.Windows.Views;
 using ReactiveUI;
 
 namespace ForresterModeller.src.Windows
