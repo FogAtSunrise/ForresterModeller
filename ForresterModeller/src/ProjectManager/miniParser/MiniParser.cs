@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ForresterModeller.src.Nodes.Models;
+using ForresterModeller.src.Windows.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +8,7 @@ using System.Threading.Tasks;
 
 namespace ForresterModeller.src.ProjectManager.miniParser
 {
-    /*
-MinParser b = new MinParser();
-    Result ho = b.check("g+12-hj)*kj/3+kj");
-foreach (Lexem h in b.allLex)
-{
-    Console.WriteLine(h.str);
-}
-Console.WriteLine("error:" + ho.str);*/
+   
 
     public class Lexem
     {
@@ -32,16 +27,98 @@ Console.WriteLine("error:" + ho.str);*/
     {
         public Result(bool n, string s)
         {
-            numb = n;
+            result = n;
             str = s;
         }
-        public bool numb;
+        public bool result;
         public string str;
 
     };
     public class MinParser
     {
 
+
+        /// <summary>
+        /// МЕТОД ПРИНИМАЮЩИЙ ПРОПЕРТИ И В ЗАВИСИМООСТИ ОТ ИХ ВИДА ВЫЗЫВАЮЩИЙ НУЖНУЮ ПРОВЕРКУ
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public bool isCorrect(String name, String value)
+        {
+            switch (name)
+            {
+                case "Уравнение":
+                    Result t = check(value);
+                    return t.result; break;
+
+                case "Обозначение":
+                    t = checkName(value);
+                    return t.result; break;
+
+                case "Значение":
+                    t =  checkConst(value);
+                    return t.result; break;
+
+               case "Имя исходящего потока":
+                    if (value == "")
+                        return false;
+                    else
+                    return true; break;
+
+                case "Имя велечены запаздывания":
+                    if (value == "")
+                        return false;
+                    else
+                        return true; break;
+
+                default: return true;
+
+            }
+            return true;
+        }
+
+        //############################---ДЛЯ КОНСТАНТА---###########################################################
+        private Result checkConst(string val)
+        {
+            if (val != "")
+            {
+                text = val + '\0';
+                //разделяю формулу по запчастям, результат в  allLex
+                pointer = 0;
+                do
+                {
+                    allLex.Add(cutForm());
+
+                    //если ошибка
+                    if (allLex[allLex.Count - 1].numb == 1000)
+                        return new Result(false, allLex[allLex.Count - 1].str);
+
+                } while (allLex[allLex.Count - 1].numb != 100);
+
+                if (allLex.Count > 2 || allLex[0].numb != tNumb)
+                return new Result(false, "Это не константа");    
+            }
+            else return new Result(false, "Введите значение");
+            return new Result(true, "");
+        }
+
+        //############################---ДЛЯ ОБОЗНАЧЕНИЯ---###########################################################
+
+        private Result checkName(string name)
+        {
+            if (name != "")
+            {
+                ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelByName(name);
+            if (nod != null)
+                return new Result(false, "Такое обозначение уже существует");
+            else return new Result(true, "");
+            }
+            else return new Result(false, "Введите обозначение");
+
+        }
+
+        //############################---ВСЁ ДЛЯ УРАВНЕНИЙ---###########################################################
+        //константы
         const int tId = 1;
         const int tNumb = 2;
         const int tPlus = 41;
@@ -56,16 +133,23 @@ Console.WriteLine("error:" + ho.str);*/
         const int tEnd = 100;
         const int tError = 1000;
 
-
+        //переменные
         string text;
         public List<Lexem> allLex = new List<Lexem>();
         int pointer;
 
-        //##########################################################################################################
+
+    /// <summary>
+    /// Этот метод вызывайте для проверки уравнения
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
         public Result check(string t)
         {
+            if (t == "")
+                return new Result(false, "Уравнение отсутствует");
 
-            text = t + '\0';
+                text = t + '\0';
             //разделяю формулу по запчастям, результат в  allLex
             pointer = 0;
             do
@@ -99,12 +183,16 @@ Console.WriteLine("error:" + ho.str);*/
             if (allLex[pointer].numb != tEnd)
             {
                 //Console.WriteLine("error:" + allLex[pointer].str);
-                return new Result(false, "Ввод максимально неправильный, даже близко");
+                return new Result(false, "Ввод не правильный, видимо, вы пропустили какой-то знак");
             }
 
             return new Result(true, t);
         }
         //##########################################################################################################
+        /// <summary>
+        ///методы для передвижения по лексемам
+        /// </summary>
+        /// <returns></returns>
         Lexem getNextLexeme()
         {
             return allLex[++pointer];
@@ -113,7 +201,10 @@ Console.WriteLine("error:" + ho.str);*/
         {
             return allLex[pointer];
         }
-
+        /// <summary>
+        /// рекурсивный спуск 
+        /// </summary>
+        /// <returns></returns>
         Lexem checkLexeme()
         {
             Lexem type = multiplier();
@@ -165,7 +256,12 @@ Console.WriteLine("error:" + ho.str);*/
                 return lex;
             }
 
-
+            else
+                if (lex.numb == tError)
+            {
+                pointer++;
+                return lex;
+            }
             else if (lex.numb == tLScob)
             {
                 pointer++;
@@ -176,12 +272,7 @@ Console.WriteLine("error:" + ho.str);*/
                 pointer++;
                 return type;
             }
-            else
-                if (lex.numb == tError)
-            {
-                pointer++;
-                return lex;
-            }
+           
             else
             {
                 if (lex.numb != tEnd)
@@ -192,18 +283,10 @@ Console.WriteLine("error:" + ho.str);*/
         }
 
 
-
-
-
-
-
-
-
-
         //##########################################################################################################
 
 
-        //отделяет от формулы одну лексему
+        //отделяет от формулы одну лексему, написан по образу и подобию сканера у Крючковой
         private Lexem cutForm()
         {
             string value = "";

@@ -46,14 +46,24 @@ namespace ForresterModeller.Windows.Views
         private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
         {
             MinParser b = new MinParser();
+           
             Result ho = b.check(input_formul.Text.ToString());
-            if (ho.numb)
+             if (ho.result)
+             {
+                 PrintFormule(input_formul.Text.ToString());
+                 input_formul.Text = "";
+             }
+             else
+                 MessageBox.Show(ho.str);
+           /* 
+             bool r = b.isCorrect("Значение", input_formul.Text.ToString());
+            if (r)
             {
                 PrintFormule(input_formul.Text.ToString());
                 input_formul.Text = "";
             }
             else
-                MessageBox.Show(ho.str);
+                MessageBox.Show("Давай по новой, Миша, Все хуйня! (если что, это тест на константу)"); */
         }
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

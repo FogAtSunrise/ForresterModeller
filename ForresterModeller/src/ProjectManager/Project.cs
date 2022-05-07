@@ -166,12 +166,27 @@ namespace ForresterModeller.src.ProjectManager
                 if (node != null)
                     return node;
             }
-
-
-
             return null;
         }
+        /// <summary>
+        /// получить экземпляр модели по обозначению
+        /// если модель не найдена, вернет null
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ForesterNodeModel getModelByName(string name)
+        {
 
+
+            foreach (var diag in Diagrams)
+            {
+                diag.UpdateNodes();
+                var node = diag.АllNodes.FirstOrDefault(x => x.Name == name);
+                if (node != null)
+                    return node;
+            }
+            return null;
+        }
         /// <summary>
         /// сохранить изменения существующего проекта
         /// </summary>
