@@ -36,6 +36,20 @@ namespace ForresterModeller.src.Nodes.Models
 
         private ForesterNodeOutputViewModel _levl;
 
+        private Result _check(string Name)
+        {
+            var r = Pars.CheckName(Name);
+            if (!r.result)
+                return r;
+            if (Name == _levl.Name || Name == _outNode.Name || Name == DelayValueName)
+            {
+                r.result = false;
+                r.str = "Имя не уникально!";
+            }
+
+            return r;
+        }
+
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();
@@ -45,20 +59,20 @@ namespace ForresterModeller.src.Nodes.Models
             {
                 Name = str;
                 _levl.Name = str;
-            }, Pars.CheckName));
+            }, _check));
 
 
             prop.Add(new PropertyViewModel("Имя исходящего потока", OutputRateName, (String str) =>
             {
                 OutputRateName = str;
                 _outNode.Name = str;
-            }, Pars.CheckName));
+            }, _check));
 
             prop.Add(new PropertyViewModel("Имя велечены запаздывания", DelayValueName, (String str) =>
             {
                 DelayValueName = str;
                 _constNode.Name = str;
-            }, Pars.CheckName));
+            }, _check));
             prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str, Pars.CheckConst));
             prop.Add(new PropertyViewModel("Глубина запаздывания", DeepDelay.ToString(), (String str) =>
             {
@@ -87,13 +101,14 @@ namespace ForresterModeller.src.Nodes.Models
 
             foreach (var inputs in Inputs.Items)
             {
-                if (inputs.Connections.Items.Count() > 0)
+                if (inputs.Connections.Items.Any())
 
                 {
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
 
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
+                    if(nod!= null)
+                      data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
                 }
             }
 
