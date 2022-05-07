@@ -43,38 +43,38 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public bool isCorrect(String name, String value)
+        public Result isCorrect(String name, String value)
         {
             switch (name)
             {
                 case "Уравнение":
-                    Result t = check(value);
-                    return t.result; break;
+                    return check(value);
+                    break;
 
                 case "Обозначение":
-                    t = checkName(value);
-                    return t.result; break;
+                    return checkName(value);
+                   
 
                 case "Значение":
-                    t =  checkConst(value);
-                    return t.result; break;
+                    return checkConst(value);
+                  
 
                case "Имя исходящего потока":
                     if (value == "")
-                        return false;
+                        return new Result(false, "Пустая строка");
                     else
-                    return true; break;
+                        return new Result(true, "");
 
                 case "Имя велечены запаздывания":
                     if (value == "")
-                        return false;
+                        return new Result(false, "Пустая строка");
                     else
-                        return true; break;
+                        return new Result(true, "");
 
-                default: return true;
+                default: return new Result(true, "");
 
             }
-            return true;
+            return new Result(true, "");
         }
 
         //############################---ДЛЯ КОНСТАНТА---###########################################################
