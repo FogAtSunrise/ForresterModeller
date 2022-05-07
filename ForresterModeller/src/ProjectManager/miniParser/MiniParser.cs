@@ -265,6 +265,11 @@ namespace ForresterModeller.src.ProjectManager.miniParser
                 pointer++;
                 return lex;
             }
+            else
+                if (lex.numb == tAbs)
+            {
+                return forAbs();
+            }
             else if (lex.numb == tLScob)
             {
                 pointer++;
@@ -285,12 +290,21 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         }
 
-        static Lexem minormax()
+        static Lexem forMinormax()
         {
             
             return new Lexem(4,"");
         }
+        static Lexem forAbs()
+        {
 
+            return new Lexem(4, "");
+        }
+        static Lexem forFunc()
+        {
+
+            return new Lexem(4, "");
+        }
 
         //##########################################################################################################
 
