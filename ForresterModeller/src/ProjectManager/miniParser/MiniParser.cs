@@ -303,6 +303,12 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             Lexem lex = getNextLexeme();
             if (lex.numb != tLScob)
                 return new Lexem(tError, "Пропущена скобка");
+            lex = getNextLexeme();
+            if (lex.numb == tRScob)
+            {
+                pointer++;
+                return new Lexem(tError, "Нет внутренностей");
+            }
             Lexem type = checkLexeme();
             lex = getCurrentLexeme();
             if (lex.numb != tRScob)

@@ -42,8 +42,10 @@ namespace ForresterModeller.src.Windows.Views
         }
         private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
         {
+            MinParser d = new MinParser();
 
-            Result ho = Pars.CheckFormula(input_formul.Text.ToString());
+            //  Result ho = Pars.CheckFormula(input_formul.Text.ToString());
+            Result ho = d.CheckFormula(input_formul.Text.ToString());
             if (ho.result)
             {
                 PrintFormule(input_formul.Text.ToString());
