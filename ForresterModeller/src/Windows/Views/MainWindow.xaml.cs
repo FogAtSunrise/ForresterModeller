@@ -1,44 +1,37 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using ForresterModeller.Pages.Tools;
-using ForresterModeller.src.Interfaces;
-using ForresterModeller.src.Nodes.Models;
-using ForresterModeller.src.Pages.Tools;
 using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ForresterModeller.src.Windows.ViewModels;
 using WpfMath.Controls;
 
-namespace ForresterModeller.Windows.Views
+namespace ForresterModeller.src.Windows.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ApplicationManager manager = new();
 
-        public MainWindow()
+        public MainWindow(StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
-            Project a = new Project{Name = "naaame of proj"};
+            Project a = new Project { Name = "naaame of proj" };
             a.Diagrams.Add(new DiagramManager("1", a));
             a.Diagrams.Add(new DiagramManager("12", a));
             a.Diagrams.Add(new DiagramManager("123", a));
-            DataContext = new MainWindowViewModel(a);
+            DataContext = new MainWindowViewModel(a, startWindowVM);
             //OpenPageInFrame(ToolsFrame, new DiagramTools());
             //тест вывода формулы
             PrintFormule(@"\frac{\pi}{a^{2n+1}} = 0");
             PrintFormule(@"x_{t_i}=x_{t_{i+1}}*12");
         }
 
-        public MainWindow(string path)
+        public MainWindow(string path, StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path)); ;
+            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path), startWindowVM); ;
         }
 
         private void PrintFormule(string form)
@@ -49,17 +42,33 @@ namespace ForresterModeller.Windows.Views
         }
         private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
         {
-            PrintFormule(input_formul.Text.ToString());
-            input_formul.Text = "";
-        }
+            MinParser d = new MinParser();
 
-        private string a;
+            //  Result ho = Pars.CheckFormula(input_formul.Text.ToString());
+            Result ho = d.CheckFormula(input_formul.Text.ToString());
+            if (ho.result)
+            {
+                PrintFormule(input_formul.Text.ToString());
+                input_formul.Text = "";
+            }
+            else
+                MessageBox.Show(ho.str);
+            /* 
+              bool r = b.isCorrect("Значение", input_formul.Text.ToString());
+             if (r)
+             {
+                 PrintFormule(input_formul.Text.ToString());
+                 input_formul.Text = "";
+             }
+             else
+                 MessageBox.Show("Давай по новой, Миша, *заблокировано РКН*! (если что, это тест на константу)"); */
+        }
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var item = ((TreeView)sender).SelectedItem;
             if (item is WorkAreaManager)
-              ((MainWindowViewModel)DataContext).OpenOrCreateTab((WorkAreaManager)item);
+                ((MainWindowViewModel)DataContext).OpenOrCreateTab((WorkAreaManager)item);
         }
     }
 }

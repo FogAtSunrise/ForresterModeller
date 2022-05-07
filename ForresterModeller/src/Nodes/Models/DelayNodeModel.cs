@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using DynamicData;
 using NodeNetwork.ViewModels;
@@ -10,6 +9,7 @@ using System.Text.Json.Nodes;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Linq;
 using System.Windows;
+using ForresterModeller.src.ProjectManager.miniParser;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -26,39 +26,54 @@ namespace ForresterModeller.src.Nodes.Models
 
         public string OutputRateName { get; set; }
 
-        public int DeepDelay { get; set;}
+        public int DeepDelay { get; set; }
 
-        public string DelayValueName { get; set;}
+        public string DelayValueName { get; set; }
 
-        public double DelayValue { get; set;}
+        public double DelayValue { get; set; }
 
         public string StartValue { get; set; }
 
         private ForesterNodeOutputViewModel _levl;
+
+        private Result _check(string Name)
+        {
+            var r = Pars.CheckName(Name);
+            if (!r.result)
+                return r;
+            if (Name == _levl.Name || Name == _outNode.Name || Name == DelayValueName)
+            {
+                r.result = false;
+                r.str = "Имя не уникально!";
+            }
+
+            return r;
+        }
 
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();
             prop.RemoveAt(0);
 
-            prop.Insert(0, new PropertyViewModel(Resource.name, Name, (String str) => {
+            prop.Insert(0, new PropertyViewModel(Resource.name, Name, (String str) =>
+            {
                 Name = str;
                 _levl.Name = str;
-            }));
+            }, _check));
 
 
             prop.Add(new PropertyViewModel("Имя исходящего потока", OutputRateName, (String str) =>
             {
                 OutputRateName = str;
                 _outNode.Name = str;
-            }));
+            }, _check));
 
             prop.Add(new PropertyViewModel("Имя велечены запаздывания", DelayValueName, (String str) =>
             {
                 DelayValueName = str;
                 _constNode.Name = str;
-            }));
-            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str));
+            }, _check));
+            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str, Pars.CheckConst));
             prop.Add(new PropertyViewModel("Глубина запаздывания", DeepDelay.ToString(), (String str) =>
             {
                 try
@@ -69,8 +84,9 @@ namespace ForresterModeller.src.Nodes.Models
                 {
                     System.Windows.MessageBox.Show("Только целочисленные значения");
                 }
-            }));
-            prop.Add(new PropertyViewModel("Величина запаздывания принятия решений", DelayValue.ToString(), (String str) => { DelayValue = Utils.GetDouble(str); }));
+            }, Pars.CheckConst));
+            prop.Add(new PropertyViewModel("Величина запаздывания принятия решений", DelayValue.ToString(),
+                (String str) => { DelayValue = Utils.GetDouble(str); }, Pars.CheckConst));
             return prop;
         }
 
@@ -79,21 +95,21 @@ namespace ForresterModeller.src.Nodes.Models
             return viseter.VisitDelay(this);
         }
 
-
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
-    
-            data.Add(new DataForViewModels("Входной поток", "", 3));
+
             foreach (var inputs in Inputs.Items)
             {
                 if (inputs.Connections.Items.Any())
+
                 {
                     //todo проверить на пустой список
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    if (nod != null)
-                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
+                    if(nod!= null)
+                      data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
                 }
             }
 
@@ -137,12 +153,12 @@ namespace ForresterModeller.src.Nodes.Models
 
             Inputs.Add(_inputRate);
         }
-        public DelayNodeModel() : this("LЕV", "Запаздывание", "Поток", "OUT", 1, "DEL", 1, "0") {}
+        public DelayNodeModel() : this("LЕV", "Запаздывание", "Поток", "OUT", 1, "DEL", 1, "0") { }
         static DelayNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("level"), typeof(IViewFor<DelayNodeModel>));
         }
-    
+
         public override JsonObject ToJSON()
         {
             JsonObject obj = new JsonObject()
@@ -153,7 +169,7 @@ namespace ForresterModeller.src.Nodes.Models
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["InputRate"] = InputRate == null ? "" : InputRate,
                 ["OutputRateName"] = OutputRateName == null ? "" : OutputRateName,
-                ["DeepDelay"] =  DeepDelay,
+                ["DeepDelay"] = DeepDelay,
                 ["DelayValueName"] = DelayValueName == null ? "" : DelayValueName,
                 ["DelayValue"] = DelayValue,
                 ["StartValue"] = StartValue == null ? "" : StartValue,

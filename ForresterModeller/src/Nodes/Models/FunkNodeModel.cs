@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using DynamicData;
-using ForresterModeller;
-using ForresterModeller.src.Nodes.Models;
 using NodeNetwork.ViewModels;
 using ReactiveUI;
 using ForresterModeller.src.Nodes.Views;
@@ -11,8 +9,7 @@ using System.Text.Json.Nodes;
 using System.Linq;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Windows;
-using System.Reactive.Linq;
-using System.Reactive;
+using ForresterModeller.src.ProjectManager.miniParser;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -44,13 +41,14 @@ namespace ForresterModeller.src.Nodes.Models
             var properties = base.GetProperties();
             properties.RemoveAt(0);
 
-            properties.Insert(0,new PropertyViewModel(Resource.name, Name, (String str) => {
+            properties.Insert(0, new PropertyViewModel(Resource.name, Name, (String str) =>
+            {
                 Name = str;
                 Outputs.Items.First().Name = str;
-            }));
+            }, Pars.CheckName));
 
 
-            properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; RefreshInput(); }));
+            properties.Add(new PropertyViewModel(Resource.equationType, Funk, (String str) => { Funk = str; RefreshInput(); }, Pars.CheckFormula));
             //todo парсер на поля в уравнеии и их добавление в проперти
             return properties;
         }
@@ -59,9 +57,8 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
-            data.Insert(0, new DataForViewModels("Где", "", 3)) ;
-            data.Insert(0, new DataForViewModels(Name, Funk, 0));
-            
+            data.Add(new DataForViewModels(Name, Funk, true));
+
 
             foreach (var inputs in Inputs.Items)
             {
@@ -70,21 +67,21 @@ namespace ForresterModeller.src.Nodes.Models
                 {
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    if(nod != null)
-                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
+                    if (nod != null)
+                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
                 }
             }
 
             return data;
         }
 
-      
+
         public void RefreshInput()
         {
             var vars = ForesterNodeCore.Program.GetArgs(this.Funk);
-            foreach(var _var in vars)
+            foreach (var _var in vars)
             {
-                if(this.Inputs.Items.ToList().FindAll(port => port.Name == _var).Count == 0)
+                if (this.Inputs.Items.ToList().FindAll(port => port.Name == _var).Count == 0)
                 {
                     var b = new NodeInputViewModel();
                     b.Name = _var;
@@ -95,7 +92,7 @@ namespace ForresterModeller.src.Nodes.Models
 
             foreach (var _var in this.Inputs.Items.ToList())
             {
-                if (! vars.ToList().Contains(_var.Name) )
+                if (!vars.ToList().Contains(_var.Name))
                 {
                     Inputs.Remove(_var);
                 }
@@ -107,9 +104,9 @@ namespace ForresterModeller.src.Nodes.Models
         {
             JsonObject obj = new JsonObject()
             {
-                ["Id"] = Id ,
+                ["Id"] = Id,
                 ["Type"] = type,
-                ["Name"] = Name == null ? "" :Name,            
+                ["Name"] = Name == null ? "" : Name,
                 ["FullName"] = FullName == null ? "" : FullName,
                 ["Funk"] = Funk == null ? "" : Funk,
                 ["Description"] = Description == null ? "" : Description,
@@ -190,4 +187,4 @@ namespace ForresterModeller.src.Nodes.Models
 
 
 }
-    
+

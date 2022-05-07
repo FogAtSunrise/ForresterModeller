@@ -38,17 +38,17 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             {
                 Name = s;
                 GenerateActualPlot();
-            }));
+            }, null));
             properties.Add(new PropertyViewModel("Ось абсцисс", XLabel, (String str) =>
             {
                 XLabel = str;
                 GenerateActualPlot();
-            }));
+            }, null));
             properties.Add(new PropertyViewModel("Ось ординат", YLabel, (String str) =>
             {
                 YLabel = str;
                 GenerateActualPlot();
-            }));
+            }, null));
             return properties;
         }
 

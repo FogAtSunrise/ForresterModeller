@@ -7,12 +7,9 @@ namespace ForresterModeller.Pages.Tools
     /// </summary>
     public partial class PlotterTools : UserControl
     {
-        private int countColumn;
-
         public PlotterTools()
         {
             InitializeComponent();
-            countColumn = 0;
         }
 
     }

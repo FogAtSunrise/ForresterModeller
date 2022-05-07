@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
-using System.Threading;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Media;
 using DynamicData;
 using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Views;
+using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.Windows.ViewModels;
-using NodeNetwork.Toolkit.Layout.ForceDirected;
-using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using ReactiveUI;
 
@@ -30,7 +22,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         private Project _project;
 
         public DiagramManager(Project project) { _project = project; }
-        public DiagramManager(string name, Project project):this(project)
+        public DiagramManager(string name, Project project) : this(project)
         {
             Name = name;
         }
@@ -50,12 +42,13 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             //ЗДЕСЬ ЛОГИКА, КОТОРАЯ ПО JSON ЗАПОЛНЯЕТ ПОЛЯ ДИАГРАММЫ
 
             var nodes = json!["Nodes"];
-            foreach(var node in nodes.AsArray())
+            foreach (var node in nodes.AsArray())
             {
                 ForesterNodeModel newNode = null;
 
 
-                switch(node!["Type"].AsValue().ToString()){
+                switch (node!["Type"].AsValue().ToString())
+                {
                     case "ChouseNodeModel":
                         newNode = new ChouseNodeModel();
                         break;
@@ -93,8 +86,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         {
             UpdateNodes();
             JsonArray nodesJson = new();
-            
-            foreach (var node in АllNodes) {
+
+            foreach (var node in АllNodes)
+            {
                 nodesJson.Add(node.ToJSON());
             }
 
@@ -122,7 +116,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         }
 
 
-  
+
 
         private IPropertyOwner _activeItem;
         public override IPropertyOwner ActiveOwnerItem
@@ -149,9 +143,9 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();
-            prop.Add(new PropertyViewModel("Период исследования", AllTime.ToString(), s => AllTime = Utils.GetDouble(s)));
+            prop.Add(new PropertyViewModel("Период исследования", AllTime.ToString(), s => AllTime = Utils.GetDouble(s), Pars.CheckConst));
 
-            prop.Add(new PropertyViewModel("DT", DeltaTime.ToString(), s =>DeltaTime = Utils.GetDouble(s)));
+            prop.Add(new PropertyViewModel("DT", DeltaTime.ToString(), s => DeltaTime = Utils.GetDouble(s), Pars.CheckConst));
             return prop;
         }
 
@@ -175,15 +169,17 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 UpdateNodes();
             };
             ///
-            this._contentView.Drop += (o, e) => {
+            this._contentView.Drop += (o, e) =>
+            {
                 AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));
                 UpdateNodes();
             };
 
-            this._contentView.Drop += (o, e) => {
+            this._contentView.Drop += (o, e) =>
+            {
                 ForesterNodeModel node = (ForesterNodeModel)e.Data.GetData("nodeVM");
 
-                if (node is LinkNodeModel  )
+                if (node is LinkNodeModel)
                 {
                     if (((LinkNodeModel)node).Modegel == ((NetworkView)o).ViewModel)
                     {

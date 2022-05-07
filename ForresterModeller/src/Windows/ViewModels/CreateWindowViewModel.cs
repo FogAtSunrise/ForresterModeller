@@ -13,9 +13,9 @@ namespace ForresterModeller.src.Windows.ViewModels
     public class CreateWindowViewModel : ReactiveObject
     {
 
-      /// <summary>
-      /// команда для выбора пути к проекту
-      /// </summary>
+        /// <summary>
+        /// команда для выбора пути к проекту
+        /// </summary>
         public ReactiveCommand<Unit, Unit> SetPath { get; }
 
         /// <summary>
@@ -24,14 +24,14 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
         public CreateWindowViewModel()
         {
-           
-            SetPath = ReactiveCommand.Create < Unit>(u => OpenGuide());
+
+            SetPath = ReactiveCommand.Create<Unit>(u => OpenGuide());
             SaveProject = ReactiveCommand.Create<Unit>(u => Save());
         }
         /// <summary>
         /// результат работы формы, содержит полный путь к json созданного проекта
         /// </summary>
-  private string _nameFile = "";
+        private string _nameFile = "";
 
         /// <summary>
         /// содержит введенное имя
@@ -69,15 +69,15 @@ namespace ForresterModeller.src.Windows.ViewModels
 
         }
 
-       /// <summary>
-       /// метод создания проекта
-       /// НЕТ НЕОБХОДИМОСТИ ПРОВЕРЯТЬ ПОЛЯ ФОРМЫ, Т.К. С ПУСТЫМИ ПОЛЯМИ НАИМЕНОВАНИЕ И ПУТЬ БУДУТ ЗАДАНЫ ПО УМОЛЧАНИЮ!
-       /// </summary>
+        /// <summary>
+        /// метод создания проекта
+        /// НЕТ НЕОБХОДИМОСТИ ПРОВЕРЯТЬ ПОЛЯ ФОРМЫ, Т.К. С ПУСТЫМИ ПОЛЯМИ НАИМЕНОВАНИЕ И ПУТЬ БУДУТ ЗАДАНЫ ПО УМОЛЧАНИЮ!
+        /// </summary>
         private void Save()
         {
-            Project project = new Project(_nameFile, _pathToImage == "" ? "": (_pathToImage + "\\" + _nameFile));
-                project.SaveNewProject();
-                FileName = project.getPath() + "\\" + project.Name + ".json";
+            Project project = new Project(_nameFile, _pathToImage == "" ? "" : (_pathToImage + "\\" + _nameFile));
+            project.SaveNewProject();
+            FileName = project.PathToProject + "\\" + project.Name + ".json";
             this.DialogResult = true;
 
         }
