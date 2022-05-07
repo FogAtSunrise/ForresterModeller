@@ -91,8 +91,17 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
                 } while (allLex[allLex.Count - 1].numb != 100);
 
-                if (allLex.Count > 2 || allLex[0].numb != tNumb)
+                if (allLex.Count > 2 || (allLex[0].numb != tNumb && allLex[0].numb != tId))
                     return new Result(false, "Это не константа");
+
+                if (allLex[0].numb == tId)
+                {
+                    string dop = allLex[0].str;
+                    ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelByName(dop);
+                    if (nod == null || !(nod is FunkNodeModel))
+                        return new Result(false, "Такой функции нет в проекте");
+
+                }
             }
             else return new Result(false, "Введите значение");
             return new Result(true, "");
