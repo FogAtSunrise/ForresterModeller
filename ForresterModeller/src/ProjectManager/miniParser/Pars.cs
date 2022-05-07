@@ -34,7 +34,8 @@ namespace ForresterModeller.src.ProjectManager.miniParser
             string t1 = t.Trim();
             if (t1.Length < 1)
                 return new Result(false, "Введите значение");
-            else
+            if(t.All(c => Char.IsLetterOrDigit(c) ||  c == '_' || c == ' '))
+                return new Result(false, "Лишние символы"); 
             return new Result(true, "");
         }
     }
