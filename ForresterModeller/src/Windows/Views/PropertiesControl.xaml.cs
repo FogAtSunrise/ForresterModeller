@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ForresterModeller.Windows.Views
+namespace ForresterModeller.src.Windows.Views
 {
     /// <summary>
     /// Логика взаимодействия для PrpertyTemplate.xaml

@@ -1,5 +1,4 @@
-﻿
-using ForresterModeller.src.Nodes.Models;
+﻿using ForresterModeller.src.Nodes.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -176,8 +175,6 @@ namespace ForresterModeller.src.ProjectManager
         /// <returns></returns>
         public ForesterNodeModel getModelByName(string name)
         {
-
-
             foreach (var diag in Diagrams)
             {
                 diag.UpdateNodes();

@@ -7,6 +7,7 @@ using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using System.Windows;
+using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.Nodes.Models
@@ -16,7 +17,7 @@ namespace ForresterModeller.src.Nodes.Models
         public override string TypeName => Resource.constType;
 
         public static string type = "ConstantNodeViewModel";
-       
+
 
         /// <summary>
         /// Значение всех констант по умолчанию
@@ -46,20 +47,22 @@ namespace ForresterModeller.src.Nodes.Models
             a.PortPosition = PortPosition.Centr;
             this.Outputs.Add(a);
         }
-        public ConstantNodeViewModel():this("DT", "DT", DefaultValue) { }
+        public ConstantNodeViewModel() : this("DT", "DT", DefaultValue) { }
         static ConstantNodeViewModel()
         {
             Splat.Locator.CurrentMutable.Register(
-                () => {
+                () =>
+                {
                     var a = new ForesterNodeView("constant");
-                    return a; 
+                    return a;
                 }, typeof(IViewFor<ConstantNodeViewModel>));
         }
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var properties = base.GetProperties();
-            //todo validation
-            properties.Add(new PropertyViewModel( Resource.value,  Value.ToString(), (String str) => { Value = Utils.GetDouble(str); }));
+            properties.Add(
+                new PropertyViewModel(Resource.value, Value.ToString(),
+                    (String str) => { Value = Utils.GetDouble(str); }, Pars.CheckConst));
             return properties;
         }
 

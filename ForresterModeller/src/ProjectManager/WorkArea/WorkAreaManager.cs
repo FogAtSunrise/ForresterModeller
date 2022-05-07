@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using ForresterModeller.src.Interfaces;
-using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Windows.ViewModels;
 using ReactiveUI;
 
@@ -37,7 +30,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         {
             var properties = new ObservableCollection<PropertyViewModel>();
             properties.Add(new PropertyViewModel("Тип", TypeName));
-            properties.Add(new PropertyViewModel("Название", Name, (string s) => Name = s));
+            //todo check on uniqui in proj
+            properties.Add(new PropertyViewModel("Название", Name, (string s) => Name = s, null));
             return properties;
         }
         public virtual string TypeName { get; }

@@ -7,16 +7,12 @@ using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using ForresterModeller.src.Windows.ViewModels;
-using System.Collections;
 using System.Linq;
 using System.Windows;
-using System.Collections.Generic;
-using ForresterModeller.src.Windows.ViewModels;
+using ForresterModeller.src.ProjectManager.miniParser;
 
 namespace ForresterModeller.src.Nodes.Models
 {
-
-
     public class LevelNodeModel : ForesterNodeModel
     {
         public override string TypeName => Resource.levelType;
@@ -29,7 +25,7 @@ namespace ForresterModeller.src.Nodes.Models
 
         public string StartValue { get; set; }
 
-        public ForesterNodeOutputViewModel Rate {get;set;}
+        public ForesterNodeOutputViewModel Rate { get; set; }
 
         public LevelNodeModel(string name, string fulname, string input, string output) : base()
         {
@@ -38,7 +34,7 @@ namespace ForresterModeller.src.Nodes.Models
             this.OutputRate = output;
             this.FullName = fulname;
             this.StartValue = "0";
-            this.Description="";
+            this.Description = "";
 
             var a = new ForesterNodeOutputViewModel();
             a.Name = "Уровень";
@@ -67,7 +63,7 @@ namespace ForresterModeller.src.Nodes.Models
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output)
                         .OutputValue;
                     ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    if(nod != null)
+                    if (nod != null)
                         dats.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
                 }
             }
@@ -81,8 +77,10 @@ namespace ForresterModeller.src.Nodes.Models
         }
 
 
-        public override JsonObject ToJSON() {
-            JsonObject obj = new JsonObject() {
+        public override JsonObject ToJSON()
+        {
+            JsonObject obj = new JsonObject()
+            {
                 ["Id"] = Id,
                 ["Type"] = type,
                 ["Name"] = Name,
@@ -96,7 +94,8 @@ namespace ForresterModeller.src.Nodes.Models
             };
 
             JsonArray con = new();
-            if (_inputRate.Connections.Items.Any()) {
+            if (_inputRate.Connections.Items.Any())
+            {
                 con.Add(new ConectionModel(_inputRate));
             }
             else
@@ -111,7 +110,8 @@ namespace ForresterModeller.src.Nodes.Models
 
 
 
-        public override void FromJSON(JsonObject obj) {
+        public override void FromJSON(JsonObject obj)
+        {
             Id = obj!["Id"]!.GetValue<string>();
             Name = obj!["Name"]!.GetValue<string>();
             FullName = obj!["FullName"]!.GetValue<string>();
@@ -130,7 +130,7 @@ namespace ForresterModeller.src.Nodes.Models
                 }
                 else
                 {
-                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())   ); ;
+                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace ForresterModeller.src.Nodes.Models
         {
             var prop = base.GetProperties();
 
-            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str));
+            prop.Add(new PropertyViewModel("Начальный уровень", StartValue.ToString(), (String str) => StartValue = str, Pars.CheckConst));
             return prop;
         }
 

@@ -1,4 +1,4 @@
-﻿<Window x:Class="ForresterModeller.Windows.Views.MainWindow"
+﻿<Window x:Class="ForresterModeller.src.Windows.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -162,14 +162,14 @@
                                     <MouseBinding Command="" MouseAction="LeftClick" />
                                 </TextBlock.InputBindings>
                             </TextBlock>
-                            
-                                <TreeView BorderThickness="0" Grid.Row="1" ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
+
+                            <TreeView BorderThickness="0" Grid.Row="1" ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
 
                                 <TreeView.Resources>
-                                        <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
+                                    <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
                                                                   ItemsSource="{Binding АllNodes}">
-                                            <TextBlock Text="{Binding Name }" />
-                                        </HierarchicalDataTemplate>
+                                        <TextBlock Text="{Binding Name }" />
+                                    </HierarchicalDataTemplate>
                                     <DataTemplate DataType="{x:Type models:ForesterNodeModel}">
                                         <TextBlock Text="{Binding Name}" />
                                     </DataTemplate>

@@ -41,7 +41,23 @@
                                     <Grid Margin="0,5">
                                         <Grid.Resources>
                                             <DataTemplate x:Key="SubmitTextBox">
-                                                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsReadOnly}" TextWrapping="Wrap"/>
+                                                <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                                         IsReadOnly="{Binding Path=IsReadOnly}" TextWrapping="Wrap">
+                                                    <TextBox.Style>
+                                                        <Style TargetType="TextBox">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsCorrect}" Value="False">
+                                                                    <Setter Property="BorderBrush"
+                                                                Value="Red" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsCorrect}" Value="False">
+                                                                    <Setter Property="Foreground"
+                                                                            Value="Red" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBox.Style>
+                                                </TextBox>
                                             </DataTemplate>
                                             <DataTemplate x:Key="TextBlock">
                                                 <TextBlock Grid.Column="1" Text="{Binding Value}"  />
@@ -67,6 +83,7 @@
                                                             <Setter Property="ContentTemplate"
                                                 Value="{StaticResource SubmitTextBox}" />
                                                         </DataTrigger>
+
                                                     </Style.Triggers>
                                                 </Style>
 

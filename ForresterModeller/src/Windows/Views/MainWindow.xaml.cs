@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.miniParser;
@@ -9,7 +6,7 @@ using ForresterModeller.src.ProjectManager.WorkArea;
 using ForresterModeller.src.Windows.ViewModels;
 using WpfMath.Controls;
 
-namespace ForresterModeller.Windows.Views
+namespace ForresterModeller.src.Windows.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -20,7 +17,7 @@ namespace ForresterModeller.Windows.Views
         public MainWindow(StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
-            Project a = new Project{Name = "naaame of proj"};
+            Project a = new Project { Name = "naaame of proj" };
             a.Diagrams.Add(new DiagramManager("1", a));
             a.Diagrams.Add(new DiagramManager("12", a));
             a.Diagrams.Add(new DiagramManager("123", a));
@@ -45,31 +42,31 @@ namespace ForresterModeller.Windows.Views
         }
         private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
         {
-           
-            Result ho = MinParser.checkFormula(input_formul.Text.ToString());
-             if (ho.result)
-             {
-                 PrintFormule(input_formul.Text.ToString());
-                 input_formul.Text = "";
-             }
-             else
-                 MessageBox.Show(ho.str);
-           /* 
-             bool r = b.isCorrect("Значение", input_formul.Text.ToString());
-            if (r)
+
+            Result ho = Pars.CheckFormula(input_formul.Text.ToString());
+            if (ho.result)
             {
                 PrintFormule(input_formul.Text.ToString());
                 input_formul.Text = "";
             }
             else
-                MessageBox.Show("Давай по новой, Миша, *заблокировано РКН*! (если что, это тест на константу)"); */
+                MessageBox.Show(ho.str);
+            /* 
+              bool r = b.isCorrect("Значение", input_formul.Text.ToString());
+             if (r)
+             {
+                 PrintFormule(input_formul.Text.ToString());
+                 input_formul.Text = "";
+             }
+             else
+                 MessageBox.Show("Давай по новой, Миша, *заблокировано РКН*! (если что, это тест на константу)"); */
         }
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var item = ((TreeView)sender).SelectedItem;
             if (item is WorkAreaManager)
-              ((MainWindowViewModel)DataContext).OpenOrCreateTab((WorkAreaManager)item);
+                ((MainWindowViewModel)DataContext).OpenOrCreateTab((WorkAreaManager)item);
         }
     }
 }

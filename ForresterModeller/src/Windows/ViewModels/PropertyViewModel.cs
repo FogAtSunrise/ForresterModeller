@@ -1,4 +1,6 @@
 ﻿using System;
+using ForresterModeller.src.ProjectManager.miniParser;
+using ReactiveUI;
 
 namespace ForresterModeller.src.Windows.ViewModels
 {
@@ -7,7 +9,7 @@ namespace ForresterModeller.src.Windows.ViewModels
     /// Для каждой строки (как редактируемой, так и нет) необходимо создать
     /// свой экземпляр Property и передать их массив в view
     /// </summary>
-    public class PropertyViewModel
+    public class PropertyViewModel : ReactiveObject
     {
         /// <summary>
         /// Конструктор для редактируемых полей объекта
@@ -15,13 +17,21 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// <param name="name">Имя поля</param>
         /// <param name="value">Значение поля</param>
         /// <param name="updateAction">Метод, обрабатывающий обновление поля на форме</param>
-        public PropertyViewModel(String name, String value, Action<String> updateAction)
+        public PropertyViewModel(String name, String value, Action<String> updateAction, Func<String, Result> validateFunc)
         {
             Name = name;
             _value = value;
             _updateValue = updateAction;
+            _validateFunc = validateFunc;
             IsReadOnly = false;
         }
+        //public PropertyViewModel(String name, String value, Action<String> updateAction)
+        //{
+        //    Name = name;
+        //    _value = value;
+        //    _updateValue = updateAction;
+        //    IsReadOnly = false;
+        //}
         /// <summary>
         /// Конструктор для нередактируемых полей объекта
         /// </summary>
@@ -35,6 +45,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         public string Name { get; set; }
         private Action<String> _updateValue;
+        private Func<String, Result> _validateFunc;
         private string _value;
         public string Value
         {
@@ -42,10 +53,14 @@ namespace ForresterModeller.src.Windows.ViewModels
             set
             {
                 _value = value;
-                _updateValue(value);
+                if (_validateFunc != null)
+                    IsCorrect = _validateFunc(value).result;
+                if (IsCorrect)
+                    _updateValue(value);
             }
-
         }
         public bool IsReadOnly { get; set; }
+        private bool _isCorrect = true;
+        public bool IsCorrect { get => _isCorrect; set => this.RaiseAndSetIfChanged(ref _isCorrect, value); }
     }
 }

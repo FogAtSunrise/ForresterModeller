@@ -6,6 +6,7 @@ using System.IO;
 using System.Reactive;
 using System.Windows;
 using ForresterModeller.src.ProjectManager;
+using ForresterModeller.src.Windows.Views;
 
 namespace ForresterModeller.src.Windows.ViewModels
 {
