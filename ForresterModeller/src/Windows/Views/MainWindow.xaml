@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ForresterModeller" xmlns:nodenetwork="clr-namespace:NodeNetwork.Views;assembly=NodeNetwork"
-        xmlns:views="clr-namespace:ForresterModeller.Windows.Views"
         xmlns:viewModels1="clr-namespace:ForresterModeller.src.Windows.ViewModels"
         xmlns:self="clr-namespace:ForresterModeller.src.ProjectManager"
         xmlns:workArea="clr-namespace:ForresterModeller.src.ProjectManager.WorkArea"
         xmlns:models="clr-namespace:ForresterModeller.src.Nodes.Models"
+        xmlns:views="clr-namespace:ForresterModeller.src.Windows.Views"
         d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Моделлер" Height="450" Width="800">
