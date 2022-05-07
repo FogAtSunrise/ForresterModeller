@@ -297,21 +297,20 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         }
 
-        static Lexem forMinormax()
+        
+         Lexem forAbs()
         {
-            
-            return new Lexem(4,"");
+            Lexem lex = getNextLexeme();
+            if (lex.numb != tLScob)
+                return new Lexem(tError, "Пропущена скобка");
+            Lexem type = checkLexeme();
+            lex = getCurrentLexeme();
+            if (lex.numb != tRScob)
+                return new Lexem(tError, "Пропущена скобка");
+            pointer++;
+            return type;
         }
-        static Lexem forAbs()
-        {
-
-            return new Lexem(4, "");
-        }
-        static Lexem forFunc()
-        {
-
-            return new Lexem(4, "");
-        }
+       
 
         //##########################################################################################################
 
@@ -388,27 +387,12 @@ namespace ForresterModeller.src.ProjectManager.miniParser
                         value += text[pointer++];
 
 
-                    if (value == "Piecewise")
-                    {
-                        return new Lexem(tFunc, value);
-                    }
-                    else
 
                     if (value == "abs")
                     {
                         return new Lexem(tAbs, value);
                     }
-                    else
-                     if (value == "min")
-                    {
-                        return new Lexem(tMin, value);
-                    }
-                    else
-                        if (value == "max")
-                    {
-                        return new Lexem(tMax, value);
-                    }
-                
+                   
                         return new Lexem(tId, value);
 
                 }
