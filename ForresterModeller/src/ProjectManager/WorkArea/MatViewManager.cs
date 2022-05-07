@@ -25,10 +25,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             };
 
             var mod = dmanager.АllNodes;
-            foreach (var mod1 in mod)
-            {if(!(mod1 is CrossNodeModel))
-                Models.Add(new MathViewModel(mod1));
-            }
+            if(mod != null)
+                foreach (var mod1 in mod)
+                {if(!(mod1 is CrossNodeModel))
+                    Models.Add(new MathViewModel(mod1));
+                }
         }
 
         public override string TypeName => "Математическое представление";
