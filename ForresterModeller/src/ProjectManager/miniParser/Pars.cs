@@ -31,7 +31,11 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         public static Result CheckNull(string t)
         {
-            return new Result(t.Length > 0, "Введите значение");
+            string t1 = t.Trim();
+            if (t1.Length < 1)
+                return new Result(false, "Введите значение");
+            else
+            return new Result(true, "");
         }
     }
 }
