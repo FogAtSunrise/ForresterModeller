@@ -11,7 +11,7 @@
         xmlns:models="clr-namespace:ForresterModeller.src.Nodes.Models"
         d:DataContext="{d:DesignInstance Type=viewModels1:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="Моделлер" Height="450" Width="800">
+        Title="Моделлер" Height="450" Width="800" WindowState="Maximized">
 
     <Grid>
         <Menu Height="19"   HorizontalAlignment="Stretch" VerticalAlignment="Top">
@@ -128,7 +128,7 @@
                     <!--фрейм 
                      <views:PropertiesControl x:Name="PropertyFrame" DataContext="{Binding PropertiesVM }" 
                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>-->
-                    <ContentControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding ToolContent}" />
+                    <ContentControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Content="{Binding ToolContent}" />
                 </Grid>
             </Grid>
             <GridSplitter  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="3" HorizontalAlignment="Stretch" Background="Black"></GridSplitter>
@@ -153,7 +153,7 @@
 
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"  />
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
