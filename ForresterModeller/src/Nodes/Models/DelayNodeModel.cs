@@ -99,6 +99,7 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
+            data.Add(new DataForViewModels("Входной поток", "", 3));
 
             foreach (var inputs in Inputs.Items)
             {
