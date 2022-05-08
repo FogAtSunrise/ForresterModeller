@@ -29,6 +29,7 @@ namespace ForresterModeller.Pages.Tools
             nodelistModel.AddNodeType<FunkNodeModel>(() => new FunkNodeModel());
             nodelistModel.AddNodeType<MaxNodeModel>(() => new MaxNodeModel());
             nodelistModel.AddNodeType<MinNodeModel>(() => new MinNodeModel());
+            nodelistModel.AddNodeType<JumpNodeModel>(() => new JumpNodeModel());
             equasionNodeList.ViewModel = nodelistModel;
 
             _nodelistModel = new();

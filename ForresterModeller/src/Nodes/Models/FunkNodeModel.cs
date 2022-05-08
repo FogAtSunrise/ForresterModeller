@@ -217,5 +217,27 @@ namespace ForresterModeller.src.Nodes.Models
     }
 
 
+    public class JumpNodeModel : ChouseNodeModel
+    {
+        public static string type = "ChouseNodeModel";
+        public JumpNodeModel() : base("jump", "jump", "default +" +
+            "(time * (time + t + abs(time - t))/2 - time * time + 1-" +
+            "abs(time * (time + t + abs(time - t))/2 - time * time - 1))/2"+
+            " * abs(default - jump)")
+        {
+
+        }
+
+        private int abs(double v)
+        {
+            throw new NotImplementedException();
+        }
+
+        static JumpNodeModel()
+        {
+            Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<JumpNodeModel>));
+        }
+    }
+
 }
 
