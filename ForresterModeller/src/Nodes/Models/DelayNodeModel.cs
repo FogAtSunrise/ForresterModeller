@@ -141,8 +141,8 @@ namespace ForresterModeller.src.Nodes.Models
                         }
                         );
                         if (node != null)
-                      
-                        data.Add(new DataForViewModels(inputs.Name, node.Name + (node is DelayNodeModel ? " (порт " + value + ")" : "") + ": " + node.FullName, 1));
+                            data.Add(new DataForViewModels(inputs.Name, node.FullName, 1));
+                      //  data.Add(new DataForViewModels(inputs.Name, node.Name + (node is DelayNodeModel ? " (порт " + value + ")" : "") + ": " + node.FullName, 1));
                     }
                 }
             }
