@@ -70,5 +70,61 @@ namespace NodeNetwork.Views.Controls
                 }
             }
         }
+
+
+        public static Point GetClosestPointOnPath(Point p, Geometry geometry)
+        {
+            PathGeometry pathGeometry = geometry.GetFlattenedPathGeometry();
+
+            var points = pathGeometry.Figures.Select(f => GetClosestPointOnPathFigure(f, p))
+                .OrderBy(t => t.Item2).FirstOrDefault();
+            return (points == null) ? new Point(0, 0) : points.Item1;
+        }
+
+
+        private static Tuple<Point, double> GetClosestPointOnPathFigure(PathFigure figure, Point p)
+        {
+            List<Tuple<Point, double>> closePoints = new List<Tuple<Point, double>>();
+            Point current = figure.StartPoint;
+            foreach (PathSegment s in figure.Segments)
+            {
+                PolyLineSegment segment = s as PolyLineSegment;
+                LineSegment line = s as LineSegment;
+                Point[] points;
+                if (segment != null)
+                {
+                    points = segment.Points.ToArray();
+                }
+                else if (line != null)
+                {
+                    points = new[] { line.Point };
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unexpected segment type");
+                }
+                foreach (Point next in points)
+                {
+                    Point closestPoint = GetClosestPointOnLine(current, next, p);
+                    double d = (closestPoint - p).LengthSquared;
+                    closePoints.Add(new Tuple<Point, double>(closestPoint, d));
+                    current = next;
+                }
+            }
+            return closePoints.OrderBy(t => t.Item2).First();
+        }
+
+        private static Point GetClosestPointOnLine(Point start, Point end, Point p)
+        {
+            double length = (start - end).LengthSquared;
+            if (length == 0.0)
+            {
+                return start;
+            }
+            Vector v = end - start;
+            double param = (p - start) * v / length;
+            return (param < 0.0) ? start : (param > 1.0) ? end : (start + param * v);
+        }
+
     }
 }

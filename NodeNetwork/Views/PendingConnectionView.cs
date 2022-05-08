@@ -105,11 +105,14 @@ namespace NodeNetwork.Views
                             return ConnectionView.BuildSmoothBezier(ViewModel.Output.Port.CenterPoint,
                                 ViewModel.Output.PortPosition,
                                 ViewModel.Input.Port.CenterPoint,
-                                ViewModel.Input.PortPosition);
+                                ViewModel.Input.PortPosition,
+                                new List<Point>()
+                                );
                         }
                     })
                     .BindTo(this, v => v.Geometry)
             ));
+
         }
 
         private void SetupVisualStateBindings()

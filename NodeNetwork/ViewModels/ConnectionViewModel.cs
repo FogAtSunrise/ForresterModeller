@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DynamicData;
 using DynamicData.Aggregation;
+using DynamicData.Binding;
 using NodeNetwork.Views;
 using ReactiveUI;
 
@@ -39,7 +42,20 @@ namespace NodeNetwork.ViewModels
         /// The viewmodel of the node output that is on one end of the connection.
         /// </summary>
         public NodeOutputViewModel Output { get; }
-        
+
+
+
+        public SourceList<Point> AdditionalPoints
+        {
+            get { return _additionalPoints;
+            }
+            set { this.RaiseAndSetIfChanged(ref _additionalPoints, value); }
+        }
+
+        public SourceList<Point> _additionalPoints;
+
+
+
         #region CanBeRemovedByUser
         /// <summary>
         /// If false, the user cannot delete this connection. True by default.
@@ -84,13 +100,16 @@ namespace NodeNetwork.ViewModels
         private ObservableAsPropertyHelper<bool> _isMarkedForDelete;
         #endregion
 
+
         public ConnectionViewModel(NetworkViewModel parent, NodeInputViewModel input, NodeOutputViewModel output)
         {
             Parent = parent;
             Input = input;
             Output = output;
-			
-			this.WhenAnyValue(v => v.Parent.CutLine.IntersectingConnections)
+
+            AdditionalPoints = new SourceList<Point>();
+
+            this.WhenAnyValue(v => v.Parent.CutLine.IntersectingConnections)
 	            .Where(l => l != null)
 	            .Select(list => list.Connect().Filter(c => c == this).Count().Select(c => c > 0))
 	            .Switch()

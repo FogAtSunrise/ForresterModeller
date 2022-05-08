@@ -105,11 +105,15 @@ namespace ForresterModeller.src.Nodes.Models
                 {
                     if (model[nw.conections.SourceId] is not LinkNodeModel)
                     {
-                        model.Connections.Add(
-                            new ConnectionViewModel(model,
+
+                        var newConection = new ConnectionViewModel(model,
                                 nw.node,
                                 model[nw.conections.SourceId].Outputs.Items.FirstOrDefault(a => a.Name == nw.conections.PointName)
-                            ));
+                            );
+
+                        newConection.AdditionalPoints.AddRange(nw.conections.AddotoionalPoint);
+
+                        Parent.Connections.Add(newConection);
                     }
                 }
             }

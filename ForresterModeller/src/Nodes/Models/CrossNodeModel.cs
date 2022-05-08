@@ -12,6 +12,7 @@ using System.Windows;
 using System;
 using System.Collections.ObjectModel;
 using ForresterModeller.src.Windows.ViewModels;
+using System.Text.Json;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -126,7 +127,7 @@ namespace ForresterModeller.src.Nodes.Models
                 }
                 else
                 {
-                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(JsonSerializer.Deserialize<ConectionModel>(con));
                 }
             }
         }

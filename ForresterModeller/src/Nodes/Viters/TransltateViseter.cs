@@ -39,7 +39,7 @@ namespace ForresterModeller.src.Nodes.Viters
             return "";
         }
 
-        public  virtual string VisitDelay(DelayNodeModel node)
+        public virtual string VisitDelay(DelayNodeModel node)
         {
             var preInEquals = node.InputRate;
             var preStart = node.StartValue;

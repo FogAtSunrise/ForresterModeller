@@ -190,7 +190,15 @@ namespace NodeNetwork.Views
             SetupErrorMessages();
             SetupDragAndDrop();
             SetupSelectionRectangle();
+            SetupLineChanger();
         }
+
+        private void SetupLineChanger()
+        {
+            this.MouseDown += CreateBrocenPoint;
+            this.MouseUp += FinishBrocenPoint;
+        }
+
 
         #region Setup
         private void SetupNodes()
@@ -549,10 +557,124 @@ namespace NodeNetwork.Views
         {
             foreach (ConnectionViewModel con in ViewModel.Connections.Items)
             {
-                PathGeometry conGeom = ConnectionView.BuildSmoothBezier(con.Input.Port.CenterPoint, con.Input.PortPosition, con.Output.Port.CenterPoint, con.Output.PortPosition);
+                PathGeometry conGeom = ConnectionView.BuildSmoothBezier(con.Input.Port.CenterPoint, con.Input.PortPosition, con.Output.Port.CenterPoint, con.Output.PortPosition, con.AdditionalPoints.Items);
                 LineGeometry cutLineGeom = new LineGeometry(ViewModel.CutLine.StartPoint, ViewModel.CutLine.EndPoint);
                 bool hasIntersections = WPFUtils.GetIntersectionPoints(conGeom, cutLineGeom).Any();
                 yield return (con, hasIntersections);
+            }
+        }
+
+
+        private bool IsBrokenPointMove { get; set; } = false;
+        private ConnectionViewModel _brokenArc;
+        private int _brokenIndex;
+        private bool _broken_was_draged;
+
+        private void CreateBrocenPoint(object sender, MouseButtonEventArgs e)
+        {
+            if (IsBrokenPointMove)
+            {
+                IsBrokenPointMove = false;
+                return;
+            }
+
+            if (ViewModel.Connections.Count > 0)
+            {
+                if (e.ChangedButton == MouseButton.Middle)
+                {
+                    var pos = e.GetPosition(contentContainer);
+                    var dl = new List<Tuple<ConnectionViewModel, Point, double>>();
+
+                    foreach (ConnectionViewModel con in ViewModel.Connections.Items)
+                    {
+                        PathGeometry conGeom = ConnectionView.BuildSmoothBezier(con.Input.Port.CenterPoint, con.Input.PortPosition, con.Output.Port.CenterPoint, con.Output.PortPosition, con.AdditionalPoints.Items);
+                        var p = WPFUtils.GetClosestPointOnPath(pos, conGeom);
+                        dl.Add(new Tuple<ConnectionViewModel, Point, double>(con, p, (p - pos).Length));
+                    }
+
+                    var near = dl.OrderBy(a => a.Item3).First();
+
+                    if (near.Item3 < 10)
+                    {
+                        _brokenArc = near.Item1;
+
+                        if (near.Item1.AdditionalPoints.Count > 0)
+                        {
+                            var t_point = _brokenArc.AdditionalPoints.Items.Aggregate((c, d) => (c - pos).Length < (d - pos).Length ? c : d);
+
+                            if ((t_point - pos).Length < 10)
+                            {
+                                _brokenIndex = _brokenArc.AdditionalPoints.Items.IndexOf(t_point);
+                                _brokenArc.AdditionalPoints.Remove(t_point);
+                                IsBrokenPointMove = true;
+                                _brokenArc.AdditionalPoints.Insert(_brokenIndex, pos);
+                            }
+
+                        }
+                        if (!IsBrokenPointMove)
+                        {
+                            if (_brokenArc.AdditionalPoints.Count == 0)
+                            {
+                                IsBrokenPointMove = true;
+                                _brokenArc.AdditionalPoints.Add(pos);
+                                _brokenIndex = 0;
+                            }
+                            else
+                            {
+                                var lap = new List<Point>();
+                                lap.Add(_brokenArc.Input.Port.CenterPoint);
+                                lap.AddRange(_brokenArc.AdditionalPoints.Items);
+                                lap.Add(_brokenArc.Output.Port.CenterPoint);
+                                double[] l = new double[lap.Count - 1];
+
+                                for (_brokenIndex = 0; _brokenIndex < lap.Count - 1; _brokenIndex++)
+                                {
+
+                                    l[_brokenIndex] = Math.Abs(
+                                        (lap[_brokenIndex + 1].Y - lap[_brokenIndex].Y) * near.Item2.X -
+                                        (lap[_brokenIndex + 1].X - lap[_brokenIndex].X) * near.Item2.Y +
+                                        lap[_brokenIndex + 1].X * lap[_brokenIndex].Y -
+                                        lap[_brokenIndex + 1].Y * lap[_brokenIndex].X
+                                        ) / Math.Sqrt(
+                                            (lap[_brokenIndex + 1].Y - lap[_brokenIndex].Y) *
+                                            (lap[_brokenIndex + 1].Y - lap[_brokenIndex].Y) +
+                                            (lap[_brokenIndex + 1].X - lap[_brokenIndex].X) *
+                                            (lap[_brokenIndex + 1].X - lap[_brokenIndex].X)
+                                            );
+                                }
+
+                                IsBrokenPointMove = true;
+                                _brokenIndex = l.IndexOf(l.Min());
+                                _brokenArc.AdditionalPoints.Insert(_brokenIndex, pos);
+                            }
+
+                        }
+                        this.MouseMove += DragBrocenPoint;
+                        _broken_was_draged = false;
+                    }
+
+                }
+            }
+        }
+
+        private void DragBrocenPoint(object sender, MouseEventArgs e)
+        {
+            var pos = e.GetPosition(contentContainer);
+            _brokenArc.AdditionalPoints.RemoveAt(_brokenIndex);
+            _brokenArc.AdditionalPoints.Insert(_brokenIndex, pos);
+            _broken_was_draged = true;
+        }
+
+
+        private void FinishBrocenPoint(object sender, MouseButtonEventArgs e) {
+            if (e.ChangedButton == MouseButton.Middle && IsBrokenPointMove)
+            {
+                this.MouseMove -= DragBrocenPoint;
+                IsBrokenPointMove = false;
+                if (!_broken_was_draged)
+                {
+                    _brokenArc.AdditionalPoints.RemoveAt(_brokenIndex);
+                }
             }
         }
 
