@@ -69,7 +69,8 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
-            data.Add(new DataForViewModels(Name, Value.ToString(), true));
+            data.Insert(0, new DataForViewModels("Где", "", 3));
+            data.Insert(0, new DataForViewModels(Name, Value.ToString(), 0));
             return data;
         }
 

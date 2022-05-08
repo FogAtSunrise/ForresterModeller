@@ -10,7 +10,16 @@
              mc:Ignorable="d" 
            >
     <Grid Background="AliceBlue">
-        <ListBox Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- Наименование диаграммы -->
+            <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20"  Text="{Binding Name}"  />
+
+
+        <!-- Содержимое -->
+        <ListBox Grid.Row="1" Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Grid.IsSharedSizeScope="True"/>
@@ -27,18 +36,18 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-         
+
+                        <!-- полное Имя модельки -->
                         <Border Grid.Row="0"   BorderBrush="DimGray" BorderThickness="1">
-                            <TextBlock Margin="5,0" FontSize="20"  FontWeight="Bold" Text="{Binding NodeForMod.TypeName}"  MaxWidth="200" TextWrapping="Wrap" />
+                            <TextBlock Margin="5,0" FontWeight="Bold" Text="{Binding NodeForMod.Name}"  MaxWidth="200" TextWrapping="Wrap" />
                         </Border>
 
-
+                        <!-- Описание -->
                         <TextBlock Grid.Row="1"   Text="Описание: "  FontWeight="Bold" />
+                        <TextBlock  Grid.Row="2" Text="{Binding NodeForMod.Description}"    />
 
-                        <TextBlock  Grid.Row="2" Text="{Binding NodeForMod.TypeName}"    />
 
                         <Grid Row="3"  >
-
                             <ItemsControl Name="it"  ItemsSource="{Binding Path=Data, Mode=TwoWay}" >
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -50,7 +59,8 @@
                                     <DataTemplate>
                                         <Grid Margin="0,5">
 
-
+                                          
+                                            
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
@@ -58,9 +68,9 @@
                                             </Grid.ColumnDefinitions>
 
 
-                                            <TextBlock Grid.Column="0" FontWeight="Bold"  Text="{Binding Left}"  />
+                                            <TextBlock Grid.Column="0"  Text="{Binding Left}"  />
+                                            
                                             <TextBlock Grid.Column="1"    Text="{Binding sim}" MaxWidth="20" />
-
                                             <TextBlock Grid.Column="2"    Text="{Binding Right}" HorizontalAlignment="Left"  />
 
                                         </Grid>

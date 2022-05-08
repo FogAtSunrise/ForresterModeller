@@ -84,7 +84,7 @@ namespace ForresterModeller.src.Nodes.Models
         public virtual ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = new ObservableCollection<DataForViewModels>();
-            data.Add(new DataForViewModels(Name, FullName, false));
+            data.Add(new DataForViewModels(Name, FullName, 1));
             return data;
         }
 

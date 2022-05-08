@@ -37,7 +37,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         public MathViewModel ActiveView
         {
-            set => ActiveOwnerItem = value.NodeForMod;
+            set => ActiveOwnerItem = value == null ? this : value.NodeForMod;
         }
 
         //ViewModel модели, свойства которой отображаются 

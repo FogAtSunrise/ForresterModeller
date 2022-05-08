@@ -115,7 +115,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 }
                 sw.Close();
             }
-            projects.Sort((a, b) => a.ChangeDate.CompareTo(b.ChangeDate));
+            projects.Sort((a, b) => b.ChangeDate.CompareTo(a.ChangeDate));
             return projects;
         }
 

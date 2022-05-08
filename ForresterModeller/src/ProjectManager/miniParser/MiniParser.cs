@@ -76,8 +76,11 @@ namespace ForresterModeller.src.ProjectManager.miniParser
         //############################---ДЛЯ КОНСТАНТА---###########################################################
         public Result CheckConst(string val)
         {
-            if (val != "")
-            {
+            string t1 = val.Trim();
+            if (t1.Length < 1)
+                return new Result(false, "Введите значение");
+
+           
                 text = val + '\0';
                 //разделяю формулу по запчастям, результат в  allLex
                 pointer = 0;
@@ -102,8 +105,7 @@ namespace ForresterModeller.src.ProjectManager.miniParser
                         return new Result(false, "Такой функции нет в проекте");
 
                 }
-            }
-            else return new Result(false, "Введите значение");
+
             return new Result(true, "");
         }
 
@@ -111,14 +113,14 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         public Result CheckName(string name)
         {
-            if (name != "")
-            {
+            string t = name.Trim();
+            if(t.Length < 1)
+            return new Result(false, "Введите значение");
                 ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelByName(name);
                 if (nod != null)
                     return new Result(false, "Такое обозначение уже существует");
                 else return new Result(true, "");
-            }
-            else return new Result(false, "Введите обозначение");
+           
 
         }
 
@@ -157,7 +159,9 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
         public Result CheckFormula(string t)
         {
-            if (t == "")
+
+            string t1 = t.Trim();
+            if (t1.Length < 1)
                 return new Result(false, "Уравнение отсутствует");
 
             text = t + '\0';
