@@ -10,6 +10,7 @@ using System.Linq;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Windows;
 using ForresterModeller.src.ProjectManager.miniParser;
+using ForresterModeller.src.ProjectManager.WorkArea;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -66,9 +67,38 @@ namespace ForresterModeller.src.Nodes.Models
 
                 {
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
-                    ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    if (nod != null)
-                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
+
+                    ObservableCollection<DiagramManager> diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
+
+                    foreach (var diag in diagrams)
+                    {
+
+                        diag.UpdateNodes();
+                        var node = diag.АllNodes.FirstOrDefault(x =>
+                       {                           
+                           if(x is DelayNodeModel)
+                           { DelayNodeModel y = (DelayNodeModel)x;
+                               foreach (var outp in y.Outputs.Items)
+                               {
+                                   if (outp.Connections.Items.Count() > 0)
+                                   { String val = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).OutputValue;
+                                       if (val == value)
+                                       {value = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).Name;
+                                           return true;
+                                       }
+                                   }  
+                               }
+         
+                           }
+                           else if (x.Id == value)
+                               return true;
+
+                           return false;
+                           }
+                        );
+                        if (node != null)
+                            data.Add(new DataForViewModels(node.Name+(node is DelayNodeModel ? " (порт "+value+")":""), node.FullName, 1));
+                    }                  
                 }
             }
 

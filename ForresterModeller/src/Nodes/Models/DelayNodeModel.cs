@@ -10,6 +10,7 @@ using ForresterModeller.src.Windows.ViewModels;
 using System.Linq;
 using System.Windows;
 using ForresterModeller.src.ProjectManager.miniParser;
+using ForresterModeller.src.ProjectManager.WorkArea;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -101,6 +102,49 @@ namespace ForresterModeller.src.Nodes.Models
 
             foreach (var inputs in Inputs.Items)
             {
+                if (inputs.Connections.Items.Count() > 0)
+
+                {
+                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+
+                    ObservableCollection<DiagramManager> diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
+
+                    foreach (var diag in diagrams)
+                    {
+
+                        diag.UpdateNodes();
+                        var node = diag.АllNodes.FirstOrDefault(x =>
+                        {
+                            if (x is DelayNodeModel)
+                            {
+                                DelayNodeModel y = (DelayNodeModel)x;
+                                foreach (var outp in y.Outputs.Items)
+                                {
+                                    if (outp.Connections.Items.Count() > 0)
+                                    {
+                                        String val = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).OutputValue;
+                                        if (val == value)
+                                        {
+                                            value = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).Name;
+                                            return true;
+                                        }
+                                    }
+                                }
+
+                            }
+                            else if (x.Id == value)
+                                return true;
+
+                            return false;
+                        }
+                        );
+                        if (node != null)
+                            data.Add(new DataForViewModels(node.Name + (node is DelayNodeModel ? " (порт " + value + ")" : ""), node.FullName, 1));
+                    }
+                }
+            }
+            /*foreach (var inputs in Inputs.Items)
+            {
                 if (inputs.Connections.Items.Any())
 
                 {
@@ -112,7 +156,7 @@ namespace ForresterModeller.src.Nodes.Models
                       data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
                 }
             }
-
+            */
 
             return data;
         }
