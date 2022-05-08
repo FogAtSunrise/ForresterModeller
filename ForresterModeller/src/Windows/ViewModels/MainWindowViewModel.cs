@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Reactive;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,6 +54,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
+        public ReactiveCommand<Unit, Unit> SaveAsProject { get; }
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
 
         #endregion
@@ -71,6 +73,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
             DiagramToolsVM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
+            SaveAsProject = ReactiveCommand.Create<Unit>(u => SaveAsProj());
             CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
         }
 
@@ -244,6 +247,31 @@ namespace ForresterModeller.src.Windows.ViewModels
             if (ActiveProject != null)
             {
                 ActiveProject.SaveOldProject(_startWindowVM);
+            }
+
+        }
+        /// <summary>
+        /// Создать проект
+        /// создает и инициализирует активный проект
+        /// </summary>
+        private void SaveAsProj()
+        {
+            if (ActiveProject != null)
+            {
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    string path = dlg.FileName;
+                   ActiveProject.Name= Path.GetFileNameWithoutExtension(path);
+                    ActiveProject.PathToProject= Path.GetDirectoryName(path)+"\\" + ActiveProject.Name;
+                    ActiveProject.SaveNewProject();
+                  //  System.Windows.MessageBox.Show(path+": " + ActiveProject.Name+"  " + ActiveProject.PathToProject);
+                }
+               
             }
 
         }
