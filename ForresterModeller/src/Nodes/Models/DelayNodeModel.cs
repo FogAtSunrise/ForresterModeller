@@ -129,9 +129,6 @@ namespace ForresterModeller.src.Nodes.Models
                                                 .Output).OutputValue;
                                         if (val == value)
                                         {
-                                            value =
-                                                ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0]
-                                                    .Output).Name;
                                             return true;
                                         }
                                     }

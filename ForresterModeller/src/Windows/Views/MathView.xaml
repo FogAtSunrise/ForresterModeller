@@ -59,19 +59,15 @@
                                     <DataTemplate>
                                         <Grid Margin="0,5">
 
-                                          
-                                            
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
-
-                                            <TextBlock Grid.Column="0"  Text="{Binding Left}"  />
-                                            
-                                            <TextBlock Grid.Column="1"    Text="{Binding sim}" MaxWidth="20" />
-                                            <TextBlock Grid.Column="2"    Text="{Binding Right}" HorizontalAlignment="Left"  />
+                                            <TextBlock Grid.Column="0" >
+                                             <Label  Content="{Binding Left}" />
+                                            <Label  Content="{Binding sim}" MaxWidth="20" />
+                                            <Label  Content="{Binding Right}" HorizontalAlignment="Left"  />
+                                            </TextBlock>
 
                                         </Grid>
 
