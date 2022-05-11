@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
+using DynamicData;
+using ForresterModeller.src.Interfaces;
+using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using NodeNetwork.Views;
 using ReactiveUI;
@@ -13,13 +17,14 @@ using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.ProjectManager
 {
-    public class Project : ReactiveObject
+
+    public class Project : ReactiveObject, IPropertyOwner
     {
         /// <summary>
         /// дефолтные значения имени и пути проекта
         /// </summary>
-        string DefaultName = "New Project";
-        string DefaultPath = Directory.GetCurrentDirectory() + "\\";
+        static string DefaultName = "New Project";
+        static string DefaultPath = Directory.GetCurrentDirectory() + "\\";
 
         /// <summary>
         /// список моделей
@@ -36,8 +41,17 @@ namespace ForresterModeller.src.ProjectManager
         public void AddDiagram(DiagramManager diagram)
         {
             Diagrams.Add(diagram);
+            diagram.PropertyChanged += DiagramOnPropertyChanged;
             var network = (NetworkView)diagram.Content;
 
+        }
+
+        private void DiagramOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is IPropertyOwner owner && e.PropertyName == nameof(DiagramManager.АllNodes))
+            {
+                OnPropertySelected(owner);
+            }
         }
 
         public DiagramManager getDiagramFromFileByName(string d)
@@ -70,7 +84,26 @@ namespace ForresterModeller.src.ProjectManager
 
         }
 
-        public string Name { get; set; }
+        public ObservableCollection<PropertyViewModel> GetProperties()
+        {
+            var properties = new ObservableCollection<PropertyViewModel>();
+            properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }, Pars.CheckName));
+            return properties;
+        }
+
+        public string TypeName { get; }
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set => this.RaiseAndSetIfChanged(ref _name, value);
+        }
+        public event IPropertyOwner.PropertySelectedEventHandler PropertySelectedEvent;
+        public void OnPropertySelected(IPropertyOwner sender)
+        {
+            PropertySelectedEvent?.Invoke(sender);
+        }
 
         public DateTime CreationDate { get; private set; }
         public DateTime ChangeDate { get; private set; }
@@ -117,36 +150,24 @@ namespace ForresterModeller.src.ProjectManager
         }
 
         /// <summary>
-        /// удаление модели по id
+        /// удаление узла
         /// </summary>
-        /// <param name="id"></param>
-        public void deleteModel(string id)
+        public void RemoveNode(ForesterNodeModel node)
         {
-            ForesterNodeModel find = allProjectModels.Find((item) => item.Id == id);
-            if (find != null)
-                allProjectModels.Remove(find);
-
+            foreach (var diagram in Diagrams)
+            {
+                foreach (var nod in diagram.АllNodes)
+                {
+                    if (nod == node)
+                    {
+                        diagram.Content.ViewModel.ClearSelection();
+                        node.IsSelected = true;
+                        diagram.Content.ViewModel.Nodes.Remove(node);
+                        return;
+                    }
+                }
+            }
         }
-        /// <summary>
-        /// добавить имя файла в список файлов проекта
-        /// </summary>
-        /// <param name="name"></param>
-        public void addFiles(string name)
-        {
-
-            //  listAllFiles.Add(name);
-            //...
-        }
-
-
-        public void deleteFile(string name)
-        {
-            // listAllFiles.Add(name);
-            //...
-        }
-
-
-
 
         /// <summary>
         /// получить экземпляр модели по id

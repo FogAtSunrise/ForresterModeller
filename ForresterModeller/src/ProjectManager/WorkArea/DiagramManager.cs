@@ -187,8 +187,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                     }
                 }
             };
-
-
             _contentView.ViewModel = network;
             return _contentView;
         }
@@ -198,7 +196,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             if (e.PropertyName == nameof(ForesterNodeModel.IsSelected))
             {
                 var node = (ForesterNodeModel)sender;
-                if (node.IsSelected)
+                if (node != null && node.IsSelected)
                     SelectedNodes.Add(node);
                 else if (SelectedNodes.Contains(node))
                 {

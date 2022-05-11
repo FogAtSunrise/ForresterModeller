@@ -151,20 +151,22 @@
 
                         </TabItem.Header>
 
-                        <Grid>
+                        <Grid x:Name="InfoGrid" PreviewKeyDown="InfoGrid_OnPreviewKeyDown">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"  />
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="{Binding ActiveProject.Name}" FontWeight="Bold">
+                            <TextBlock x:Name="ProjectName" Text="{Binding ActiveProject.Name}" FontWeight="Bold">
                                 <TextBlock.InputBindings>
-                                    <MouseBinding Command="" MouseAction="LeftClick" />
+                                    <MouseBinding Command="{Binding OpenPropertyCommand}"
+                                                  CommandParameter="{Binding ActiveProject}"  MouseAction="LeftClick" />
                                 </TextBlock.InputBindings>
                             </TextBlock>
 
-                            <TreeView BorderThickness="0" Grid.Row="1" ItemsSource="{Binding ActiveProject.Diagrams}"  SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
-
+                            <TreeView  x:Name="ProjectTree"  BorderThickness="0" Grid.Row="1"
+                                       ItemsSource="{Binding ActiveProject.Diagrams}" 
+                                       SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
                                 <TreeView.Resources>
                                     <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
                                                                   ItemsSource="{Binding АllNodes}">

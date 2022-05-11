@@ -6,8 +6,10 @@ using System.Reactive;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using DynamicData;
 using ForesterNodeCore;
 using ForresterModeller.Pages.Tools;
+using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Viters;
 using ForresterModeller.src.ProjectManager;
@@ -48,12 +50,12 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<String, Unit> OpenTab { get; }
         public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
         public ReactiveCommand<Unit, Unit> CalculateByCore { get; }
-        public ReactiveCommand<Unit, Unit> OpenTestGraph { get; }
         public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
+        public ReactiveCommand<IPropertyOwner, Unit> OpenPropertyCommand { get; }
 
         #endregion
         public MainWindowViewModel(Project project, StartWindowViewModel StartWindowVM)
@@ -72,6 +74,11 @@ namespace ForresterModeller.src.Windows.ViewModels
             DiagramToolsVM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
             CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
+            OpenPropertyCommand = ReactiveCommand.Create<IPropertyOwner>(u =>
+            {
+                if (u != null)
+                    PropertiesVM.ActiveItem = u;
+            });
         }
 
         private void ActiveProject_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -246,6 +253,49 @@ namespace ForresterModeller.src.Windows.ViewModels
                 ActiveProject.SaveOldProject(_startWindowVM);
             }
 
+        }
+
+        public void Remove(IPropertyOwner obj)
+        {
+            if (obj is Project)
+            {
+                return;
+            }
+
+            if (obj is DiagramManager diagramManager)
+            {
+                ActiveProject.Diagrams.Remove(diagramManager);
+                foreach (var tab in TabControlVM.Tabs)
+                {
+                    if (tab.WAManager == diagramManager)
+                    {
+                        TabControlVM.Tabs.Remove(tab);
+                        return;
+                    }
+                }
+                return;
+            }
+
+            if (obj is ForesterNodeModel node)
+            {
+               ActiveProject.RemoveNode(node);
+            }
+        }
+        public void SetSelectedNode(ForesterNodeModel node)
+        {
+            foreach (var diagram in ActiveProject.Diagrams)
+            {
+                foreach (var nod in diagram.АllNodes)
+                {
+                    if (nod == node)
+                    {
+                        OpenOrCreateTab(diagram);
+                        diagram.Content.ViewModel.ClearSelection();
+                        node.IsSelected = true;
+                        return;
+                    }
+                }
+            }
         }
     }
 }
