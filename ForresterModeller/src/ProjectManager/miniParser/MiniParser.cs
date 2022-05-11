@@ -33,6 +33,25 @@ namespace ForresterModeller.src.ProjectManager.miniParser
     };
     public class MinParser
     {
+        //крамсает строку с формулой на массив из элементов формулы
+        public List<Lexem> GetFormulaArray(string t)
+        {
+            List<Lexem> array = new List<Lexem>();
+            string t1 = t.Trim();
+            if (t1.Length < 1)
+                array = new List<Lexem>() { new Lexem(tEnd, "") };
+            text = t + '\0';
+            pointer = 0;
+            Lexem lex = cutForm();
+            while(lex.numb != 100)
+            {
+                array.Add(lex);
+                lex = cutForm();
+            }
+            return array;
+        }
+
+
         /// <summary>
         /// МЕТОД ПРИНИМАЮЩИЙ ПРОПЕРТИ И В ЗАВИСИМООСТИ ОТ ИХ ВИДА ВЫЗЫВАЮЩИЙ НУЖНУЮ ПРОВЕРКУ
         /// </summary>
@@ -203,6 +222,8 @@ namespace ForresterModeller.src.ProjectManager.miniParser
 
             return new Result(true, t);
         }
+
+       
         //##########################################################################################################
         /// <summary>
         ///методы для передвижения по лексемам
