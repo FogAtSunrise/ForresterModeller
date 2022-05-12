@@ -19,10 +19,10 @@ namespace ForresterModeller {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ForresterModeller {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ForresterModeller.Resource", typeof(Resource).Assembly);
@@ -51,7 +51,7 @@ namespace ForresterModeller {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на ФункцияВыбора.
         /// </summary>
-        internal static string chooseFuncName {
+        public static string chooseFuncName {
             get {
                 return ResourceManager.GetString("chooseFuncName", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Константа.
         /// </summary>
-        internal static string constType {
+        public static string constType {
             get {
                 return ResourceManager.GetString("constType", resourceCulture);
             }
@@ -81,16 +81,26 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Описание.
         /// </summary>
-        internal static string description {
+        public static string description {
             get {
                 return ResourceManager.GetString("description", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] Doc {
+            get {
+                object obj = ResourceManager.GetObject("Doc", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Уравнение.
         /// </summary>
-        internal static string equationType {
+        public static string equationType {
             get {
                 return ResourceManager.GetString("equationType", resourceCulture);
             }
@@ -99,7 +109,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
-        internal static string fullName {
+        public static string fullName {
             get {
                 return ResourceManager.GetString("fullName", resourceCulture);
             }
@@ -108,7 +118,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Функция.
         /// </summary>
-        internal static string funcType {
+        public static string funcType {
             get {
                 return ResourceManager.GetString("funcType", resourceCulture);
             }
@@ -117,7 +127,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Уровень.
         /// </summary>
-        internal static string levelType {
+        public static string levelType {
             get {
                 return ResourceManager.GetString("levelType", resourceCulture);
             }
@@ -126,7 +136,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Сторонняядиаграмма.
         /// </summary>
-        internal static string linkDiagramm {
+        public static string linkDiagramm {
             get {
                 return ResourceManager.GetString("linkDiagramm", resourceCulture);
             }
@@ -135,7 +145,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Обозначение.
         /// </summary>
-        internal static string name {
+        public static string name {
             get {
                 return ResourceManager.GetString("name", resourceCulture);
             }
@@ -144,7 +154,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Тип.
         /// </summary>
-        internal static string type {
+        public static string type {
             get {
                 return ResourceManager.GetString("type", resourceCulture);
             }
@@ -153,7 +163,7 @@ namespace ForresterModeller {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Значение.
         /// </summary>
-        internal static string value {
+        public static string value {
             get {
                 return ResourceManager.GetString("value", resourceCulture);
             }

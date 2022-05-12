@@ -95,7 +95,9 @@ namespace ForresterModeller.src.ProjectManager
                 diagram.JsonToDiagram(jobj.AsObject());
 
             }
-            catch { MessageBox.Show("Ошибка файла диаграммы " + d); }
+            catch (Exception e){
+                MessageBox.Show("Ошибка файла диаграммы " + d);
+            }
 
             return diagram;
         }

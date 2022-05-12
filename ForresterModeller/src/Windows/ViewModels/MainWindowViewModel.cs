@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Reactive;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using System.Windows.Resources;
 using System.Windows.Xps.Packaging;
 using DynamicData;
 using ForesterNodeCore;
@@ -49,6 +52,9 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         private StartWindowViewModel _startWindowVM { get; set; }
 
+
+        private FixedDocumentSequence _doc { get; set; } = null;
+
         #region commands
         //Создать новую диаграмму
         public ReactiveCommand<WorkAreaManager, Unit> CreateDiagramTab { get; }
@@ -72,6 +78,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> ShowHelpWindow{get;}
 
         public ReactiveCommand<Unit, Unit> ShowAftorWindow{get;}
+        public Package ResourceManager { get; private set; }
 
 
 
@@ -102,9 +109,18 @@ namespace ForresterModeller.src.Windows.ViewModels
 
             ShowHelpWindow = ReactiveCommand.Create<Unit>(u =>
                 {
-                    XpsDocument xpsDocument = new XpsDocument("D:/dwnd/2.xps", FileAccess.Read);
-                    FixedDocumentSequence fds = xpsDocument.GetFixedDocumentSequence();
-                    new HelpWindow(fds).Show();
+
+                    if (_doc is null)
+                    {
+                        Stream stream = new MemoryStream(Resource.Doc);
+                        var package = Package.Open(stream);
+                        string uri = "memorystream://myXps.xps";
+                        Uri packageUri = new Uri(uri);
+                        PackageStore.AddPackage(packageUri, package);
+                        XpsDocument xpsDocument = new XpsDocument(package, CompressionOption.Maximum, uri);
+                        _doc = xpsDocument.GetFixedDocumentSequence();
+                    }
+                    new HelpWindow(_doc).Show();
                 }
             );
             ShowAftorWindow = ReactiveCommand.Create<Unit>(u =>
@@ -164,7 +180,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public DiagramManager CreateDiagramManager()
         {
             var diagramManager = new DiagramManager(ActiveProject);
-            diagramManager.Name = "диаграмма 2123у1";
+            diagramManager.Name = "диаграмма " + ActiveProject.Diagrams.Count;
             ActiveProject.AddDiagram(diagramManager);
             return diagramManager;
         }
