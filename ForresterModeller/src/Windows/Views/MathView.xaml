@@ -17,19 +17,19 @@
         <!-- Наименование диаграммы -->
 
         <DockPanel Grid.Row="0">
-        <TextBlock  FontWeight="Bold" FontSize="20"  Text="{Binding Name}" ></TextBlock>
+            <TextBlock  FontWeight="Bold" FontSize="20"  Text="{Binding Name}" ></TextBlock>
             <Button Width="150" HorizontalAlignment="Right" Command="{Binding UpdateMath }">Обновить</Button>
 
         </DockPanel>
-       
+
         <!-- Содержимое -->
-        <ListBox Grid.Row="1" Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
+        <ListBox Grid.Row="1" Name="ItemsCtrl"  ItemsSource="{Binding Path=Models}"
+                 SelectedItem="{Binding ActiveView, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Grid.IsSharedSizeScope="True"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,5">
@@ -43,16 +43,16 @@
 
                         <!-- полное Имя модельки -->
                         <Border Grid.Row="0"   BorderBrush="DimGray" BorderThickness="1">
-                            <TextBlock Margin="5,0" FontWeight="Bold" Text="{Binding NodeForMod.Name}"  MaxWidth="200" TextWrapping="Wrap" />
+                            <TextBlock Margin="5,0" FontWeight="Bold" Text="{Binding NodeForMod.Name}"  MaxWidth="200" TextWrapping="Wrap"/>
                         </Border>
 
                         <!-- Описание -->
                         <TextBlock Grid.Row="1"    Text="Описание: "  FontWeight="Bold" />
-                        <TextBlock  Grid.Row="2" MaxWidth="900" TextWrapping="Wrap" HorizontalAlignment="Left"  Text="{Binding NodeForMod.Description}"    />
+                        <TextBlock  Grid.Row="2" MaxWidth="900" TextWrapping="Wrap" HorizontalAlignment="Left"  Text="{Binding NodeForMod.Description}"/>
 
 
                         <Grid Row="3"  >
-                            <ItemsControl Name="it"  ItemsSource="{Binding Path=Data, Mode=TwoWay}" >
+                            <ItemsControl Name="it"  ItemsSource="{Binding Path=Data}" >
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Grid.IsSharedSizeScope="True"/>
@@ -68,7 +68,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock  MaxWidth="900" TextWrapping="Wrap" HorizontalAlignment="Left"  Grid.Column="0" >
-                                             <TextBlock TextWrapping="Wrap"  Text="{Binding Left}" />
+                                                <TextBlock TextWrapping="Wrap"  Text="{Binding Left}" />
                                             <TextBlock TextWrapping="Wrap" Text="{Binding sim}" MaxWidth="20" />
                                             <TextBlock TextWrapping="Wrap" Text="{Binding Right}" HorizontalAlignment="Left"  />
                                             </TextBlock>
@@ -78,8 +78,6 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
-
                         </Grid>
                     </Grid>
 

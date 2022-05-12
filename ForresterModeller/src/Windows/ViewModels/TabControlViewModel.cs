@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ReactiveUI;
 
@@ -29,11 +30,16 @@ namespace ForresterModeller.src.Windows.ViewModels
 
         #endregion
 
-        public void AddTabFromWAManager(WorkAreaManager contentManager)
+        public TabViewModel AddTabFromWAManager(WorkAreaManager contentManager)
         {
-            var item = new TabViewModel(contentManager);
-            Tabs.Add(item);
-            ActiveTab = item;
+            var tab = Tabs.FirstOrDefault((x) => x.WAManager == contentManager);
+            if (tab == null)
+            {
+                tab = new TabViewModel(contentManager);
+                Tabs.Add(tab);
+            }
+            ActiveTab = tab;
+            return tab;
         }
     }
 }

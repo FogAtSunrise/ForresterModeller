@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reactive;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,12 +55,12 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// <summary>
         /// Открыть элемент по имени
         /// </summary>
-        public ReactiveCommand<String, Unit> OpenTab { get; }
+        public ReactiveCommand<String, Unit> OpenTabCommand { get; }
         public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
         public ReactiveCommand<Unit, Unit> CalculateByCore { get; }
         public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
-        public ReactiveCommand<Unit, Unit> OpenMathView { get; }
+        public ReactiveCommand<Unit, Unit> OpenMathViewCommand { get; }
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
         public ReactiveCommand<Unit, Unit> DeleteProjectCommand { get; }
         public ReactiveCommand<Unit, Unit> SaveAsProjectCommand { get; }
@@ -81,13 +82,13 @@ namespace ForresterModeller.src.Windows.ViewModels
             ActiveProject = project;
             ActiveProject.PropertyChanged += ActiveProject_PropertyChanged;
             TabControlVM.PropertyChanged += ActiveTabChanged;
-            CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => AddTab(CreateDiagramManager()));
-            OpenTab = ReactiveCommand.Create<String>(s => AddTab(new DiagramManager(ActiveProject) { Name = "Диаграмма12" }));
+            CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => OpenTab(CreateDiagramManager()));
+            OpenTabCommand = ReactiveCommand.Create<String>(s => OpenTab(new DiagramManager(ActiveProject) { Name = "Диаграмма12" }));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<Unit>(o => ExecuteModelling());
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
             CreateNewProject = ReactiveCommand.Create<Unit>(u => CreateProject());
-            OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
+            OpenMathViewCommand = ReactiveCommand.Create<Unit>(o => OpenMathView());
             DiagramToolsVM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
             DeleteProjectCommand = ReactiveCommand.Create<Unit>(u => DeleteProject());
@@ -128,13 +129,14 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// иначе окно пропертей не будет обновляться
         /// </summary>
         /// <param name="contentManager"></param>
-        private void AddTab(WorkAreaManager contentManager)
+        private TabViewModel OpenTab(WorkAreaManager contentManager)
         {
             if (contentManager != null)
             {
                 contentManager.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
-                TabControlVM.AddTabFromWAManager(contentManager);
+                return TabControlVM.AddTabFromWAManager(contentManager);
             }
+            return null;
         }
         public void CloseAllTabs()
         {
@@ -156,15 +158,8 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         public void OpenOrCreateTab(WorkAreaManager contentManager)
         {
-            foreach (var tab in TabControlVM.Tabs)
-            {
-                if (tab.WAManager == contentManager)
-                {
-                    TabControlVM.ActiveTab = tab;
-                    return;
-                }
-            }
-            AddTab(contentManager);
+            var tab = TabControlVM.Tabs.FirstOrDefault((x) => x.WAManager == contentManager) ?? OpenTab(contentManager);
+            TabControlVM.ActiveTab = tab;
         }
         public DiagramManager CreateDiagramManager()
         {
@@ -196,7 +191,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 try
                 {
-                    AddTab(CalculateGraphByCore());
+                    OpenTab(CalculateGraphByCore());
                 }
                 catch (Exception e)
                 {
@@ -204,22 +199,19 @@ namespace ForresterModeller.src.Windows.ViewModels
                 }
             }
         }
-        private void AddMathView()
+        private void OpenMathView()
         {
 
             if (TabControlVM.ActiveTab == null || TabControlVM.ActiveTab.WAManager is not DiagramManager)
             {
-                System.Windows.MessageBox.Show("Откройте диаграмму, по которой необходимо построить мат. модель");
+                System.Windows.MessageBox.Show("Откройте диаграмму, для которой необходимо построить мат. модель");
             }
             else
             {
-                var diagr = (DiagramManager)TabControlVM.ActiveTab.WAManager;
-                var math = new MatViewManager(diagr);
-                math.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
-                AddTab(math);
-
+                var diagram = (DiagramManager)TabControlVM.ActiveTab.WAManager;
+                var math = diagram.MathVM ?? new MatViewManager(diagram);
+                OpenTab(math);
             }
-
         }
         private PlotManager CalculateGraphByCore()
         {
