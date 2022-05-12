@@ -7,8 +7,10 @@ using System.Linq;
 using System.Reactive;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using System.Windows.Xps.Packaging;
 using DynamicData;
 using ForesterNodeCore;
 using ForresterModeller.Pages.Tools;
@@ -66,6 +68,13 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<IPropertyOwner, Unit> OpenPropertyCommand { get; }
         public ReactiveCommand<Unit, Unit> UpdateTab { get; }
 
+
+        public ReactiveCommand<Unit, Unit> ShowHelpWindow{get;}
+
+        public ReactiveCommand<Unit, Unit> ShowAftorWindow{get;}
+
+
+
         #endregion
         public MainWindowViewModel(Project project, StartWindowViewModel StartWindowVM)
         {
@@ -90,6 +99,17 @@ namespace ForresterModeller.src.Windows.ViewModels
                 if (u != null)
                     PropertiesVM.ActiveItem = u;
             });
+
+            ShowHelpWindow = ReactiveCommand.Create<Unit>(u =>
+                {
+                    XpsDocument xpsDocument = new XpsDocument("D:/dwnd/2.xps", FileAccess.Read);
+                    FixedDocumentSequence fds = xpsDocument.GetFixedDocumentSequence();
+                    new HelpWindow(fds).Show();
+                }
+            );
+            ShowAftorWindow = ReactiveCommand.Create<Unit>(u =>
+                ExecuteModelling()
+            );
 
             UpdateTab = ReactiveCommand.Create<Unit>(u => UpdateActiveTab());
         }
@@ -348,5 +368,8 @@ namespace ForresterModeller.src.Windows.ViewModels
 
 
         }
+
+
+
     }
 }
