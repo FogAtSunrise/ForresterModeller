@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DynamicData;
 using NodeNetwork.ViewModels;
@@ -60,7 +61,9 @@ namespace ForresterModeller.src.Nodes.Models
         {
             var data = base.GetMathView();
             data.Insert(0, new DataForViewModels("Где", "", 3));
-            data.Insert(0, new DataForViewModels(Name, Funk, 0));
+         
+            MinParser parser = new MinParser();
+            List<Lexem> array =  parser.GetFormulaArray(Funk);
 
             foreach (var inputs in Inputs.Items)
             {
@@ -70,40 +73,65 @@ namespace ForresterModeller.src.Nodes.Models
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
 
                     ObservableCollection<DiagramManager> diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
-
+                    ForesterNodeModel node = null;
                     foreach (var diag in diagrams)
                     {
 
                         diag.UpdateNodes();
-                        var node = diag.АllNodes.FirstOrDefault(x =>
-                       {                           
-                           if(x is DelayNodeModel)
-                           { DelayNodeModel y = (DelayNodeModel)x;
-                               foreach (var outp in y.Outputs.Items)
-                               {
-                                   if (outp.Connections.Items.Count() > 0)
-                                   { String val = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).OutputValue;
-                                       if (val == value)
-                                       {value = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).Name;
-                                           return true;
-                                       }
-                                   }  
-                               }
-         
-                           }
-                           else if (x.Id == value)
-                               return true;
+                        node = diag.АllNodes.FirstOrDefault(x =>
+                        {
+                            if (x is DelayNodeModel)
+                            {
+                                DelayNodeModel y = (DelayNodeModel)x;
+                                foreach (var outp in y.Outputs.Items)
+                                {
+                                    if (outp.Connections.Items.Count() > 0)
+                                    {
+                                        String val =
+                                            ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0]
+                                                .Output).OutputValue;
+                                        if (val == value)
+                                        {
+                     
+                                            return true;
+                                        }
+                                    }
+                                }
 
-                           return false;
-                           }
+                            }
+                            else if (x.Id == value)
+                                return true;
+
+                            return false;
+                        }
                         );
                         if (node != null)
-                          //  data.Add(new DataForViewModels(inputs.Name, node.Name + (node is DelayNodeModel ? " (порт " + value + ")" : "") +": "+node.FullName, 1));
-                        data.Add(new DataForViewModels(inputs.Name, node.FullName, 1));
-                    }                  
-                }
-            }
+                        {
+                            data.Add(new DataForViewModels(node.Name, node.FullName, 1));
+                            foreach (var word in array)
+                            {
+                                if (word.str == inputs.Name)
+                                    word.str = node.Name;
+                            }
+                            break;
+                        }
+                    }
+                    if (node == null)
+                    {
+                        data.Add(new DataForViewModels("Значение не найдено", "", 2));
+                    }
 
+                }
+                else
+                    data.Add(new DataForViewModels(inputs.Name, "Значение не задано", 1));
+            }
+            
+            string funk = "";
+            foreach (var word in array)
+            {
+                funk += word.str;
+            }
+            data.Insert(0, new DataForViewModels(Name, funk, 0));
             return data;
         }
 
