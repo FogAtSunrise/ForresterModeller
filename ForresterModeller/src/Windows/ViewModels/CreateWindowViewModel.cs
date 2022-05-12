@@ -18,13 +18,15 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// </summary>
         public ReactiveCommand<Unit, Unit> SetPath { get; }
 
+        private StartWindowViewModel _startVM;
+
         /// <summary>
         /// команда создания проекта по введенным данным
         /// </summary>
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
-        public CreateWindowViewModel()
+        public CreateWindowViewModel(StartWindowViewModel startVm)
         {
-
+            _startVM = startVm;
             SetPath = ReactiveCommand.Create<Unit>(u => OpenGuide());
             SaveProject = ReactiveCommand.Create<Unit>(u => Save());
         }
@@ -75,7 +77,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// </summary>
         private void Save()
         {
-            Project project = new Project(_nameFile, _pathToImage == "" ? "" : (_pathToImage + "\\" + _nameFile));
+            Project project = new Project(_nameFile, _pathToImage == "" ? "" : (_pathToImage + "\\" + _nameFile), _startVM);
             project.SaveNewProject();
             FileName = project.PathToProject + "\\" + project.Name + ".json";
             this.DialogResult = true;

@@ -273,7 +273,6 @@ namespace ForresterModeller.src.Nodes.Models
             properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }, Pars.CheckName));
             properties.Add(new PropertyViewModel(Resource.fullName, FullName, (String str) => { FullName = str; }, Pars.CheckNull));
             properties.Add(new PropertyViewModel(TypeName, TypeName));
-
             properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }, null));
             return properties;
         }

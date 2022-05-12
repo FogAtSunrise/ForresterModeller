@@ -20,6 +20,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
     {
 
         private Project _project;
+        public string FullName => PathToFile + "\\" + Name;
 
         public DiagramManager(Project project) { _project = project; }
         public DiagramManager(string name, Project project) : this(project)

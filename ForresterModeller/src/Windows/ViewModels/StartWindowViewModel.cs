@@ -62,7 +62,7 @@ namespace ForresterModeller.src.Windows.ViewModels
 
             CreateProjectCommand = ReactiveCommand.Create<Unit>(u =>
             {
-                CreateProject proj = new CreateProject();
+                CreateProject proj = new CreateProject(this);
                 var window = proj as Window;
                 var dialogResult = window.ShowDialog();
                 if (dialogResult == true)
@@ -86,7 +86,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
         }
-        private static List<Project> GetActualProjectList()
+        private List<Project> GetActualProjectList()
         {
             var uniquePaths = new HashSet<string>();
             var projects = new List<Project>();
@@ -110,7 +110,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 foreach (var projPath in uniquePaths)
                 {
-                    projects.Add(Loader.InitProjectByPath(projPath));
+                    projects.Add(Loader.InitProjectByPath(projPath, this));
                     sw.WriteLine(projPath);
                 }
                 sw.Close();

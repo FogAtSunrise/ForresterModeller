@@ -31,7 +31,7 @@ namespace ForresterModeller.src.Windows.Views
             if (((ListBox)sender).SelectedItem != null)
             {
                 var selected = (Project)((ListBox)sender).SelectedItem;
-                ViewModel.OpenProject(selected.GetFullName());
+                ViewModel.OpenProject(selected.FullName());
             }
         }
     }

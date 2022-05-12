@@ -19,7 +19,7 @@
                 <MenuItem Header="Создать" Command="{Binding CreateNewProject}" />
                 <MenuItem Header="Открыть"   Command="{Binding  InitProjectByPath}"/>
                 <MenuItem Header="Сохранить" Command="{Binding SaveProject}"/>
-                <MenuItem Header="Сохранить как" Command="{Binding SaveAsProject}"/>
+                <MenuItem Header="Сохранить как" Command="{Binding SaveAsProjectCommand}"/>
             </MenuItem>
             <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagramTab }"/>
             <MenuItem Header="Создать представление" Command="{Binding OpenMathView}"/>
@@ -157,19 +157,16 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock x:Name="ProjectName" Text="{Binding ActiveProject.Name}" FontWeight="Bold">
-                                <TextBlock.InputBindings>
-                                    <MouseBinding Command="{Binding OpenPropertyCommand}"
-                                                  CommandParameter="{Binding ActiveProject}"  MouseAction="LeftClick" />
-                                </TextBlock.InputBindings>
-                            </TextBlock>
-
                             <TreeView  x:Name="ProjectTree"  BorderThickness="0" Grid.Row="1"
-                                       ItemsSource="{Binding ActiveProject.Diagrams}" 
+                                       ItemsSource="{Binding ListFromProject}" 
                                        SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
                                 <TreeView.Resources>
+                                    <HierarchicalDataTemplate DataType="{x:Type self:Project}" 
+                                                                  ItemsSource="{Binding Diagrams}">
+                                        <TextBlock Text="{Binding Name }" />
+                                    </HierarchicalDataTemplate> 
                                     <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
-                                                                  ItemsSource="{Binding АllNodes}">
+                                                              ItemsSource="{Binding АllNodes}">
                                         <TextBlock Text="{Binding Name }" />
                                     </HierarchicalDataTemplate>
                                     <DataTemplate DataType="{x:Type models:ForesterNodeModel}">

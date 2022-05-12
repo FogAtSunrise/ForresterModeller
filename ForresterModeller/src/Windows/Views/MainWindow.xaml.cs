@@ -20,7 +20,7 @@ namespace ForresterModeller.src.Windows.Views
         public MainWindow(StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
-            Project a = new Project { Name = "naaame of proj" };
+            Project a = new Project(startWindowVM) { Name = "naaame of proj" };
             a.Diagrams.Add(new DiagramManager("1", a));
             a.Diagrams.Add(new DiagramManager("12", a));
             a.Diagrams.Add(new DiagramManager("123", a));
@@ -30,7 +30,7 @@ namespace ForresterModeller.src.Windows.Views
         public MainWindow(string path, StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path), startWindowVM); ;
+            DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path, startWindowVM), startWindowVM); ;
         }
 
         private void PrintFormule(string form)
@@ -97,19 +97,26 @@ namespace ForresterModeller.src.Windows.Views
                         tree = (TreeView)child;
                     }
                 }
-                if (tree != null)
+                if (tree != null )
                 {
                     var obj = (IPropertyOwner)tree.SelectedItem;
-                    string checkMessage = "Удалить " + obj.TypeName + " \"" + obj.Name + "\"? Данное действие нельзя отменить.";
-                    var result = MessageBox.Show(checkMessage, "Delete", MessageBoxButton.OKCancel);
-                    if (result == MessageBoxResult.OK)
+                    if (obj != null)
                     {
-                        ((MainWindowViewModel)DataContext).Remove(obj);
-                        tree.ItemsSource = mainVM.ActiveProject?.Diagrams;
-                        tree.Items.Refresh();
-                        tree.UpdateLayout();
+                        string checkMessage = "Удалить " + obj.TypeName + " \"" + obj.Name +
+                                              "\"? Данное действие нельзя отменить.";
+                        var result = MessageBox.Show(checkMessage, "Delete", MessageBoxButton.OKCancel);
+                        if (result == MessageBoxResult.OK)
+                        {
+                            mainVM.Remove(obj);
+                            tree.ItemsSource = mainVM.ListFromProject;
+                            tree.Items.Refresh();
+                            tree.UpdateLayout();
+                            if (mainVM.ActiveProject == null)
+                            {
+                                this.Close();
+                            }
+                        }
                     }
-                
                 }
             }
         }

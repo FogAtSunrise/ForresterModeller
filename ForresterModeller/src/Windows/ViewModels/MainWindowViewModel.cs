@@ -7,6 +7,7 @@ using System.Reactive;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using DynamicData;
 using ForesterNodeCore;
 using ForresterModeller.Pages.Tools;
@@ -15,6 +16,7 @@ using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Viters;
 using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.ProjectManager.WorkArea;
+using ForresterModeller.src.Windows.Views;
 using NodeNetwork.Views;
 using ReactiveUI;
 using WpfMath.Controls;
@@ -23,6 +25,7 @@ namespace ForresterModeller.src.Windows.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject
     {
+        public ObservableCollection<Project> ListFromProject { get; private set; }
         public TabControlViewModel TabControlVM { get; } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
@@ -37,6 +40,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _activeProject, value);
+                ListFromProject = new ObservableCollection<Project>() { ActiveProject };
                 ProjectInstance = _activeProject;
             }
         }
@@ -55,10 +59,11 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CreateNewProject { get; }
         public ReactiveCommand<Unit, Unit> OpenMathView { get; }
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
-        public ReactiveCommand<Unit, Unit> SaveAsProject { get; }
+        public ReactiveCommand<Unit, Unit> DeleteProjectCommand { get; }
+        public ReactiveCommand<Unit, Unit> SaveAsProjectCommand { get; }
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
         public ReactiveCommand<IPropertyOwner, Unit> OpenPropertyCommand { get; }
-        public ReactiveCommand<Unit, Unit> UpdateTab{ get; }
+        public ReactiveCommand<Unit, Unit> UpdateTab { get; }
 
         #endregion
         public MainWindowViewModel(Project project, StartWindowViewModel StartWindowVM)
@@ -76,7 +81,8 @@ namespace ForresterModeller.src.Windows.ViewModels
             OpenMathView = ReactiveCommand.Create<Unit>(o => AddMathView());
             DiagramToolsVM = new(project: ActiveProject);
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
-            SaveAsProject = ReactiveCommand.Create<Unit>(u => SaveAsProj());
+            DeleteProjectCommand = ReactiveCommand.Create<Unit>(u => DeleteProject());
+            SaveAsProjectCommand = ReactiveCommand.Create<Unit>(u => SaveAsProject());
             CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
             OpenPropertyCommand = ReactiveCommand.Create<IPropertyOwner>(u =>
             {
@@ -90,6 +96,11 @@ namespace ForresterModeller.src.Windows.ViewModels
         private void ActiveProject_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var proj = (Project)sender;
+        } 
+        private void DeleteProject()
+        {
+           ActiveProject.RemoveFromFileSystem();
+           ActiveProject = null;
         }
 
         /// <summary>
@@ -112,16 +123,15 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         public void UpdateActiveTab()
         {
-           if (TabControlVM.ActiveTab == null)
+            if (TabControlVM.ActiveTab == null)
             {
                 System.Windows.MessageBox.Show("Откройте элемент для обновления");
             }
             else
-           {
-               TabViewModel tab = TabControlVM.ActiveTab;
-               TabControlVM.ActiveTab = null;
-               TabControlVM.ActiveTab = tab;
-
+            {
+                TabViewModel tab = TabControlVM.ActiveTab;
+                TabControlVM.ActiveTab = null;
+                TabControlVM.ActiveTab = tab;
             }
         }
         public void OpenOrCreateTab(WorkAreaManager contentManager)
@@ -234,8 +244,8 @@ namespace ForresterModeller.src.Windows.ViewModels
             openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ActiveProject = Loader.InitProjectByPath(openFileDialog.FileName);
-                _startWindowVM.AddProject(ActiveProject.GetFullName());
+                ActiveProject = Loader.InitProjectByPath(openFileDialog.FileName, _startWindowVM);
+                _startWindowVM.AddProject(ActiveProject.FullName());
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
         }
@@ -250,13 +260,13 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 ActiveProject.SaveOldProject(_startWindowVM);
             }
-            CreateProject proj = new CreateProject();
+            CreateProject proj = new CreateProject(_startWindowVM);
             var window = proj as Window;
             var dialogResult = window.ShowDialog();
 
             if (dialogResult == true)
             {
-                ActiveProject = Loader.InitProjectByPath(proj.ViewModel.FileName);
+                ActiveProject = Loader.InitProjectByPath(proj.ViewModel.FileName, _startWindowVM);
                 _startWindowVM.AddProject(proj.ViewModel.FileName);
                 //ИЗМЕНИТЬ СОДЕРЖИМОЕ ОКНА ЕЩЕ
             }
@@ -279,26 +289,28 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             if (obj is Project)
             {
-                return;
+                DeleteProject();
+                
             }
 
             if (obj is DiagramManager diagramManager)
             {
-                ActiveProject.Diagrams.Remove(diagramManager);
-                foreach (var tab in TabControlVM.Tabs)
+                for (int i = 0; i < TabControlVM.Tabs.Count; i++)
                 {
+                    var tab = TabControlVM.Tabs[i];
                     if (tab.WAManager == diagramManager)
                     {
                         TabControlVM.Tabs.Remove(tab);
-                        return;
+                        i--;
                     }
                 }
+                ActiveProject.Remove(diagramManager);
                 return;
             }
 
             if (obj is ForesterNodeModel node)
             {
-               ActiveProject.RemoveNode(node);
+                ActiveProject.Remove(node);
             }
         }
         public void SetSelectedNode(ForesterNodeModel node)
@@ -322,7 +334,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// Создать проект
         /// создает и инициализирует активный проект
         /// </summary>
-        private void SaveAsProj()
+        private void SaveAsProject()
         {
             if (ActiveProject != null)
             {
@@ -334,12 +346,12 @@ namespace ForresterModeller.src.Windows.ViewModels
                 {
                     // Save document
                     string path = dlg.FileName;
-                   ActiveProject.Name= Path.GetFileNameWithoutExtension(path);
-                    ActiveProject.PathToProject= Path.GetDirectoryName(path)+"\\" + ActiveProject.Name;
+                    ActiveProject.Name = Path.GetFileNameWithoutExtension(path);
+                    ActiveProject.PathToProject = Path.GetDirectoryName(path) + "\\" + ActiveProject.Name;
                     ActiveProject.SaveNewProject();
-                  //  System.Windows.MessageBox.Show(path+": " + ActiveProject.Name+"  " + ActiveProject.PathToProject);
+                    //  System.Windows.MessageBox.Show(path+": " + ActiveProject.Name+"  " + ActiveProject.PathToProject);
                 }
-               
+
             }
 
 

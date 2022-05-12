@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Windows.Forms;
+using ForresterModeller.src.Windows.ViewModels;
 
 namespace ForresterModeller.src.ProjectManager
 {
@@ -22,10 +23,9 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         /// <param name="path"></param>
         /// <returns> экземпляр инициализированного проекта</returns>
-        public static Project InitProjectByPath(string path)
+        public static Project InitProjectByPath(string path, StartWindowViewModel startVM)
         {
-   
-            Project project = new Project(Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path));
+            Project project = new Project(Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path), startVM);
             try
             {
                 StreamReader r = new StreamReader(path);

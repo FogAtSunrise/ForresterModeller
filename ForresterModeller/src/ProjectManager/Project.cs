@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
+using System.Windows.Forms;
 using DynamicData;
 using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.ProjectManager.miniParser;
@@ -25,12 +26,12 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         static string DefaultName = "New Project";
         static string DefaultPath = Directory.GetCurrentDirectory() + "\\";
-
         /// <summary>
         /// список моделей
         /// </summary>
         List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
 
+        public StartWindowViewModel startVM { get; set; }
         private ObservableCollection<DiagramManager> _diagrams = new();
         public ObservableCollection<DiagramManager> Diagrams
         {
@@ -81,6 +82,7 @@ namespace ForresterModeller.src.ProjectManager
 
             }
             Loader.WriteFileJson(diagram.Name, PathToProject + "\\diagrams", json);
+            diagram.PathToFile = PathToProject + "\\diagrams";
 
         }
 
@@ -113,23 +115,25 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         public string PathToProject { get; set; }
 
-        public string GetFullName() => PathToProject + "\\" + Name + ".json";
+        public string FullName() => PathToProject + "\\" + Name + ".json";
 
         /// <summary>
         /// конструкторы
         /// </summary>
         /// <param name="name"></param>
         /// <param name="pathTofile"></param>
-        public Project(string name, string pathTofile)
+        public Project(string name, string pathTofile, StartWindowViewModel startWindowVM)
         {
+            startVM = startWindowVM;
             Name = (name == null || name == "") ? DefaultName : name;
             PathToProject = (pathTofile == null || pathTofile == "") ? DefaultPath + Name : pathTofile;
             CreationDate = DateTime.Now;
             ChangeDate = DateTime.Now;
         }
 
-        public Project()
+        public Project(StartWindowViewModel startWindowVM)
         {
+            startVM = startWindowVM;
             Name = DefaultName;
             PathToProject = DefaultPath + Name;
             CreationDate = DateTime.Now;
@@ -152,7 +156,7 @@ namespace ForresterModeller.src.ProjectManager
         /// <summary>
         /// удаление узла
         /// </summary>
-        public void RemoveNode(ForesterNodeModel node)
+        public void Remove(ForesterNodeModel node)
         {
             foreach (var diagram in Diagrams)
             {
@@ -167,6 +171,33 @@ namespace ForresterModeller.src.ProjectManager
                     }
                 }
             }
+        }   
+        
+        /// <summary>
+        /// удаление диаграммы
+        /// </summary>
+        public void Remove(DiagramManager deletedDiagram)
+        {
+            foreach (var diagram in Diagrams)
+            {
+                    if(diagram == deletedDiagram)
+                    {
+                        File.Delete(diagram.FullName);
+                        Diagrams.Remove(diagram);
+                        return;
+                    }
+            }
+        }
+        /// <summary>
+        /// удаление проекта
+        /// </summary>
+        public void RemoveFromFileSystem()
+        {
+            for (int i = Diagrams.Count - 1; i >= 0; i-- ) 
+            {
+                Remove(Diagrams[i]);
+            }
+            File.Delete(this.FullName());
         }
 
         /// <summary>
@@ -177,8 +208,6 @@ namespace ForresterModeller.src.ProjectManager
         /// <returns></returns>
         public ForesterNodeModel getModelById(string id)
         {
-
-
             foreach (var diag in Diagrams)
             {
                 diag.UpdateNodes();
@@ -232,6 +261,7 @@ namespace ForresterModeller.src.ProjectManager
             Loader.CreateDirectory(PathToProject + "\\diagrams");
             JsonObject jsonVerst = ToJson();
             Loader.WriteFileJson(Name, PathToProject, jsonVerst);
+            startVM.AddProject(FullName());
         }
 
 

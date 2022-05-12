@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ForresterModeller.src.ProjectManager;
 using ForresterModeller.src.Windows.ViewModels;
 using ReactiveUI;
 
-namespace ForresterModeller.src.Windows
+namespace ForresterModeller.src.Windows.Views
 {
     /// <summary>
     /// Логика взаимодействия для CreateProject.xaml
@@ -28,10 +14,10 @@ namespace ForresterModeller.src.Windows
         //public string FileName = "";
 
 
-        public CreateProject()
+        public CreateProject(StartWindowViewModel startVM)
         {
             InitializeComponent();
-            this.ViewModel = new CreateWindowViewModel();
+            this.ViewModel = new CreateWindowViewModel(startVM);
             this.DataContext = this.ViewModel;
 
             this.ViewModel
