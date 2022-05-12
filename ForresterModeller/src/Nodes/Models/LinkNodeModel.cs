@@ -26,16 +26,19 @@ namespace ForresterModeller.src.Nodes.Models
         private Project _diagrams;
 
         private bool _isConnected = false;
+       
 
         public string Salt => Id;
         public ForesterNetworkViewModel Modegel => (ForesterNetworkViewModel)_diagrams.Diagrams.FirstOrDefault(a => a.Name == this.Name).Content.ViewModel;
         public override string TypeName => Resource.linkDiagramm;
+        
         public LinkNodeModel(Project diagram, string name) : base()
         {
             _diagrams = diagram;
             this.Name = name;
+            this.FullName = Resource.linkDiagramm;
 
-           _diagrams.Diagrams.FirstOrDefault(a => a.Name == this.Name).PropertyChanged += (sender, e) =>
+            _diagrams.Diagrams.FirstOrDefault(a => a.Name == this.Name).PropertyChanged += (sender, e) =>
            {
                if (e.PropertyName == "Name")
                {
@@ -47,7 +50,13 @@ namespace ForresterModeller.src.Nodes.Models
 
             RefreshInput();
         }
-        
+
+        public override ObservableCollection<DataForViewModels> GetMathView()
+        {
+            var data = new ObservableCollection<DataForViewModels>();
+            data.Add(new DataForViewModels(Name, Resource.linkDiagramm, 1));
+            return data;
+        }
         public LinkNodeModel(Project diagram)
         {
             _diagrams = diagram;
