@@ -197,9 +197,8 @@ namespace ForresterModeller.src.ProjectManager
                 {
                     if (nod == node)
                     {
-                        diagram.Content.ViewModel.ClearSelection();
-                        node.IsSelected = true;
-                        diagram.Content.ViewModel.Nodes.Remove(node);
+                      diagram.Content.ViewModel.Nodes.Remove(node);
+                        diagram.UpdateNodes();
                         return;
                     }
                 }

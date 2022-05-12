@@ -67,10 +67,14 @@
                                             <ColumnDefinition Width="Auto" SharedSizeGroup="a"/>
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="15"/>
+                                        </Grid.RowDefinitions>
 
                                         <TextBlock Grid.Column="0" Margin="5,0"  Text="{Binding Name}"  MaxWidth="200" TextWrapping="Wrap" />
 
-                                        <ContentControl Grid.Column="1" Content="{Binding}" Margin="5,0">
+                                        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding }" Margin="5,0">
                                             <ContentControl.Style>
                                                 <Style TargetType="ContentControl">
                                                     <Style.Triggers>
@@ -85,9 +89,24 @@
 
                                                     </Style.Triggers>
                                                 </Style>
-
                                             </ContentControl.Style>
-
+                                        </ContentControl>
+                                        <TextBlock Grid.Row="1" Grid.Column="1"  Margin="5,0" Foreground="Red" 
+                                                   Text="{Binding Message, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <ContentControl Grid.Row="1" Grid.Column="1"  >
+                                            <ContentControl.Style>
+                                                <Style TargetType="ContentControl">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCorrect}" Value="True">
+                                                            <Setter Property="Visibility" Value="Hidden" />
+                                                            <Setter Property="Height" Value="1"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsCorrect}" Value="False">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ContentControl.Style>
                                         </ContentControl>
                                     </Grid>
                                 </DataTemplate>

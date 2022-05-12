@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using ForresterModeller.src.Interfaces;
+using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.Windows.ViewModels;
 using ReactiveUI;
 
@@ -31,7 +32,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             var properties = new ObservableCollection<PropertyViewModel>();
             properties.Add(new PropertyViewModel("Тип", TypeName));
             //todo check on uniqui in proj
-            properties.Add(new PropertyViewModel("Название", Name, (string s) => Name = s, null));
+            properties.Add(new PropertyViewModel("Имя", Name, (string s) => Name = s, Pars.CheckName));
             return properties;
         }
         public virtual string TypeName { get; }

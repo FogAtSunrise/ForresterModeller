@@ -35,7 +35,7 @@
             <Grid Background="LightGray" Grid.Row="1">
                 <DockPanel Height="15">
                     <Grid HorizontalAlignment="Stretch" >
-                        <TextBlock Text="Имя"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,2,0,0" />
+                        <TextBlock Text="Имя" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,2,0,0" />
                     </Grid>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                         <TextBlock Text="Дата изменения"  VerticalAlignment="Center"/>
@@ -63,7 +63,7 @@
                                         <ColumnDefinition Width="100"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0" >
-                                        <TextBlock Text="{Binding Name}"  TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                     </Grid>
                                     <Grid Grid.Column="1" HorizontalAlignment="Left" >
                                         <Label Content="{Binding ChangeDate}" />
