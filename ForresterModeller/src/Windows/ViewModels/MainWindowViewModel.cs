@@ -34,6 +34,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ObservableCollection<Project> ListFromProject { get; private set; }
         public TabControlViewModel TabControlVM { get; } = new();
         public PropertiesControlViewModel PropertiesVM { get; set; } = new();
+        public ContentControl formuls { get; set; } = new();
         public ObservableCollection<FormulaControl> Formulas { get; set; }
         public PlotterTools PlotterToolsVM { get; set; } = new();
         public DiagramTools DiagramToolsVM { get; set; }
@@ -73,6 +74,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
         public ReactiveCommand<IPropertyOwner, Unit> OpenPropertyCommand { get; }
         public ReactiveCommand<Unit, Unit> UpdateTab { get; }
+        public ReactiveCommand<Unit, Unit> UpdateFormul { get; }
 
 
         public ReactiveCommand<Unit, Unit> ShowHelpWindow{get;}
@@ -128,6 +130,8 @@ namespace ForresterModeller.src.Windows.ViewModels
             );
 
             UpdateTab = ReactiveCommand.Create<Unit>(u => UpdateActiveTab());
+
+            UpdateFormul = ReactiveCommand.Create<Unit>(u => UpdateFunc());
         }
 
         private void ActiveProject_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -172,6 +176,17 @@ namespace ForresterModeller.src.Windows.ViewModels
                 TabControlVM.ActiveTab = tab;
             }
         }
+
+        public void UpdateFunc()
+        {
+            if (TabControlVM.ActiveTab == null || TabControlVM.ActiveTab.WAManager is not DiagramManager)
+            {
+                System.Windows.MessageBox.Show("Откройте диаграмму");
+            }
+            else
+                formuls.Content = new FormulasViewModel((DiagramManager)TabControlVM.ActiveTab.WAManager).GenerateActualView();
+        }
+
         public void OpenOrCreateTab(WorkAreaManager contentManager)
         {
             var tab = TabControlVM.Tabs.FirstOrDefault((x) => x.WAManager == contentManager) ?? OpenTab(contentManager);
@@ -190,9 +205,14 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 var tbControl = ((TabControlViewModel)sender);
                 var manager = tbControl.ActiveTab?.WAManager;
+
+                
                 if (manager is DiagramManager)
                 {
                     ToolContent.Content = DiagramToolsVM;
+                    formuls.Content = new FormulasViewModel((DiagramManager)manager).GenerateActualView();
+                 
+
                 }
                 else if (manager is PlotManager)
                 {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Windows.Controls;
 using ForresterModeller.src.ProjectManager.miniParser;
 using ReactiveUI;
 
@@ -17,7 +19,8 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// <param name="name">Имя поля</param>
         /// <param name="value">Значение поля</param>
         /// <param name="updateAction">Метод, обрабатывающий обновление поля на форме</param>
-        public PropertyViewModel(String name, String value, Action<String> updateAction, Func<String, Result> validateFunc)
+        public PropertyViewModel(String name, String value, Action<String> updateAction,
+            Func<String, Result> validateFunc)
         {
             Name = name;
             _value = value;
@@ -25,6 +28,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             _validateFunc = validateFunc;
             IsReadOnly = false;
         }
+
         //public PropertyViewModel(String name, String value, Action<String> updateAction)
         //{
         //    Name = name;
@@ -43,10 +47,14 @@ namespace ForresterModeller.src.Windows.ViewModels
             _value = value;
             IsReadOnly = true;
         }
+
         public string Name { get; set; }
         private Action<String> _updateValue;
         private Func<String, Result> _validateFunc;
         private string _value;
+        private string _msg;
+        public string Message { get => _msg; set => this.RaiseAndSetIfChanged(ref _msg, value); }
+
         public string Value
         {
             get => _value;
@@ -54,9 +62,16 @@ namespace ForresterModeller.src.Windows.ViewModels
             {
                 _value = value;
                 if (_validateFunc != null)
-                    IsCorrect = _validateFunc(value).result;
+                {
+                    var res = _validateFunc(value);
+                    IsCorrect = res.result;
+                    Message = res.str;
+                }
                 if (IsCorrect)
+                {
                     _updateValue(value);
+                    Message = "";
+                }
             }
         }
         public bool IsReadOnly { get; set; }

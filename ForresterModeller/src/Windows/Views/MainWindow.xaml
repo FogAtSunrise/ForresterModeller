@@ -183,14 +183,16 @@
                                 <TextBlock Margin="3"><Run Text="Уравнения"/></TextBlock>
                             </StackPanel>
                         </TabItem.Header>
-
-                        <StackPanel Name ="formuls" xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath" >
-                            <DockPanel>
-                                <TextBox Name ="input_formul"  DockPanel.Dock="Left" Width="299"></TextBox>
-                                <Button DockPanel.Dock="Right" Content="+" Width="44" Click="Button_Click_Add_Formule"/>
-                            </DockPanel>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0" Width="150" HorizontalAlignment="Right" Command="{Binding UpdateFormul }">Обновить</Button>
+                            <ContentControl Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Content="{Binding formuls}" />
+                        </Grid>
                     </TabItem>
+                   
 
                 </TabControl>
             </Grid>

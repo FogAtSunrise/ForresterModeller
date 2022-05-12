@@ -143,6 +143,80 @@ namespace ForresterModeller.src.Nodes.Models
             return data;
         }
 
+        public DataForViewModels GetFormul()
+        {
+            var data = new DataForViewModels(Name, Funk, 0);
+            MinParser parser = new MinParser();
+            List<Lexem> array = parser.GetFormulaArray(Funk);
+
+            foreach (var inputs in Inputs.Items)
+            {
+                if (inputs.Connections.Items.Count() > 0)
+
+                {
+                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
+
+                    var diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
+                    ForesterNodeModel node = null;
+                    foreach (var diag in diagrams)
+                    {
+
+                        diag.UpdateNodes();
+                        node = diag.АllNodes.FirstOrDefault(x =>
+                        {
+
+                            if (x is DelayNodeModel || x is LinkNodeModel)
+                            {
+                                ForesterNodeModel y;
+                                if (x is DelayNodeModel)
+                                    y = (DelayNodeModel)x;
+                                else
+                                    y = (LinkNodeModel)x;
+
+                                foreach (var outp in y.Outputs.Items)
+                                {
+                                    if (outp.Connections.Items.Count() > 0)
+                                    {
+                                        String val =
+                                            ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0]
+                                                .Output).OutputValue;
+                                        if (val == value)
+                                        {
+
+                                            return true;
+                                        }
+                                    }
+                                }
+
+                            }
+                            else if (x.Id == value)
+                                return true;
+
+                            return false;
+                        }
+                        );
+                        if (node != null)
+                        {
+                            foreach (var word in array)
+                            {
+                                if (word.str == inputs.Name)
+                                    word.str = node.Name;
+                            }
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            string funk = "";
+            foreach (var word in array)
+            {
+                funk += word.str;
+            }
+            data= new DataForViewModels(Name, funk, 0);
+            return data;
+        }
 
         public void RefreshInput()
         {
