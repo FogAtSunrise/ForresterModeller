@@ -225,7 +225,9 @@ namespace ForresterModeller.src.Nodes.Models
 
     public class MaxNodeModel : ChouseNodeModel
     {
-        public static string type = "ChouseNodeModel";
+        public static string type = "ChouseNodeModel"; 
+        public override string TypeName => "функция выбора максимума";
+
         public MaxNodeModel() : base("max", "max", "(first + second + abs(first-second))/2")
         {
             Description = "Функция выбора максимума из двух аргументов.";
@@ -240,9 +242,10 @@ namespace ForresterModeller.src.Nodes.Models
                 _ => Observable.Return(42).Delay(TimeSpan.FromSeconds(2)));
 
             var properties = new ObservableCollection<PropertyViewModel>();
-            properties.Add(new PropertyViewModel(Resource.name, Name));
-            properties.Add(new PropertyViewModel(Resource.name, FullName));
-            properties.Add(new PropertyViewModel(Resource.description, Description));
+            properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }, Pars.CheckName));
+            properties.Add(new PropertyViewModel(Resource.fullName, FullName, (String str) => { FullName = str; }, Pars.CheckNull));
+            properties.Add(new PropertyViewModel(TypeName, TypeName));
+            properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }, null));
             return properties;
         }
     }
@@ -250,7 +253,7 @@ namespace ForresterModeller.src.Nodes.Models
     public class MinNodeModel : ChouseNodeModel
     {
         public static string type = "ChouseNodeModel";
-        public override string TypeName => "функция минимума";
+        public override string TypeName => "функция выбора минимума";
 
         public MinNodeModel() : base("min", "min", "(first + second - abs(first-second))/2")
         {
@@ -269,6 +272,9 @@ namespace ForresterModeller.src.Nodes.Models
             var properties = new ObservableCollection<PropertyViewModel>();
             properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }, Pars.CheckName));
             properties.Add(new PropertyViewModel(Resource.fullName, FullName, (String str) => { FullName = str; }, Pars.CheckNull));
+            properties.Add(new PropertyViewModel(TypeName, TypeName));
+
+            properties.Add(new PropertyViewModel(Resource.description, Description, (String str) => { Description = str; }, null));
             return properties;
         }
     }

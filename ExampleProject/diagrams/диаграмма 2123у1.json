@@ -6,10 +6,10 @@
     {
       "Id": "OBJ1577748292",
       "Type": "ChouseNodeModel",
-      "Name": "jump",
-      "FullName": "jump",
+      "Name": "LVLFunc",
+      "FullName": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F \u0432\u044B\u0431\u043E\u0440\u0430 \u0443\u0440\u043E\u0432\u043D\u044F",
       "Funk": "default \u002B(time * (time \u002B t \u002B abs(time - t))/2 - time * time \u002B 1-abs((time * (time \u002B t \u002B abs(time - t))/2 - time * time - 1))/2 * abs(default - jump)",
-      "Description": "",
+      "Description": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F, \u0432\u044B\u0431\u0438\u0440\u0430\u044E\u0449\u0430\u044F \u0441\u0442\u0430\u0440\u0442\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0432 \u0437\u0430\u0432\u0438\u0441\u0438\u043C\u043E\u0441\u0442\u0438 \u043E\u0442 \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u0432\u0440\u0435\u043C\u0435\u043D\u0438.",
       "PositionX": 608,
       "PositionY": 200.04,
       "Conects": [
@@ -25,7 +25,7 @@
         },
         {
           "SourceId": "OBJ523945801",
-          "PointName": "\u0418\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C",
+          "PointName": "ResLVL",
           "AddotoionalPoint": []
         }
       ]
@@ -33,10 +33,10 @@
     {
       "Id": "OBJ523945801",
       "Type": "FunkNodeModel",
-      "Name": "\u0418\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C",
-      "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
+      "Name": "ResLVL",
+      "FullName": "\u0418\u0442\u043E\u0433\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C",
       "Funk": "x * 1.1",
-      "Description": "",
+      "Description": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C, \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u043D\u044B\u0439 \u0432 \u0438\u0442\u043E\u0433\u0435",
       "PositionX": 337,
       "PositionY": 250.03999999999996,
       "Conects": [
@@ -50,20 +50,20 @@
     {
       "Id": "OBJ1126977057",
       "Type": "ConstantNodeViewModel",
-      "Name": "\u041D\u0430\u0447\u0430\u043B\u044C\u044B\u043D\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C",
-      "FullName": "DT",
+      "Name": "SLVL",
+      "FullName": "\u041D\u0430\u0447\u0430\u043B\u044C\u043D\u043E\u0435 \u0432\u0440\u0435\u043C\u044F",
       "Value": 1,
-      "Description": "",
+      "Description": "\u0412\u0440\u0435\u043C\u044F \u043D\u0430\u0447\u0430\u043B\u0430",
       "PositionX": 158,
       "PositionY": 173.04
     },
     {
       "Id": "OBJ1392072413",
       "Type": "ConstantNodeViewModel",
-      "Name": "\u0412\u0440\u0435\u043C\u044F \u0441\u043A\u043E\u0447\u043A\u0430",
-      "FullName": "DT",
+      "Name": "JT",
+      "FullName": "\u0412\u0440\u0435\u043C\u044F \u0441\u043A\u043E\u0447\u043A\u0430",
       "Value": 5,
-      "Description": "",
+      "Description": "\u0412\u0440\u0435\u043C\u044F, \u0432 \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u043F\u0440\u044B\u0433\u0430\u044E\u0442",
       "PositionX": 412,
       "PositionY": 94.03999999999999
     }
