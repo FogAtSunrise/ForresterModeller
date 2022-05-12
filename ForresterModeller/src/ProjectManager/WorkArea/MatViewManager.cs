@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Windows.Controls;
 using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.Nodes.Models;
@@ -13,6 +14,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public ObservableCollection<MathViewModel> Models { get; set; } = new();
         public override ContentControl Content => GenerateActualView();
         public DiagramManager Diagram { get; set; }
+
+        public ReactiveCommand<Unit, Unit> UpdateMath { get; }
 
         public MatViewManager(DiagramManager dmanager)
         {
@@ -30,8 +33,29 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 {if(!(mod1 is CrossNodeModel))
                     Models.Add(new MathViewModel(mod1));
                 }
+
+            UpdateMath = ReactiveCommand.Create<Unit>(u => updatemod());
+
         }
 
+
+        public void updatemod()
+        {
+            Name = "Матпредставление для " + Diagram.Name;
+            Diagram.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(DiagramManager.Name))
+                    Name = "Матпредставление для " + Diagram.Name;
+            };
+            var mod = Diagram.АllNodes;
+            Models.Clear();
+            if (mod != null)
+                foreach (var mod1 in mod)
+                {
+                    if (!(mod1 is CrossNodeModel))
+                        Models.Add(new MathViewModel(mod1));
+                }
+        }
         public override string TypeName => "Математическое представление";
 
 

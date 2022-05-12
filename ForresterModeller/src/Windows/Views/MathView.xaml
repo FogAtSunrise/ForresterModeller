@@ -15,9 +15,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!-- Наименование диаграммы -->
-            <TextBlock Grid.Row="0" FontWeight="Bold" FontSize="20"  Text="{Binding Name}"  />
 
+        <DockPanel Grid.Row="0">
+        <TextBlock  FontWeight="Bold" FontSize="20"  Text="{Binding Name}" ></TextBlock>
+            <Button Width="150" HorizontalAlignment="Right" Command="{Binding UpdateMath }">Обновить</Button>
 
+        </DockPanel>
+       
         <!-- Содержимое -->
         <ListBox Grid.Row="1" Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}" >
             <ListBox.ItemsPanel>
@@ -43,8 +47,8 @@
                         </Border>
 
                         <!-- Описание -->
-                        <TextBlock Grid.Row="1"   Text="Описание: "  FontWeight="Bold" />
-                        <TextBlock  Grid.Row="2" Text="{Binding NodeForMod.Description}"    />
+                        <TextBlock Grid.Row="1"    Text="Описание: "  FontWeight="Bold" />
+                        <TextBlock  Grid.Row="2" MaxWidth="900" TextWrapping="Wrap" HorizontalAlignment="Left"  Text="{Binding NodeForMod.Description}"    />
 
 
                         <Grid Row="3"  >
@@ -63,10 +67,10 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock Grid.Column="0" >
-                                             <Label  Content="{Binding Left}" />
-                                            <Label  Content="{Binding sim}" MaxWidth="20" />
-                                            <Label  Content="{Binding Right}" HorizontalAlignment="Left"  />
+                                            <TextBlock  MaxWidth="900" TextWrapping="Wrap" HorizontalAlignment="Left"  Grid.Column="0" >
+                                             <TextBlock TextWrapping="Wrap"  Text="{Binding Left}" />
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding sim}" MaxWidth="20" />
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding Right}" HorizontalAlignment="Left"  />
                                             </TextBlock>
 
                                         </Grid>

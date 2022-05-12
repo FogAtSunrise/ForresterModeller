@@ -56,6 +56,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         public ReactiveCommand<Unit, Unit> SaveProject { get; }
         public ReactiveCommand<Unit, Unit> SaveAsProject { get; }
         public ReactiveCommand<Unit, Unit> CloseAllTab { get; }
+        public ReactiveCommand<Unit, Unit> UpdateTab{ get; }
 
         #endregion
         public MainWindowViewModel(Project project, StartWindowViewModel StartWindowVM)
@@ -75,6 +76,8 @@ namespace ForresterModeller.src.Windows.ViewModels
             SaveProject = ReactiveCommand.Create<Unit>(u => SaveProj());
             SaveAsProject = ReactiveCommand.Create<Unit>(u => SaveAsProj());
             CloseAllTab = ReactiveCommand.Create<Unit>(u => CloseAllTabs());
+
+            UpdateTab = ReactiveCommand.Create<Unit>(u => UpdateActiveTab());
         }
 
         private void ActiveProject_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -99,6 +102,20 @@ namespace ForresterModeller.src.Windows.ViewModels
         {
             TabControlVM.Tabs.Clear();
             TabControlVM.ActiveTab = null;
+        }
+        public void UpdateActiveTab()
+        {
+           if (TabControlVM.ActiveTab == null)
+            {
+                System.Windows.MessageBox.Show("Откройте элемент для обновления");
+            }
+            else
+           {
+               TabViewModel tab = TabControlVM.ActiveTab;
+               TabControlVM.ActiveTab = null;
+               TabControlVM.ActiveTab = tab;
+
+            }
         }
         public void OpenOrCreateTab(WorkAreaManager contentManager)
         {
