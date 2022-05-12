@@ -7,11 +7,13 @@ using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.Nodes.Viters;
 using System.Text.Json.Nodes;
 using System.Linq;
+using System.Reactive.Linq;
 using ForresterModeller.src.Windows.ViewModels;
 using System.Windows;
 using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using System.Text.Json;
+using Microsoft.FSharp.Core;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -198,22 +200,48 @@ namespace ForresterModeller.src.Nodes.Models
         public static string type = "ChouseNodeModel";
         public MaxNodeModel() : base("max", "max", "(first + second + abs(first-second))/2")
         {
+            Description = "Функция выбора максимума из двух аргументов.";
         }
         static MaxNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<MaxNodeModel>));
+        }
+        public override ObservableCollection<PropertyViewModel> GetProperties()
+        {
+            var command = ReactiveCommand.CreateFromObservable<Unit, int>(
+                _ => Observable.Return(42).Delay(TimeSpan.FromSeconds(2)));
+
+            var properties = new ObservableCollection<PropertyViewModel>();
+            properties.Add(new PropertyViewModel(Resource.name, Name));
+            properties.Add(new PropertyViewModel(Resource.name, FullName));
+            properties.Add(new PropertyViewModel(Resource.description, Description));
+            return properties;
         }
     }
 
     public class MinNodeModel : ChouseNodeModel
     {
         public static string type = "ChouseNodeModel";
+        public override string TypeName => "функция минимума";
+
         public MinNodeModel() : base("min", "min", "(first + second - abs(first-second))/2")
         {
+            Description = "Функция выбора минимума из двух аргументов.";
         }
         static MinNodeModel()
         {
             Splat.Locator.CurrentMutable.Register(() => new ForesterNodeView("chouse"), typeof(IViewFor<MinNodeModel>));
+        }
+        public override ObservableCollection<PropertyViewModel> GetProperties()
+        {
+            
+            var command = ReactiveCommand.CreateFromObservable<Unit, int>(
+                _ => Observable.Return(42).Delay(TimeSpan.FromSeconds(2)));
+
+            var properties = new ObservableCollection<PropertyViewModel>();
+            properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }, Pars.CheckName));
+            properties.Add(new PropertyViewModel(Resource.fullName, FullName, (String str) => { FullName = str; }, Pars.CheckNull));
+            return properties;
         }
     }
 

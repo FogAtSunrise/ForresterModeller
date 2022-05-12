@@ -102,10 +102,8 @@ namespace ForresterModeller.src.Windows.Views
                     var obj = (IPropertyOwner)tree.SelectedItem;
                     string checkMessage = "Удалить " + obj.TypeName + " \"" + obj.Name + "\"? Данное действие нельзя отменить.";
                     var result = MessageBox.Show(checkMessage, "Delete", MessageBoxButton.OKCancel);
-
                     if (result == MessageBoxResult.OK)
                     {
-                        
                         ((MainWindowViewModel)DataContext).Remove(obj);
                         tree.ItemsSource = mainVM.ActiveProject?.Diagrams;
                         tree.Items.Refresh();
