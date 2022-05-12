@@ -32,7 +32,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             try
             {
                 Name = json!["Name"]!.GetValue<string>();
-
+                AllTime = json!["Time"]!.GetValue<float>();
+                DeltaTime = json!["Delta"]!.GetValue<float>();
             }
             catch
             {
@@ -80,6 +81,8 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
             ((ForesterNetworkViewModel)this.Content.ViewModel).AutoConect();
             UpdateNodes();
+
+
         }
 
         public JsonObject DiagramToJson()

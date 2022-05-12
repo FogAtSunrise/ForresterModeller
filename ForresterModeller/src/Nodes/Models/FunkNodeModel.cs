@@ -252,7 +252,7 @@ namespace ForresterModeller.src.Nodes.Models
         public JumpNodeModel() : base("jump", "jump", "default +" +
             "(time * (time + t + abs(time - t))/2 - time * time + 1-" +
             "abs(time * (time + t + abs(time - t))/2 - time * time - 1))/2"+
-            " * abs(default - jump)")
+            " * (jump - default)")
         {
 
         }
