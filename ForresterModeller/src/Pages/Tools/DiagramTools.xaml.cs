@@ -34,8 +34,7 @@ namespace ForresterModeller.Pages.Tools
 
             _nodelistModel = new();
             _project = project;
-
-            project.Diagrams.CollectionChanged += SetDiagrammNodes;
+            ((INotifyCollectionChanged)project.Diagrams).CollectionChanged += SetDiagrammNodes;
             foreach (var d in project.Diagrams)
             {
                 _nodelistModel.AddNodeType<LinkNodeModel>(() => new LinkNodeModel(project, d.Name));

@@ -33,8 +33,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             try
             {
                 Name = json!["Name"]!.GetValue<string>();
-                AllTime = json!["Time"]!.GetValue<float>();
-                DeltaTime = json!["Delta"]!.GetValue<float>();
+               
             }
             catch
             {
@@ -99,8 +98,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             JsonObject json = new JsonObject
             {
                 ["Name"] = Name,
-                ["Time"] = AllTime,
-                ["Delta"] = DeltaTime
+
             };
 
             json.Add("Nodes", nodesJson);
@@ -141,15 +139,13 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         }
         public override NetworkView Content => _contentView ?? CreateNetworkView();
         public override string TypeName => "Диаграмма потоков";
-        public double DeltaTime { get; set; } = 0.1;
-        public double AllTime { get; set; } = 10;
+        public double DeltaTime { get; set; } 
+        public double AllTime { get; set; }
 
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
             var prop = base.GetProperties();
-            prop.Add(new PropertyViewModel("Период исследования", AllTime.ToString(), s => AllTime = Utils.GetDouble(s), Pars.CheckConst));
 
-            prop.Add(new PropertyViewModel("DT", DeltaTime.ToString(), s => DeltaTime = Utils.GetDouble(s), Pars.CheckConst));
             return prop;
         }
 
@@ -172,7 +168,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 OnPropertySelected(this);
                 UpdateNodes();
             };
-            ///
+            
             this._contentView.Drop += (o, e) =>
             {
                 AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));

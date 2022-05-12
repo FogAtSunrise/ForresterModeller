@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Windows.Forms;
+using System.Windows.Navigation;
 using DynamicData;
 using ForresterModeller.src.Interfaces;
 using ForresterModeller.src.ProjectManager.miniParser;
@@ -26,22 +27,49 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         static string DefaultName = "New Project";
         static string DefaultPath = Directory.GetCurrentDirectory() + "\\";
+        private double _deltaTime = 0.1;
+        private double _allTime = 10;
+
+        public double DeltaTime
+        {
+            get => _deltaTime;
+            set
+            {
+                _deltaTime = value;
+                foreach (var diagram in Diagrams)
+                {
+                    diagram.DeltaTime = _deltaTime;
+                }
+            }
+        }
+
+        public double AllTime
+        {
+            get => _allTime;
+            set
+            {
+                _allTime = value;
+                foreach (var diagram in Diagrams)
+                {
+                    diagram.AllTime = _allTime;
+                }
+            }
+        }
         /// <summary>
         /// список моделей
         /// </summary>
         List<ForesterNodeModel> allProjectModels = new List<ForesterNodeModel>();
 
+
         public StartWindowViewModel startVM { get; set; }
-        private ObservableCollection<DiagramManager> _diagrams = new();
-        public ObservableCollection<DiagramManager> Diagrams
-        {
-            get => _diagrams;
-            set => this.RaiseAndSetIfChanged(ref _diagrams, value);
-        }
+        private ObservableCollection<DiagramManager> _diagrams;
+        public ReadOnlyObservableCollection<DiagramManager> Diagrams { get; }
 
         public void AddDiagram(DiagramManager diagram)
         {
-            Diagrams.Add(diagram);
+            _diagrams.Add(diagram);
+            diagram.AllTime = AllTime;
+            diagram.DeltaTime = DeltaTime;
             diagram.PropertyChanged += DiagramOnPropertyChanged;
             var network = (NetworkView)diagram.Content;
 
@@ -90,6 +118,8 @@ namespace ForresterModeller.src.ProjectManager
         {
             var properties = new ObservableCollection<PropertyViewModel>();
             properties.Add(new PropertyViewModel(Resource.name, Name, (String str) => { Name = str; }, Pars.CheckName));
+            properties.Add(new PropertyViewModel("Период исследования", AllTime.ToString(), s => AllTime = Utils.GetDouble(s), Pars.CheckConst));
+            properties.Add(new PropertyViewModel("DT", DeltaTime.ToString(), s => DeltaTime = Utils.GetDouble(s), Pars.CheckConst));
             return properties;
         }
 
@@ -124,6 +154,8 @@ namespace ForresterModeller.src.ProjectManager
         /// <param name="pathTofile"></param>
         public Project(string name, string pathTofile, StartWindowViewModel startWindowVM)
         {
+            _diagrams = new();
+            Diagrams = new(_diagrams);
             startVM = startWindowVM;
             Name = (name == null || name == "") ? DefaultName : name;
             PathToProject = (pathTofile == null || pathTofile == "") ? DefaultPath + Name : pathTofile;
@@ -133,6 +165,7 @@ namespace ForresterModeller.src.ProjectManager
 
         public Project(StartWindowViewModel startWindowVM)
         {
+
             startVM = startWindowVM;
             Name = DefaultName;
             PathToProject = DefaultPath + Name;
@@ -171,8 +204,8 @@ namespace ForresterModeller.src.ProjectManager
                     }
                 }
             }
-        }   
-        
+        }
+
         /// <summary>
         /// удаление диаграммы
         /// </summary>
@@ -180,12 +213,12 @@ namespace ForresterModeller.src.ProjectManager
         {
             foreach (var diagram in Diagrams)
             {
-                    if(diagram == deletedDiagram)
-                    {
-                        File.Delete(diagram.FullName);
-                        Diagrams.Remove(diagram);
-                        return;
-                    }
+                if (diagram == deletedDiagram)
+                {
+                    File.Delete(diagram.FullName);
+                    _diagrams.Remove(diagram);
+                    return;
+                }
             }
         }
         /// <summary>
@@ -193,7 +226,7 @@ namespace ForresterModeller.src.ProjectManager
         /// </summary>
         public void RemoveFromFileSystem()
         {
-            for (int i = Diagrams.Count - 1; i >= 0; i-- ) 
+            for (int i = Diagrams.Count - 1; i >= 0; i--)
             {
                 Remove(Diagrams[i]);
             }
@@ -287,6 +320,8 @@ namespace ForresterModeller.src.ProjectManager
             {
                 //Информация о проекте
                 ["Name"] = Name,
+                ["Time"] = AllTime,
+                ["Delta"] = DeltaTime,
                 ["CreationDate"] = CreationDate,
                 ["ChangeDate"] = DateTime.Now,
                 //Список файлов проекта
@@ -300,6 +335,8 @@ namespace ForresterModeller.src.ProjectManager
             try
             {
                 Name = obj!["Name"]!.GetValue<string>();
+                AllTime = obj!["Time"]!.GetValue<float>();
+                DeltaTime = obj!["Delta"]!.GetValue<float>();
                 CreationDate = obj!["CreationDate"]!.GetValue<DateTime>();
                 ChangeDate = obj!["ChangeDate"]!.GetValue<DateTime>();
 
@@ -307,7 +344,7 @@ namespace ForresterModeller.src.ProjectManager
                 foreach (var file in projectFiles)
                 {
                     DiagramManager d = getDiagramFromFileByName(file.ToString());
-                    Diagrams.Add(d);
+                    AddDiagram(d);
                 }
                 ConnectLinkNodes();
             }

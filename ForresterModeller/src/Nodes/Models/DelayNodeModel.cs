@@ -109,7 +109,7 @@ namespace ForresterModeller.src.Nodes.Models
                 {
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
 
-                    ObservableCollection<DiagramManager> diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
+                    var diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
                     ForesterNodeModel node = null;
                     foreach (var diag in diagrams)
                     {

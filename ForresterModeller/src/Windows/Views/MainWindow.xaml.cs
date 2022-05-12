@@ -21,9 +21,9 @@ namespace ForresterModeller.src.Windows.Views
         {
             InitializeComponent();
             Project a = new Project(startWindowVM) { Name = "naaame of proj" };
-            a.Diagrams.Add(new DiagramManager("1", a));
-            a.Diagrams.Add(new DiagramManager("12", a));
-            a.Diagrams.Add(new DiagramManager("123", a));
+            a.AddDiagram(new DiagramManager("1", a));
+            a.AddDiagram(new DiagramManager("12", a));
+            a.AddDiagram(new DiagramManager("123", a));
             DataContext = new MainWindowViewModel(a, startWindowVM);
         }
 
