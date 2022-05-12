@@ -24,8 +24,8 @@
             <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagramTab }"/>
             <MenuItem Header="Создать представление" Command="{Binding OpenMathView}"/>
             <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}"/>
-            <MenuItem Header="Справка"/>
-            <MenuItem Header="О программе"/>
+            <MenuItem Header="Справка" Command="{Binding ShowHelpWindow}"/>
+            <MenuItem Header="О программе" Command="{Binding ShowAftorWindow}"/>
         </Menu>
 
         <Grid Margin="0,19,0,31"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
