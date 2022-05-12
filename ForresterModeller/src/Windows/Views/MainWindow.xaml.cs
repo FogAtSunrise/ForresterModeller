@@ -100,7 +100,7 @@ namespace ForresterModeller.src.Windows.Views
                 if (tree != null)
                 {
                     var obj = (IPropertyOwner)tree.SelectedItem;
-                    string checkMessage = "Удалить " + obj.GetType() + " \"" + obj.Name + "\"? Данное действие нельзя отменить.";
+                    string checkMessage = "Удалить " + obj.TypeName + " \"" + obj.Name + "\"? Данное действие нельзя отменить.";
                     var result = MessageBox.Show(checkMessage, "Delete", MessageBoxButton.OKCancel);
 
                     if (result == MessageBoxResult.OK)

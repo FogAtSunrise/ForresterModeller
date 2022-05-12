@@ -17,7 +17,8 @@
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1520370607",
-          "PointName": "FFF"
+          "PointName": "FFF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -35,7 +36,8 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C684594849",
-          "PointName": "SRF"
+          "PointName": "SRF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -51,11 +53,13 @@
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1613443649",
-          "PointName": "NIF"
+          "PointName": "NIF",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1147325239",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         },
         null,
         null
@@ -69,11 +73,13 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1147325239",
-          "PointName": "\u041F\u043E\u0442\u043E\u043A"
+          "PointName": "\u041F\u043E\u0442\u043E\u043A",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F\u0412\u044B\u0431\u043E\u0440\u0430117447319",
-          "PointName": "SSF"
+          "PointName": "SSF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -85,11 +91,13 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C99259137",
-          "PointName": "\u041F\u043E\u0442\u043E\u043A"
+          "PointName": "\u041F\u043E\u0442\u043E\u043A",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F\u0412\u044B\u0431\u043E\u0440\u0430117447319",
-          "PointName": "SSF"
+          "PointName": "SSF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -109,7 +117,8 @@
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1520370607",
-          "PointName": "FFF"
+          "PointName": "FFF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -129,7 +138,8 @@
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1258001538",
-          "PointName": "FUN"
+          "PointName": "FUN",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -155,11 +165,13 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C982819476",
-          "PointName": "MOF"
+          "PointName": "MOF",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u0430700379020",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         null,
         null
@@ -177,7 +189,8 @@
       "Conects": [
         {
           "SourceId": "crossnode104450891",
-          "PointName": ""
+          "PointName": "",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -193,11 +206,13 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C99259137",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301740123546",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -237,7 +252,8 @@
       "Conects": [
         {
           "SourceId": "crossnode1856370573",
-          "PointName": ""
+          "PointName": "",
+          "AddotoionalPoint": []
         }
       ]
     },

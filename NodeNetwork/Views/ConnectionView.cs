@@ -108,7 +108,6 @@ namespace NodeNetwork.Views
         public ConnectionView()
         {
             this.DefaultStyleKey = typeof(ConnectionView);
-            
             SetupPathData();
             SetupBrushesBinding();
         }
@@ -128,15 +127,30 @@ namespace NodeNetwork.Views
                     v => v.ViewModel.Input.PortPosition,
                     v => v.ViewModel.Output.Port.CenterPoint, 
                     v => v.ViewModel.Output.PortPosition,
-                    (a, b, c, e) => (a, b, c, e))
+                    v => v.ViewModel.AdditionalPoints,
+                    (a, b, c, e,l) => (a, b, c, e, l))
                     .Select(_ 
                         => BuildSmoothBezier(
                             ViewModel.Input.Port.CenterPoint, 
                             ViewModel.Input.PortPosition, 
                             ViewModel.Output.Port.CenterPoint,
-                            ViewModel.Output.PortPosition))
+                            ViewModel.Output.PortPosition,
+                            ViewModel.AdditionalPoints.Items))
                     .BindTo(this, v => v.Geometry)
             ));
+
+            this.WhenActivated(d => d(
+                this.ViewModel.AdditionalPoints.Connect()
+                    .Select(_
+                        => BuildSmoothBezier(
+                            ViewModel.Input.Port.CenterPoint,
+                            ViewModel.Input.PortPosition,
+                            ViewModel.Output.Port.CenterPoint,
+                            ViewModel.Output.PortPosition,
+                            ViewModel.AdditionalPoints.Items))
+                    .BindTo(this, v => v.Geometry)
+            ));
+
         }
 
         private void SetupBrushesBinding()
@@ -157,28 +171,36 @@ namespace NodeNetwork.Views
                 }).DisposeWith(d);
             });
         }
-        public static PathGeometry BuildSmoothBezier(Point startPoint, PortPosition startPosition, Point endPoint, PortPosition endPosition)
+
+
+
+        public static PathGeometry BuildSmoothBezier(Point startPoint, PortPosition startPosition, Point endPoint, PortPosition endPosition, IEnumerable<Point> additional)
         {
             Vector startGradient = ToGradient(startPosition);
             Vector endGradient = ToGradient(endPosition);
 
-            return BuildSmoothBezier(startPoint, startGradient, endPoint, endGradient);
+            return BuildSmoothBezier(startPoint, startGradient, endPoint, endGradient, additional);
         }
+
+        public static PathGeometry BuildSmoothBezier(Point startPoint, PortPosition startPosition, Point endPoint, PortPosition endPosition)
+        {
+            return BuildSmoothBezier(startPoint, startPosition, endPoint, endPosition, new List<Point>());
+        }
+
 
         public static PathGeometry BuildSmoothBezier(Point startPoint, PortPosition startPosition, Point endPoint)
         {
             Vector startGradient = ToGradient(startPosition);
             Vector endGradient = -startGradient;
 
-            return BuildSmoothBezier(startPoint, startGradient, endPoint, endGradient);
+            return BuildSmoothBezier(startPoint, startGradient, endPoint, endGradient, new List<Point>());
         }
 
         public static PathGeometry BuildSmoothBezier(Point startPoint, Point endPoint, PortPosition endPosition)
         {
             Vector endGradient = ToGradient(endPosition);
             Vector startGradient = -endGradient;
-
-            return BuildSmoothBezier(startPoint, startGradient, endPoint, endGradient);
+            return BuildSmoothBezier(startPoint, startGradient, endPoint, endGradient, new List<Point>());
         }
 
         private static Vector ToGradient(PortPosition portPosition)
@@ -205,7 +227,7 @@ namespace NodeNetwork.Views
         private const double MinGradient = 10;
         private const double WidthScaling = 5;
 
-        private static PathGeometry BuildSmoothBezier(Point startPoint, Vector startGradient, Point endPoint, Vector endGradient)
+        private static PathGeometry BuildSmoothBezier(Point startPoint, Vector startGradient, Point endPoint, Vector endGradient, IEnumerable<Point> additional)
         {
             double width = endPoint.X - startPoint.X;
 
@@ -214,17 +236,23 @@ namespace NodeNetwork.Views
             Point startGradientPoint = startPoint + startGradient * gradientScale;
             Point endGradientPoint = endPoint + endGradient * gradientScale;
 
-            Point midPoint = new Point((startGradientPoint.X + endGradientPoint.X) / 2d, (startPoint.Y + endPoint.Y) / 2d);
+
+
+            var psc = new List<PathSegment>();
+            var lastPoint = startGradientPoint;
+            foreach (var p in additional)
+            {
+                psc.Add(new QuadraticBezierSegment(lastPoint, p, true));
+                lastPoint = p;
+            }
+
+            psc.Add(new QuadraticBezierSegment(lastPoint, endPoint, true));
 
             PathFigure pathFigure = new PathFigure
             {
                 StartPoint = startPoint,
                 IsClosed = false,
-                Segments =
-                {
-                    new QuadraticBezierSegment(startGradientPoint, midPoint, true),
-                    new QuadraticBezierSegment(endGradientPoint, endPoint, true)
-                }
+                Segments = new PathSegmentCollection(psc)
             };
 
             PathGeometry geom = new PathGeometry();

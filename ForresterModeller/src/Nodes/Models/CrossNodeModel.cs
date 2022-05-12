@@ -12,6 +12,7 @@ using System.Windows;
 using System;
 using System.Collections.ObjectModel;
 using ForresterModeller.src.Windows.ViewModels;
+using System.Text.Json;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -52,17 +53,6 @@ namespace ForresterModeller.src.Nodes.Models
         public override ObservableCollection<DataForViewModels> GetMathView()
         {
             var data = base.GetMathView();
-            foreach (var inputs in Inputs.Items)
-            {
-                if (inputs.Connections.Items.Count() > 0)
-
-                {
-                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
-                   
-                    ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    data.Add(new DataForViewModels(inputs.Name, nod.FullName, false));
-                }
-            }
             return data;
         }
 
@@ -126,7 +116,7 @@ namespace ForresterModeller.src.Nodes.Models
                 }
                 else
                 {
-                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(JsonSerializer.Deserialize<ConectionModel>(con));
                 }
             }
         }

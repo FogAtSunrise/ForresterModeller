@@ -15,6 +15,8 @@ using NodeNetwork.Views;
 using NodeNetwork;
 using ForresterModeller.src.ProjectManager.WorkArea;
 using ForresterModeller.src.ProjectManager;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace ForresterModeller.src.Nodes.Models
 {
@@ -41,8 +43,7 @@ namespace ForresterModeller.src.Nodes.Models
                }
            };
 
-            Modegel.PropertyChanged += (sender, e) => {
-                if (e.PropertyName == "LatestValidation") RefreshInput(); };
+            Modegel.PropertyChanged += (sender, e) => {if (e.PropertyName == "LatestValidation") RefreshInput(); };
 
             RefreshInput();
         }
@@ -67,27 +68,46 @@ namespace ForresterModeller.src.Nodes.Models
         }
         public void RefreshInput()
         {
-            Inputs.Clear();
-            Outputs.Clear();
+            var newInput = new List<NodeInputViewModel>();
+            var newOutput  = new List<NodeOutputViewModel>();
 
             foreach (var node in Modegel.Nodes.Items )
             {
                 foreach (var inp in node.Inputs.Items)
                 {
-                    if (inp.Connections.Count == 0 && !Inputs.Items.Contains(inp))
+                    if (inp.Connections.Count == 0)
                     {
-                        this.Inputs.Add(new LincNodeModelInputRate() { Name = inp.Name, PortPosition = PortPosition.Left, Target = (ForesterNodeModel)inp.Parent});
+                        newInput.Add(new LincNodeModelInputRate() { Name = inp.Name, PortPosition = PortPosition.Left, Target = (ForesterNodeModel)inp.Parent});
                     }
                 }
 
                 foreach (var inp in node.Outputs.Items )
                 {
-                    if (inp.Connections.Count == 0 && !Outputs.Items.Contains(inp))
+                    if (inp.Connections.Count == 0)
                     {
-                        this.Outputs.Add(new ForesterNodeOutputViewModel() {OutFunc = () => ((ForesterNodeOutputViewModel)inp).OutputValue + '_' + Salt, Name = inp.Name} );
+                        newOutput.Add(new ForesterNodeOutputViewModel() {OutFunc = () => ((ForesterNodeOutputViewModel)inp).OutputValue + '_' + Salt, Name = inp.Name} );
                     }
                 }
             }
+
+            foreach (var link in Inputs.Items.Select(a => a))
+            {
+                if (!newInput.Any(a => a.Name == link.Name))
+                {
+                    Inputs.Remove(link);
+                }
+            }
+
+            foreach (var link in Outputs.Items.Select(a => a))
+            {
+                if (!newOutput.Any(a => a.Name == link.Name))
+                {
+                    Outputs.Remove(link);
+                }
+            }
+
+            Inputs.AddRange(newInput.Where(a => !Inputs.Items.Any(b => b.Name == a.Name)));
+            Outputs.AddRange(newOutput.Where(a => !Outputs.Items.Any(b => b.Name == a.Name)));
         }
         public override JsonObject ToJSON()
         {
@@ -132,7 +152,7 @@ namespace ForresterModeller.src.Nodes.Models
                 }
                 else
                 {
-                    DumpConections.Add(new ConectionModel(con!["SourceId"].GetValue<string>(), con!["PointName"].GetValue<string>())); ;
+                    DumpConections.Add(JsonSerializer.Deserialize<ConectionModel>(con));
                 }
             }
         }
@@ -140,7 +160,6 @@ namespace ForresterModeller.src.Nodes.Models
         {
             return viseter.VisitLink(this);
         }
-
         public void AutoConectionLinks()
         {
             if (!_isConnected)
@@ -166,11 +185,15 @@ namespace ForresterModeller.src.Nodes.Models
                             {
                                 if (((ForesterNetworkViewModel)Parent)[nw.conections.SourceId] == this)
                                 {
-                                    Parent.Connections.Add(
-                                        new ConnectionViewModel(Parent,
+
+                                    var newConection = new ConnectionViewModel(Parent,
                                             nw.node,
                                             ((ForesterNetworkViewModel)Parent)[nw.conections.SourceId].Outputs.Items.FirstOrDefault(a => a.Name == nw.conections.PointName)
-                                        ));
+                                        );
+
+                                    newConection.AdditionalPoints.AddRange(nw.conections.AddotoionalPoint);
+
+                                    Parent.Connections.Add(newConection);
                                 }
                             }
                         }

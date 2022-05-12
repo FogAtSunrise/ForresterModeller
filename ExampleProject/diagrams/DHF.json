@@ -15,11 +15,26 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1735939235",
-          "PointName": "CPF"
+          "PointName": "CPF",
+          "AddotoionalPoint": [
+            {
+              "X": 660.2129796431934,
+              "Y": 422.730101474042
+            },
+            {
+              "X": 2409.242872598403,
+              "Y": 390.0379539421689
+            },
+            {
+              "X": 2410.728879304397,
+              "Y": 241.43728334274584
+            }
+          ]
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C797842098",
-          "PointName": "OPF"
+          "PointName": "OPF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -30,20 +45,45 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "RSF * (DCF \u002B DPF)",
       "Description": "",
-      "PositionX": 792.8097730617735,
-      "PositionY": 623.0185362797557,
+      "PositionX": 841.1642999301337,
+      "PositionY": 601.1810080166251,
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C177023411",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1735939235",
-          "PointName": "DCF"
+          "PointName": "DCF",
+          "AddotoionalPoint": [
+            {
+              "X": 718.7679546717594,
+              "Y": 598.6078843843788
+            },
+            {
+              "X": 2759.9721497772416,
+              "Y": 619.3359733213744
+            },
+            {
+              "X": 2753.1578203869053,
+              "Y": 278.49069920767175
+            }
+          ]
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C797842098",
-          "PointName": "DPF"
+          "PointName": "DPF",
+          "AddotoionalPoint": [
+            {
+              "X": 350.1914683844909,
+              "Y": 686.4370362736718
+            },
+            {
+              "X": 353.3111152792237,
+              "Y": 541.3734556685911
+            }
+          ]
         }
       ]
     },
@@ -54,40 +94,84 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "RRF \u002B 1/DIF * ((IDF - IAF) \u002B (LDF - LAF) \u002B (UOF - UNF))",
       "Description": "",
-      "PositionX": 1585.4407149111762,
-      "PositionY": 773.5414458530757,
+      "PositionX": 1574.521950779611,
+      "PositionY": 843.7335009845664,
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F\u0412\u044B\u0431\u043E\u0440\u0430255983946",
-          "PointName": "RRR"
+          "PointName": "RRR",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301018134333",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1966413349",
-          "PointName": "IDF"
+          "PointName": "IDF",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1485134590",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": [
+            {
+              "X": 1214.3336582255092,
+              "Y": 995.2820788522308
+            },
+            {
+              "X": 1216.6178510671912,
+              "Y": 1459.977823703362
+            }
+          ]
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F831170348",
-          "PointName": "LDF"
+          "PointName": "LDF",
+          "AddotoionalPoint": [
+            {
+              "X": 980.8583518007335,
+              "Y": 1036.253908341659
+            }
+          ]
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F232036142",
-          "PointName": "LAF"
+          "PointName": "LAF",
+          "AddotoionalPoint": [
+            {
+              "X": 1314.1623588569623,
+              "Y": 1054.5553698521562
+            },
+            {
+              "X": 1286.6090125353808,
+              "Y": 537.957989548092
+            }
+          ]
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C450728308",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": [
+            {
+              "X": 753.2522410762554,
+              "Y": 1087.7719787839665
+            },
+            {
+              "X": 751.692417628889,
+              "Y": 752.4099376001777
+            },
+            {
+              "X": 539.4535812468471,
+              "Y": 748.5341549425639
+            }
+          ]
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F477014565",
-          "PointName": "UNF"
+          "PointName": "UNF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -98,20 +182,28 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "RSF * (DHF \u002B DUF)",
       "Description": "",
-      "PositionX": 548.8790346408751,
-      "PositionY": 890.8608523560612,
+      "PositionX": 533.4149284535436,
+      "PositionY": 987.5474818728948,
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C177023411",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": [
+            {
+              "X": 289.33114629329657,
+              "Y": 1052.1285575280915
+            }
+          ]
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301710372314",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u0430718571256",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -122,16 +214,18 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "AIF * RSF",
       "Description": "",
-      "PositionX": -5.499587150714717,
-      "PositionY": 965.4629318441713,
+      "PositionX": -68.22176492854447,
+      "PositionY": 897.6205762885594,
       "Conects": [
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u0430346247418",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C177023411",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -142,24 +236,33 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "DHF \u002B DUF * IDF / IAF",
       "Description": "",
-      "PositionX": 950.357648240167,
-      "PositionY": 1191.0301646868481,
+      "PositionX": 536.4194782775187,
+      "PositionY": 1205.3038946855604,
       "Conects": [
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301710372314",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u0430718571256",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1966413349",
-          "PointName": "IDF"
+          "PointName": "IDF",
+          "AddotoionalPoint": [
+            {
+              "X": 391.286360569811,
+              "Y": 1323.3294275036196
+            }
+          ]
         },
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1485134590",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -170,16 +273,36 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "UOF/DFF",
       "Description": "",
-      "PositionX": 1590.1406118891687,
-      "PositionY": 1165.1170380833619,
+      "PositionX": 1406.90063946589,
+      "PositionY": 1226.1970288911211,
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C450728308",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": [
+            {
+              "X": 753.2522410762554,
+              "Y": 1270.2713221258423
+            },
+            {
+              "X": 749.0979495689164,
+              "Y": 752.0474795879325
+            }
+          ]
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1226738694",
-          "PointName": "DFF"
+          "PointName": "DFF",
+          "AddotoionalPoint": [
+            {
+              "X": 754.9101106467194,
+              "Y": 1311.7945962035485
+            },
+            {
+              "X": 754.9101106467194,
+              "Y": 1389.7857685718714
+            }
+          ]
         }
       ]
     },
@@ -190,16 +313,18 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "IAF/DT",
       "Description": "",
-      "PositionX": 1391.348210908348,
-      "PositionY": 1389.6631616144973,
+      "PositionX": 1397.4655237649395,
+      "PositionY": 1410.0542044698002,
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1485134590",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u043060818808",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -217,7 +342,8 @@
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F\u0412\u044B\u0431\u043E\u0440\u0430255983946",
-          "PointName": "RRR"
+          "PointName": "RRR",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -228,8 +354,8 @@
       "FullName": "DT",
       "Value": 1,
       "Description": "",
-      "PositionX": 416.90273972567053,
-      "PositionY": 1089.8421610593518
+      "PositionX": 337.43953164949255,
+      "PositionY": 1174.5770742286404
     },
     {
       "Id": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301018134333",
@@ -238,8 +364,8 @@
       "FullName": "DT",
       "Value": 4,
       "Description": "",
-      "PositionX": 1448.6831315763632,
-      "PositionY": 846.6682937765838
+      "PositionX": 1437.0411247408845,
+      "PositionY": 902.9439188146512
     },
     {
       "Id": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u0430346247418",
@@ -248,8 +374,8 @@
       "FullName": "DT",
       "Value": 4,
       "Description": "",
-      "PositionX": -333.3889971736517,
-      "PositionY": 979.7864906618688
+      "PositionX": -286.4895986064551,
+      "PositionY": 924.730674952551
     },
     {
       "Id": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u043034282385",
@@ -258,8 +384,8 @@
       "FullName": "DT",
       "Value": 20000,
       "Description": "",
-      "PositionX": 1636.574581560643,
-      "PositionY": 576.7586768232633
+      "PositionX": 1642.6825806414188,
+      "PositionY": 683.6486607368425
     },
     {
       "Id": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301710372314",
@@ -268,8 +394,8 @@
       "FullName": "DT",
       "Value": 1,
       "Description": "",
-      "PositionX": 421.021571270058,
-      "PositionY": 994.6338931352342
+      "PositionX": 342.6729757248371,
+      "PositionY": 1085.6793602709254
     },
     {
       "Id": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1485134590",
@@ -285,7 +411,8 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C797842098",
-          "PointName": "SRF"
+          "PointName": "SRF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -318,7 +445,25 @@
       "Conects": [
         {
           "SourceId": "OBJ450770511",
-          "PointName": "MDF"
+          "PointName": "MDF",
+          "AddotoionalPoint": [
+            {
+              "X": 1577.6798307364247,
+              "Y": 203.33010058991334
+            },
+            {
+              "X": 1588.3635893302294,
+              "Y": 468.6606602043865
+            },
+            {
+              "X": 2291.843964092502,
+              "Y": 462.4213664149206
+            },
+            {
+              "X": 2321.480609592465,
+              "Y": 780.6253496776783
+            }
+          ]
         }
       ]
     },
@@ -338,7 +483,25 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1735939235",
-          "PointName": "MOF"
+          "PointName": "MOF",
+          "AddotoionalPoint": [
+            {
+              "X": -1186.423453872753,
+              "Y": 138.57969664177517
+            },
+            {
+              "X": -1168.6317236271448,
+              "Y": 81.49124956070318
+            },
+            {
+              "X": 2633.334226364486,
+              "Y": 50.999292067035924
+            },
+            {
+              "X": 2635.23997370784,
+              "Y": 310.18093076320724
+            }
+          ]
         }
       ]
     },
@@ -349,8 +512,8 @@
       "FullName": "DT",
       "Value": 0.10000000149011612,
       "Description": "",
-      "PositionX": 1091.7804035582778,
-      "PositionY": 1522.1839231844135
+      "PositionX": 1097.897716414869,
+      "PositionY": 1505.8710889001713
     },
     {
       "Id": "crossnode1111844442",
@@ -360,11 +523,26 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C1485134590",
-          "PointName": "\u041F\u043E\u0442\u043E\u043A"
+          "PointName": "\u041F\u043E\u0442\u043E\u043A",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "OBJ889678594",
-          "PointName": "SSF"
+          "PointName": "SSF",
+          "AddotoionalPoint": [
+            {
+              "X": 195.47709404643274,
+              "Y": 1626.5391416465204
+            },
+            {
+              "X": 2012.634761904724,
+              "Y": 1651.474204466373
+            },
+            {
+              "X": 2017.8737255461565,
+              "Y": 1547.6707176148177
+            }
+          ]
         }
       ]
     },
@@ -376,11 +554,26 @@
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C450728308",
-          "PointName": "\u041F\u043E\u0442\u043E\u043A"
+          "PointName": "\u041F\u043E\u0442\u043E\u043A",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "OBJ889678594",
-          "PointName": "SSF"
+          "PointName": "SSF",
+          "AddotoionalPoint": [
+            {
+              "X": 516.76407588029,
+              "Y": 1629.9164552061638
+            },
+            {
+              "X": 2014.1945853520904,
+              "Y": 1651.474204466373
+            },
+            {
+              "X": 2017.8737255461565,
+              "Y": 1547.6707176148177
+            }
+          ]
         }
       ]
     },
@@ -391,12 +584,13 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "SSF",
       "Description": "",
-      "PositionX": 304.0313596379799,
-      "PositionY": 1825.2683945522504,
+      "PositionX": 352.96986249070665,
+      "PositionY": 1796.7209345548263,
       "Conects": [
         {
           "SourceId": "crossnode1111844442",
-          "PointName": ""
+          "PointName": "",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -407,12 +601,13 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "SFF",
       "Description": "",
-      "PositionX": 818.1393752080644,
+      "PositionX": 826.2957923501858,
       "PositionY": 1776.6403494064002,
       "Conects": [
         {
           "SourceId": "crossnode1782123364",
-          "PointName": ""
+          "PointName": "",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -425,12 +620,13 @@
       "OutputRate": "OBJ971459857",
       "Description": "",
       "StartValue": "1000",
-      "PositionX": -377.34820531441983,
-      "PositionY": 1075.4092566054408,
+      "PositionX": -458.6620308728398,
+      "PositionY": 1084.7681972896396,
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F857358063",
-          "PointName": "RSFD"
+          "PointName": "RSFD",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -451,32 +647,36 @@
       "FullName": "\u0444\u0443\u043D\u043A\u0446\u0438\u044F",
       "Funk": "RRR/DRF",
       "Description": "",
-      "PositionX": -547.6188584344557,
-      "PositionY": 976.5896306988429,
+      "PositionX": -619.6578990338819,
+      "PositionY": 997.7487503859724,
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F\u0412\u044B\u0431\u043E\u0440\u0430255983946",
-          "PointName": "RRR"
+          "PointName": "RRR",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301675234382",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         }
       ]
     },
     {
       "Id": "crossnode1896847129",
       "Type": "CrossNodeModel",
-      "PositionX": 136.67587556279875,
-      "PositionY": 1234.0697407577736,
+      "PositionX": 154.59649778503592,
+      "PositionY": 1200.7885852021905,
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C177023411",
-          "PointName": "\u041F\u043E\u0442\u043E\u043A"
+          "PointName": "\u041F\u043E\u0442\u043E\u043A",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "OBJ971459857",
-          "PointName": "RSFF"
+          "PointName": "RSFF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -487,16 +687,18 @@
       "FullName": "min",
       "Funk": "RSF / DRF",
       "Description": "",
-      "PositionX": -112.08884260123813,
-      "PositionY": 1296.1985244236823,
+      "PositionX": -44.24648704562611,
+      "PositionY": 1273.1577244236632,
       "Conects": [
         {
           "SourceId": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C177023411",
-          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C"
+          "PointName": "\u0423\u0440\u043E\u0432\u0435\u043D\u044C",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u04301675234382",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -512,11 +714,13 @@
       "Conects": [
         {
           "SourceId": "\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u043034282385",
-          "PointName": "DT"
+          "PointName": "DT",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F605518961",
-          "PointName": "MWF"
+          "PointName": "MWF",
+          "AddotoionalPoint": []
         }
       ]
     },
@@ -532,11 +736,13 @@
       "Conects": [
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F1847618066",
-          "PointName": "STF"
+          "PointName": "STF",
+          "AddotoionalPoint": []
         },
         {
           "SourceId": "\u0424\u0443\u043D\u043A\u0446\u0438\u044F785693216",
-          "PointName": "NIF"
+          "PointName": "NIF",
+          "AddotoionalPoint": []
         }
       ]
     }

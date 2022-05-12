@@ -10,6 +10,8 @@ namespace ForresterModeller.src.Nodes.Views
 {
     public class ForesterNetworkViewModel : NetworkViewModel
     {
+
+
         public ForesterNodeModel this[string index]
         {
             get
