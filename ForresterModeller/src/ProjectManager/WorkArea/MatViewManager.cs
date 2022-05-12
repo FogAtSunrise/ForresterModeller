@@ -28,16 +28,16 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             };
 
             var mod = dmanager.АllNodes;
-            if(mod != null)
+            if (mod != null)
                 foreach (var mod1 in mod)
-                {if(!(mod1 is CrossNodeModel))
-                    Models.Add(new MathViewModel(mod1));
+                {
+                    if (!(mod1 is CrossNodeModel))
+                        Models.Add(new MathViewModel(mod1));
                 }
 
             UpdateMath = ReactiveCommand.Create<Unit>(u => updatemod());
 
         }
-
 
         public void updatemod()
         {
@@ -67,7 +67,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         //ViewModel модели, свойства которой отображаются 
         //Биндится как SelectedItem во вью
         private IPropertyOwner _activeItem;
-       
+
         //Сама модель, владеющая проперти
         public override IPropertyOwner ActiveOwnerItem
         {
@@ -88,13 +88,13 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             m.DataContext = this;
             return m;
         }
-      /*  public MathView GenerateActualView()
-        {
-            MathView m = new MathView();
-            m.DataContext = this;
-            return m;
-        }
-      */
+        /*  public MathView GenerateActualView()
+          {
+              MathView m = new MathView();
+              m.DataContext = this;
+              return m;
+          }
+        */
         //свойства самого матпредставления
         public override ObservableCollection<PropertyViewModel> GetProperties()
         {
