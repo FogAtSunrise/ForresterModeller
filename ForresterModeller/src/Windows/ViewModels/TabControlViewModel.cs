@@ -29,11 +29,12 @@ namespace ForresterModeller.src.Windows.ViewModels
 
         #endregion
 
-        public void AddTabFromWAManager(WorkAreaManager contentManager)
+        public TabViewModel AddTabFromWAManager(WorkAreaManager contentManager)
         {
             var item = new TabViewModel(contentManager);
             Tabs.Add(item);
             ActiveTab = item;
+            return item;
         }
     }
 }

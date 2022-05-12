@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive;
 using System.Text.Json.Nodes;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -11,6 +14,7 @@ using ForresterModeller.src.Nodes.Models;
 using ForresterModeller.src.Nodes.Views;
 using ForresterModeller.src.ProjectManager.miniParser;
 using ForresterModeller.src.Windows.ViewModels;
+using NodeNetwork.ViewModels;
 using NodeNetwork.Views;
 using ReactiveUI;
 
@@ -22,7 +26,10 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         private Project _project;
         public string FullName => PathToFile + "\\" + Name;
 
-        public DiagramManager(Project project) { _project = project; }
+        public DiagramManager(Project project)
+        {
+            _project = project;
+        }
         public DiagramManager(string name, Project project) : this(project)
         {
             Name = name;
@@ -33,7 +40,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             try
             {
                 Name = json!["Name"]!.GetValue<string>();
-               
             }
             catch
             {
@@ -75,14 +81,14 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                 }
 
                 newNode.FromJSON(node.AsObject());
-                newNode.PropertyChanged += NodeOnPropertyChanged;
                 this.Content.ViewModel.Nodes.Add(newNode);
             }
 
             ((ForesterNetworkViewModel)this.Content.ViewModel).AutoConect();
-            UpdateNodes();
 
-
+            Content.ViewModel.SelectedNodes.Connect()
+               .ForEachChange((_) => OnSelectedNodesChanged()).Subscribe();
+           UpdateNodes();
         }
 
         public JsonObject DiagramToJson()
@@ -117,9 +123,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             set { this.RaiseAndSetIfChanged(ref _allnodes, value); }
         }
 
-
-
-
         private IPropertyOwner _activeItem;
         public override IPropertyOwner ActiveOwnerItem
         {
@@ -131,12 +134,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             }
         }
         private NetworkView _contentView;
-        private ObservableCollection<ForesterNodeModel> _selectedNodes = new();
-        public ObservableCollection<ForesterNodeModel> SelectedNodes
-        {
-            get => _selectedNodes;
-            set => this.RaiseAndSetIfChanged(ref _selectedNodes, value);
-        }
+     
         public override NetworkView Content => _contentView ?? CreateNetworkView();
         public override string TypeName => "Диаграмма потоков";
         public double DeltaTime { get; set; } 
@@ -149,10 +147,6 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             return prop;
         }
 
-        private void AddDragNode(ForesterNodeModel node)
-        {
-            node.PropertyChanged += NodeOnPropertyChanged;
-        }
 
         public NetworkView CreateNetworkView()
         {
@@ -161,17 +155,13 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             var network = new ForesterNetworkViewModel();
             network.NodeDeletedEvent += (list) =>
             {
-                foreach (var node in list)
-                {
-                    SelectedNodes.Remove((ForesterNodeModel)node);
-                }
                 OnPropertySelected(this);
                 UpdateNodes();
             };
             
             this._contentView.Drop += (o, e) =>
             {
-                AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));
+               // AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));
                 UpdateNodes();
             };
 
@@ -191,24 +181,14 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
             return _contentView;
         }
 
-        private void NodeOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnSelectedNodesChanged()
         {
-            if (e.PropertyName == nameof(ForesterNodeModel.IsSelected))
-            {
-                var node = (ForesterNodeModel)sender;
-                if (node != null && node.IsSelected)
-                    SelectedNodes.Add(node);
-                else if (SelectedNodes.Contains(node))
-                {
-                    SelectedNodes.Remove(node);
-                }
-                if (SelectedNodes.Count == 1)
+                var selected = Content.ViewModel.SelectedNodes;
+                if (selected.Count == 1 && selected.Items.First() is ForesterNodeModel node)
                 {
                     ActiveOwnerItem = node;
                 }
                 else ActiveOwnerItem = this;
-                OnPropertySelected(ActiveOwnerItem);
-            }
         }
 
     }

@@ -108,9 +108,6 @@ namespace ForresterModeller.src.Windows.Views
                         if (result == MessageBoxResult.OK)
                         {
                             mainVM.Remove(obj);
-                            tree.ItemsSource = mainVM.ListFromProject;
-                            tree.Items.Refresh();
-                            tree.UpdateLayout();
                             if (mainVM.ActiveProject == null)
                             {
                                 this.Close();

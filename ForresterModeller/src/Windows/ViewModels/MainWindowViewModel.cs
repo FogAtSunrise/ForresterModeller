@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reactive;
 using System.Windows;
 using System.Windows.Controls;
@@ -108,13 +109,14 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// иначе окно пропертей не будет обновляться
         /// </summary>
         /// <param name="contentManager"></param>
-        private void AddTab(WorkAreaManager contentManager)
+        private TabViewModel AddTab(WorkAreaManager contentManager)
         {
             if (contentManager != null)
             {
                 contentManager.PropertySelectedEvent += sender => PropertiesVM.ActiveItem = sender;
-                TabControlVM.AddTabFromWAManager(contentManager);
+                return TabControlVM.AddTabFromWAManager(contentManager);
             }
+            return null;
         }
         public void CloseAllTabs()
         {
@@ -136,15 +138,8 @@ namespace ForresterModeller.src.Windows.ViewModels
         }
         public void OpenOrCreateTab(WorkAreaManager contentManager)
         {
-            foreach (var tab in TabControlVM.Tabs)
-            {
-                if (tab.WAManager == contentManager)
-                {
-                    TabControlVM.ActiveTab = tab;
-                    return;
-                }
-            }
-            AddTab(contentManager);
+            var tab = TabControlVM.Tabs.FirstOrDefault((x) => x.WAManager == contentManager) ?? AddTab(contentManager);
+            TabControlVM.ActiveTab = tab;
         }
         public DiagramManager CreateDiagramManager()
         {
