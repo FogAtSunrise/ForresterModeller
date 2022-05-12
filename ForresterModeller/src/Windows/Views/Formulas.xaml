@@ -16,8 +16,8 @@
         </Grid.RowDefinitions>
         <!-- Наименование диаграммы -->
 
-        
-        <ListBox Grid.Row="1" Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" SelectedItem="{Binding ActiveView, UpdateSourceTrigger=PropertyChanged}">
+
+        <ListBox Grid.Row="1" Name="itemsCtrl"  ItemsSource="{Binding Path=Models, Mode=TwoWay}" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Grid.IsSharedSizeScope="True"/>

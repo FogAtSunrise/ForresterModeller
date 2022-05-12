@@ -33,35 +33,6 @@ namespace ForresterModeller.src.Windows.Views
             DataContext = new MainWindowViewModel(Loader.InitProjectByPath(path, startWindowVM), startWindowVM); ;
         }
 
-        private void PrintFormule(string form)
-        {
-            FormulaControl forml = new FormulaControl();
-            forml.Formula = form;
-            formuls.Children.Add(forml);
-        }
-        private void Button_Click_Add_Formule(object sender, RoutedEventArgs e)
-        {
-            MinParser d = new MinParser();
-
-            //  Result ho = Pars.CheckFormula(input_formul.Text.ToString());
-            Result ho = d.CheckFormula(input_formul.Text.ToString());
-            if (ho.result)
-            {
-                PrintFormule(input_formul.Text.ToString());
-                input_formul.Text = "";
-            }
-            else
-                MessageBox.Show(ho.str);
-            /* 
-              bool r = b.isCorrect("Значение", input_formul.Text.ToString());
-             if (r)
-             {
-                 PrintFormule(input_formul.Text.ToString());
-                 input_formul.Text = "";
-             }
-             else
-                 MessageBox.Show("Давай по новой, Миша, *заблокировано РКН*! (если что, это тест на константу)"); */
-        }
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
