@@ -138,7 +138,7 @@
             <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
 
                 <Grid Background="White"  Grid.Row="1" x:Name="Buttonss" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,-0.4,-0.2" Height="35">
-                    <Button Width="170" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
+                    <Button Width="170" Command="{Binding UpdateTab}" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
                     <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
 
                 </Grid>

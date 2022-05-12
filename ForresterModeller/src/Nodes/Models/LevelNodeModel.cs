@@ -68,58 +68,53 @@ namespace ForresterModeller.src.Nodes.Models
                     String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output).OutputValue;
 
                     ObservableCollection<DiagramManager> diagrams = MainWindowViewModel.ProjectInstance.Diagrams;
-
+                    ForesterNodeModel node=null;
                     foreach (var diag in diagrams)
                     {
 
                         diag.UpdateNodes();
-                        var node = diag.АllNodes.FirstOrDefault(x =>
-                        {
-                            if (x is DelayNodeModel)
+                        node = diag.АllNodes.FirstOrDefault(x =>
                             {
-                                DelayNodeModel y = (DelayNodeModel)x;
-                                foreach (var outp in y.Outputs.Items)
+                                if (x is DelayNodeModel)
                                 {
-                                    if (outp.Connections.Items.Count() > 0)
+                                    DelayNodeModel y = (DelayNodeModel) x;
+                                    foreach (var outp in y.Outputs.Items)
                                     {
-                                        String val = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).OutputValue;
-                                        if (val == value)
+                                        if (outp.Connections.Items.Count() > 0)
                                         {
-                                            value = ((ForesterNodeOutputViewModel)outp.Connections.Items.ToList()[0].Output).Name;
-                                            return true;
+                                            String val =
+                                                ((ForesterNodeOutputViewModel) outp.Connections.Items.ToList()[0]
+                                                    .Output).OutputValue;
+                                            if (val == value)
+                                            {
+                                                return true;
+                                            }
                                         }
                                     }
+
                                 }
+                                else if (x.Id == value)
+                                    return true;
 
+                                return false;
                             }
-                            else if (x.Id == value)
-                                return true;
-
-                            return false;
-                        }
                         );
                         if (node != null)
-                         
-                        //data.Add(new DataForViewModels(inputs.Name, node.Name + (node is DelayNodeModel ? " (порт " + value + ")" : "") + ": " + node.FullName, 1));
-                        data.Add(new DataForViewModels(inputs.Name, node.FullName, 1));
+                        {
+                            data.Add(new DataForViewModels(node.Name, node.FullName, 1));
+                            break;
+                        }
                     }
+                    if (node == null)
+                    {
+                        data.Add(new DataForViewModels("Значение не найдено", "", 2));
+                    }
+
                 }
+                else
+                    data.Add(new DataForViewModels("Значение не задано", "", 2));
             }
 
-            /*
-            foreach (var inputs in Inputs.Items)
-            {
-                if (inputs.Connections.Items.Any())
-                {
-                    //todo проверить на пустой список
-                    String value = ((ForesterNodeOutputViewModel)inputs.Connections.Items.ToList()[0].Output)
-                        .OutputValue;
-                    ForesterNodeModel nod = MainWindowViewModel.ProjectInstance.getModelById(value);
-                    if (nod != null)
-                        data.Add(new DataForViewModels(inputs.Name, nod.FullName, 1));
-                }
-            }
-            */
 
             return data;
         }
