@@ -143,6 +143,11 @@ namespace ForresterModeller.src.Nodes.Models
             return data;
         }
 
+        public DataForViewModels GetFormul()
+        {
+            var data = new DataForViewModels(Name, Funk, 0);
+            return data;
+        }
 
         public void RefreshInput()
         {
