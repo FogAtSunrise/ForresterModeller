@@ -138,10 +138,17 @@ namespace ForresterModeller.src.Nodes.Models
 
             ConnectionValidator = con =>
             {
-                var level = con.Output.Parent as LevelNodeModel;
-                if (Source.Connections.Items.Count() != 0)
+                try
                 {
-                    level.OutputRate = ((ForesterNodeOutputViewModel)Source.Connections.Items.ToList()[0].Output).OutputValue;
+                    var level = con.Output.Parent as LevelNodeModel;
+                    if (Source.Connections.Items.Count() != 0)
+                    {
+                        level.OutputRate = ((ForesterNodeOutputViewModel)Source.Connections.Items.ToList()[0].Output).OutputValue;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ConnectionValidationResult(false, null);
                 }
                 return new ConnectionValidationResult(true, null);
             };
@@ -162,10 +169,17 @@ namespace ForresterModeller.src.Nodes.Models
 
             ConnectionValidator = con =>
             {
-                var level = con.Output.Parent as LevelNodeModel;
-                if (Target.Connections.Items.Count() != 0)
+                try
                 {
-                    ((LevelNodeModel)Target.Connections.Items.ToList()[0].Output.Parent).OutputRate = ((ForesterNodeOutputViewModel)con.Output).OutputValue;
+                    var level = con.Output.Parent as LevelNodeModel;
+                    if (Target.Connections.Items.Count() != 0)
+                    {
+                        ((LevelNodeModel)Target.Connections.Items.ToList()[0].Output.Parent).OutputRate = ((ForesterNodeOutputViewModel)con.Output).OutputValue;   
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new ConnectionValidationResult(false, null);
                 }
                 return new ConnectionValidationResult(true, null);
             };

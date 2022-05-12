@@ -81,10 +81,16 @@ namespace ForresterModeller.src.Nodes.Models
 
                         diag.UpdateNodes();
                         node = diag.АllNodes.FirstOrDefault(x =>
-                        {
-                            if (x is DelayNodeModel)
                             {
-                                DelayNodeModel y = (DelayNodeModel)x;
+                               
+                            if (x is DelayNodeModel || x is LinkNodeModel)
+                            {
+                                ForesterNodeModel y;
+                                if (x is DelayNodeModel)
+                                    y = (DelayNodeModel)x;
+                                else
+                                   y = (LinkNodeModel)x;
+
                                 foreach (var outp in y.Outputs.Items)
                                 {
                                     if (outp.Connections.Items.Count() > 0)
@@ -109,7 +115,7 @@ namespace ForresterModeller.src.Nodes.Models
                         );
                         if (node != null)
                         {
-                            data.Add(new DataForViewModels(node.Name, node.FullName, 1));
+                            data.Add(new DataForViewModels(node.Name, (node is LinkNodeModel)?"Сторонняя диаграмма":node.FullName, 1));
                             foreach (var word in array)
                             {
                                 if (word.str == inputs.Name)
@@ -285,7 +291,7 @@ namespace ForresterModeller.src.Nodes.Models
         public JumpNodeModel() : base("jump", "jump", "default +" +
             "(time * (time + t + abs(time - t))/2 - time * time + 1-" +
             "abs(time * (time + t + abs(time - t))/2 - time * time - 1))/2"+
-            " * abs(default - jump)")
+            " * (jump - default)")
         {
 
         }
