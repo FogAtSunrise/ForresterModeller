@@ -68,7 +68,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock  MaxWidth="900" TextWrapping="Wrap" HorizontalAlignment="Left"  Grid.Column="0" >
-                                             <TextBlock TextWrapping="Wrap"  Text="{Binding Left}" />
+                                                <TextBlock TextWrapping="Wrap"  Text="{Binding Left}" />
                                             <TextBlock TextWrapping="Wrap" Text="{Binding sim}" MaxWidth="20" />
                                             <TextBlock TextWrapping="Wrap" Text="{Binding Right}" HorizontalAlignment="Left"  />
                                             </TextBlock>
@@ -78,8 +78,6 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
-
                         </Grid>
                     </Grid>
 

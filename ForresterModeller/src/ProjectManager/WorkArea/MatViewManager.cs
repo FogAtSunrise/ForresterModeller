@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace ForresterModeller.src.ProjectManager.WorkArea
 {
-    class MatViewManager : WorkAreaManager
+    public class MatViewManager : WorkAreaManager
     {
         public ObservableCollection<MathViewModel> Models { get; set; } = new();
         public override ContentControl Content => GenerateActualView();
@@ -20,6 +20,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public MatViewManager(DiagramManager dmanager)
         {
             Diagram = dmanager;
+            dmanager.MathVM = this;
             Name = "Матпредставление для " + Diagram.Name;
             dmanager.PropertyChanged += (sender, args) =>
             {

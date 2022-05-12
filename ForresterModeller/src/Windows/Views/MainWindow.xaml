@@ -22,7 +22,7 @@
                 <MenuItem Header="Сохранить как" Command="{Binding SaveAsProjectCommand}"/>
             </MenuItem>
             <MenuItem Header="Создать диаграмму" Command="{Binding CreateDiagramTab }"/>
-            <MenuItem Header="Создать представление" Command="{Binding OpenMathView}"/>
+            <MenuItem Header="Создать представление" Command="{Binding OpenMathViewCommand}"/>
             <MenuItem Header="> Моделировать" Command="{Binding CalculateByCore}"/>
             <MenuItem Header="Справка"/>
             <MenuItem Header="О программе"/>

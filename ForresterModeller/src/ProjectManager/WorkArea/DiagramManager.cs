@@ -25,7 +25,7 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
         private Project _project;
         public string FullName => PathToFile + "\\" + Name;
-
+        public MatViewManager MathVM { get; set; }
         public DiagramManager(Project project)
         {
             _project = project;
@@ -151,21 +151,19 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
         public NetworkView CreateNetworkView()
         {
             _contentView = new NetworkView() { Background = Brushes.AliceBlue };
-            _contentView.NodeAddedEvent += (sender, args) => UpdateNodes();
+            Content.NodeAddedEvent += (sender, args) => UpdateNodes();
             var network = new ForesterNetworkViewModel();
             network.NodeDeletedEvent += (list) =>
             {
-                OnPropertySelected(this);
                 UpdateNodes();
             };
             
-            this._contentView.Drop += (o, e) =>
+            this.Content.Drop += (o, e) =>
             {
-               // AddDragNode((ForesterNodeModel)e.Data.GetData("nodeVM"));
                 UpdateNodes();
             };
 
-            this._contentView.Drop += (o, e) =>
+            this.Content.Drop += (o, e) =>
             {
                 ForesterNodeModel node = (ForesterNodeModel)e.Data.GetData("nodeVM");
 
@@ -177,8 +175,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
                     }
                 }
             };
-            _contentView.ViewModel = network;
-            return _contentView;
+            Content.ViewModel = network;
+            Content.ViewModel.SelectedNodes.Connect()
+                .ForEachChange((_) => OnSelectedNodesChanged()).Subscribe();
+            UpdateNodes();
+            return Content;
         }
 
         private void OnSelectedNodesChanged()
