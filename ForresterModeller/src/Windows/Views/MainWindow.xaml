@@ -137,12 +137,8 @@
             <!--Область отображения информации-->
             <Grid Grid.Row="0" Grid.Column="2"  x:Name="InformationArea">
 
-                <Grid Background="White"  Grid.Row="1" x:Name="Buttonss" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,-0.4,-0.2" Height="35">
-                    <Button Width="170" Command="{Binding UpdateTab}" HorizontalAlignment="Right" Margin="0,7,5,3">Обновить</Button>
-                    <Button Width="170" HorizontalAlignment="Right" Margin="0,7,180,3">Экспортировать</Button>
 
-                </Grid>
-                <TabControl Margin="0,40,0,0">
+                <TabControl>
                     <TabItem >
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -152,6 +148,12 @@
                         </TabItem.Header>
 
                         <Grid x:Name="InfoGrid" PreviewKeyDown="InfoGrid_OnPreviewKeyDown">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="243*"/>
+                                <ColumnDefinition Width="18*"/>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="58*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"  />
                                 <RowDefinition/>
@@ -159,12 +161,12 @@
 
                             <TreeView  x:Name="ProjectTree"  BorderThickness="0" Grid.Row="1"
                                        ItemsSource="{Binding ListFromProject}" 
-                                       SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto">
+                                       SelectedItemChanged="TreeView_OnSelectedItemChanged" Height="Auto" Grid.ColumnSpan="4">
                                 <TreeView.Resources>
                                     <HierarchicalDataTemplate DataType="{x:Type self:Project}" 
                                                                   ItemsSource="{Binding Diagrams}">
                                         <TextBlock Text="{Binding Name }" />
-                                    </HierarchicalDataTemplate> 
+                                    </HierarchicalDataTemplate>
                                     <HierarchicalDataTemplate DataType="{x:Type workArea:DiagramManager}" 
                                                               ItemsSource="{Binding АllNodes}">
                                         <TextBlock Text="{Binding Name }" />
@@ -192,7 +194,7 @@
                             <ContentControl Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Content="{Binding formuls}" />
                         </Grid>
                     </TabItem>
-                   
+
 
                 </TabControl>
             </Grid>

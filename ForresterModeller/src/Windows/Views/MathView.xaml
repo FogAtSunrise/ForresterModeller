@@ -17,10 +17,11 @@
         <!-- Наименование диаграммы -->
 
         <DockPanel Grid.Row="0">
-            <TextBlock  FontWeight="Bold" FontSize="20"  Width="300" Text="{Binding Name}" ></TextBlock>
-            <Button Width="150" HorizontalAlignment="Right" Command="{Binding UpdateMath }">Обновить</Button>
-            <Button Width="150" HorizontalAlignment="Right" Command="{Binding pdfConvert }">Экспорт</Button>
+            <TextBlock  FontWeight="Bold" FontSize="20"  Width="600" Text="{Binding Name}" ></TextBlock>
 
+            <DockPanel HorizontalAlignment="Right" Width="300"> <Button Width="150" HorizontalAlignment="Right" Command="{Binding UpdateMath }">Обновить</Button>
+            <Button Width="150" Command="{Binding pdfConvert }">Экспорт</Button>
+</DockPanel>
         </DockPanel>
 
         <!-- Содержимое -->
