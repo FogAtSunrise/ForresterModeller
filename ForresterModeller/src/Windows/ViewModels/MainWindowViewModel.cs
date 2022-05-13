@@ -62,7 +62,7 @@ namespace ForresterModeller.src.Windows.ViewModels
         /// <summary>
         /// Открыть элемент по имени
         /// </summary>
-        public ReactiveCommand<String, Unit> OpenTabCommand { get; }
+   
         public ReactiveCommand<TabViewModel, Unit> CloseTab { get; }
         public ReactiveCommand<Unit, Unit> CalculateByCore { get; }
         public ReactiveCommand<Unit, Unit> InitProjectByPath { get; }
@@ -92,7 +92,7 @@ namespace ForresterModeller.src.Windows.ViewModels
             ActiveProject.PropertyChanged += ActiveProject_PropertyChanged;
             TabControlVM.PropertyChanged += ActiveTabChanged;
             CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => OpenTab(CreateDiagramManager()));
-            OpenTabCommand = ReactiveCommand.Create<String>(s => OpenTab(new DiagramManager(ActiveProject) { Name = "Диаграмма12" }));
+            
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<Unit>(o => ExecuteModelling());
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());
@@ -187,6 +187,7 @@ namespace ForresterModeller.src.Windows.ViewModels
                 formuls.Content = new FormulasViewModel((DiagramManager)TabControlVM.ActiveTab.WAManager).GenerateActualView();
         }
 
+      
         public void OpenOrCreateTab(WorkAreaManager contentManager)
         {
             var tab = TabControlVM.Tabs.FirstOrDefault((x) => x.WAManager == contentManager) ?? OpenTab(contentManager);
@@ -195,10 +196,31 @@ namespace ForresterModeller.src.Windows.ViewModels
         public DiagramManager CreateDiagramManager()
         {
             var diagramManager = new DiagramManager(ActiveProject);
-            diagramManager.Name = "диаграмма " + ActiveProject.Diagrams.Count;
+
+            var number = 1;
+            DiagramManager node;
+            do
+            {
+               node = ActiveProject.Diagrams.FirstOrDefault(x =>
+                {
+                    if (x.TypeName == diagramManager.TypeName && x.Name == (diagramManager.TypeName + number))
+                    {
+                        number++;
+                        return true;
+                    }
+                    else
+                    return false;
+
+                });
+            } while (node!=null);
+
+
+            diagramManager.Name = diagramManager.TypeName + number;
             ActiveProject.AddDiagram(diagramManager);
             return diagramManager;
         }
+        
+
         private void ActiveTabChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(TabControlViewModel.ActiveTab))

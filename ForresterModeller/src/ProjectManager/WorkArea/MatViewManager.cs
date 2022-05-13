@@ -71,10 +71,11 @@ namespace ForresterModeller.src.ProjectManager.WorkArea
 
                     document.Open();
 
-                    
-                  
-                   
-                    //BaseFont baseFont = BaseFont.CreateFont("arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
+                    BaseFont basefont = BaseFont.CreateFont("arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
+
+                   // BaseFont baseFont = BaseFont.CreateFont("arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 
                     //Header ---------------------------------------------------------------
 
