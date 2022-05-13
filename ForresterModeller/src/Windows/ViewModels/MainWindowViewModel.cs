@@ -92,7 +92,6 @@ namespace ForresterModeller.src.Windows.ViewModels
             ActiveProject.PropertyChanged += ActiveProject_PropertyChanged;
             TabControlVM.PropertyChanged += ActiveTabChanged;
             CreateDiagramTab = ReactiveCommand.Create<WorkAreaManager>(o => OpenTab(CreateDiagramManager()));
-            OpenTabCommand = ReactiveCommand.Create<String>(s => OpenTab(new DiagramManager(ActiveProject) { Name = "Диаграмма12" }));
             CloseTab = ReactiveCommand.Create<TabViewModel>(o => TabControlVM.Tabs.Remove(o));
             CalculateByCore = ReactiveCommand.Create<Unit>(o => ExecuteModelling());
             InitProjectByPath = ReactiveCommand.Create<Unit>(u => InitiateProjectByPath());

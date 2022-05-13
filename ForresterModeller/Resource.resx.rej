@@ -1,0 +1,10 @@
+diff a/ForresterModeller/Resource.resx b/ForresterModeller/Resource.resx	(rejected hunks)
+@@ -139,7 +139,7 @@
+     <value>Уровень</value>
+   </data>
+   <data name="linkDiagramm" xml:space="preserve">
+-    <value>Сторонняядиаграмма</value>
++    <value>Сторонняя диаграмма</value>
+   </data>
+   <data name="name" xml:space="preserve">
+     <value>Обозначение</value>

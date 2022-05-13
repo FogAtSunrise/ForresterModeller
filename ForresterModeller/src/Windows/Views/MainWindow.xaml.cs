@@ -17,16 +17,6 @@ namespace ForresterModeller.src.Windows.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(StartWindowViewModel startWindowVM)
-        {
-            InitializeComponent();
-            Project a = new Project(startWindowVM) { Name = "naaame of proj" };
-            a.AddDiagram(new DiagramManager("1", a));
-            a.AddDiagram(new DiagramManager("12", a));
-            a.AddDiagram(new DiagramManager("123", a));
-            DataContext = new MainWindowViewModel(a, startWindowVM);
-        }
-
         public MainWindow(string path, StartWindowViewModel startWindowVM)
         {
             InitializeComponent();
